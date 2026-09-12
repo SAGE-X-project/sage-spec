@@ -86,8 +86,8 @@ constant-time equality.
 |---|---|---|
 | `initDid` | string | initiator DID; MUST equal the DID that signed the transport message |
 | `respDid` | string | responder DID; MUST equal the receiving agent's DID |
-| `info` | base64url-raw | the `info` bytes of §2 |
-| `exportCtx` | base64url-raw | the `exportCtx` bytes of §2 |
+| `info` | string | the `info` bytes of §2 as a JSON string (they are ASCII) |
+| `exportCtx` | string | the `exportCtx` bytes of §2 as a JSON string |
 | `nonce` | string | UUID, unique per context; replay-checked per `ctxID` for 10 minutes |
 | `ts` | string | RFC 3339 with nanoseconds; MUST be within ±2 minutes of the responder's clock |
 | `enc` | base64url-raw | 32-byte encapsulated key |
