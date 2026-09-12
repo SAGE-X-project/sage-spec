@@ -113,6 +113,82 @@
       }
     },
     {
+      "name": "request-target-ed25519",
+      "mode": "deterministic",
+      "description": "Signed POST request that also covers @request-target (the target without the method, RFC 9421 section 2.2.5), @path and @query (\"?\" when the request has no query).",
+      "input": {
+        "alg": "ed25519",
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":7,\"method\":\"tools/call\",\"params\":{\"name\":\"echo\",\"arguments\":{\"text\":\"hello\"}}}",
+        "covered": [
+          "\"@method\"",
+          "\"@target-uri\"",
+          "\"@authority\"",
+          "\"content-type\"",
+          "\"content-digest\"",
+          "\"x-sage-did\"",
+          "\"date\"",
+          "\"@request-target\"",
+          "\"@path\"",
+          "\"@query\""
+        ],
+        "created": 1788609600,
+        "headers": {
+          "content-type": "application/json",
+          "date": "Tue, 01 Sep 2026 12:00:00 GMT",
+          "x-sage-did": "did:sage:ethereum:0x1111111111111111111111111111111111111111"
+        },
+        "key_label": "sage-spec/vectors/ed25519/agent-a",
+        "keyid": "did:sage:ethereum:0x1111111111111111111111111111111111111111#key-1",
+        "method": "POST",
+        "nonce": "8f0c5b1c-0d1a-4c8e-9a51-6d2e4b7f1a10",
+        "signature_name": "sig1",
+        "url": "https://agent-b.example/mcp/tools/call"
+      },
+      "output": {
+        "content_digest": "sha-256=:8LVpz99pqw3Qk15ZR9KrTw7BNYt9yrfJQf92GvVs0X0=:",
+        "signature": "sig1=:bTxNK0zHSzTUC3FH7meQBx14AhN9H9UAXwD1JqIocsApYkXwxCuZjD3VIuZ6kjZc84deeRroAySLnczsJWhJAw==:",
+        "signature_base": "\"@method\": POST\n\"@target-uri\": https://agent-b.example/mcp/tools/call\n\"@authority\": agent-b.example\n\"content-type\": application/json\n\"content-digest\": sha-256=:8LVpz99pqw3Qk15ZR9KrTw7BNYt9yrfJQf92GvVs0X0=:\n\"x-sage-did\": did:sage:ethereum:0x1111111111111111111111111111111111111111\n\"date\": Tue, 01 Sep 2026 12:00:00 GMT\n\"@request-target\": /mcp/tools/call\n\"@path\": /mcp/tools/call\n\"@query\": ?\n\"@signature-params\": (\"@method\" \"@target-uri\" \"@authority\" \"content-type\" \"content-digest\" \"x-sage-did\" \"date\" \"@request-target\" \"@path\" \"@query\");keyid=\"did:sage:ethereum:0x1111111111111111111111111111111111111111#key-1\";alg=\"ed25519\";created=1788609600;nonce=\"8f0c5b1c-0d1a-4c8e-9a51-6d2e4b7f1a10\"",
+        "signature_input": "sig1=(\"@method\" \"@target-uri\" \"@authority\" \"content-type\" \"content-digest\" \"x-sage-did\" \"date\" \"@request-target\" \"@path\" \"@query\");keyid=\"did:sage:ethereum:0x1111111111111111111111111111111111111111#key-1\";alg=\"ed25519\";created=1788609600;nonce=\"8f0c5b1c-0d1a-4c8e-9a51-6d2e4b7f1a10\""
+      }
+    },
+    {
+      "name": "request-tag-ed25519",
+      "mode": "deterministic",
+      "description": "Signed POST request whose Signature-Input carries tag=\"sage-mcp\". The profile assigns no meaning to tag; verifiers must keep the received parameters verbatim in the signature base.",
+      "input": {
+        "alg": "ed25519",
+        "body": "{\"jsonrpc\":\"2.0\",\"id\":7,\"method\":\"tools/call\",\"params\":{\"name\":\"echo\",\"arguments\":{\"text\":\"hello\"}}}",
+        "covered": [
+          "\"@method\"",
+          "\"@target-uri\"",
+          "\"@authority\"",
+          "\"content-type\"",
+          "\"content-digest\"",
+          "\"x-sage-did\"",
+          "\"date\""
+        ],
+        "created": 1788609600,
+        "headers": {
+          "content-type": "application/json",
+          "date": "Tue, 01 Sep 2026 12:00:00 GMT",
+          "x-sage-did": "did:sage:ethereum:0x1111111111111111111111111111111111111111"
+        },
+        "key_label": "sage-spec/vectors/ed25519/agent-a",
+        "keyid": "did:sage:ethereum:0x1111111111111111111111111111111111111111#key-1",
+        "method": "POST",
+        "nonce": "8f0c5b1c-0d1a-4c8e-9a51-6d2e4b7f1a10",
+        "signature_name": "sig1",
+        "tag": "sage-mcp",
+        "url": "https://agent-b.example/mcp/tools/call"
+      },
+      "output": {
+        "content_digest": "sha-256=:8LVpz99pqw3Qk15ZR9KrTw7BNYt9yrfJQf92GvVs0X0=:",
+        "signature": "sig1=:sRzhCP7k/hDMDKr0xG17OzPi1ytFuQEnBWyLhQxtk8tzMPIsI9BMp8hTLJ1N5Ak2U4j+D23ceKSErfiAHsBTCw==:",
+        "signature_base": "\"@method\": POST\n\"@target-uri\": https://agent-b.example/mcp/tools/call\n\"@authority\": agent-b.example\n\"content-type\": application/json\n\"content-digest\": sha-256=:8LVpz99pqw3Qk15ZR9KrTw7BNYt9yrfJQf92GvVs0X0=:\n\"x-sage-did\": did:sage:ethereum:0x1111111111111111111111111111111111111111\n\"date\": Tue, 01 Sep 2026 12:00:00 GMT\n\"@signature-params\": (\"@method\" \"@target-uri\" \"@authority\" \"content-type\" \"content-digest\" \"x-sage-did\" \"date\");keyid=\"did:sage:ethereum:0x1111111111111111111111111111111111111111#key-1\";alg=\"ed25519\";created=1788609600;nonce=\"8f0c5b1c-0d1a-4c8e-9a51-6d2e4b7f1a10\";tag=\"sage-mcp\"",
+        "signature_input": "sig1=(\"@method\" \"@target-uri\" \"@authority\" \"content-type\" \"content-digest\" \"x-sage-did\" \"date\");keyid=\"did:sage:ethereum:0x1111111111111111111111111111111111111111#key-1\";alg=\"ed25519\";created=1788609600;nonce=\"8f0c5b1c-0d1a-4c8e-9a51-6d2e4b7f1a10\";tag=\"sage-mcp\""
+      }
+    },
+    {
       "name": "response-ed25519",
       "mode": "deterministic",
       "description": "Response signed by agent B over @status plus the request's @method/@target-uri/@authority/content-digest/signature with ;req, and the response content-type/content-digest. The request carries the ed25519 request signature vector.",

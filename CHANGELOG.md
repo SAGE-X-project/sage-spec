@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased (1.0.0-draft.2)
+
+Wire-format corrections found by the 2026-09 project review; each changes
+what a conformant implementation signs or accepts.
+
+- `03-rfc9421.md`: `@request-target` is the request target without the
+  method, as RFC 9421 section 2.2.5 defines it. The Go reference produced
+  `METHOD path?query` before. New deterministic vector
+  `request-target-ed25519` covers `@request-target`, `@path` and `@query`.
+- `03-rfc9421.md`: the `"@signature-params"` line is the received
+  `Signature-Input` member byte for byte; verifiers accept `tag` and any
+  parameter they do not know instead of re-serialising. New deterministic
+  vector `request-tag-ed25519` carries a `tag` parameter.
+
 ## 1.0.0-draft.1 (2026-09-12)
 
 First draft. Documents the wire formats of the Go core (`sage` v1.5.2 plus
