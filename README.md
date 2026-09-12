@@ -24,6 +24,7 @@ under `vectors/` in CI.
 | `spec/07-a2a.md` | A2A agent card and its proof |
 | `spec/08-transport.md` | Transport envelope (`WireMessage`, `WireResponse`) and the `X-SAGE-*` headers |
 | `vectors/` | Golden test vectors, one JSON file per suite (see `vectors/README.md`) |
+| `charter.md` | What is being standardised, the deployment models, the adversary, and the numbered requirements every chapter must meet |
 | `PROCESS.md` | How this specification is developed: the five stages from charter to frozen text, the draft ladder, where each chapter stands, and the work plan to `1.0.0` |
 
 ## Status
