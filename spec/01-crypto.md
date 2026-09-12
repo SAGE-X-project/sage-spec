@@ -81,7 +81,9 @@ MUST reject a signature whose `alg` contradicts the key.
 `KeyID(pub) = hex(SHA-256(pub)[0:8])` over the raw public key bytes of
 section 1 (`keys/keyid.go`). It is used for key selection and logging, not
 as a security binding. The Ethereum address of a secp256k1 key is
-`0x || hex(Keccak-256(X || Y)[12:32])`, EIP-55 checksummed.
+`0x || hex(Keccak-256(X || Y)[12:32])` in lower-case hex (the form used in
+`did:sage:ethereum` identifiers and by the `crypto` vector); EIP-55
+checksumming is a display convention and is not applied on the wire.
 
 ## 5. Open items
 
