@@ -24,6 +24,7 @@ under `vectors/` in CI.
 | `spec/07-a2a.md` | A2A agent card and its proof |
 | `spec/08-transport.md` | Transport envelope (`WireMessage`, `WireResponse`) and the `X-SAGE-*` headers |
 | `vectors/` | Golden test vectors, one JSON file per suite (see `vectors/README.md`) |
+| `PROCESS.md` | How this specification is developed: the five stages from charter to frozen text, the draft ladder, where each chapter stands, and the work plan to `1.0.0` |
 
 ## Status
 
@@ -31,6 +32,13 @@ Version `1.0.0-draft.1`. The text describes what the Go core implements on
 2026-09-12 (`sage` v1.5.2 with the refactoring merged up to that date). Every
 normative statement is backed by a vector or by a cited source file in the Go
 core. Items marked *open* are known gaps that a later draft resolves.
+
+This draft is a snapshot of one implementation, which is how to start and not
+how to finish. `PROCESS.md` defines the five stages that take the text from
+here to a frozen `1.0.0` (charter, design, verification, analysis,
+finalisation), what each draft closes, and the work each stage needs. Until
+`1.0.0`, corrections that change bytes are expected and arrive as draft
+increments.
 
 ## How to check an implementation
 
