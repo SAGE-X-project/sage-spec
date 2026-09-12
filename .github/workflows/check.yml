@@ -1,0 +1,58 @@
+name: Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  vectors:
+    name: Vectors verify against the Go core
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sage-spec
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: spec
+      - name: Checkout the Go core (main)
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: SAGE-X-project/sage
+          ref: main
+          path: sage
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: sage/go.mod
+          cache-dependency-path: sage/go.sum
+      - name: Validate JSON
+        run: |
+          for f in spec/vectors/*.json; do
+            python3 -c "import json,sys; json.load(open(sys.argv[1]))" "$f"
+          done
+      - name: Check vectors
+        working-directory: sage
+        env:
+          GOTOOLCHAIN: auto
+        run: go run ./cmd/sage-vectors check -dir "$GITHUB_WORKSPACE/spec/vectors"
+
+  markdown:
+    name: Markdown links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check relative links resolve
+        run: |
+          status=0
+          for f in README.md spec/*.md vectors/README.md; do
+            dir=$(dirname "$f")
+            for link in $(grep -oE '\]\(([^)#]+)' "$f" | sed 's/](//' | grep -vE '^https?://'); do
+              if [ ! -e "$dir/$link" ] && [ ! -e "$link" ]; then
+                echo "$f: broken link $link"; status=1
+              fi
+            done
+          done
+          exit $status
