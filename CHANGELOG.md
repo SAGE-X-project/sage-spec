@@ -1,5 +1,34 @@
 # Changelog
 
+## Unreleased (1.0.0-draft.2)
+
+The design stage of `PROCESS.md`. Every change serves a requirement in
+`charter.md`, and several change what a conformant implementation signs or
+accepts. Breaking changes are expected before `1.0.0`.
+
+### Identity
+
+- Identifiers name the registry that holds the record:
+  `did:sage:<kind>:<locator>:<agent-id>`. Previously the network was
+  configuration, so two registries could issue the same identifier and a
+  proof of possession made for one network was byte-identical for another.
+  Every existing identifier changes.
+- New `09-registry.md`: one registry model with the record shape, the
+  lifecycle and its operations, one proof of possession that binds the
+  registry, the agent, the algorithm and the key, the rules that make
+  revocation immediate, and three profiles, two of them chains and one not a
+  blockchain.
+- New `10-resolution.md`: the document a record projects to, the resolution
+  contract, its metadata, error reporting and an HTTP binding.
+- New `11-registries.md`: signature algorithms, key encodings, domain
+  separation labels, registry kinds, headers and diagnostic codes, with the
+  procedure for adding an entry.
+- `06-did-sage.md` rewritten around the grammar, the uniqueness rules, the
+  rule that selects the verifying key, and the method's relationship to the
+  identifier standards. Chain aliases are removed; there is one normal form.
+- `00-overview.md` gains the requirements language, the extension policy and
+  the reference list, and no longer makes any implementation normative.
+
 ## 1.0.0-draft.1 (2026-09-12)
 
 First draft. Documents the wire formats of the Go core (`sage` v1.5.2 plus

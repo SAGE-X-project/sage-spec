@@ -1,75 +1,119 @@
 # 6. The did:sage method
 
-Vectors: `vectors/did.json`. Go sources: `pkg/agent/did/` (`manager.go`,
-`did.go`, `utils.go`, `types.go`, `types_v4.go`, `key_proof.go`).
+Vectors: `vectors/did.json`. Requirements: `charter.md` R-1, R-2, R-8, R-14.
 
-## 1. Grammar
+An agent is named by an identifier that says which registry holds its
+record. The registry model and the operations are in `09-registry.md`; the
+document an identifier resolves to is in `10-resolution.md`.
+
+## 1. Syntax
+
+```abnf
+did-sage     = "did:sage:" registry-id ":" agent-id
+registry-id  = kind ":" locator
+kind         = lowercase *( lowercase / DIGIT / "-" )
+locator      = segment *( ":" segment )
+agent-id     = segment
+segment      = 1*64 ( ALPHA / DIGIT / "." / "-" / "_" )
+lowercase    = %x61-7A
+```
+
+The number of segments in `locator` is fixed by the kind and is given in
+the profile for that kind (`11-registries.md` §5). A parser that does not
+implement the kind MUST reject the identifier rather than guess where the
+locator ends; it reports `id.unknown-kind`.
+
+A key inside a record is named by a fragment:
+
+```abnf
+did-url      = did-sage "#" key-id
+key-id       = 1*32 ( ALPHA / DIGIT / "-" / "_" )
+```
+
+Examples, informative:
 
 ```
-did-sage   = "did:sage:" chain ":" identifier
-chain      = "ethereum" / "solana"          ; after normalisation, see §2
-identifier = 1*( unreserved / ":" )         ; everything after the third colon
+did:sage:eip155:11155111:0xc7ecf7ad6ee71cb0d94f0eb00f46f1ddf432a808:0x1234abcd
+did:sage:web:agents.example.com:billing-bot
+did:sage:web:agents.example.com:billing-bot#key-1
 ```
 
-- The identifier MAY contain further colons; parsers split at the first
-  three colons only and keep the remainder verbatim
-  (`did:sage:ethereum:0x…:42` has identifier `0x…:42`).
-- The whole string MUST be at least 10 characters and start with `did:`.
-- An empty identifier, a missing chain, an unknown chain or a different
-  method are rejected. The `rejected` list in the vector is normative.
-- Ethereum identifiers are the lower-case `0x` address; a nonce suffix
-  (`:<n>`) distinguishes several agents under one address.
+## 2. Uniqueness and equality
 
-## 2. Chains
+- `registry-id` identifies one registry instance. Two registries MUST NOT
+  share a `registry-id`, and a profile states what makes its locator
+  unambiguous: for a chain, the chain reference of CAIP-2 together with the
+  address of the registry; for a hosted registry, the domain name.
+- `agent-id` is unique within that registry.
+- Two identifiers denote the same agent when their strings are equal after
+  the normalisation below. There are no aliases: an implementation MUST NOT
+  accept an abbreviation of a kind or of a locator.
+- Normalisation: `kind` is lower-case; a chain locator's hexadecimal address
+  is lower-case; no percent-encoding is permitted anywhere in the
+  identifier. An identifier that is not in normal form MUST be rejected
+  (`id.malformed`).
 
-`ParseChain` trims whitespace and lower-cases, then accepts:
+Because the identifier names the registry, an agent registered in one
+registry can never be confused with an agent registered in another, and a
+proof of possession made for one registry is not valid in another
+(`09-registry.md` §4).
 
-| Input | Chain |
+## 3. Which key verifies a message
+
+A signature names its key with the `keyid` parameter, which MUST be a
+`did-url` with a fragment. A verifier:
+
+1. parses `keyid` into an identifier and a key name, rejecting a `keyid`
+   without a fragment (`sig.malformed`);
+2. resolves the identifier (`10-resolution.md`) and rejects if the record is
+   unknown, not active, or unreadable (`record.not-found`,
+   `record.inactive`, `record.unreachable`);
+3. finds the key with that name and rejects if there is none
+   (`key.not-in-record`);
+4. rejects if that key is not accepted, is revoked, or has expired
+   (`key.unproven`, `key.revoked`);
+5. rejects if the key's algorithm does not match the `alg` parameter
+   (`sig.alg-mismatch`);
+6. verifies the signature with that key alone. A verifier MUST NOT try
+   other keys in the record.
+
+Where a protocol step needs a key but no `keyid` names one, for example the
+key-agreement key used to start a handshake, the record's key for that
+purpose is selected by the rule in `09-registry.md` §2.
+
+## 4. Operations
+
+Creating, activating, adding a key, revoking a key and deactivating a
+record are defined once, in `09-registry.md` §3, and are the same for every
+kind of registry. A profile states how each operation is carried out and
+who is authorised.
+
+## 5. Relationship to the identifier standards
+
+`did:sage` is a decentralised identifier method. Its syntax conforms to the
+identifier grammar of the W3C specification, its resolution contract is in
+`10-resolution.md`, and the document it produces uses the controlled
+identifier data model. The method name is to be registered in the W3C
+method registry before `1.0.0`.
+
+## 6. Security considerations
+
+| Threat | Defence |
 |---|---|
-| `ethereum`, `eth` | `ethereum` |
-| `solana`, `sol` | `solana` |
+| A-5: an attacker registers the identifier a party is claiming | The identifier names the registry and the claim binds the keys (`09-registry.md` §3) |
+| A-5: a proof made in a cheap registry is replayed in an expensive one | The proof covers the `registry-id` (`09-registry.md` §4) |
+| A-4: a valid agent presents another agent's key | The `keyid` must name a key in the sender's own record, and only that key is tried |
+| A-6: a stale view hides a revocation | Resolution states its observation point and grants no grace (`09-registry.md` §5) |
+| Confusion between two records | No aliases and a single normal form; equality is byte equality |
 
-Networks within a chain (`ethereum-mainnet`, `sepolia`, `goerli`,
-`solana-mainnet`, `solana-devnet`, `solana-testnet`) are configuration, not
-part of the DID.
+This chapter assumes the primitives of `01-crypto.md` and the resolution
+contract of `10-resolution.md`.
 
-## 3. Resolution
+## 7. Change from `1.0.0-draft.1`
 
-Resolution returns agent metadata, not a W3C DID Document (open item O-8).
-The registry record (`AgentMetadataV4`) carries:
-
-| Member | Content |
-|---|---|
-| `did` | the DID |
-| `name`, `description`, `endpoint` | strings |
-| `keys[]` | `{type, key_data, signature, verified, created_at}`; `type` 0 = ECDSA/secp256k1, 1 = Ed25519, 2 = X25519; `key_data` raw public key bytes of `01-crypto.md` §1 |
-| `capabilities` | free-form object |
-| `owner` | chain address |
-| `is_active` | boolean; inactive agents MUST NOT be trusted |
-| `public_kem_key` | 32-byte X25519 key used as the HPKE KEM key |
-| `created_at`, `updated_at` | timestamps |
-
-## 4. Key proof of possession
-
-Each registered signing key carries a signature proving control of the
-private key at registration time:
-
-```
-challenge = "SAGE-PoP:" || DID || ":" || hex(key_data)
-digest    = SHA-256(challenge)
-Ed25519:    signature = Ed25519.Sign(priv, digest)          (64 bytes)
-secp256k1:  signature = ECDSA-RFC6979(priv, digest) as r||s||v (65 bytes)
-X25519:     no proof (key agreement only)
-```
-
-Verifiers recompute the challenge from the DID and `key_data` and verify
-`signature`; a key whose proof fails MUST NOT be marked `verified`. Note
-that both signature types hash the challenge with SHA-256, and that the
-secp256k1 case therefore differs from the Keccak convention used everywhere
-else (`01-crypto.md` O-1).
-
-## 5. Open items
-
-| Id | Item |
-|---|---|
-| O-8 | A DID Document projection of the registry record (verification methods, key agreement, service endpoints) |
+The earlier form was `did:sage:<chain>:<identifier>`, where the network was
+configuration rather than part of the identifier. Two registries could
+therefore issue the same identifier, and a proof of possession made against
+one network was byte-identical for another. Every identifier changes; there
+is no compatibility rule, because no deployment may rely on the earlier
+form.
