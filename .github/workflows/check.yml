@@ -56,3 +56,13 @@ jobs:
             done
           done
           exit $status
+
+  mcp-setup-proposal:
+    name: MCP setup proposal consistency
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check document controls and planned cases
+        run: |
+          python3 proposals/non-http-mcp-setup/verify.py --self-test
+          python3 proposals/non-http-mcp-setup/verify.py
