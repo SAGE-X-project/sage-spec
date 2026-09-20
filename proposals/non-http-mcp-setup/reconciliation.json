@@ -1,0 +1,245 @@
+{
+  "kind": "mcp-adoption-reconciliation",
+  "status": "PROPOSAL_NOT_ADOPTED",
+  "method": "AUTHORING_AGENT_DOCUMENT_COMPARISON",
+  "external_review": "NOT_PERFORMED",
+  "proposal_revision": "55949a6b7b0de33f94992db595540ae58c92d13f",
+  "local_baseline": {
+    "state": "PRE_EXISTING_UNCOMMITTED_DESIGN",
+    "files": {
+      "profiles/agent-mcp-security.md": "99d5dc57d12d59d6e33102b2fdaa44efb137e48deab65e8012ff5128838d04b1",
+      "spec/04-hpke.md": "1420818451ce8363a16e391647dbaca8ec2f06efa56b6507027a4e17f399fdd6",
+      "spec/05-session.md": "8a45b8bdd3b6bfc399a94c420b2161b8f16db5c6b29ed2e85584a6282b17cce5",
+      "spec/08-transport.md": "87bb1adc1aae4883e13f8ba52a7c86153c71efb621ffc50458f7e2aa57db3eeb",
+      "verification/traceability.json": "c4db008e83ad9491559941ce6cb36960eea4fe3ba1ec6c698d7d77ea91ea009c"
+    },
+    "rule_count": 77,
+    "case_count": 386
+  },
+  "mappings": [
+    {
+      "proposed_rule": "MSET-01",
+      "baseline_rule_ids": [
+        "HPKE-05",
+        "SESSION-06",
+        "EXEC-01",
+        "EXEC-08"
+      ],
+      "baseline_requirement_ids": [
+        "R-21",
+        "R-22",
+        "R-26",
+        "R-36",
+        "R-39",
+        "R-43",
+        "R-44",
+        "R-45",
+        "R-9"
+      ],
+      "proposed_case_ids": [
+        "mset-01-valid-channel",
+        "mset-01-wrong-owner",
+        "mset-01-revoked-key"
+      ],
+      "disposition": "REVIEW_REQUIRED",
+      "execution": "NOT_RUN"
+    },
+    {
+      "proposed_rule": "MSET-02",
+      "baseline_rule_ids": [
+        "SESSION-03",
+        "SESSION-04",
+        "SESSION-05",
+        "TRANSPORT-04",
+        "EXEC-08"
+      ],
+      "baseline_requirement_ids": [
+        "R-17",
+        "R-24",
+        "R-26",
+        "R-27",
+        "R-30",
+        "R-35",
+        "R-36",
+        "R-39",
+        "R-43",
+        "R-44"
+      ],
+      "proposed_case_ids": [
+        "mset-02-exact-bytes",
+        "mset-02-size-boundary",
+        "mset-02-json-duplicates",
+        "mset-02-id-collision",
+        "mset-02-output-barrier",
+        "mset-02-send-failure-after-prepare",
+        "mset-02-setup-id-reuse",
+        "mset-02-history-exhaustion",
+        "mset-02-inner-rejection-replay"
+      ],
+      "disposition": "REVIEW_REQUIRED",
+      "execution": "NOT_RUN"
+    },
+    {
+      "proposed_rule": "MSET-03",
+      "baseline_rule_ids": [
+        "EXEC-08"
+      ],
+      "baseline_requirement_ids": [
+        "R-39",
+        "R-43",
+        "R-44"
+      ],
+      "proposed_case_ids": [
+        "mset-03-initialize-success",
+        "mset-03-unsupported-version",
+        "mset-03-capability-mismatch",
+        "mset-03-wrong-request"
+      ],
+      "disposition": "REVIEW_REQUIRED",
+      "execution": "NOT_RUN"
+    },
+    {
+      "proposed_rule": "MSET-04",
+      "baseline_rule_ids": [
+        "TRANSPORT-04",
+        "EXEC-08"
+      ],
+      "baseline_requirement_ids": [
+        "R-17",
+        "R-30",
+        "R-35",
+        "R-36",
+        "R-39",
+        "R-43",
+        "R-44"
+      ],
+      "proposed_case_ids": [
+        "mset-04-notification-ack",
+        "mset-04-ack-is-not-result",
+        "mset-04-malformed-ack",
+        "mset-04-notification-has-id",
+        "mset-04-lost-ack"
+      ],
+      "disposition": "REVIEW_REQUIRED",
+      "execution": "NOT_RUN"
+    },
+    {
+      "proposed_rule": "MSET-05",
+      "baseline_rule_ids": [
+        "EXEC-01",
+        "EXEC-04",
+        "EXEC-08"
+      ],
+      "baseline_requirement_ids": [
+        "R-38",
+        "R-39",
+        "R-41",
+        "R-43",
+        "R-44",
+        "R-45"
+      ],
+      "proposed_case_ids": [
+        "mset-05-discovery-success",
+        "mset-05-schema-replacement",
+        "mset-05-early-tool-call",
+        "mset-05-capability-not-authority",
+        "mset-05-extended-descriptor"
+      ],
+      "disposition": "REVIEW_REQUIRED",
+      "execution": "NOT_RUN"
+    },
+    {
+      "proposed_rule": "MSET-06",
+      "baseline_rule_ids": [
+        "HPKE-05",
+        "SESSION-06",
+        "EXEC-01",
+        "EXEC-08"
+      ],
+      "baseline_requirement_ids": [
+        "R-21",
+        "R-22",
+        "R-26",
+        "R-36",
+        "R-39",
+        "R-43",
+        "R-44",
+        "R-45",
+        "R-9"
+      ],
+      "proposed_case_ids": [
+        "mset-06-before-deadline",
+        "mset-06-deadline-equality",
+        "mset-06-slow-callback",
+        "mset-06-uncertain-send",
+        "mset-06-deadline-after-callback",
+        "mset-06-close-completion-race",
+        "mset-06-ready-past-setup-deadline"
+      ],
+      "disposition": "REVIEW_REQUIRED",
+      "execution": "NOT_RUN"
+    },
+    {
+      "proposed_rule": "MSET-07",
+      "baseline_rule_ids": [
+        "SESSION-06",
+        "EXEC-04",
+        "EXEC-05",
+        "EXEC-07"
+      ],
+      "baseline_requirement_ids": [
+        "R-22",
+        "R-26",
+        "R-38",
+        "R-39",
+        "R-41",
+        "R-42",
+        "R-45",
+        "R-9"
+      ],
+      "proposed_case_ids": [
+        "mset-07-fresh-reconnect",
+        "mset-07-stale-ready",
+        "mset-07-terminal-preserved",
+        "mset-07-missing-ledger"
+      ],
+      "disposition": "REVIEW_REQUIRED",
+      "execution": "NOT_RUN"
+    },
+    {
+      "proposed_rule": "MSET-08",
+      "baseline_rule_ids": [
+        "TRANSPORT-05",
+        "TRANSPORT-06",
+        "EXEC-08",
+        "EXEC-09"
+      ],
+      "baseline_requirement_ids": [
+        "R-15",
+        "R-16",
+        "R-17",
+        "R-18",
+        "R-30",
+        "R-34",
+        "R-39",
+        "R-43",
+        "R-44",
+        "R-45"
+      ],
+      "proposed_case_ids": [
+        "mset-08-proposal-scope",
+        "mset-08-http-not-defined",
+        "mset-08-historical-evidence"
+      ],
+      "disposition": "REVIEW_REQUIRED",
+      "execution": "NOT_RUN"
+    }
+  ],
+  "proposal_cases": {
+    "NOT_RUN": 40
+  },
+  "lifecycle": {
+    "NOT_RUN": 37
+  },
+  "conformance": "NOT_ESTABLISHED"
+}
