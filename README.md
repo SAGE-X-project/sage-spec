@@ -78,3 +78,7 @@ non-HTTP setup design. It is review input, not a protocol release or conformance
 The [adoption reconciliation](proposals/non-http-mcp-setup/reconciliation.md) maps
 that proposal to the preserved local 0.10.0 design and records unresolved adoption
 conditions. Its mappings are review input, not evidence of protocol execution.
+
+The [carriage and owner addendum](proposals/non-http-mcp-setup/addendum.md) proposes
+complete-message size rules and eighteen additional planned checks. It remains
+unadopted and preserves the earlier review and execution records.
