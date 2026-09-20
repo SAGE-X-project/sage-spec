@@ -66,3 +66,5 @@ jobs:
         run: |
           python3 proposals/non-http-mcp-setup/verify.py --self-test
           python3 proposals/non-http-mcp-setup/verify.py
+          python3 proposals/non-http-mcp-setup/verify_addendum.py --self-test
+          python3 proposals/non-http-mcp-setup/verify_addendum.py

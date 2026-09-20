@@ -82,3 +82,7 @@ conditions. Its mappings are review input, not evidence of protocol execution.
 The [carriage and owner addendum](proposals/non-http-mcp-setup/addendum.md) proposes
 complete-message size rules and eighteen additional planned checks. It remains
 unadopted and preserves the earlier review and execution records.
+
+CI also checks the supplemental case plan and reconciliation membership with
+`python3 proposals/non-http-mcp-setup/verify_addendum.py`. This validates document
+consistency, not the semantics of unpublished normative sources or protocol execution.
