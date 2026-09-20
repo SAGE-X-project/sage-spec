@@ -281,6 +281,87 @@
       "expected": "DENY_CLAIM",
       "status": "NOT_RUN",
       "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+    },
+    {
+      "id": "mset-02-output-barrier",
+      "rule": "MSET-02",
+      "precondition": "Server has prepared a listing response but local send is pending",
+      "input": "A protected request arrives before the send callback succeeds",
+      "expected": "DENY_EFFECT",
+      "status": "NOT_RUN",
+      "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+    },
+    {
+      "id": "mset-02-send-failure-after-prepare",
+      "rule": "MSET-02",
+      "precondition": "Server output is immutable and its next target state would be READY",
+      "input": "Local send reports partial or uncertain completion while input waits",
+      "expected": "CLOSE",
+      "status": "NOT_RUN",
+      "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+    },
+    {
+      "id": "mset-02-setup-id-reuse",
+      "rule": "MSET-02",
+      "precondition": "Initialize ID remains in the connection request history",
+      "input": "Reuse it for discovery or a later protected call",
+      "expected": "CLOSE",
+      "status": "NOT_RUN",
+      "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+    },
+    {
+      "id": "mset-02-history-exhaustion",
+      "rule": "MSET-02",
+      "precondition": "Connection history already retains 1024 authenticated request IDs",
+      "input": "Allocate a new endpoint and attempt another request",
+      "expected": "CLOSE",
+      "status": "NOT_RUN",
+      "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+    },
+    {
+      "id": "mset-02-inner-rejection-replay",
+      "rule": "MSET-02",
+      "precondition": "Outer signature and AEAD succeeded and reserved replay state",
+      "input": "Reject malformed inner JSON; retain consumed sequence and replay IDs",
+      "expected": "CLOSE",
+      "status": "NOT_RUN",
+      "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+    },
+    {
+      "id": "mset-05-extended-descriptor",
+      "rule": "MSET-05",
+      "precondition": "Name and inputSchema match but descriptor has an added outputSchema",
+      "input": "Validate the complete descriptor against the fixed baseline",
+      "expected": "CLOSE",
+      "status": "NOT_RUN",
+      "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+    },
+    {
+      "id": "mset-06-deadline-after-callback",
+      "rule": "MSET-06",
+      "precondition": "Final validation starts at 29999ms and ends at 30000ms",
+      "input": "Attempt to publish READY after callback completion",
+      "expected": "CLOSE",
+      "status": "NOT_RUN",
+      "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+    },
+    {
+      "id": "mset-06-close-completion-race",
+      "rule": "MSET-06",
+      "precondition": "Local send is pending and the owner has become CLOSED",
+      "input": "A successful late send callback tries to publish its target state",
+      "expected": "CLOSE",
+      "status": "NOT_RUN",
+      "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+    },
+    {
+      "id": "mset-06-ready-past-setup-deadline",
+      "rule": "MSET-06",
+      "precondition": "Local READY transition completed before the setup deadline; session remains valid",
+      "input": "The old setup deadline passes without a new setup operation",
+      "expected": "ALLOW_OPERATION_CHECKS",
+      "status": "NOT_RUN",
+      "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
     }
   ]
 }
