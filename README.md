@@ -74,3 +74,7 @@ copied into implementations and their test suites.
 The [trusted connection-owner API proposal](proposals/non-http-mcp-setup/owner-contract.md)
 describes local ownership, bounded callbacks and Guard handoff for the unadopted
 non-HTTP setup design. It is review input, not a protocol release or conformance claim.
+
+The [adoption reconciliation](proposals/non-http-mcp-setup/reconciliation.md) maps
+that proposal to the preserved local 0.10.0 design and records unresolved adoption
+conditions. Its mappings are review input, not evidence of protocol execution.
