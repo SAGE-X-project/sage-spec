@@ -68,3 +68,9 @@ version they conform to. See `spec/00-overview.md` §5.
 
 Apache-2.0 (see `LICENSE`). The text, schemas and vectors are meant to be
 copied into implementations and their test suites.
+
+### Proposed MCP connection ownership
+
+The [trusted connection-owner API proposal](proposals/non-http-mcp-setup/owner-contract.md)
+describes local ownership, bounded callbacks and Guard handoff for the unadopted
+non-HTTP setup design. It is review input, not a protocol release or conformance claim.
