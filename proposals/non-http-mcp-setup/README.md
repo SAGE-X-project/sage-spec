@@ -62,21 +62,42 @@ ID collision with the inner ID is rejected. Inner notifications have no ID.
 For this binding each decrypted control message is at most **16,348 bytes**, the
 current core carriage ceiling, not the larger general session maximum. Wire messages
 are at most **32,768 bytes**. Reject invalid UTF-8, duplicate JSON members, batches,
-trailing JSON, wrong message shape and excess depth (>36) before state mutation.
+trailing JSON, wrong message shape and excess depth (>36) before changing MCP
+admission state or causing application effects. An authenticated record may already
+have consumed cryptographic sequence/replay state; rejecting its inner JSON MUST NOT
+restore that state. An outer validation failure follows the underlying transport
+acceptance rules instead of inventing a second replay policy.
 Use the versioned MCP schema for initialize fields; optional descriptive fields are
 not authority and MUST NOT be forwarded as model instructions. No automatic signing,
 policy change, artifact installation or tool execution occurs during setup.
 
-The trusted owner serializes state transitions and output commitment. Commitment
-means retaining one immutable authenticated output and updating its local state
-before handing bytes to I/O; it does not imply peer receipt or mandatory disk storage.
-Concurrent inputs cannot allocate a second response or bypass the state guard.
+The trusted owner serializes state transitions and output commitment. Preparing an
+immutable authenticated output reserves its sequence and invocation but enters a
+local OUTPUT_PENDING barrier, not the advertised next state. The bounded local send
+must report full success before that next state is published. A partial write,
+uncertain completion, cancellation or send failure closes the connection. Send success
+is only a local handoff guarantee, never proof of peer receipt or disk persistence.
+
+While OUTPUT_PENDING, no inbound message or callback may dispatch, publish readiness
+or reenter the owner. A receiver may defer at most one size-bounded frame until the
+barrier clears; it then runs normal authentication and state checks. Overflow closes
+the connection. A response arriving before the sender's send callback returns is
+subject to the same barrier. Failed or closed output never activates deferred input.
+No second output, sequence reuse or duplicate response is created by cleanup.
 
 All control messages consume normal directional sequence and outer replay budgets.
 At most one control request is outstanding. The client MUST retain its exact sent
 outer envelope until its sole correlated response is authenticated or the connection
 closes. Application validation failure never rolls back cryptographic acceptance.
 Setup messages never enter the protected tools/call parser or Guard execution ledger.
+The connection owner nevertheless retains one client JSON-RPC request-ID history
+across initialize, tools/list and all later protected requests. Reserve a syntactically
+valid ID of an authenticated request before routing it; repeated IDs close the
+connection before dispatch. IDs are never released on response completion or failure.
+Sender and receiver both enforce this rule. A newly created Guard endpoint cannot
+reset it. The history is bounded to 1024 request attempts including setup; exhaustion
+closes the connection, and any tighter record/session limit still applies. Notification
+carriers consume outer replay/sequence budgets but have no inner request ID.
 
 ## MSET-03 — Initialize and negotiation
 
@@ -98,8 +119,8 @@ and no outer error. A false/error carrier never becomes setup success even if it
 plaintext looks successful.
 
 A successfully validated reply moves the client to INITIALIZE_ACCEPTED. The server
-moves to WAIT_INITIALIZED only after committing the successful initialization reply
-for that immutable invocation. The client does not dispatch tools in either state.
+moves to WAIT_INITIALIZED only after the initialization reply for that immutable
+invocation clears OUTPUT_PENDING with successful local send and final checks. The client does not dispatch tools in either state.
 Duplicate initialize, out-of-order lifecycle messages and mismatched replies close
 setup. Failure is locally observable without exposing detailed authentication oracles.
 
@@ -122,7 +143,8 @@ It is not a Guard result, execution success, capability or model-visible content
 The client validates signature, AEAD, session, exact original request_hash/message_id,
 outer success and exact `{}` plaintext before entering NEGOTIATED. Any other plaintext,
 MCP response object, error, wrong correlation or second response is rejected. The
-server enters DISCOVERY_ONLY after committing the acknowledgement. If sending fails
+server enters DISCOVERY_ONLY only after the acknowledgement clears OUTPUT_PENDING
+with successful local send and final checks. If sending fails
 or its outcome is uncertain, close the connection; do not resend or create a second
 acknowledgement. Accepted replay records remain consumed.
 
@@ -134,16 +156,23 @@ A new connection may recover by fresh setup; no tool effect occurred in this pha
 ## MSET-05 — Protected tool discovery and readiness
 
 NEGOTIATED/DISCOVERY_ONLY permit exactly one authenticated `tools/list` request and
-correlated response before protected operations. The request has a fresh UUIDv4 ID
-and no pagination cursor. The response lists exactly one tool, `sage_secure_call`,
-with the [pinned closed inputSchema](tool.json) for the Guard intent envelope, and
-no nextCursor. Compare the JCS of name and inputSchema to the trusted profile
-baseline; received schema is not a replacement baseline. Descriptive annotations
-are not policy, may not mutate approval, and are not fed into model instructions.
+correlated response before protected operations. The request has exactly jsonrpc, a fresh UUIDv4 id and method `tools/list`, with
+no params, cursor or extra members. The successful JSON-RPC response has exactly
+jsonrpc, that id and result; result has exactly tools. Its one tool object MUST equal
+the complete JCS of the [pinned descriptor](tool.json), including the exact member
+set, not just a projection of name/inputSchema. Reject nextCursor, outputSchema,
+annotations, descriptions, titles and unknown metadata in this narrow discovery
+binding. Received schema never replaces the trusted baseline.
+
+General MCP permits additional tool description fields, including outputSchema;
+this restriction is a deliberate smaller binding, not a statement that those fields
+are invalid MCP. See [MCP tool definitions](https://modelcontextprotocol.io/specification/2025-06-18/server/tools).
+Extending this descriptor requires an explicit baseline/profile revision.
 
 The client becomes READY only after successful schema and response verification.
-The server becomes READY after committing its listing response and confirming its
-local protected endpoint, schema and mediation are installed. A peer-supplied tools
+The server becomes READY only after its listing response clears OUTPUT_PENDING
+with successful local send and final checks, and its local protected endpoint, schema
+and mediation are installed. A peer-supplied tools
 capability alone cannot establish that local fact. If discovery fails, close setup.
 This deliberately restricted one-tool, fixed-schema binding does not advertise full
 MCP service interoperability. Broader discovery requires a separate profile revision.
@@ -161,7 +190,13 @@ its local SAGE channel key-state creation. The responder starts while provisiona
 confirmation does not restart the deadline. Handshake and session expiration may
 close earlier. At or after the deadline no new setup transition or transition into READY
 is allowed. Local policy may shorten it. Peer timestamps, traffic or progress never
-extend it. Every blocking callback is bounded by the remaining deadline, not merely
+extend it. A missing, untrusted or backward-moving monotonic clock closes setup.
+Immediately before publishing every transition, including after validation, gate
+preparation and local I/O, re-read that clock and recheck deadline, session validity,
+owner liveness and closure under the serialized owner. A concurrent timeout or close
+wins over any later completion callback; CLOSED cannot publish READY. Starting a
+callback before the deadline does not allow completing its transition after it.
+Every blocking callback is bounded by the remaining deadline, not merely
 checked after return. A setup timeout closes the SAGE connection and discards local
 readiness and pending response handles without resetting replay state.
 
@@ -212,10 +247,21 @@ reports, 37 lifecycle NOT_RUN outcomes and conformance NOT_ESTABLISHED are uncha
 | WAIT_INITIALIZED_ACK | authenticated fixed acknowledgement | NEGOTIATED |
 | NEGOTIATED | emit tools/list | WAIT_DISCOVERY |
 | WAIT_DISCOVERY | authenticated pinned tool schema | READY |
-| any nonclosed state | deadline/session/validation failure | CLOSED |
+| setup state, including OUTPUT_PENDING | setup deadline or validation failure | CLOSED |
+| any nonclosed state, including READY | session invalidation or explicit close | CLOSED |
 
 Server progression is EXPECT_INITIALIZE → WAIT_INITIALIZED → DISCOVERY_ONLY → READY,
-with transitions after authenticated input and committed corresponding output as
-specified above. All other setup events close the connection. No transition leaves
+with transitions after authenticated input, successful bounded local output and
+final serialized checks as specified above. Each output passes through OUTPUT_PENDING;
+the table lists stable states only. All other setup events close the connection. No transition leaves
 CLOSED. Once READY, setup timeout is no longer a traffic timer; normal session and
 Guard limits apply. Re-initialization on a READY connection is rejected and closes it.
+
+
+## Review disposition
+
+The [counterexample review](review.md) identifies five ambiguities in the first
+published draft and maps their corrections to nine additional planned cases. It is
+a separate review pass by the same authoring agent, not an independent external
+reviewer, formal proof or real MCP runtime result. All 40 planned cases remain NOT_RUN.
+The [review record](review.json) binds the reviewed revision and corrected artifacts.
