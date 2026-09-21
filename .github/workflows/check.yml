@@ -71,3 +71,5 @@ jobs:
           python3 -B proposals/non-http-mcp-setup/verify_resolutions.py --self-test
           python3 -B proposals/non-http-mcp-setup/verify_resolutions.py
           python3 -B proposals/non-http-mcp-setup/consolidate.py --check
+          python3 -B proposals/non-http-mcp-setup/test_integrate_admission.py
+          python3 -B proposals/non-http-mcp-setup/integrate_admission.py --check

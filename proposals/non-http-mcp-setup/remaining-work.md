@@ -42,8 +42,8 @@ full protocol cases. The recent iterations therefore improved prerequisites with
 reducing 71 NOT_RUN. Future progress should be reported against the five completion
 conditions above, not counted by the number of merged documentation/checker PRs.
 
-The next deliverable is one integrated candidate reflecting the corrected admission
-contract and affected assertions, followed by independent review and explicit normative
-adoption. Do not add unrelated fixtures or another integrity checker as a substitute
+The [integrated candidate](integrated-candidate.md) and effective case plan now
+incorporate the corrected admission contract. The next deliverable is independent
+review of these exact outputs, normative reconciliation and explicit adoption. Do not add unrelated fixtures or another integrity checker as a substitute
 for that deliverable. An absent independent review must remain visible, not be fulfilled
 by relabeling another same-author pass.

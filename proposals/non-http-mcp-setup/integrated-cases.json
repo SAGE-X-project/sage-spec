@@ -1,0 +1,1410 @@
+{
+  "kind": "integrated-mcp-admission-plan",
+  "status": "PROPOSAL_NOT_ADOPTED",
+  "external_review": "NOT_PERFORMED",
+  "conformance": "NOT_ESTABLISHED",
+  "source_revision": "e88f9c3cb7a9ab96e63a51b3468b59d0b55c34b8",
+  "input_manifest_sha256": "79cc4ec7381152e2eeafee9890a8a456227b19a0cc0e284f3154ac0e2fa5f088",
+  "protocol_cases": {
+    "NOT_RUN": 71
+  },
+  "lifecycle": {
+    "NOT_RUN": 37
+  },
+  "change_counts": {
+    "NO_DIRECT_ADMISSION_CHANGE": 53,
+    "REDEFINE_ADMISSION_ASSERTION": 8,
+    "STRENGTHEN_OBSERVATION": 10
+  },
+  "cases": [
+    {
+      "id": "mset-01-valid-channel",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "First encrypted initialize confirms responder before MCP processing",
+      "expected": "ALLOW_SETUP",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-01-valid-channel",
+          "rule": "MSET-01",
+          "precondition": "Valid authenticated client channel and provisional responder",
+          "input": "First encrypted initialize confirms responder before MCP processing",
+          "expected": "ALLOW_SETUP",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-01-wrong-owner",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Reuse the old readiness handle",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-01-wrong-owner",
+          "rule": "MSET-01",
+          "precondition": "Authenticated channel belongs to another peer or owner",
+          "input": "Reuse the old readiness handle",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-01-revoked-key",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Receive the next setup record",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-01-revoked-key",
+          "rule": "MSET-01",
+          "precondition": "Previously accepted session key is now revoked",
+          "input": "Receive the next setup record",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-02-exact-bytes",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Preserve complete UTF-8 payload and distinct outer/inner request IDs",
+      "expected": "ALLOW_SETUP",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-02-exact-bytes",
+          "rule": "MSET-02",
+          "precondition": "Same authenticated session and valid control message",
+          "input": "Preserve complete UTF-8 payload and distinct outer/inner request IDs",
+          "expected": "ALLOW_SETUP",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-02-size-boundary",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Receive the oversized message",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-02-size-boundary",
+          "rule": "MSET-02",
+          "precondition": "Control plaintext is 16349 bytes",
+          "input": "Receive the oversized message",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-02-json-duplicates",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Duplicate a JSON member or provide a batch/trailing JSON",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-02-json-duplicates",
+          "rule": "MSET-02",
+          "precondition": "Bounded local synthetic parser input",
+          "input": "Duplicate a JSON member or provide a batch/trailing JSON",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-02-id-collision",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Use its outer UUID as the inner request UUID",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-02-id-collision",
+          "rule": "MSET-02",
+          "precondition": "Valid encrypted request",
+          "input": "Use its outer UUID as the inner request UUID",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-03-initialize-success",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Select 2025-06-18 and exactly tools capability",
+      "expected": "ALLOW_SETUP",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-03-initialize-success",
+          "rule": "MSET-03",
+          "precondition": "Client WAIT_INITIALIZE and matching authenticated response",
+          "input": "Select 2025-06-18 and exactly tools capability",
+          "expected": "ALLOW_SETUP",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-03-unsupported-version",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Return another MCP version without changing the authenticated peer",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-03-unsupported-version",
+          "rule": "MSET-03",
+          "precondition": "Client WAIT_INITIALIZE",
+          "input": "Return another MCP version without changing the authenticated peer",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-03-capability-mismatch",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Request unsupported optional features or omit tools capability",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-03-capability-mismatch",
+          "rule": "MSET-03",
+          "precondition": "Client WAIT_INITIALIZE",
+          "input": "Request unsupported optional features or omit tools capability",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-03-wrong-request",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Supply response belonging to another initialization request",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-03-wrong-request",
+          "rule": "MSET-03",
+          "precondition": "Client WAIT_INITIALIZE",
+          "input": "Supply response belonging to another initialization request",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-04-notification-ack",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Verify correlated encrypted success with plaintext exactly {}",
+      "expected": "ALLOW_SETUP",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-04-notification-ack",
+          "rule": "MSET-04",
+          "precondition": "Client WAIT_INITIALIZED_ACK with retained exact carrier",
+          "input": "Verify correlated encrypted success with plaintext exactly {}",
+          "expected": "ALLOW_SETUP",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-04-ack-is-not-result",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Attempt to consume marker as Guard output",
+      "expected": "DENY_EFFECT",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-04-ack-is-not-result",
+          "rule": "MSET-04",
+          "precondition": "Valid notification acknowledgement",
+          "input": "Attempt to consume marker as Guard output",
+          "expected": "DENY_EFFECT",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-04-malformed-ack",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Supply MCP result, whitespace variant, error or wrong request hash",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-04-malformed-ack",
+          "rule": "MSET-04",
+          "precondition": "Client WAIT_INITIALIZED_ACK",
+          "input": "Supply MCP result, whitespace variant, error or wrong request hash",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-04-notification-has-id",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Receive initialized with a JSON-RPC request ID",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-04-notification-has-id",
+          "rule": "MSET-04",
+          "precondition": "Server WAIT_INITIALIZED",
+          "input": "Receive initialized with a JSON-RPC request ID",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-04-lost-ack",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Deadline expires without acknowledgement; reconnect uses new setup",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-04-lost-ack",
+          "rule": "MSET-04",
+          "precondition": "Server committed acknowledgement; client has not received it",
+          "input": "Deadline expires without acknowledgement; reconnect uses new setup",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-05-discovery-success",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Authenticate one-tool listing with pinned name/inputSchema",
+      "expected": "READY",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-05-discovery-success",
+          "rule": "MSET-05",
+          "precondition": "Client WAIT_DISCOVERY and prepared local server endpoint",
+          "input": "Authenticate one-tool listing with pinned name/inputSchema",
+          "expected": "READY",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-05-schema-replacement",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Receive changed schema or nextCursor instead of fixed complete listing",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-05-schema-replacement",
+          "rule": "MSET-05",
+          "precondition": "Client WAIT_DISCOVERY",
+          "input": "Receive changed schema or nextCursor instead of fixed complete listing",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-05-early-tool-call",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Attempt a protected tool call in a local unit scenario",
+      "expected": "DENY_EFFECT",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-05-early-tool-call",
+          "rule": "MSET-05",
+          "precondition": "Receiver is not READY",
+          "input": "Attempt a protected tool call in a local unit scenario",
+          "expected": "DENY_EFFECT",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-05-capability-not-authority",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Attempt to create readiness without a protected local endpoint",
+      "expected": "DENY_EFFECT",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-05-capability-not-authority",
+          "rule": "MSET-05",
+          "precondition": "Peer claims tools capability; local mediation absent",
+          "input": "Attempt to create readiness without a protected local endpoint",
+          "expected": "DENY_EFFECT",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-06-before-deadline",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Commit final READY transition at elapsed 29999ms",
+      "expected": "READY",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-06-before-deadline",
+          "rule": "MSET-06",
+          "precondition": "Session and initialization otherwise valid",
+          "input": "Commit final READY transition at elapsed 29999ms",
+          "expected": "READY",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-06-deadline-equality",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Commit final READY transition at elapsed 30000ms",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-06-deadline-equality",
+          "rule": "MSET-06",
+          "precondition": "Session initialization remains incomplete",
+          "input": "Commit final READY transition at elapsed 30000ms",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-06-slow-callback",
+      "status": "NOT_RUN",
+      "change": "STRENGTHEN_OBSERVATION",
+      "scenario": "Trusted remaining deadline expires; no effect may proceed; additionally: Record close while work is paused; late completion has no admission rights and cannot replenish a bounded worker pool.",
+      "expected": "CLOSE; additionally: Record close while work is paused; late completion has no admission rights and cannot replenish a bounded worker pool.",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-06-slow-callback",
+          "rule": "MSET-06",
+          "precondition": "Setup callback has not returned",
+          "input": "Trusted remaining deadline expires; no effect may proceed",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-06-uncertain-send",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Attempt resend or another reply on the old connection",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-06-uncertain-send",
+          "rule": "MSET-06",
+          "precondition": "Any setup response or acknowledgement output is uncertain",
+          "input": "Attempt resend or another reply on the old connection",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-07-fresh-reconnect",
+      "status": "NOT_RUN",
+      "change": "STRENGTHEN_OBSERVATION",
+      "scenario": "Complete fresh authenticated setup without executing old call again; additionally: Use a fresh owner with old durable identities; no recovery of old admission work or readiness.",
+      "expected": "ALLOW_SETUP; additionally: Use a fresh owner with old durable identities; no recovery of old admission work or readiness.",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-07-fresh-reconnect",
+          "rule": "MSET-07",
+          "precondition": "Old connection closed; Guard terminal state persists",
+          "input": "Complete fresh authenticated setup without executing old call again",
+          "expected": "ALLOW_SETUP",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-07-stale-ready",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Reuse old initialization, acknowledgement, listing or readiness",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-07-stale-ready",
+          "rule": "MSET-07",
+          "precondition": "New session with same DID but different tuple",
+          "input": "Reuse old initialization, acknowledgement, listing or readiness",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-07-terminal-preserved",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Request old signed call; preserve terminal and single client consumption",
+      "expected": "NO_REEXECUTION",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-07-terminal-preserved",
+          "rule": "MSET-07",
+          "precondition": "New connection READY with prior terminal journal",
+          "input": "Request old signed call; preserve terminal and single client consumption",
+          "expected": "NO_REEXECUTION",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-07-missing-ledger",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Recreate an empty ledger to resume an old call",
+      "expected": "DENY_EFFECT",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-07-missing-ledger",
+          "rule": "MSET-07",
+          "precondition": "Previously durable operation state cannot be opened",
+          "input": "Recreate an empty ledger to resume an old call",
+          "expected": "DENY_EFFECT",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-08-proposal-scope",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Attempt to claim deployed negotiation or full conformance",
+      "expected": "DENY_CLAIM",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-08-proposal-scope",
+          "rule": "MSET-08",
+          "precondition": "Only this draft and static checks exist",
+          "input": "Attempt to claim deployed negotiation or full conformance",
+          "expected": "DENY_CLAIM",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-08-http-not-defined",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Fallback to unspecified HTTP mapping or plaintext protected call",
+      "expected": "DENY_EFFECT",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-08-http-not-defined",
+          "rule": "MSET-08",
+          "precondition": "Non-HTTP setup unavailable",
+          "input": "Fallback to unspecified HTTP mapping or plaintext protected call",
+          "expected": "DENY_EFFECT",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-08-historical-evidence",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Promote them based only on proposal validation",
+      "expected": "DENY_CLAIM",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-08-historical-evidence",
+          "rule": "MSET-08",
+          "precondition": "Existing 37 lifecycle results are NOT_RUN",
+          "input": "Promote them based only on proposal validation",
+          "expected": "DENY_CLAIM",
+          "status": "NOT_RUN",
+          "evidence": "Future core unit or bounded runtime observations with revision, exact state, correlation and effect counters."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-02-output-barrier",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "A protected request arrives before the send callback succeeds",
+      "expected": "DENY_EFFECT",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-02-output-barrier",
+          "rule": "MSET-02",
+          "precondition": "Server has prepared a listing response but local send is pending",
+          "input": "A protected request arrives before the send callback succeeds",
+          "expected": "DENY_EFFECT",
+          "status": "NOT_RUN",
+          "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-02-send-failure-after-prepare",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Local send reports partial or uncertain completion while input waits",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-02-send-failure-after-prepare",
+          "rule": "MSET-02",
+          "precondition": "Server output is immutable and its next target state would be READY",
+          "input": "Local send reports partial or uncertain completion while input waits",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-02-setup-id-reuse",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Reuse it for discovery or a later protected call",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-02-setup-id-reuse",
+          "rule": "MSET-02",
+          "precondition": "Initialize ID remains in the connection request history",
+          "input": "Reuse it for discovery or a later protected call",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-02-history-exhaustion",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Allocate a new endpoint and attempt another request",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-02-history-exhaustion",
+          "rule": "MSET-02",
+          "precondition": "Connection history already retains 1024 authenticated request IDs",
+          "input": "Allocate a new endpoint and attempt another request",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-02-inner-rejection-replay",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Reject malformed inner JSON; retain consumed sequence and replay IDs",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-02-inner-rejection-replay",
+          "rule": "MSET-02",
+          "precondition": "Outer signature and AEAD succeeded and reserved replay state",
+          "input": "Reject malformed inner JSON; retain consumed sequence and replay IDs",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-05-extended-descriptor",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Validate the complete descriptor against the fixed baseline",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-05-extended-descriptor",
+          "rule": "MSET-05",
+          "precondition": "Name and inputSchema match but descriptor has an added outputSchema",
+          "input": "Validate the complete descriptor against the fixed baseline",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-06-deadline-after-callback",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Attempt to publish READY after callback completion",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-06-deadline-after-callback",
+          "rule": "MSET-06",
+          "precondition": "Final validation starts at 29999ms and ends at 30000ms",
+          "input": "Attempt to publish READY after callback completion",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-06-close-completion-race",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "A successful late send callback tries to publish its target state",
+      "expected": "CLOSE",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-06-close-completion-race",
+          "rule": "MSET-06",
+          "precondition": "Local send is pending and the owner has become CLOSED",
+          "input": "A successful late send callback tries to publish its target state",
+          "expected": "CLOSE",
+          "status": "NOT_RUN",
+          "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mset-06-ready-past-setup-deadline",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "The old setup deadline passes without a new setup operation",
+      "expected": "ALLOW_OPERATION_CHECKS",
+      "historical_source": {
+        "file": "cases.json",
+        "case": {
+          "id": "mset-06-ready-past-setup-deadline",
+          "rule": "MSET-06",
+          "precondition": "Local READY transition completed before the setup deadline; session remains valid",
+          "input": "The old setup deadline passes without a new setup operation",
+          "expected": "ALLOW_OPERATION_CHECKS",
+          "status": "NOT_RUN",
+          "evidence": "Future unit-controlled state and I/O interleavings; no effect before admission, retained replay and bounded request history."
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-plaintext-boundary",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Complete control and protected request plaintext at 16348 and 16349 UTF-8 bytes",
+      "expected": "Within-limit input continues other checks; oversize fails without dispatch",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-plaintext-boundary",
+          "obligation": "limits",
+          "input": "Complete control and protected request plaintext at 16348 and 16349 UTF-8 bytes",
+          "expected": "Within-limit input continues other checks; oversize fails without dispatch",
+          "planned_method": "unit_and_local_runtime",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-record-boundary",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Decoded records at 16384 and 16385 bytes",
+      "expected": "Boundary continues authentication; excess fails before decryption",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-record-boundary",
+          "obligation": "limits",
+          "input": "Decoded records at 16384 and 16385 bytes",
+          "expected": "Boundary continues authentication; excess fails before decryption",
+          "planned_method": "unit_and_local_runtime",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-wire-boundary",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Complete envelopes at 32768 and 32769 bytes including deferred receive",
+      "expected": "Boundary continues other checks; excess is never queued or dispatched",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-wire-boundary",
+          "obligation": "limits",
+          "input": "Complete envelopes at 32768 and 32769 bytes including deferred receive",
+          "expected": "Boundary continues other checks; excess is never queued or dispatched",
+          "planned_method": "unit_and_local_runtime",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-utf8-and-escapes",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Non-ASCII and escaped JSON near the plaintext bound",
+      "expected": "Count exact encoded bytes including JSON syntax, not characters or argument length",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-utf8-and-escapes",
+          "obligation": "limits",
+          "input": "Non-ASCII and escaped JSON near the plaintext bound",
+          "expected": "Count exact encoded bytes including JSON syntax, not characters or argument length",
+          "planned_method": "unit",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-result-representations",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Structured result plus escaped canonical text jointly exceeds bound",
+      "expected": "Reject complete message even when each representation alone fits",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-result-representations",
+          "obligation": "limits",
+          "input": "Structured result plus escaped canonical text jointly exceeds bound",
+          "expected": "Reject complete message even when each representation alone fits",
+          "planned_method": "unit",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-post-effect-oversize",
+      "status": "NOT_RUN",
+      "change": "STRENGTHEN_OBSERVATION",
+      "scenario": "Inert effect commits; complete terminal response exceeds carriage limit; additionally: Distinguish admission, actual effect, durable terminal and failed delivery in the recorded trace.",
+      "expected": "Preserve durable outcome, close delivery, no replacement rejection or redispatch; additionally: Distinguish admission, actual effect, durable terminal and failed delivery in the recorded trace.",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-post-effect-oversize",
+          "obligation": "limits",
+          "input": "Inert effect commits; complete terminal response exceeds carriage limit",
+          "expected": "Preserve durable outcome, close delivery, no replacement rejection or redispatch",
+          "planned_method": "unit_and_local_runtime",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-post-reservation-size-failure",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Final wire size fails after sequence and request-ID reservation",
+      "expected": "No send; close without restoring reservations",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-post-reservation-size-failure",
+          "obligation": "limits",
+          "input": "Final wire size fails after sequence and request-ID reservation",
+          "expected": "No send; close without restoring reservations",
+          "planned_method": "unit",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-inner-size-replay",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Outer acceptance succeeds but decrypted size fails",
+      "expected": "Close before inner routing; accepted replay state stays consumed",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-inner-size-replay",
+          "obligation": "limits",
+          "input": "Outer acceptance succeeds but decrypted size fails",
+          "expected": "Close before inner routing; accepted replay state stays consumed",
+          "planned_method": "unit",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-mutable-buffer",
+      "status": "NOT_RUN",
+      "change": "STRENGTHEN_OBSERVATION",
+      "scenario": "Caller modifies submitted bytes while work is pending; additionally: Verify exact captured bytes and pinned instance through fence, observation and atomic queue insertion.",
+      "expected": "Owner uses captured immutable bytes or rejects invalid ownership; additionally: Verify exact captured bytes and pinned instance through fence, observation and atomic queue insertion.",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-mutable-buffer",
+          "obligation": "owner",
+          "input": "Caller modifies submitted bytes while work is pending",
+          "expected": "Owner uses captured immutable bytes or rejects invalid ownership",
+          "planned_method": "unit",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-synchronous-completion",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Transport completion fires before send returns",
+      "expected": "Serialized barrier applies and no reentrant readiness publication",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-synchronous-completion",
+          "obligation": "owner",
+          "input": "Transport completion fires before send returns",
+          "expected": "Serialized barrier applies and no reentrant readiness publication",
+          "planned_method": "unit",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-duplicate-completion",
+      "status": "NOT_RUN",
+      "change": "STRENGTHEN_OBSERVATION",
+      "scenario": "Same completed operation reports success again; additionally: Distinguish output callback and admission work completion; neither may enqueue or publish twice.",
+      "expected": "No new phase transition, output or effect; additionally: Distinguish output callback and admission work completion; neither may enqueue or publish twice.",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-duplicate-completion",
+          "obligation": "owner",
+          "input": "Same completed operation reports success again",
+          "expected": "No new phase transition, output or effect",
+          "planned_method": "unit",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-old-incarnation",
+      "status": "NOT_RUN",
+      "change": "STRENGTHEN_OBSERVATION",
+      "scenario": "Completion from closed owner reaches replacement connection; additionally: Check private operation/incarnation identity at queue insertion as well as output publication.",
+      "expected": "No mutation of replacement owner or readiness transfer; additionally: Check private operation/incarnation identity at queue insertion as well as output publication.",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-old-incarnation",
+          "obligation": "owner",
+          "input": "Completion from closed owner reaches replacement connection",
+          "expected": "No mutation of replacement owner or readiness transfer",
+          "planned_method": "unit_and_local_runtime",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-bounded-cancellation",
+      "status": "NOT_RUN",
+      "change": "STRENGTHEN_OBSERVATION",
+      "scenario": "Repeated timeout/cancel with pending callbacks and deferred input; additionally: Separate pre-admission zero-effect cancellation from post-admission unresolved execution. Bound occupied slots; do not claim forced termination of an uncancellable provider.",
+      "expected": "Before admission: revoke rights and observe zero effects. After admission: preserve outcome without rollback or redispatch. Bound workers and buffers; finite cleanup requires bounded completion/cancellation providers. Unsupported providers cannot satisfy cleanup; occupied-slot denial is only fail-closed degradation.",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-bounded-cancellation",
+          "obligation": "owner",
+          "input": "Repeated timeout/cancel with pending callbacks and deferred input",
+          "expected": "Admission revoked, workers and buffers bounded and released, no effects",
+          "planned_method": "unit_and_local_runtime",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-history-capacity",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Two setup IDs followed by 1022 unique protected request attempts and one more",
+      "expected": "All 1024 total entries retained; next attempt closes before dispatch",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-history-capacity",
+          "obligation": "owner",
+          "input": "Two setup IDs followed by 1022 unique protected request attempts and one more",
+          "expected": "All 1024 total entries retained; next attempt closes before dispatch",
+          "planned_method": "unit",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-close-before-handoff",
+      "status": "NOT_RUN",
+      "change": "REDEFINE_ADMISSION_ASSERTION",
+      "scenario": "Use queue insertion as the handoff point; close during storage or verification must win without waiting for the execution mutex.",
+      "expected": "Use queue insertion as the handoff point; close during storage or verification must win without waiting for the execution mutex.",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-close-before-handoff",
+          "obligation": "owner",
+          "input": "Close linearizes before Guard admission of inert call",
+          "expected": "Zero protected effects; no success report",
+          "planned_method": "unit_and_local_runtime",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-close-after-handoff",
+      "status": "NOT_RUN",
+      "change": "REDEFINE_ADMISSION_ASSERTION",
+      "scenario": "Use queue insertion, not durable EXECUTING, as the admitted event. No automatic retry or false non-execution claim after close.",
+      "expected": "Use queue insertion, not durable EXECUTING, as the admitted event. No automatic retry or false non-execution claim after close.",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-close-after-handoff",
+          "obligation": "owner",
+          "input": "Close follows Guard effect admission",
+          "expected": "No false rollback claim; durable outcome retained; no automatic redispatch",
+          "planned_method": "unit_and_local_runtime",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-cross-language-setup",
+      "status": "NOT_RUN",
+      "change": "STRENGTHEN_OBSERVATION",
+      "scenario": "Go/Go, Go/Rust, Rust/Go and Rust/Rust authenticated setup and inert protected exchange; additionally: Preserve real admission ordering and journal evidence in all four pairings, not only successful message exchange.",
+      "expected": "Exact discovery and correlation, successful bounded exchange with original Guard checks; additionally: Preserve real admission ordering and journal evidence in all four pairings, not only successful message exchange.",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-cross-language-setup",
+          "obligation": "owner",
+          "input": "Go/Go, Go/Rust, Rust/Go and Rust/Rust authenticated setup and inert protected exchange",
+          "expected": "Exact discovery and correlation, successful bounded exchange with original Guard checks",
+          "planned_method": "unit_and_local_runtime",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "madd-restart-consumption",
+      "status": "NOT_RUN",
+      "change": "STRENGTHEN_OBSERVATION",
+      "scenario": "Reconnect and client restart after stored terminal consumption; additionally: Confirm that recovery never reconstructs an unresolved execution queue, while existing client single-consumption protection remains.",
+      "expected": "Fresh setup; old callbacks rejected; consumed result not exposed again or redispatched; additionally: Confirm that recovery never reconstructs an unresolved execution queue, while existing client single-consumption protection remains.",
+      "historical_source": {
+        "file": "addendum-cases.json",
+        "case": {
+          "id": "madd-restart-consumption",
+          "obligation": "owner",
+          "input": "Reconnect and client restart after stored terminal consumption",
+          "expected": "Fresh setup; old callbacks rejected; consumed result not exposed again or redispatched",
+          "planned_method": "unit_and_local_runtime",
+          "status": "NOT_RUN"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mres-close-before-reservation",
+      "status": "NOT_RUN",
+      "change": "REDEFINE_ADMISSION_ASSERTION",
+      "scenario": "Close before reservation: no queue insertion or effect; no invented durable outcome.",
+      "expected": "Close before reservation: no queue insertion or effect; no invented durable outcome.",
+      "historical_source": {
+        "file": "resolutions.json",
+        "case": {
+          "id": "mres-close-before-reservation",
+          "finding": "DREV-01",
+          "input": "Close wins before reservation",
+          "expected": "Deny with zero effects",
+          "status": "NOT_RUN",
+          "planned_method": "unit_and_bounded_local_runtime"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mres-close-after-reservation",
+      "status": "NOT_RUN",
+      "change": "REDEFINE_ADMISSION_ASSERTION",
+      "scenario": "Exercise close before fencing and close during/after successful fencing but before queue insertion. Zero admissions/effects; retain reservation/nonce and conservative UNKNOWN or storage unavailability.",
+      "expected": "Exercise close before fencing and close during/after successful fencing but before queue insertion. Zero admissions/effects; retain reservation/nonce and conservative UNKNOWN or storage unavailability.",
+      "historical_source": {
+        "file": "resolutions.json",
+        "case": {
+          "id": "mres-close-after-reservation",
+          "finding": "DREV-01",
+          "input": "Reserve, close, then attempt final admission",
+          "expected": "Zero effects; reservation and nonce retained; no false completed outcome",
+          "status": "NOT_RUN",
+          "planned_method": "unit_and_bounded_local_runtime"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mres-close-after-admission",
+      "status": "NOT_RUN",
+      "change": "REDEFINE_ADMISSION_ASSERTION",
+      "scenario": "Observe successful protected queue insertion before close. Preserve one admission and any eventual outcome without claiming rollback or retry.",
+      "expected": "Observe successful protected queue insertion before close. Preserve one admission and any eventual outcome without claiming rollback or retry.",
+      "historical_source": {
+        "file": "resolutions.json",
+        "case": {
+          "id": "mres-close-after-admission",
+          "finding": "DREV-01",
+          "input": "Final admission commits before close and effect completion",
+          "expected": "No rollback claim or redispatch; retain execution outcome",
+          "status": "NOT_RUN",
+          "planned_method": "unit_and_bounded_local_runtime"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mres-crash-after-admission",
+      "status": "NOT_RUN",
+      "change": "REDEFINE_ADMISSION_ASSERTION",
+      "scenario": "Crash after queue insertion but before worker effect. Recover durable EXECUTING as UNKNOWN without rebuilding the queue. Separately exercise a durable fence without queue insertion.",
+      "expected": "Crash after queue insertion but before worker effect. Recover durable EXECUTING as UNKNOWN without rebuilding the queue. Separately exercise a durable fence without queue insertion.",
+      "historical_source": {
+        "file": "resolutions.json",
+        "case": {
+          "id": "mres-crash-after-admission",
+          "finding": "DREV-01",
+          "input": "Crash after durable admission but before inert effect",
+          "expected": "Recover unresolved/unknown without executing again",
+          "status": "NOT_RUN",
+          "planned_method": "unit_and_bounded_local_runtime"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mres-ready-past-setup",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "READY before 30 seconds; protected exchange after 30 seconds",
+      "expected": "Continue under valid protected and session limits",
+      "historical_source": {
+        "file": "resolutions.json",
+        "case": {
+          "id": "mres-ready-past-setup",
+          "finding": "DREV-02",
+          "input": "READY before 30 seconds; protected exchange after 30 seconds",
+          "expected": "Continue under valid protected and session limits",
+          "status": "NOT_RUN",
+          "planned_method": "unit_and_bounded_local_runtime"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mres-stale-setup-completion",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Duplicate SETUP completion arrives after READY",
+      "expected": "No readiness change or new output; operation cannot change class",
+      "historical_source": {
+        "file": "resolutions.json",
+        "case": {
+          "id": "mres-stale-setup-completion",
+          "finding": "DREV-02",
+          "input": "Duplicate SETUP completion arrives after READY",
+          "expected": "No readiness change or new output; operation cannot change class",
+          "status": "NOT_RUN",
+          "planned_method": "unit_and_bounded_local_runtime"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mres-protected-timeout-before-admission",
+      "status": "NOT_RUN",
+      "change": "REDEFINE_ADMISSION_ASSERTION",
+      "scenario": "Expire before queue insertion, including during fence persistence or post-storage checks. Zero admissions/effects; retain identity and conservative storage state.",
+      "expected": "Expire before queue insertion, including during fence persistence or post-storage checks. Zero admissions/effects; retain identity and conservative storage state.",
+      "historical_source": {
+        "file": "resolutions.json",
+        "case": {
+          "id": "mres-protected-timeout-before-admission",
+          "finding": "DREV-02",
+          "input": "Protected request deadline expires before final admission",
+          "expected": "Deny with zero effects; do not reset intent or reservation",
+          "status": "NOT_RUN",
+          "planned_method": "unit_and_bounded_local_runtime"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mres-protected-timeout-after-admission",
+      "status": "NOT_RUN",
+      "change": "REDEFINE_ADMISSION_ASSERTION",
+      "scenario": "Expire after queue insertion. Close delivery without reversing admission; preserve terminal or unresolved outcome and prohibit redispatch.",
+      "expected": "Expire after queue insertion. Close delivery without reversing admission; preserve terminal or unresolved outcome and prohibit redispatch.",
+      "historical_source": {
+        "file": "resolutions.json",
+        "case": {
+          "id": "mres-protected-timeout-after-admission",
+          "finding": "DREV-02",
+          "input": "Protected deadline expires after final admission",
+          "expected": "Transport failure without rollback claim; retain durable result",
+          "status": "NOT_RUN",
+          "planned_method": "unit_and_bounded_local_runtime"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mres-ready-session-expiry",
+      "status": "NOT_RUN",
+      "change": "STRENGTHEN_OBSERVATION",
+      "scenario": "READY session expires while protected deadline remains valid; additionally: Exercise expiry before and after queue insertion; deny new admission without fabricating rollback of an earlier admission.",
+      "expected": "Deny new admission and close the owner; additionally: Exercise expiry before and after queue insertion; deny new admission without fabricating rollback of an earlier admission.",
+      "historical_source": {
+        "file": "resolutions.json",
+        "case": {
+          "id": "mres-ready-session-expiry",
+          "finding": "DREV-02",
+          "input": "READY session expires while protected deadline remains valid",
+          "expected": "Deny new admission and close the owner",
+          "status": "NOT_RUN",
+          "planned_method": "unit_and_bounded_local_runtime"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mres-signature-intent",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Valid role-bound intent proofs for Ed25519, P-256 and secp256k1",
+      "expected": "Only Ed25519 continues remaining validation; reject unsupported algorithms",
+      "historical_source": {
+        "file": "resolutions.json",
+        "case": {
+          "id": "mres-signature-intent",
+          "finding": "DREV-03",
+          "input": "Valid role-bound intent proofs for Ed25519, P-256 and secp256k1",
+          "expected": "Only Ed25519 continues remaining validation; reject unsupported algorithms",
+          "status": "NOT_RUN",
+          "planned_method": "unit_and_bounded_local_runtime"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mres-signature-result",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Valid correlated result proofs for Ed25519, P-256 and secp256k1",
+      "expected": "Only Ed25519 continues remaining validation; no unsupported result consumption",
+      "historical_source": {
+        "file": "resolutions.json",
+        "case": {
+          "id": "mres-signature-result",
+          "finding": "DREV-03",
+          "input": "Valid correlated result proofs for Ed25519, P-256 and secp256k1",
+          "expected": "Only Ed25519 continues remaining validation; no unsupported result consumption",
+          "status": "NOT_RUN",
+          "planned_method": "unit_and_bounded_local_runtime"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mres-signature-carriage",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Outer and handshake signatures under each baseline signing algorithm",
+      "expected": "Only active role-bound Ed25519 continues; HPKE KEM unchanged",
+      "historical_source": {
+        "file": "resolutions.json",
+        "case": {
+          "id": "mres-signature-carriage",
+          "finding": "DREV-03",
+          "input": "Outer and handshake signatures under each baseline signing algorithm",
+          "expected": "Only active role-bound Ed25519 continues; HPKE KEM unchanged",
+          "status": "NOT_RUN",
+          "planned_method": "unit_and_bounded_local_runtime"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    },
+    {
+      "id": "mres-missing-signing-key",
+      "status": "NOT_RUN",
+      "change": "NO_DIRECT_ADMISSION_CHANGE",
+      "scenario": "Participant lacks a suitable active Ed25519 signing key",
+      "expected": "Binding unsupported; no fallback or substitution",
+      "historical_source": {
+        "file": "resolutions.json",
+        "case": {
+          "id": "mres-missing-signing-key",
+          "finding": "DREV-03",
+          "input": "Participant lacks a suitable active Ed25519 signing key",
+          "expected": "Binding unsupported; no fallback or substitution",
+          "status": "NOT_RUN",
+          "planned_method": "unit_and_bounded_local_runtime"
+        }
+      },
+      "planned_method": "unit_and_bounded_local_runtime"
+    }
+  ]
+}
