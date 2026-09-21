@@ -99,3 +99,9 @@ reports keep their original scope. The corrections are unadopted and unimplement
 Start with the [consolidated MCP binding draft](proposals/non-http-mcp-setup/consolidated.md)
 for the integrated proposal, including all three design corrections. Historical source
 documents remain unchanged; CI checks the exact integration against pinned inputs.
+
+The [concrete admission and closure candidate](proposals/non-http-mcp-setup/admission-close-contract.md)
+proposes separating durable execution fencing from final protected-queue admission.
+This explicitly changes the consolidated draft's admission definition and awaits
+independent review and normative reconciliation; it is not an already integrated rule.
+The original 71-case catalog and historical results remain unchanged.
