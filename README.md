@@ -96,9 +96,9 @@ final dispatch admission, separate operation deadlines and the Ed25519 signing s
 Thirteen new planned cases bring the combined proposal total to 71 NOT_RUN; earlier
 reports keep their original scope. The corrections are unadopted and unimplemented.
 
-Start with the [consolidated MCP binding draft](proposals/non-http-mcp-setup/consolidated.md)
-for the integrated proposal, including all three design corrections. Historical source
-documents remain unchanged; CI checks the exact integration against pinned inputs.
+The historical [consolidated MCP binding draft](proposals/non-http-mcp-setup/consolidated.md)
+contains the earlier integrated proposal, including its three design corrections.
+Historical source documents remain unchanged; CI checks its pinned integration.
 
 The [concrete admission and closure candidate](proposals/non-http-mcp-setup/admission-close-contract.md)
 proposes separating durable execution fencing from final protected-queue admission.
@@ -110,3 +110,11 @@ The [admission case-impact review](proposals/non-http-mcp-setup/admission-case-r
 accounts for all 71 planned cases and clarifies expiry and bounded-cleanup assertions.
 The [remaining delivery work](proposals/non-http-mcp-setup/remaining-work.md) separates
 five unfinished implementation/validation packages from the broader SDK/service plan.
+
+For current admission review, start with the
+[integrated admission candidate](proposals/non-http-mcp-setup/integrated-candidate.md)
+and its [71 effective cases](proposals/non-http-mcp-setup/integrated-cases.json).
+This incorporates the corrected fencing/admission contract into the complete binding
+text. CI reproduces both outputs and rejects source/output drift. It remains unadopted
+and awaits independent review and normative reconciliation; historical models do not
+certify this candidate.
