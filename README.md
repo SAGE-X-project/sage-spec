@@ -116,5 +116,9 @@ For current admission review, start with the
 and its [71 effective cases](proposals/non-http-mcp-setup/integrated-cases.json).
 This incorporates the corrected fencing/admission contract into the complete binding
 text. CI reproduces both outputs and rejects source/output drift. It remains unadopted
-and awaits independent review and normative reconciliation; historical models do not
-certify this candidate.
+and awaits normative reconciliation; historical models do not certify this candidate.
+
+The user-authorized [separate-agent cross-review](proposals/non-http-mcp-setup/cross-review.md)
+and re-review resolved the recorded design/coverage findings for hash-identified
+corrected artifacts. The effective plan now includes 26 mandatory child assertions
+under its 71 parents. All remain NOT_RUN. This is not third-party audit or adoption.

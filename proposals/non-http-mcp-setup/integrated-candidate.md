@@ -8,10 +8,12 @@ and reports remain frozen and are not alternative implementation choices.
 
 Generated with `python3 -B integrate_admission.py --write` from
 [integrated-inputs.json](integrated-inputs.json). `--check` verifies both outputs.
-The [effective case plan](integrated-cases.json) has one assertion per existing case,
+The [effective case plan](integrated-cases.json) has one parent per existing case,
 with historical inputs recorded only as provenance. This integration incorporates
 the expiry-order and finite-cleanup clarifications. It is not external review,
 core execution, normative adoption or reconciliation of the unpublished baseline.
+The hash-pinned cross-review-amendment.json supplies the reviewed clarifications,
+history-limit correction and mandatory child assertions; historical inputs remain fixed.
 
 ## Scope and compatibility
 
@@ -627,17 +629,108 @@ KDF and AEAD are unchanged: X25519 is not an alternative signing algorithm.
 Expanding this binding requires an explicit profile/descriptor revision and verifier
 and interoperability evidence before advertisement.
 
+## Cross-review clarifications and required schedules
+
+These candidate rules incorporate separate-agent review of revision
+bf9e1b3e44f8d5a7123248fb7cf82b8f9407e739. They are not normative adoption or
+third-party external audit. The exact findings and re-review are recorded in
+[cross-review.md](cross-review.md).
+
+### Dispatch, worker claim and administrative invalidation
+
+For this binding's proposed EXEC-04/05 reconciliation, successful protected queue
+insertion is dispatch. A queued but unclaimed invocation is already admitted;
+ordinary owner closure or intent/session/request expiry after insertion does not
+prove that no effect occurred and does not itself undo dispatch. Expiry before
+insertion requires zero admissions and effects. The eventual effect may start after
+expiry if admission already won and no independently required cancellation applies.
+Keep admission, worker claim, actual effect and result persistence separate in traces.
+
+EXEC-06 administrative baseline replacement and approved policy retirement require
+additional treatment: under the coordinator, invalidate the old generation and cancel
+its queued but unclaimed invocations before a worker may claim them. This implements
+pending-call invalidation without silently moving work to the new component. A cancelled
+entry retains its historical admission and durable identity but cannot reach effects
+or be redispatched. Preserve a conservative unresolved outcome unless existing signed
+result rules allow a stronger durable conclusion; cancellation alone cannot fabricate
+an authenticated rejection or completion.
+
+Worker claim and administrative invalidation share the coordinator. If invalidation
+wins, observe zero worker effects. If claim wins, the running invocation keeps its
+original pinned instance and remains subject to the applicable running-tool cancellation
+policy; never claim retroactive non-execution or automatically retry. Queue removal,
+claim and cancellation must be single-consumer operations. An admitted entry is not a
+portable permit. This mapping must be adopted alongside the baseline, not inferred
+from a peer's description of its queue.
+
+### Finite providers and scheduler bounds
+
+Trusted storage, verification and transport providers must have finite completion or
+safe-cancellation bounds. The scheduler must also supply a finite enqueue-to-claim OR
+safe-cancellation bound; a provider bound alone does not cover an unclaimed queue entry.
+At the scheduler bound, claim/cancel races are serialized under the coordinator. No
+cancelled entry may later be claimed. If scheduling or cancellation unexpectedly stalls,
+retain occupied capacity and pinned dependencies and deny further work when exhausted;
+this is fail-closed degradation, not successful cleanup or an availability guarantee.
+
+Worker and outstanding-I/O quotas apply to the shared gate/host pool across owner
+replacement and reconnect, not just separately to each connection. Reconnect cannot
+abandon an old worker and allocate an unlimited replacement budget. Release capacity
+only after the operation actually terminates or a safe cancellation completes. Never
+free a pinned dependency merely because owner closure was recorded. Waiting for storage
+termination or cleanup must not hold the admission coordinator.
+
+### Final observations and storage uncertainty
+
+The final coordinator clock read is a trusted bounded local sample, never a registry
+lookup such as the existing Go RegistryAuthority.Now. Authoritative observation work
+occurs outside the coordinator. Its immutable result binds the operation, exact key,
+peer, expiries and observed policy/component/session generations. The observation is
+acquired after operation start, and its age at final admission is at most 5000 ms:
+5000 ms alone is not stale; 5001 ms is. Independent intent, session and request deadlines
+still reject at equality. Reject missing/rollback clocks, pre-operation observations,
+changed generations and stale observations before queue insertion. A denied attempt
+may be re-resolved only through bounded work without extending any fixed deadline.
+
+Closing during a fence write records closure immediately without asserting the write
+was cancelled. Test success, explicit failure and uncertain durability separately.
+No branch may admit closed work. Failed/uncertain fencing, failed UNKNOWN persistence
+and failed recovery conversion keep the affected storage scope unavailable under its
+existing integrity rules; no empty-store recreation or queue reconstruction is allowed.
+If the fence never became durable, do not fabricate a durable EXECUTING row in evidence.
+Whole-scope storage failure is distinct from closing one otherwise healthy owner.
+
+### Distinct record and owner-history limits
+
+The 1024-entry owner history ceiling is an isolated owner-unit bound. It is not a
+promise that one authenticated session can reach it. The baseline closes before
+sending sequence 1000 and rejects received sequence >=1000 in either direction.
+Initialize, initialized notification and discovery consume normal records, while the
+notification consumes no inner request ID. Test the owner ceiling in isolation and
+separately prove that the tighter record ceiling closes real authenticated traffic
+first. Do not alter the session limit, reset counters via a new endpoint, or count
+an owner-only result as protocol runtime evidence.
+
+The effective plan's mandatory subscenarios specify generation/freshness boundaries,
+storage outcomes, queue failures, shared-owner isolation and bounded cleanup. They
+are child assertions of existing cases, not additional top-level protocol cases.
+Every applicable child must be observed before its parent can pass. All remain NOT_RUN.
+
+
 ## Effective evidence and adoption status
 
-The effective plan contains **71 NOT_RUN** cases: eight redefined admission assertions,
-ten strengthened observations and fifty-three retained assertions. Full description
+The effective plan contains **71 NOT_RUN** parent cases and 26 mandatory child
+assertions, which are not additional top-level cases. The earlier impact classification
+was eight redefined, ten strengthened and fifty-three retained assertions; cross-review
+also corrects history-capacity scope and adds the mandatory child schedules. Full description
 and expected result are in integrated-cases.json; historical assertions there are
 provenance, not selectable alternatives. The fixed tool descriptor is unchanged.
 No case is satisfied by generating this document or by a historical primitive test.
 
 The 37 historical lifecycle cases remain NOT_RUN; conformance is NOT_ESTABLISHED.
-Existing finite models do not implement this admission candidate. Independent review
-is NOT_PERFORMED. Next: review this exact candidate and effective plan, reconcile the
+Existing finite models do not implement this admission candidate. Separate-agent review
+and re-review are recorded in cross-review.md; external audit is NOT_PERFORMED.
+Next: reconcile this corrected candidate with the
 profile, descriptor adoption, compatibility and traceability, and explicitly adopt
 before claiming implementation of a normative binding. No new private review or
 model result can substitute for that decision. HTTP mapping, general MCP support

@@ -22,7 +22,7 @@ class IntegrationTests(unittest.TestCase):
             counts[c['change']]=counts.get(c['change'],0)+1
             self.assertEqual(c['status'],'NOT_RUN')
             old=c['historical_source']['case']
-            if c['change']=='NO_DIRECT_ADMISSION_CHANGE':
+            if c['change']=='NO_DIRECT_ADMISSION_CHANGE' and not c.get('cross_review_override'):
                 self.assertEqual((c['scenario'],c['expected']),(old['input'],old['expected']))
             elif c['change']=='STRENGTHEN_OBSERVATION' and c['id']!='madd-bounded-cancellation':
                 self.assertTrue(c['expected'].startswith(old['expected']+'; additionally:'))
@@ -37,15 +37,37 @@ class IntegrationTests(unittest.TestCase):
         self.assertIn('If expiry precedes queue insertion: zero admissions/effects',text)
         self.assertEqual(text.count('## Final dispatch admission and closure'),1)
 
+    def test_cross_review_schedules_and_scope(self):
+        outputs=render();plan=json.loads(outputs['integrated-cases.json'])
+        children={c['id']:c for c in plan['mandatory_subscenarios']}
+        self.assertEqual(len(children),26)
+        self.assertTrue(all(c['status']=='NOT_RUN' for c in children.values()))
+        for kind in ('policy','component','session'):
+            self.assertIn('generation-'+kind,children)
+        for age in (4999,5000,5001):
+            self.assertIn('observation-age-'+str(age),children)
+        self.assertIn('Continue remaining checks',children['observation-age-5000']['expected'])
+        self.assertIn('Deny admission',children['observation-age-5001']['expected'])
+        for outcome in ('success','failure','uncertain'):
+            self.assertIn('fence-close-'+outcome,children)
+        for name in ('unknown-write-failure','recovery-conversion-failure','shared-owner-close',
+                     'queue-insert-failure','reconnect-pool-bound','scheduler-stall'):
+            self.assertIn(name,children)
+        self.assertEqual(children['owner-history-1024']['planned_method'],'owner_unit_only')
+        history=next(c for c in plan['cases'] if c['id']=='madd-history-capacity')
+        self.assertEqual(history['planned_method'],'owner_unit_plus_distinct_session_runtime')
+        self.assertIn('cancel\nits queued but unclaimed invocations',outputs['integrated-candidate.md'])
+        self.assertIn('external audit is NOT_PERFORMED',outputs['integrated-candidate.md'])
+
     def copied(self,directory):
         root=Path(directory)
         names=set(json.loads((ROOT/'integrated-inputs.json').read_text())['files'])
-        names.update(('integrated-inputs.json','integrate_admission.py','consolidate.py'))
+        names.update(('integrated-inputs.json','integrate_admission.py','consolidate.py','cross-review-amendment.json'))
         for name in names:shutil.copyfile(ROOT/name,root/name)
         return root
 
     def test_changed_sources_and_manifest_fail(self):
-        for name in ('integrated-inputs.json','admission-close-contract.md','admission-case-impact.json'):
+        for name in ('integrated-inputs.json','admission-close-contract.md','admission-case-impact.json','cross-review-amendment.json'):
             with self.subTest(name=name),tempfile.TemporaryDirectory() as directory:
                 root=self.copied(directory)
                 with (root/name).open('a') as f:f.write('\n')

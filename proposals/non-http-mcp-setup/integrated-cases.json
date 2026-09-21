@@ -1068,8 +1068,8 @@
       "id": "madd-history-capacity",
       "status": "NOT_RUN",
       "change": "NO_DIRECT_ADMISSION_CHANGE",
-      "scenario": "Two setup IDs followed by 1022 unique protected request attempts and one more",
-      "expected": "All 1024 total entries retained; next attempt closes before dispatch",
+      "scenario": "Separate isolated 1024-ID owner history testing from authenticated session record exhaustion.",
+      "expected": "Owner-only unit enforces 1024 entries; actual session closes at its tighter record limit with control records counted; endpoint replacement resets neither bound.",
       "historical_source": {
         "file": "addendum-cases.json",
         "case": {
@@ -1081,7 +1081,8 @@
           "status": "NOT_RUN"
         }
       },
-      "planned_method": "unit_and_bounded_local_runtime"
+      "planned_method": "owner_unit_plus_distinct_session_runtime",
+      "cross_review_override": true
     },
     {
       "id": "madd-close-before-handoff",
@@ -1406,5 +1407,227 @@
       },
       "planned_method": "unit_and_bounded_local_runtime"
     }
+  ],
+  "cross_review_amendment_sha256": "7a90b485205c83b2d2784829ee1c3479c64bf2c43f09a2c7e362f61e50589bdd",
+  "mandatory_subscenarios": [
+    {
+      "id": "generation-policy",
+      "parent_case": "madd-close-before-handoff",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Fence and verify; pause before coordinator; publish policy generation change; resume",
+      "expected": "Zero queue admissions/effects; preserve identities and UNKNOWN or unavailable storage; record observed/current generations and order"
+    },
+    {
+      "id": "generation-component",
+      "parent_case": "madd-close-before-handoff",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Fence and verify; pause before coordinator; publish component generation change; resume",
+      "expected": "Zero queue admissions/effects; preserve identities and UNKNOWN or unavailable storage; record observed/current generations and order"
+    },
+    {
+      "id": "generation-session",
+      "parent_case": "madd-close-before-handoff",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Fence and verify; pause before coordinator; publish session generation change; resume",
+      "expected": "Zero queue admissions/effects; preserve identities and UNKNOWN or unavailable storage; record observed/current generations and order"
+    },
+    {
+      "id": "observation-age-4999",
+      "parent_case": "madd-close-before-handoff",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Post-start observation ages 4999 ms before insertion; all other checks remain valid",
+      "expected": "Continue remaining checks; one inert admission with otherwise valid inputs"
+    },
+    {
+      "id": "observation-age-5000",
+      "parent_case": "madd-close-before-handoff",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Post-start observation ages 5000 ms before insertion; all other checks remain valid",
+      "expected": "Continue remaining checks; one inert admission with otherwise valid inputs"
+    },
+    {
+      "id": "observation-age-5001",
+      "parent_case": "madd-close-before-handoff",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Post-start observation ages 5001 ms before insertion; all other checks remain valid",
+      "expected": "Deny admission/effects; preserve reservation and conservative outcome"
+    },
+    {
+      "id": "observation-before-start",
+      "parent_case": "madd-close-before-handoff",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Use otherwise valid observation acquired before or at operation start",
+      "expected": "Reject observation; zero admissions/effects; no cached acceptance"
+    },
+    {
+      "id": "queue-capacity-race",
+      "parent_case": "madd-bounded-cancellation",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Capacity available during preparation becomes full before final insertion",
+      "expected": "Zero visible entries/effects for denied invocation; conservative ledger state and bounded capacity"
+    },
+    {
+      "id": "queue-insert-failure",
+      "parent_case": "madd-close-before-handoff",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Bounded insertion fails at the atomic queue operation",
+      "expected": "No partial visibility or worker claim; retained identity and conservative outcome"
+    },
+    {
+      "id": "shared-owner-close",
+      "parent_case": "madd-close-before-handoff",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "A and B share healthy gate; pause A, close A, complete valid B",
+      "expected": "A zero admissions/effects; B one admission/effect; no global retirement from A close"
+    },
+    {
+      "id": "fence-close-success",
+      "parent_case": "mres-close-after-reservation",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Pause fence persistence; record close before releasing provider with success",
+      "expected": "Zero queue admissions/effects; retain actual durable evidence. Successful fence settles UNKNOWN or unavailable storage"
+    },
+    {
+      "id": "fence-close-failure",
+      "parent_case": "mres-close-after-reservation",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Pause fence persistence; record close before releasing provider with failure",
+      "expected": "Zero queue admissions/effects; retain actual durable evidence. Affected scope unavailable; no positive acknowledgment or fabricated durable row"
+    },
+    {
+      "id": "fence-close-uncertain",
+      "parent_case": "mres-close-after-reservation",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Pause fence persistence; record close before releasing provider with uncertain",
+      "expected": "Zero queue admissions/effects; retain actual durable evidence. Affected scope unavailable; no positive acknowledgment or fabricated durable row"
+    },
+    {
+      "id": "unknown-write-failure",
+      "parent_case": "mres-close-after-reservation",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "After successful fence and denied admission, fail UNKNOWN persistence",
+      "expected": "Scope unavailable and exclusive writer ownership retained under existing failure rules; zero effects"
+    },
+    {
+      "id": "recovery-conversion-failure",
+      "parent_case": "mres-crash-after-admission",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Reopen unresolved EXECUTING and fail durable UNKNOWN conversion",
+      "expected": "No ready writer or reconstructed queue; preserve failed storage isolation and zero new effects"
+    },
+    {
+      "id": "queue-expiry-before",
+      "parent_case": "mres-protected-timeout-before-admission",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Deadline equality before queue insertion",
+      "expected": "Zero admissions and effects; preserve reservation"
+    },
+    {
+      "id": "queue-expiry-after",
+      "parent_case": "mres-protected-timeout-after-admission",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Insert before expiry; hold claim until after expiry; no administrative invalidation",
+      "expected": "Admission retained; later effect allowed under tool policy; failed delivery cannot claim rollback or redispatch"
+    },
+    {
+      "id": "policy-retirement-invalidate-first",
+      "parent_case": "madd-close-after-handoff",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Insert and hold worker; order policy-retirement and claim as invalidate-first",
+      "expected": "Cancel unclaimed old-generation entry with zero effects and retained admission/identity"
+    },
+    {
+      "id": "policy-retirement-claim-first",
+      "parent_case": "madd-close-after-handoff",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Insert and hold worker; order policy-retirement and claim as claim-first",
+      "expected": "Running invocation retains pinned old instance and applicable cancellation policy; no substitution, automatic retry or false rollback"
+    },
+    {
+      "id": "baseline-replacement-invalidate-first",
+      "parent_case": "madd-close-after-handoff",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Insert and hold worker; order baseline-replacement and claim as invalidate-first",
+      "expected": "Cancel unclaimed old-generation entry with zero effects and retained admission/identity"
+    },
+    {
+      "id": "baseline-replacement-claim-first",
+      "parent_case": "madd-close-after-handoff",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Insert and hold worker; order baseline-replacement and claim as claim-first",
+      "expected": "Running invocation retains pinned old instance and applicable cancellation policy; no substitution, automatic retry or false rollback"
+    },
+    {
+      "id": "scheduler-cancel-race",
+      "parent_case": "madd-bounded-cancellation",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Pause claim until configured scheduling bound; race cancellation and claim in both orders",
+      "expected": "Exactly one claimant or safe cancellation; cancelled entry never executes; no redispatch; admission remains historical"
+    },
+    {
+      "id": "scheduler-stall",
+      "parent_case": "madd-bounded-cancellation",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Scheduler and cancellation fail to terminate within promised bound",
+      "expected": "Retain bounded occupied slots and dependencies; deny new work when exhausted; do not report cleanup complete"
+    },
+    {
+      "id": "reconnect-pool-bound",
+      "parent_case": "madd-bounded-cancellation",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Repeated owners close/reconnect while bounded fixture I/O remains occupied",
+      "expected": "Gate/host worker cap unchanged across reconnect; no new slots until actual termination; no premature dependency release"
+    },
+    {
+      "id": "owner-history-1024",
+      "parent_case": "madd-history-capacity",
+      "status": "NOT_RUN",
+      "planned_method": "owner_unit_only",
+      "scenario": "Isolated owner seam: two setup IDs and 1022 unique protected IDs, then one extra",
+      "expected": "Retain all 1024 IDs and deny next; endpoint replacement cannot reset history; not actual authenticated session evidence"
+    },
+    {
+      "id": "session-record-limit-first",
+      "parent_case": "madd-history-capacity",
+      "status": "NOT_RUN",
+      "planned_method": "unit_and_bounded_local_runtime",
+      "scenario": "Real authenticated setup then bounded valid exchanges up to sequence 999; next send/receive at 1000",
+      "expected": "Tighter session ceiling closes/rejects first; control records counted; no endpoint reset or relaxed crypto limit"
+    }
+  ],
+  "required_observations": [
+    "coordinator_order",
+    "observed_and_current_generations",
+    "trusted_clock_and_observation_times",
+    "durable_write_outcome",
+    "queue_admissions",
+    "worker_claims",
+    "inert_effects",
+    "storage_availability",
+    "occupied_slots_and_dependency_lifetime"
   ]
 }
