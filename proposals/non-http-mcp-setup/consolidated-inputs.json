@@ -1,0 +1,11 @@
+{
+  "kind": "consolidated-proposal-inputs",
+  "revision": "bf854ac321bd1569f04553f64663470093097da3",
+  "status": "PROPOSAL_NOT_ADOPTED",
+  "files": {
+    "README.md": "8c73c61b1a4487be3ba52a716a2ccba5c58346c8894e4e7004b0dbf14df7652b",
+    "owner-contract.md": "69a63fed73edf11c6e0c566c86cf1834880eee4248a3ef5a3b9f87a232dd27a2",
+    "addendum.md": "74ea440703e267e5e586ef00048a39293fc2a40bd7050254cb2d5a7e2c14d186",
+    "resolutions.md": "dfa812f4d2c7659e99fbcfce46bc4a21444fd19e6e7c50b50fd3afbdb1ad2bd7"
+  }
+}

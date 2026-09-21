@@ -95,3 +95,7 @@ The [proposed review resolutions](proposals/non-http-mcp-setup/resolutions.md) d
 final dispatch admission, separate operation deadlines and the Ed25519 signing subset.
 Thirteen new planned cases bring the combined proposal total to 71 NOT_RUN; earlier
 reports keep their original scope. The corrections are unadopted and unimplemented.
+
+Start with the [consolidated MCP binding draft](proposals/non-http-mcp-setup/consolidated.md)
+for the integrated proposal, including all three design corrections. Historical source
+documents remain unchanged; CI checks the exact integration against pinned inputs.
