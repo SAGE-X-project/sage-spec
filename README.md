@@ -90,3 +90,8 @@ consistency, not the semantics of unpublished normative sources or protocol exec
 The [MCP design re-review](proposals/non-http-mcp-setup/design-review.md) records
 three open adoption findings concerning Guard admission, deadline scope and algorithm
 compatibility. It is a same-author review, not an independent external audit.
+
+The [proposed review resolutions](proposals/non-http-mcp-setup/resolutions.md) define
+final dispatch admission, separate operation deadlines and the Ed25519 signing subset.
+Thirteen new planned cases bring the combined proposal total to 71 NOT_RUN; earlier
+reports keep their original scope. The corrections are unadopted and unimplemented.
