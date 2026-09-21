@@ -86,3 +86,7 @@ unadopted and preserves the earlier review and execution records.
 CI also checks the supplemental case plan and reconciliation membership with
 `python3 proposals/non-http-mcp-setup/verify_addendum.py`. This validates document
 consistency, not the semantics of unpublished normative sources or protocol execution.
+
+The [MCP design re-review](proposals/non-http-mcp-setup/design-review.md) records
+three open adoption findings concerning Guard admission, deadline scope and algorithm
+compatibility. It is a same-author review, not an independent external audit.

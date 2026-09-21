@@ -1,0 +1,53 @@
+{
+  "kind": "mcp-design-review",
+  "method": "SEPARATE_PASS_SAME_AUTHORING_AGENT",
+  "external_review": "NOT_PERFORMED",
+  "verdict": "CHANGES_REQUIRED_BEFORE_ADOPTION",
+  "reviewed_revision": "11a06e5ba2e972c8c10bf310c18d1f356db97493",
+  "reviewed_files": {
+    "README.md": "8c73c61b1a4487be3ba52a716a2ccba5c58346c8894e4e7004b0dbf14df7652b",
+    "owner-contract.md": "69a63fed73edf11c6e0c566c86cf1834880eee4248a3ef5a3b9f87a232dd27a2",
+    "addendum.md": "74ea440703e267e5e586ef00048a39293fc2a40bd7050254cb2d5a7e2c14d186",
+    "tool.json": "c3edd622a7c90baa028118f63af42a91f354fe7202070ef91a4bd349e4048204",
+    "cases.json": "4a6a4ff3f1c0c3a9aba6cfbfe42789c01ab25f28683637e1d423a15e7a59777b",
+    "addendum-cases.json": "b9bdea7f0be96493cdbc2f2a5ebd3460e368c66a81db4ba444bcba387f54727f",
+    "reconciliation.json": "68cc2225fa5aaf9458594bccd2ce0b70e96aabcbf2c4de7f2eaba0bff0cfa80b",
+    "reconciliation.md": "4adffcc6dde9bf3dd36e46e86c981c9c2917281727b91c292c53a4c649209aed"
+  },
+  "review_archive_sha256": "ca23cdbdf5ec77fa683e319463b848b31fa49f7fdf93b1ebaad02c387b5a0b51",
+  "report_sha256": "425823c498fc133c032f490eea550779dfd041f17ccfdf5eb68dc184381bdffa",
+  "adoption": "PROPOSAL_NOT_ADOPTED",
+  "conformance": "NOT_ESTABLISHED",
+  "protocol_cases": {
+    "NOT_RUN": 58
+  },
+  "lifecycle": {
+    "NOT_RUN": 37
+  },
+  "findings": [
+    {
+      "id": "DREV-01",
+      "priority": "P2",
+      "severity": "MEDIUM",
+      "status": "OPEN",
+      "topic": "close-versus-Guard-admission",
+      "required_tests": "NOT_RUN"
+    },
+    {
+      "id": "DREV-02",
+      "priority": "P2",
+      "severity": "MEDIUM",
+      "status": "OPEN",
+      "topic": "setup-deadline-scope",
+      "required_tests": "NOT_RUN"
+    },
+    {
+      "id": "DREV-03",
+      "priority": "P2",
+      "severity": "MEDIUM",
+      "status": "OPEN",
+      "topic": "intent-algorithm-compatibility",
+      "required_tests": "NOT_RUN"
+    }
+  ]
+}
