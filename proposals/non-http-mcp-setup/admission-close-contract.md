@@ -143,8 +143,11 @@ own eligibility if the gate and storage remain healthy. A storage-integrity fail
 may separately deny the whole affected storage scope. This is not per-owner closure.
 Cleanup waits for workers outside the coordinator; pinned dependencies remain alive
 until their last operation has finished. At most the configured finite number of
-operations and queue slots may survive cancellation. An uncancellable provider must
-occupy its slot until safe release and deny new work when exhausted, not leak workers.
+operations and queue slots may survive cancellation. Finite cleanup claims require
+a trusted provider with a finite completion/cancellation bound. A provider lacking
+that bound is unsupported for this contract. If an unexpected failure prevents
+termination, retain its slot and deny new work when exhausted rather than leak workers;
+this is fail-closed degradation, not completed cleanup or an availability guarantee.
 
 ## Failure and recovery table
 
@@ -175,7 +178,7 @@ not new executed cases or an automatic expansion of the pinned 71-case catalog.
 |---|---|
 | Pause fence write; close; release successful write | Close recorded before release, zero admissions/effects, retained fence/UNKNOWN |
 | Pause post-storage key/policy check; invalidate; release | Generation or authority rejection, no queue entry |
-| Persist while crossing intent/session/request expiry | Post-storage time rejection, no effect at or after the applicable boundary |
+| Persist while crossing intent/session/request expiry | If expiry precedes queue insertion: zero admissions/effects; if insertion already won: use post-admission closure without rollback |
 | Queue insertion and close in both explicit orders | Close-first denies; insertion-first records exactly one admission |
 | Durable write failure, uncertain result or queue exhaustion | No visible work; no reservation deletion or successful delivery |
 | Duplicate completion or stale owner incarnation | No second queue entry, no reopened owner or response publication |
@@ -201,6 +204,7 @@ update profile/traceability together. Do not silently rewrite historical resolut
 hashes or treat their previous review as covering this amendment.
 
 No core changes are made here. The existing 71 protocol cases and 37 historical
-lifecycle cases remain NOT_RUN; conformance remains NOT_ESTABLISHED. Next work is
-review/reconciliation of this explicit amendment and its affected case assertions,
-followed by the owner-aware gate implementation after adoption.
+lifecycle cases remain NOT_RUN; conformance remains NOT_ESTABLISHED. The [case-impact review](admission-case-review.md) identifies eight changed admission
+assertions and ten strengthened observations. Its expiry and cleanup clarifications
+are applied here; independent review, integration and adoption remain pending before
+the owner-aware gate implementation.

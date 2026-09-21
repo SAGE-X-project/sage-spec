@@ -1,0 +1,524 @@
+{
+  "kind": "candidate-admission-case-impact",
+  "method": "SAME_AUTHOR_REVIEW",
+  "reviewed_revision": "37027c7e91b817e437d197b73b7332bb889ffd66",
+  "adoption": "CANDIDATE_AMENDMENT_NOT_ADOPTED",
+  "external_review": "NOT_PERFORMED",
+  "conformance": "NOT_ESTABLISHED",
+  "protocol_cases": {
+    "NOT_RUN": 71
+  },
+  "lifecycle": {
+    "NOT_RUN": 37
+  },
+  "input_sha256": {
+    "admission-close-contract.md": "a41ad62620ee0a5a86d35497b6376461b1115b667383b867139b172956607dc5",
+    "cases.json": "4a6a4ff3f1c0c3a9aba6cfbfe42789c01ab25f28683637e1d423a15e7a59777b",
+    "addendum-cases.json": "b9bdea7f0be96493cdbc2f2a5ebd3460e368c66a81db4ba444bcba387f54727f",
+    "resolutions.json": "3b693dc0e24effee51bbd70cb8374515852c984f1eed5eeefe4c348e7646631b"
+  },
+  "counts": {
+    "NO_DIRECT_ADMISSION_CHANGE": 53,
+    "REDEFINE_ADMISSION_ASSERTION": 8,
+    "STRENGTHEN_OBSERVATION": 10
+  },
+  "cases": [
+    {
+      "id": "mset-01-valid-channel",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-01-wrong-owner",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-01-revoked-key",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-02-exact-bytes",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-02-size-boundary",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-02-json-duplicates",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-02-id-collision",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-03-initialize-success",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-03-unsupported-version",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-03-capability-mismatch",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-03-wrong-request",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-04-notification-ack",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-04-ack-is-not-result",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-04-malformed-ack",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-04-notification-has-id",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-04-lost-ack",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-05-discovery-success",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-05-schema-replacement",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-05-early-tool-call",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-05-capability-not-authority",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-06-before-deadline",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-06-deadline-equality",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-06-slow-callback",
+      "source": "cases.json",
+      "category": "STRENGTHEN_OBSERVATION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Record close while work is paused; late completion has no admission rights and cannot replenish a bounded worker pool."
+    },
+    {
+      "id": "mset-06-uncertain-send",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-07-fresh-reconnect",
+      "source": "cases.json",
+      "category": "STRENGTHEN_OBSERVATION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Use a fresh owner with old durable identities; no recovery of old admission work or readiness."
+    },
+    {
+      "id": "mset-07-stale-ready",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-07-terminal-preserved",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-07-missing-ledger",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-08-proposal-scope",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-08-http-not-defined",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-08-historical-evidence",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-02-output-barrier",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-02-send-failure-after-prepare",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-02-setup-id-reuse",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-02-history-exhaustion",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-02-inner-rejection-replay",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-05-extended-descriptor",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-06-deadline-after-callback",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-06-close-completion-race",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mset-06-ready-past-setup-deadline",
+      "source": "cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "madd-plaintext-boundary",
+      "source": "addendum-cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "madd-record-boundary",
+      "source": "addendum-cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "madd-wire-boundary",
+      "source": "addendum-cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "madd-utf8-and-escapes",
+      "source": "addendum-cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "madd-result-representations",
+      "source": "addendum-cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "madd-post-effect-oversize",
+      "source": "addendum-cases.json",
+      "category": "STRENGTHEN_OBSERVATION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Distinguish admission, actual effect, durable terminal and failed delivery in the recorded trace."
+    },
+    {
+      "id": "madd-post-reservation-size-failure",
+      "source": "addendum-cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "madd-inner-size-replay",
+      "source": "addendum-cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "madd-mutable-buffer",
+      "source": "addendum-cases.json",
+      "category": "STRENGTHEN_OBSERVATION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Verify exact captured bytes and pinned instance through fence, observation and atomic queue insertion."
+    },
+    {
+      "id": "madd-synchronous-completion",
+      "source": "addendum-cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "madd-duplicate-completion",
+      "source": "addendum-cases.json",
+      "category": "STRENGTHEN_OBSERVATION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Distinguish output callback and admission work completion; neither may enqueue or publish twice."
+    },
+    {
+      "id": "madd-old-incarnation",
+      "source": "addendum-cases.json",
+      "category": "STRENGTHEN_OBSERVATION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Check private operation/incarnation identity at queue insertion as well as output publication."
+    },
+    {
+      "id": "madd-bounded-cancellation",
+      "source": "addendum-cases.json",
+      "category": "STRENGTHEN_OBSERVATION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Separate pre-admission zero-effect cancellation from post-admission unresolved execution. Bound occupied slots; do not claim forced termination of an uncancellable provider."
+    },
+    {
+      "id": "madd-history-capacity",
+      "source": "addendum-cases.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "madd-close-before-handoff",
+      "source": "addendum-cases.json",
+      "category": "REDEFINE_ADMISSION_ASSERTION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Use queue insertion as the handoff point; close during storage or verification must win without waiting for the execution mutex."
+    },
+    {
+      "id": "madd-close-after-handoff",
+      "source": "addendum-cases.json",
+      "category": "REDEFINE_ADMISSION_ASSERTION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Use queue insertion, not durable EXECUTING, as the admitted event. No automatic retry or false non-execution claim after close."
+    },
+    {
+      "id": "madd-cross-language-setup",
+      "source": "addendum-cases.json",
+      "category": "STRENGTHEN_OBSERVATION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Preserve real admission ordering and journal evidence in all four pairings, not only successful message exchange."
+    },
+    {
+      "id": "madd-restart-consumption",
+      "source": "addendum-cases.json",
+      "category": "STRENGTHEN_OBSERVATION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Confirm that recovery never reconstructs an unresolved execution queue, while existing client single-consumption protection remains."
+    },
+    {
+      "id": "mres-close-before-reservation",
+      "source": "resolutions.json",
+      "category": "REDEFINE_ADMISSION_ASSERTION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Close before reservation: no queue insertion or effect; no invented durable outcome."
+    },
+    {
+      "id": "mres-close-after-reservation",
+      "source": "resolutions.json",
+      "category": "REDEFINE_ADMISSION_ASSERTION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Exercise close before fencing and close during/after successful fencing but before queue insertion. Zero admissions/effects; retain reservation/nonce and conservative UNKNOWN or storage unavailability."
+    },
+    {
+      "id": "mres-close-after-admission",
+      "source": "resolutions.json",
+      "category": "REDEFINE_ADMISSION_ASSERTION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Observe successful protected queue insertion before close. Preserve one admission and any eventual outcome without claiming rollback or retry."
+    },
+    {
+      "id": "mres-crash-after-admission",
+      "source": "resolutions.json",
+      "category": "REDEFINE_ADMISSION_ASSERTION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Crash after queue insertion but before worker effect. Recover durable EXECUTING as UNKNOWN without rebuilding the queue. Separately exercise a durable fence without queue insertion."
+    },
+    {
+      "id": "mres-ready-past-setup",
+      "source": "resolutions.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mres-stale-setup-completion",
+      "source": "resolutions.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mres-protected-timeout-before-admission",
+      "source": "resolutions.json",
+      "category": "REDEFINE_ADMISSION_ASSERTION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Expire before queue insertion, including during fence persistence or post-storage checks. Zero admissions/effects; retain identity and conservative storage state."
+    },
+    {
+      "id": "mres-protected-timeout-after-admission",
+      "source": "resolutions.json",
+      "category": "REDEFINE_ADMISSION_ASSERTION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Expire after queue insertion. Close delivery without reversing admission; preserve terminal or unresolved outcome and prohibit redispatch."
+    },
+    {
+      "id": "mres-ready-session-expiry",
+      "source": "resolutions.json",
+      "category": "STRENGTHEN_OBSERVATION",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Exercise expiry before and after queue insertion; deny new admission without fabricating rollback of an earlier admission."
+    },
+    {
+      "id": "mres-signature-intent",
+      "source": "resolutions.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mres-signature-result",
+      "source": "resolutions.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mres-signature-carriage",
+      "source": "resolutions.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    },
+    {
+      "id": "mres-missing-signing-key",
+      "source": "resolutions.json",
+      "category": "NO_DIRECT_ADMISSION_CHANGE",
+      "execution": "NOT_RUN",
+      "candidate_assertion": "Retain historical assertion; this narrow review does not certify its completeness."
+    }
+  ]
+}
