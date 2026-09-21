@@ -1,124 +1,79 @@
 # sage-spec
 
-Protocol specification and golden test vectors for SAGE (Secure Agent
-Guarantee Engine): the wire-level rules that every SAGE implementation must
-follow so that agents built on different cores interoperate.
+**SAGE protocol 0.10.0 — documentation design, not an implementation release.**
 
-This repository contains no implementation. The reference implementation is
-the Go core, [`sage`](https://github.com/SAGE-X-project/sage); the Rust core,
-[`rs-sage-core`](https://github.com/SAGE-X-project/rs-sage-core), is being
-aligned to this specification. Both prove conformance by running the vectors
-under `vectors/` in CI.
+This repository defines identity, authenticated messaging and Agent/MCP execution
+protection for independent implementations. It updates existing documents in place,
+based on the Go `sage` code and design documents, Rust core and inspector evidence.
+Implementations are evidence, never authority where the text is silent.
 
-## Contents
+## Specification
 
-| Path | What |
+| Document | Responsibility |
 |---|---|
-| `spec/00-overview.md` | Scope, terminology, layering, versioning, conformance levels |
-| `spec/01-crypto.md` | Key types, signature algorithms and encodings, key identifiers |
-| `spec/02-jcs.md` | JSON canonicalisation (RFC 8785) and where it is required |
-| `spec/03-rfc9421.md` | HTTP Message Signatures profile (RFC 9421): components, parameters, headers, verification rules |
-| `spec/04-hpke.md` | HPKE handshake profile (RFC 9180): suite, info and export context, E2E combiner, acknowledgement tag, init payload and response envelope |
-| `spec/05-session.md` | Session layer: seed and id derivation, key schedule, record format, replay window, key rotation |
-| `spec/06-did-sage.md` | The `did:sage` method: grammar, chains, key material, proof of possession |
-| `spec/07-a2a.md` | A2A agent card and its proof |
-| `spec/08-transport.md` | Transport envelope (`WireMessage`, `WireResponse`) and the `X-SAGE-*` headers |
-| `spec/09-registry.md` | The registry model, the agent lifecycle, the proof of possession and one section per registry kind |
-| `spec/10-resolution.md` | The document a registry record projects to, and the resolution contract |
-| `spec/11-registries.md` | Signature algorithms, key encodings, labels, registry kinds, headers and diagnostic codes, with the procedure for adding an entry |
-| `vectors/` | Golden test vectors, one JSON file per suite (see `vectors/README.md`) |
-| `charter.md` | What is being standardised, the deployment models, the adversary, and the numbered requirements every chapter must meet |
-| `PROCESS.md` | How this specification is developed: the five stages from charter to frozen text, the draft ladder, where each chapter stands, and the work plan to `1.0.0` |
+| [Charter](charter.md) | Purpose, trust boundaries, adversary, R-1..R-45 |
+| [00 Overview](spec/00-overview.md) | Conventions, layering, versioning, conformance |
+| [01 Crypto](spec/01-crypto.md) | Keys, signatures, encodings |
+| [02 JCS](spec/02-jcs.md) | Canonical JSON and rejection |
+| [03 HTTP signatures](spec/03-rfc9421.md) | RFC 9421/9530 profile and request-bound responses |
+| [04 HPKE](spec/04-hpke.md) | Authenticated transcript, combiner, confirmation |
+| [05 Sessions](spec/05-session.md) | Keys, records, sequence, replay, closure |
+| [06 DID](spec/06-did-sage.md) | Grammar and key selection |
+| [07 Agent Card](spec/07-a2a.md) | Card proof and registry binding |
+| [08 Transport](spec/08-transport.md) | Authenticated wire envelopes |
+| [09 Registry](spec/09-registry.md) | Lifecycle, profiles, authoritative state |
+| [10 Resolution](spec/10-resolution.md) | DID document projection and reads |
+| [11 Registries](spec/11-registries.md) | Algorithms, labels, headers, diagnostics |
+| [Execution Guard](profiles/agent-mcp-security.md) | Mandatory verification and fail-closed execution |
+| [Non-HTTP MCP binding](profiles/non-http-mcp-security.md) | Adopted connection ownership, negotiation and execution admission design |
+| [Integration guide](guides/integration.md) | Agent/SDK/hook/MCP integration |
 
-## Status
+## Evidence and follow-up design
 
-Version `1.0.0-draft.1`. The text describes what the Go core implements on
-2026-09-12 (`sage` v1.5.2 with the refactoring merged up to that date). Every
-normative statement is backed by a vector or by a cited source file in the Go
-core. Items marked *open* are known gaps that a later draft resolves.
+- [Document/code graph](analysis/graphs.md), [JSON graph](analysis/graphs.json),
+  [purpose and vision](analysis/purpose-and-vision.md).
+- [Inspector plan](verification/inspector-plan.md), [traceability](verification/traceability.json),
+  [standards review](verification/standards.md), [review evidence](verification/review.md).
+- [Repository roles](architecture/repository-roles.md), [migration](architecture/migration-plan.md).
+- [Process](PROCESS.md), [changelog](CHANGELOG.md), [approved Seed](seeds/sage-spec-0.10.0.yaml).
 
-This draft is a snapshot of one implementation, which is how to start and not
-how to finish. `PROCESS.md` defines the five stages that take the text from
-here to a frozen `1.0.0` (charter, design, verification, analysis,
-finalisation), what each draft closes, and the work each stage needs. Until
-`1.0.0`, corrections that change bytes are expected and arrive as draft
-increments.
+## Status and limits
 
-## How to check an implementation
+The former `1.0.0-draft.1` was a Go snapshot. Continuing as `0.10.0` is an explicit
+version-policy reset, not a downgrade or promise of byte compatibility. Security
+corrections may change wire formats. Exact 0.x versions are matched.
 
-1. Load every file in `vectors/`.
-2. For each vector with `"mode": "deterministic"`, recompute `output` from
-   `input` and compare byte for byte.
-3. For each vector with `"mode": "verify"`, run your verification path on
-   `output` (decrypt, verify signature, verify proof) and require success.
-4. Reject any input marked `rejected` (DID grammar) and any tampered record.
+The six JSON suites in [vectors/](vectors/README.md) remain historical and retain
+their embedded version. They do not certify 0.10.0. No Core, SDK, MCP, inspector
+or demo code is implemented here. Full binding interoperability and formal security
+proof are not established. Earlier partial Inspector/core runtime evidence retains its
+original scope and is not promoted by this documentation update.
 
-The Go core does exactly this with `sage-vectors check -dir vectors`. The
-workflow in `.github/workflows/check.yml` runs it against the Go core's main
-branch on every push.
-
-## Versioning
-
-The specification and the vectors are versioned together (`spec_version` in
-every vector file). A breaking change to any wire format increments the major
-version and gets a new vector set; implementations state which specification
-version they conform to. See `spec/00-overview.md` §5.
+Execution Guard assumes protected Client capture, keys, policy, verifier, baselines
+and final dispatch. It covers compromised ordinary Plugin/MCP/Skill components
+under that boundary, not semantic safety or a fully compromised trusted host.
 
 ## Licence
 
-Apache-2.0 (see `LICENSE`). The text, schemas and vectors are meant to be
-copied into implementations and their test suites.
+Apache-2.0; see [LICENSE](LICENSE). This is RFC-style specification work, not an
+IETF RFC. Examples describe proposed behaviour rather than deployed services.
 
-### Proposed MCP connection ownership
+## Adopted MCP design and historical proposals
 
-The [trusted connection-owner API proposal](proposals/non-http-mcp-setup/owner-contract.md)
-describes local ownership, bounded callbacks and Guard handoff for the unadopted
-non-HTTP setup design. It is review input, not a protocol release or conformance claim.
+The [adoption record](verification/mcp-adoption.json) fixes the reviewed non-HTTP
+MCP 2025-06-18 design, exact descriptor, compatibility decisions and traceability.
+The current plan contains 91 rule groups and 457 top-level planned cases: the preserved
+386 baseline cases plus 71 MCP binding parents, with 26 mandatory child assertions.
+All are planned/unexecuted in this normative plan; historical runtime reports remain
+separate and must be mapped by exact case evidence. This is design adoption, not a tag,
+release, third-party audit or a claim that either core supports the whole binding.
 
-The [adoption reconciliation](proposals/non-http-mcp-setup/reconciliation.md) maps
-that proposal to the preserved local 0.10.0 design and records unresolved adoption
-conditions. Its mappings are review input, not evidence of protocol execution.
+The [cross-review](proposals/non-http-mcp-setup/cross-review.md) records two separate
+agents and their re-review. Proposal files remain frozen with their historical statuses;
+current normative requirements live in profiles/ and spec/. Do not select an earlier
+proposal's different admission definition instead of the adopted profile.
+The [remaining work](proposals/non-http-mcp-setup/remaining-work.md) tracks implementation
+and deployment follow-up.
 
-The [carriage and owner addendum](proposals/non-http-mcp-setup/addendum.md) proposes
-complete-message size rules and eighteen additional planned checks. It remains
-unadopted and preserves the earlier review and execution records.
-
-CI also checks the supplemental case plan and reconciliation membership with
-`python3 proposals/non-http-mcp-setup/verify_addendum.py`. This validates document
-consistency, not the semantics of unpublished normative sources or protocol execution.
-
-The [MCP design re-review](proposals/non-http-mcp-setup/design-review.md) records
-three open adoption findings concerning Guard admission, deadline scope and algorithm
-compatibility. It is a same-author review, not an independent external audit.
-
-The [proposed review resolutions](proposals/non-http-mcp-setup/resolutions.md) define
-final dispatch admission, separate operation deadlines and the Ed25519 signing subset.
-Thirteen new planned cases bring the combined proposal total to 71 NOT_RUN; earlier
-reports keep their original scope. The corrections are unadopted and unimplemented.
-
-The historical [consolidated MCP binding draft](proposals/non-http-mcp-setup/consolidated.md)
-contains the earlier integrated proposal, including its three design corrections.
-Historical source documents remain unchanged; CI checks its pinned integration.
-
-The [concrete admission and closure candidate](proposals/non-http-mcp-setup/admission-close-contract.md)
-proposes separating durable execution fencing from final protected-queue admission.
-This explicitly changes the consolidated draft's admission definition and awaits
-independent review and normative reconciliation; it is not an already integrated rule.
-The original 71-case catalog and historical results remain unchanged.
-
-The [admission case-impact review](proposals/non-http-mcp-setup/admission-case-review.md)
-accounts for all 71 planned cases and clarifies expiry and bounded-cleanup assertions.
-The [remaining delivery work](proposals/non-http-mcp-setup/remaining-work.md) separates
-five unfinished implementation/validation packages from the broader SDK/service plan.
-
-For current admission review, start with the
-[integrated admission candidate](proposals/non-http-mcp-setup/integrated-candidate.md)
-and its [71 effective cases](proposals/non-http-mcp-setup/integrated-cases.json).
-This incorporates the corrected fencing/admission contract into the complete binding
-text. CI reproduces both outputs and rejects source/output drift. It remains unadopted
-and awaits normative reconciliation; historical models do not certify this candidate.
-
-The user-authorized [separate-agent cross-review](proposals/non-http-mcp-setup/cross-review.md)
-and re-review resolved the recorded design/coverage findings for hash-identified
-corrected artifacts. The effective plan now includes 26 mandatory child assertions
-under its 71 parents. All remain NOT_RUN. This is not third-party audit or adoption.
+Graphs and dated review records describe their pinned source inputs; they are not
+live indexes of the current core repositories or new execution evidence.

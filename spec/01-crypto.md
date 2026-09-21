@@ -1,94 +1,80 @@
 # 1. Cryptographic primitives
 
-Vectors: `vectors/crypto.json`. Go sources: `pkg/agent/crypto/keys/`
-(`ed25519.go`, `secp256k1.go`, `secp256k1_keccak.go`, `p256.go`,
-`ecdsa_encoding.go`, `verify.go`, `keyid.go`).
+Status: normative design for SAGE `0.10.0`. Requirement references are to
+[the charter](../charter.md). Existing `vectors/crypto.json` and Go
+`pkg/agent/crypto/keys/` are historical implementation evidence, not proof
+that these revised requirements are implemented.
 
-## 1. Key types
+## 1. Key types and algorithm selection
 
-| Type | Curve | Use | Public key encoding |
+**CRYPTO-01 (R-8, R-19, R-29).** Every implementation MUST support Ed25519.
+The other signing suites below are optional; an unsupported suite MUST fail
+closed without substituting another algorithm. A signing `kid` MUST name an
+explicit active proven key in the resolved sender record. X25519 MUST NOT
+be used for signatures. Registry type integers are registry-specific and
+MUST NOT be interpreted as a wire algorithm identifier.
+
+| Key | Wire public key | Signature | Wire algorithm |
 |---|---|---|---|
-| Ed25519 | edwards25519 | signing (default) | 32 bytes (RFC 8032) |
-| secp256k1 | secp256k1 | signing, Ethereum identity | 65-byte uncompressed SEC1 (`04 || X || Y`); 33-byte compressed accepted where noted |
-| P-256 | NIST P-256 | signing (optional) | 65-byte uncompressed SEC1 |
-| X25519 | curve25519 | key agreement (HPKE, E2E) | 32 bytes (RFC 7748) |
-| RSA | 2048+ | legacy signing (optional) | PKCS#1 / SPKI DER |
+| Ed25519 | 32 bytes | 64-byte R followed by S | `ed25519` |
+| secp256k1 | 65-byte uncompressed SEC1, `04` followed by X and Y | 65-byte r, s, v | `sage-secp256k1-keccak256` |
+| P-256 | 65-byte uncompressed SEC1 | 64-byte r followed by s | `ecdsa-p256-sha256` |
+| X25519 | 32 bytes | none | HPKE KEM only |
 
-On-chain and in agent cards the registry key type is an integer:
-ECDSA (secp256k1) = 0, Ed25519 = 1, X25519 = 2 (`did/types_v4.go`).
+Coordinates, r and s are fixed-width 32-byte unsigned big-endian integers.
+The secp256k1 identifier is a SAGE-local identifier, not an IANA assignment
+or JOSE ES256K. Compressed keys, DER signatures, extra bytes and legacy RSA
+signatures MUST be rejected in this version. This resolves the historical
+RSA-PSS identifier/PKCS#1 v1.5 operation mismatch by excluding RSA entirely.
 
-## 2. Signature algorithms
+## 2. Signing and verification
 
-### Ed25519
+**CRYPTO-02 (R-19, R-29).** Ed25519 uses the pure RFC 8032 operation over
+exact message bytes, without prehash or context. Verifiers MUST reject
+noncanonical encodings, S outside the scalar range, invalid points, and
+small-order public keys or R points. For deterministic cross-library acceptance, decoded A and R MUST be nonidentity members of the prime-order subgroup ([L]A and [L]R are identity, L as in RFC 8032). Require the uncofactored equation [S]B = R + [k]A, with k = SHA-512(R_encoding || A_encoding || message) reduced modulo L. Mixed-torsion points are rejected even if a cofactored verifier would accept. This is the stricter SAGE verification profile. P-256 hashes message bytes with
+SHA-256; secp256k1 hashes them with Keccak-256, without EIP-191 prefix.
+Neither SHA3-256 nor SHA-256 substitutes for Keccak on that suite.
+ECDSA signatures MUST have `1 <= r < n` and `1 <= s <= floor(n/2)`;
+verifiers MUST reject high-S rather than normalize attacker input.
+secp256k1 v MUST be 0 or 1, and recovery using v MUST produce the resolved
+public key in addition to ordinary ECDSA verification. Point validation
+includes curve membership and rejection of infinity.
 
-Pure Ed25519 over the message bytes. No pre-hash, no context string.
-Signature: 64 bytes `R || S`.
+**CRYPTO-03 (R-19).** ECDSA signers SHOULD use RFC 6979 deterministic
+nonces. Secure randomized signing is permitted: identical signatures from
+two signers are not a conformance requirement. After low-S normalization,
+secp256k1 signers MUST adjust v to retain the correct recovered key.
+Verification is deterministic even when signing is randomized.
 
-### secp256k1 (Ethereum convention)
+## 3. Key references, secret handling and domain separation
 
-This is the single secp256k1 convention on every SAGE path (RFC 9421, HPKE
-envelope, A2A proof, CLI):
+**CRYPTO-04 (R-8, R-15, R-29).** The historical
+`hex(SHA-256(pub)[0:8])` identifier MAY appear in logs, but MUST NOT select
+or authenticate a key. Protocol key references use the full DID key URL
+specified in [chapter 06](06-did-sage.md). JSON binary values use canonical
+unpadded base64url except where a chapter explicitly requires standard
+base64. Public key bytes MUST match the resolved key exactly.
 
-1. `digest = Keccak-256(message)` (not SHA-256; not the EIP-191 personal
-   prefix).
-2. ECDSA with RFC 6979 deterministic nonces.
-3. `s` MUST be in the lower half of the group order (low-S).
-4. Signature: 65 bytes `r || s || v`, `v` in {0, 1} (the recovery id, not 27/28).
+**CRYPTO-05 (R-19, R-22).** CSPRNG-generated secrets and ephemeral keys
+MUST be fresh. Private keys, shared secrets and expired traffic keys MUST
+remain inside the trusted implementation boundary and MUST NOT be logged.
+Comparisons of secret-derived authentication values MUST use a
+constant-time equality operation. A signing API MUST apply the domain
+prefix specified by its calling chapter; it MUST NOT expose arbitrary
+signing authority to untrusted plugins. Signature validity establishes
+provenance, not safe meaning or user approval.
 
-Verifiers MUST accept 65-byte `r || s || v` and 64-byte `r || s`, and SHOULD
-accept ASN.1 DER. Verifiers MUST normalise a high-S value before checking so
-that signatures produced by other libraries remain verifiable
-(`secp256k1_keccak.go:55-59`).
+Registration proof-of-possession has its own explicitly specified signing
+input in chapter 06; the historical SHA-256 registration challenge is not
+a reason to change the messaging suite or accept multiple digests.
 
-A signature under this convention is valid for `ecrecover` on chain and for
-any Ethereum wallet that signs the raw Keccak digest, and vice versa.
+## 4. References and verification status
 
-*Exception.* The key proof of possession in `06-did-sage.md` signs
-SHA-256 of its challenge string with the same secp256k1 key. That path is
-kept for on-chain compatibility and is listed as open item O-1.
-
-### P-256
-
-1. `digest = SHA-256(message)`.
-2. ECDSA. Go's signer is randomised; RFC 6979 is RECOMMENDED and will become
-   REQUIRED (open item O-2). Vectors for P-256 are verify-only until then.
-3. Low-S normalisation on the signer side.
-4. Signature: 64 bytes raw `r || s`. The RFC 9421 verifier accepts raw only;
-   the generic verifier also accepts DER.
-
-### RSA
-
-RSASSA-PKCS1-v1_5 with SHA-256 over the message. The RFC 9421 algorithm
-identifier the Go core emits for RSA keys is `rsa-pss-sha256`, which does not
-match the PKCS#1 v1.5 operation it performs. Open item O-3; RSA is not
-covered by vectors and SHOULD NOT be used for new agents.
-
-## 3. RFC 9421 algorithm identifiers
-
-| Key type | `alg` |
-|---|---|
-| Ed25519 | `ed25519` |
-| secp256k1 | `es256k` |
-| P-256 | `ecdsa-p256-sha256` |
-| RSA | `rsa-pss-sha256` (see O-3) |
-
-Source: `pkg/agent/crypto/algorithm_registry.go`. The `alg` parameter is
-informative: verifiers select the algorithm from the resolved key type and
-MUST reject a signature whose `alg` contradicts the key.
-
-## 4. Key identifier
-
-`KeyID(pub) = hex(SHA-256(pub)[0:8])` over the raw public key bytes of
-section 1 (`keys/keyid.go`). It is used for key selection and logging, not
-as a security binding. The Ethereum address of a secp256k1 key is
-`0x || hex(Keccak-256(X || Y)[12:32])` in lower-case hex (the form used in
-`did:sage:ethereum` identifiers and by the `crypto` vector); EIP-55
-checksumming is a display convention and is not applied on the wire.
-
-## 5. Open items
-
-| Id | Item |
-|---|---|
-| O-1 | Key proof of possession uses SHA-256 for secp256k1; unify with the Keccak convention or document it as a distinct algorithm |
-| O-2 | Deterministic P-256 signing (RFC 6979) |
-| O-3 | RSA identifier `rsa-pss-sha256` vs PKCS#1 v1.5 operation |
+[RFC 8032](https://www.rfc-editor.org/rfc/rfc8032.html) supplies Ed25519;
+[RFC 6979](https://www.rfc-editor.org/rfc/rfc6979.html) supplies an optional
+deterministic ECDSA nonce procedure. P-256 HTTP signatures use
+[RFC 9421 §3.3.4](https://www.rfc-editor.org/rfc/rfc9421.html#section-3.3.4).
+The stricter encoding acceptance, low-S rule and secp256k1 name above are
+SAGE design decisions. Independent Go/Rust verification, malformed-point
+cases and new signature-encoding vectors remain inspector follow-up work.
