@@ -105,3 +105,8 @@ proposes separating durable execution fencing from final protected-queue admissi
 This explicitly changes the consolidated draft's admission definition and awaits
 independent review and normative reconciliation; it is not an already integrated rule.
 The original 71-case catalog and historical results remain unchanged.
+
+The [admission case-impact review](proposals/non-http-mcp-setup/admission-case-review.md)
+accounts for all 71 planned cases and clarifies expiry and bounded-cleanup assertions.
+The [remaining delivery work](proposals/non-http-mcp-setup/remaining-work.md) separates
+five unfinished implementation/validation packages from the broader SDK/service plan.
