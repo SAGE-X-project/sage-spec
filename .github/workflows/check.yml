@@ -68,3 +68,5 @@ jobs:
           python3 proposals/non-http-mcp-setup/verify.py
           python3 proposals/non-http-mcp-setup/verify_addendum.py --self-test
           python3 proposals/non-http-mcp-setup/verify_addendum.py
+          python3 -B proposals/non-http-mcp-setup/verify_resolutions.py --self-test
+          python3 -B proposals/non-http-mcp-setup/verify_resolutions.py
