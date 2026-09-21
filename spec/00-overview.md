@@ -1,9 +1,12 @@
 # 0. Overview
 
+Status: normative design for **0.10.0**, updated from the existing chapters.
+Implementation and security proof remain follow-up work.
+
 ## 1. Scope
 
 SAGE gives software agents a way to prove who they are and to exchange
-messages that cannot be forged, replayed or read in transit. This
+messages protected against forgery, replay and disclosure under the charter assumptions. This
 specification fixes everything that crosses an implementation boundary.
 `charter.md` states the problem, the deployment models, the adversary and
 the numbered requirements; every normative statement here serves one of
@@ -17,12 +20,12 @@ them and cites it.
 | Confidentiality: handshake and session records | `04-hpke.md`, `05-session.md` |
 | Carriage: envelope and headers | `08-transport.md` |
 | Tables and their registration procedure | `11-registries.md` |
+| Protected Agent/MCP execution | [Execution Guard](../profiles/agent-mcp-security.md) |
+| Authenticated non-HTTP MCP binding | [MCP ownership and admission](../profiles/non-http-mcp-security.md) |
 
 Out of scope, as `charter.md` §1 records: the implementation of any
 registry, including the contracts published by
-[sage-contracts](https://github.com/SAGE-X-project/sage-contracts); proxy
-and client integrations; key storage; payment, reputation and staking
-signals.
+[sage-contracts](https://github.com/SAGE-X-project/sage-contracts); concrete proxy/client implementations and key-storage mechanisms; payment, reputation and staking signals. Required security integration outcomes ARE specified in the Execution Guard profile.
 
 ## 2. Conventions
 
@@ -31,8 +34,7 @@ NOT, RECOMMENDED, NOT RECOMMENDED, MAY and OPTIONAL in this specification
 are to be interpreted as described in BCP 14 (RFC 2119 and RFC 8174) when,
 and only when, they appear in capitals.
 
-Grammars are written in ABNF (RFC 5234). Where a chapter gives both prose
-and a grammar, the grammar governs.
+**OVERVIEW-01 (R-1, R-28, R-32).** Grammars are ABNF (RFC 5234) where present. Grammar and prose semantic constraints both apply; satisfying grammar alone does not waive bounds or checks. A contradiction is a specification defect, not permission to choose the weaker rule. MiB means 2^20 bytes and KiB means 2^10 bytes.
 
 Terminology:
 
@@ -69,8 +71,7 @@ carriage (08)                envelope, X-SAGE-* headers
           primitives (01, 02)      signatures, key encodings, canonical JSON
 ```
 
-A layer depends only on the layers below it. An implementation of a layer
-MUST pass the vectors of that layer and of every layer below it.
+**OVERVIEW-02 (R-31, R-32).** This diagram is a conceptual dependency view, not a literal cyclic runtime stack. Identity permits signing; signed envelopes authenticate handshake participants; a successful handshake enables optional encrypted payloads. Execution authorisation is separate from transport authentication. Conformance requires all dependencies and version-matched tests; historical vectors cannot prove the new design.
 
 ## 4. Conformance levels
 
@@ -83,33 +84,33 @@ claims (§5).
 | Verifier | Reads records and verifies messages and cards | a proxy or conformance checker |
 | Peer | Verifier, and establishes sessions | an agent |
 | Registrar | Verifier, and creates and maintains records | a registration tool |
-| Reference | Every level, and regenerates the vectors | the reference cores |
+| Reference | Every core level, and regenerates version-matched vectors | the reference cores |
+| Execution Guard | Verifier and R-37..R-45; Peer when sessions are used | trusted Client/execution boundary |
 
 ## 5. Versioning and extension
 
-- The version is `MAJOR.MINOR.PATCH[-draft.N]` and appears in every vector
-  file as `spec_version`.
-- A change is MAJOR when it alters bytes on the wire, a derivation label, a
-  covered component set, a rejection rule, or the meaning of an existing
-  registry entry.
-- A change is MINOR when it adds an optional field, a registry entry, a
-  profile or a vector. A change is PATCH when it only clarifies.
-- Domain-separation labels carry their own version suffix. A new label
-  version is a MAJOR change.
-- Before `1.0.0` the draft number increments instead, and MAJOR changes are
-  expected: `PROCESS.md` names what each draft closes.
-- An extension adds a registry entry or a profile under the procedure of
-  `11-registries.md` §1. An extension that would change an existing entry is
-  not an extension but a MAJOR change.
-- An implementation MUST refuse a version whose MAJOR differs from one it
-  implements, and MAY accept a higher MINOR by ignoring what it does not
-  know, provided ignoring it does not weaken a check.
+**OVERVIEW-03 (R-34).** The target version is `0.10.0`, continuing earlier work
+previously named `1.0.0-draft.1`. That historical label remains on its vectors.
+This is a version-policy reset, not a claim of backwards compatibility.
+
+A verifier MUST accept only an exact supported `0.x.y` version and MUST reject
+missing/unknown versions without fallback. HTTP carries signed `X-SAGE-Version`;
+chapter 08 envelopes and the execution profile carry their signed `version`.
+All layers of one exchange MUST agree. A claimed supported version requires its
+own implemented rules; merely changing a string is not conformance.
+
+During 0.x, wire formats, rejection rules or labels may change with a MINOR
+increment. PATCH changes clarify without changing accepted bytes or verdicts.
+After a separately approved stable 1.0 release, breaking behaviour requires MAJOR;
+optional compatible features use MINOR. Labels have independent domain-separation
+versions; every changed label is recorded and implementations select by exact
+protocol version, not by guessing from a suffix. Extensions follow chapter 11 and
+cannot silently weaken existing checks. No follow-up release number is promised.
 
 ## 6. Normative status of this text
 
-This text is the specification. An ambiguity, a gap or a contradiction is a
-defect in this text and is fixed here first, together with a vector that
-pins the fix; implementations then follow. No implementation is normative.
+**OVERVIEW-04 (R-32, R-33).** This text and the explicitly normative integration profile are the specification. An ambiguity, a gap or a contradiction is a
+defect in this text and is fixed here first, together with a planned test that pins the fix; implementation and version-matched vectors follow in the next phase. No implementation is normative.
 
 Where this text cites a source file, the citation is informative: it records
 where a rule came from, not what the rule is.
@@ -132,12 +133,16 @@ Normative:
 | RFC 9180 | Hybrid public key encryption |
 | RFC 9421 | HTTP message signatures |
 | RFC 9530 | Digest fields |
-| RFC 8941 | Structured field values for HTTP |
+| RFC 8941 (as referenced by RFC 9421), RFC 9651 | Structured fields; see the applicability review for version differences |
 | RFC 9457 | Problem details for HTTP APIs |
 | W3C Decentralized Identifiers 1.0 | Identifier syntax, documents, resolution requirements |
 | W3C Controlled Identifiers 1.0 | Verification methods, services, verification relationships |
 | W3C DID Resolution | Resolution and dereferencing contract |
 | CAIP-2 | Chain-agnostic chain identifiers |
 
-Informative: `charter.md`, `PROCESS.md`, and the analyses cited in
-individual chapters.
+Scope and process: [charter](../charter.md), [process](../PROCESS.md).
+Reference applicability and errata are recorded in [standards review](../verification/standards.md). References inform the adopted rules; a future revision or reported erratum does not silently change this version.
+
+The non-HTTP MCP profile is adopted as a normative design, not a runtime conformance
+claim. The baseline remains transport-independent unless that binding is explicitly
+selected. Its scope and compatibility are fixed in verification/mcp-adoption.json.

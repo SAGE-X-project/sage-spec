@@ -58,7 +58,7 @@ jobs:
           exit $status
 
   mcp-setup-proposal:
-    name: MCP setup proposal consistency
+    name: MCP design and historical proposal consistency
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -73,3 +73,5 @@ jobs:
           python3 -B proposals/non-http-mcp-setup/consolidate.py --check
           python3 -B proposals/non-http-mcp-setup/test_integrate_admission.py
           python3 -B proposals/non-http-mcp-setup/integrate_admission.py --check
+          python3 -B verification/test_mcp_adoption.py
+          python3 -B verification/check_mcp_adoption.py

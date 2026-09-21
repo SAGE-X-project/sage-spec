@@ -1,186 +1,218 @@
 # 9. The registry and the agent lifecycle
 
-Vectors: `vectors/did.json`, `vectors/registry.json`. Requirements:
-`charter.md` R-3 to R-13.
+Target: **0.10.0**. Requirements: charter R-3 to R-13, R-28 to R-30.
+Existing `vectors/registry.json` and `vectors/did.json` are historical
+fixtures. This chapter defines the abstract contract; contract ABI,
+transaction encoding and deployment addresses belong to deployment bindings.
+No existing deployment is certified by this document.
 
-A registry holds records that bind an identifier to keys. This chapter
-states what every registry must offer, what a verifier may conclude from a
-record, and how each kind of registry meets the model. Nothing here assumes
-a blockchain; §6 to §8 are the profiles that say how three kinds do it.
+## 1. The record — REG-01 (R-4, R-6, R-28, R-30)
 
-## 1. The record
+A record is JSON with exactly these members. Strings/arrays are bounded
+before cryptographic work. The complete encoded record is at most 65536
+UTF-8 bytes and follows chapter 02.
 
-| Member | Content |
+| Member | Value |
 |---|---|
-| `id` | the identifier (`06-did-sage.md`) |
-| `controller` | the party authorised to change the record, in a form the profile defines |
-| `keys` | one or more key entries, below |
-| `services` | zero or more endpoints, each with a type and a URL |
-| `state` | `created`, `active` or `deactivated` |
-| `version` | a value that increases on every change, used as the version identifier in resolution |
+| `id` | canonical DID, chapter 06 |
+| `controller` | ASCII authorization identifier, 1–256 bytes; deployment binding defines its authenticated meaning |
+| `keys` | 1–128 entries including tombstones, sorted by ASCII `name` |
+| `services` | 0–16 objects with exactly `name`, `type`, `uri`; sorted by `name` |
+| `state` | `created`, `active`, `deactivated` |
+| `version` | decimal string, 1 through 18446744073709551615, no leading zero |
 
-A key entry:
+A key has exactly `name`, `alg`, `key`, `proof`, `state`, and optionally
+`expires`. Name is chapter 06 `key-id`; algorithm is chapter 11; `key` is
+unpadded canonical base64url of chapter 11 raw bytes; state is `accepted`
+or `revoked`. Optional expiry is integer Unix seconds, 0 through
+9007199254740991; it is unusable when `now >= expires`. Names and key bytes
+MUST NOT be reused within a record, including revoked keys. Key material,
+algorithm, proof and expiry are immutable after addition. Duplicate names,
+unknown members, unknown algorithms and private key material are rejected.
 
-| Member | Content |
-|---|---|
-| `name` | the fragment that names this key within the record, unique in the record |
-| `alg` | a signature algorithm name, or `x25519` for a key-agreement key (`11-registries.md` §2, §3) |
-| `key` | the public key bytes in the encoding of `11-registries.md` §3 |
-| `proof` | the proof of possession (§4) |
-| `state` | `accepted` or `revoked` |
-| `expires` | optional; after this time the key MUST NOT be used |
+Each service name uses `key-id`, is unique, type is 1–64 ASCII bytes, and
+Service names MUST NOT collide with any key name.
+URI is an absolute HTTPS URL of at most 2048 ASCII bytes without userinfo
+or fragment. An endpoint is discovery metadata, not an authorization grant.
+A deployment may restrict endpoints further but MUST NOT fetch URLs merely
+to validate a record. Cards bind this array without a second key store.
 
-A registry MUST NOT report a key as `accepted` unless it has verified the
-proof for that key. A registry that cannot verify proofs for an algorithm
-MUST refuse keys of that algorithm rather than record them unverified.
+## 2. What a verifier reads — REG-02 (R-7, R-8, R-12)
 
-## 2. What a verifier reads
+For signatures the exact named accepted, unexpired key MUST be used, never
+trial verification over alternatives. An `active` record must have at least
+one usable signing key. For a new handshake choose the accepted, unexpired
+`x25519` key whose name sorts first in ASCII order; the handshake MUST name
+that full key URL and bind it to its transcript. Rotation in flight cannot
+silently substitute another key. A record without an eligible KEM key
+cannot establish a session; signed-message verification can still work.
 
-A verifier needs exactly this, and a profile MUST be able to answer it:
+## 3. Operations and lifecycle — REG-03 (R-3, R-5, R-7, R-10, R-11)
 
-1. given an identifier, the key entries with `name`, `alg`, `key` and
-   `state`;
-2. the record's `state`;
-3. for a handshake, the key-agreement key: the accepted, unexpired entry
-   whose `alg` is `x25519`. Where a record has several, the one whose
-   `name` sorts first is used.
-
-`services` and other members are advisory: a verifier MUST NOT make an
-authentication decision from them.
-
-## 3. Operations and lifecycle
-
-```
-            create                 activate
-   (none) ──────────► created ───────────────► active
-                         │                       │
-                         │ deactivate            │ deactivate
-                         ▼                       ▼
-                    deactivated ◄────────────────┘
-
-   while active: add key, revoke key, authorise
+```text
+absent -> created -> active -> deactivated
+              \-------------> deactivated
 ```
 
-| Operation | Rule |
+Creation starts at version `1`; each successful atomic mutation increments
+version exactly once. Mutations require the authenticated controller or
+explicitly delegated operator and the expected previous version. Wrong
+version, unauthorized or invalid mutation fails without changing anything.
+A version at its maximum permits no further mutation; deployments MUST
+arrange deactivation before exhaustion. The limit is not permission to wrap.
+
+| Operation | Atomic rule |
 |---|---|
-| create | Binds the identifier to an initial key set and a controller. The registry MUST refuse an identifier that already has a record. The claim MUST bind the identifier, the keys and the controller before it is visible to others; a profile that cannot hide a claim states what it offers instead (§6 to §8). The record enters `created` |
-| activate | Moves `created` to `active`. A profile MAY require a delay or a second authorisation. Only an `active` record is usable |
-| add key | Adds a key entry with its own proof (§4) to an `active` record |
-| revoke key | Sets a key entry to `revoked`. The entry MUST be kept, so that a verifier can tell a revoked key from one that was never present. A registry MUST refuse to revoke the last accepted signing key of an `active` record; deactivate the record instead |
-| deactivate | Moves the record to `deactivated`. The record MUST remain readable |
-| authorise | Names another party who may perform the operations above |
+| create | reserve unused identifier and bind controller, initial keys and services; check all proofs; a client chooses the identifier before forming proofs; creation needs at least one unexpired accepted signing key |
+| activate | `created` to `active`, with at least one unexpired accepted signing key |
+| add key | active only; new immutable name/material and valid proof; at most 128 lifetime entries |
+| revoke key | accepted to revoked, retained forever; if no usable signing key would remain, deactivate atomically instead |
+| update services | replace the complete bounded services array, active only |
+| authorize/revoke operator | explicit controller-authorized scoped delegation; operators cannot change controller or delegate further |
+| deactivate | created or active to deactivated; terminal, record remains readable |
 
-A `deactivated` record is never reactivated. The identifier is never
-reassigned.
+The identifier is never reassigned, and revoked keys never become accepted
+again. Controller transfer/recovery is not defined in 0.10.0: use a new
+record and explicit peer configuration. Operators are management-plane data
+whose authenticated enforcement is required by the deployment binding, not
+DID signing keys. Expiry can leave a record active but unusable; verifiers
+reject it until a still-authorized controller adds a new proven key.
 
-## 4. Proof of possession
+## 4. Proof of possession and KEM endorsement — REG-04 (R-5, R-6, R-12, R-29)
 
-One proof, for every registry and every key type. The challenge binds the
-registry, the agent, the algorithm and the key, so that a proof is valid in
-exactly one place:
-
+```text
+challenge = ASCII("sage-pop-0.10.0")
+          || len16(registry-id) || registry-id
+          || len16(agent-id) || agent-id
+          || len16(name) || name
+          || len16(alg) || alg
+          || len16(keyBytes) || keyBytes
 ```
-challenge = "sage-pop-v1"
-          ‖ len16(registry-id) ‖ registry-id
-          ‖ len16(agent-id)    ‖ agent-id
-          ‖ len16(alg)         ‖ alg
-          ‖ len16(key)         ‖ key
-```
 
-`registry-id` and `agent-id` are the components of `06-did-sage.md` §1 as
-ASCII; `alg` is the name from `11-registries.md` §2 or §3 as ASCII; `key`
-is the public key bytes.
+Here `len16(x)` is the unsigned two-byte big-endian byte length (not the
+field itself); text fields are canonical ASCII and `keyBytes` is decoded
+public key material. The key name prevents rebinding a captured proof to a
+new key entry. A signing entry's `proof` is exactly `{ "signer": full-key-URL,
+"value": unpadded-base64url-signature }`; signer MUST equal its own key URL.
+Sign the challenge with the algorithm of chapter 01; the registry and
+resolver both check it. There is no separate SHA-256 exception for
+secp256k1. A proof is at most 87 encoded signature characters.
 
-- For a signing key, `proof` is a signature over `challenge` made with that
-  key, using the digest and encoding its algorithm prescribes
-  (`01-crypto.md`).
-- For a key-agreement key, which cannot sign, `proof` is a signature over
-  the same `challenge` made with an accepted signing key of the same
-  record, and the entry records which key made it.
+An X25519 entry has the same proof shape but its signer names an accepted,
+unexpired signing key in the same proposed/current record. Signing keys
+are validated first. This proves **controller-authorized endorsement of the
+KEM key, not possession of its private key**. Actual KEM possession is
+confirmed by the authenticated handshake. On later reads an endorsement
+may be verified with its retained historical signer even if that signer
+is now revoked/expired; that signer is not thereby usable for messages.
+A deployment can revoke the endorsed key separately if compromise requires
+it. The registry's authenticated mutation supplies authorization; a PoP
+alone MUST NOT authorize create/update or a controller substitution.
 
-A verifier of a record, and the registry itself, recompute `challenge` and
-check `proof`. A failed proof means the key is not accepted (`pop.bad`).
+## 5. Observation and revocation — REG-05 (R-9, R-13)
 
-## 5. Observation, caching and immediacy
+Every protected-message decision, session operation and execution decision
+MUST obtain a fresh authoritative observation of all keys/records it relies
+on. No earlier `accepted`/`active` result may authorize a later operation.
+A single operation may share one consistent snapshot, acquired after that
+operation starts and at most 5 seconds before its final authorization gate;
+if it expires while waiting, re-resolve. Missing/untrusted clock, timeout,
+stale state, version rollback or conflicting state MUST fail closed.
 
-`charter.md` R-9 requires that revocation take effect immediately.
+Observation is a linearization point, not a promise to foresee future
+revocation. No already completed side effect is undone. Registry publication
+or chain finality latency precedes observation; a verifier adds no grace
+period. An arbitrary remote RPC provider's assertion of "latest" is not
+proof of freshness. Deployments MUST configure a trusted authoritative
+source (self-validated node or explicitly trusted resolver), its identity,
+chain/network binding and readiness policy. If readiness cannot be
+established, return `record.unreachable`. A malicious trusted registry or
+validator remains outside the stated trust boundary.
 
-1. A verifier MUST decide a key's `state` and the record's `state` from the
-   registry state observed at the time of verification, as the profile
-   defines observation.
-2. A verifier MAY remember, without limit, that a key is `revoked` or that a
-   record is `deactivated`. A verifier MUST NOT remember that a key is
-   `accepted` or that a record is `active` beyond the observation point;
-   caching MUST NOT extend the usable life of a key. Negative caching only.
-3. If the registry cannot be observed, verification fails
-   (`record.unreachable`). A verifier MUST NOT fall back to an earlier
-   positive result.
-4. A profile states the observation point, the cost of an observation, and
-   the delay between a change being submitted and becoming observable. That
-   delay is a property of the registry, not of this specification; the
-   requirement binds the verifier, which grants no grace of its own.
+Confirmed monotonic tombstones may be cached permanently. Unfinalized
+revocation observations may only be used to deny the current operation;
+they MUST NOT become irreversible tombstones. Persist the highest observed
+finalized version per registry/record, reject rollback (`record.stale`), and
+re-establish source readiness after restart. For blockchain profiles the
+observation is one finalized block hash: no mixture of latest state and
+finalized keys. Publication-to-finality delay and observed latency MUST be
+reported in deployment measurements, not represented as zero.
 
-## 6. Profile: `eip155`
+## 6. Profile: eip155 — REG-06 (R-2, R-3, R-5, R-11, R-13)
 
-Locator: two segments, the CAIP-2 chain reference and the address of the
-registry contract, both lower-case.
+Locator has two segments: a positive decimal chain ID without leading zeros
+(at most 32 digits), then `0x` and exactly 40 lowercase hex digits of the
+registry address. Agent ID is 1–64 ASCII letters, digits, `.`, `_`, `-`,
+excluding `.` and `..`. Controller is a lowercase account address on that
+chain. Registry algorithms MUST include Ed25519; unsupported optional
+algorithms are rejected, not stored as accepted without proof verification.
 
-| Aspect | Rule |
-|---|---|
-| Identifier | `agent-id` is assigned by the registry when the record is created, and is stable for the life of the record |
-| Controller | an account address on the same chain |
-| Key algorithms | `ed25519`, `es256k`, `ecdsa-p256-sha256`, `x25519`, subject to what the contract can verify; a contract that cannot verify an algorithm MUST refuse it (§1) |
-| Claim | two steps: a commitment to the identifier, the key set and the controller, then the revealing transaction. The commitment MUST include the chain reference and the registry address, so it cannot be replayed elsewhere |
-| Activation | a delay set by the registry, after which the controller activates |
-| Authorisation | the controller, or an operator the controller named |
-| Observation | the record's `state` and each key's `state` are read at the most recent block; key material and a newly created record are read at the most recent finalised block. A reorganisation then withdraws a revocation only in the safe direction: the verifier over-rejects rather than accepts a revoked key |
-| Cost and latency | published as measurements per deployed registry (`charter.md` R-13) |
+A deployment binding MUST pin chain ID, registry address, deployed code hash
+and upgrade policy, authenticated read/write ABI mapping to sections 1–5,
+operator scopes, transaction authorization, finalized-node readiness checks,
+and measured costs/latency. Absence of any of these prevents a conformance
+claim for that deployment; it does not invite clients to guess an ABI.
 
-## 7. Profile: `solana`
+A claim uses commitment then reveal. Compute SHA-256 over
+`ASCII("sage-claim-0.10.0") || 0x00 || JCS(claim)` where claim has exactly
+`registryId`, `agentId`, `controller`, `keys`, `services`, and `salt` (32
+random bytes in canonical unpadded base64url). The commitment is submitted
+by the authenticated controller, scoped to its account and this registry;
+a reveal by another account cannot consume it. Reveal must be after the
+commit block, within 256 blocks, and match all fields. Consuming it and
+creating the record are atomic; duplicates fail. The commitment does not
+promise a human-chosen name cannot independently be claimed by someone
+else. Activation is a separate authenticated operation after creation.
 
-Locator: two segments, the CAIP-2 chain reference and the program address.
-The rules of §6 apply with these differences: the controller is an account
-on that chain; the claim is a single instruction, because the ordering
-guarantees the chain offers make a separate commitment unnecessary, and the
-profile states this explicitly; observation uses the confirmed and finalised
-commitments in place of the most recent and finalised blocks.
+## 7. Profile: solana — REG-07 (R-2, R-3)
 
-This profile is not yet implemented by any core and is marked provisional
-until it passes the vectors (`PROCESS.md` stage 3).
+`solana` is reserved, not an executable 0.10.0 profile. The previous draft
+claimed ordering made front-running protection unnecessary without defining
+an authorization or atomic claim construction. No such guarantee is made.
+A conforming 0.10.0 resolver returns `id.unknown-kind`; a future profile must
+define a full deployment binding and pass independent inspector cases.
+The abstract registry model remains chain-independent.
 
-## 8. Profile: `web`
+## 8. Profile: web — REG-08 (R-2, R-3, R-4, R-9, R-11)
 
-A registry that is not a blockchain. Locator: one segment, a domain name.
+This optional non-blockchain profile is not equivalent to prior on-chain
+registration assurance. Its trust root is the configured HTTPS origin and
+its operator. A deployment requiring blockchain registration MUST reject
+web identities rather than silently fall back to them.
 
-| Aspect | Rule |
-|---|---|
-| Record location | `https://<domain>/.well-known/sage/agents/<agent-id>`, retrieved over TLS |
-| Record encoding | the resolved document of `10-resolution.md`, with the additional members `issued` and `expires` |
-| Controller | control of the domain, demonstrated by serving the record at that location under a certificate valid for it |
-| Claim | publication. A profile of this kind cannot hide a claim before it is visible, so an operator that needs protection against a racing claim MUST use a registry kind that can |
-| Activation | a record is `active` when it is served with `state` equal to `active` |
-| Revocation | serving a record in which the key entry is `revoked`, or serving `state` equal to `deactivated` |
-| Observation | the verifier retrieves the record for the verification it is performing. `expires` MUST NOT be more than 300 seconds after `issued`, and a verifier MUST reject a record whose `expires` has passed. A verifier MUST NOT reuse a retrieved record for a later verification |
-| Cost and latency | one retrieval per verification; publication takes effect as soon as the new record is served |
+Locator is a lowercase ASCII DNS name, maximum 64 bytes, with labels of
+1–63 alphanumeric/hyphen characters, no leading/trailing hyphen, no trailing
+dot, no IP literal or port. Internationalized names must be configured in
+ASCII A-label form. Agent ID follows section 6. Read exactly
+`https://<domain>/.well-known/sage/agents/<agent-id>` over authenticated TLS;
+redirects, HTTP downgrade, intermediated positive-cache responses, `304`
+and non-200 responses fail resolution. Fetch MUST use `Cache-Control:
+no-cache, no-store`; the origin MUST return `Cache-Control: no-store` and
+freshly produce the record. Response is an object with exactly `record`,
+`issued`, `expires`; record is section 1 and timestamps are integer Unix
+seconds. Require `issued <= now < expires`, `expires-issued <= 5` and
+positive lifetime. Maximum response is 69632 bytes.
 
-The record MUST be signed by an accepted signing key of the record itself,
-over the canonical form of `02-jcs.md` with the signature member removed, so
-that a retrieval that is intercepted cannot substitute keys. The first
-record for an identifier is therefore self-asserted: this profile binds the
-identifier to the domain, and the domain to the keys, but it cannot prove
-that the domain holder is anyone in particular. A deployment that needs
-more MUST use a registry kind that records a controller independently.
+The domain authority controls creation and writes; it MUST authenticate the
+controller/operator, enforce section 3 atomically and retain tombstones.
+Administrative API is deployment-specific and never inferred from a card.
+No hidden-claim guarantee is offered. Self-signing a substituted key set
+adds no independent protection against a malicious origin and is not a
+substitute for TLS origin trust. A record response is consumed for one
+operation only and section 5 still applies. Implementations must explicitly
+allowlist registry origins and network destinations before fetch to avoid
+SSRF; deny inaccessible or unapproved origins, never follow card endpoints.
 
-## 9. Security considerations
+## 9. Security and verification status
 
-| Threat | Defence |
-|---|---|
-| A-5: racing a claim | The two-step claim of §6; `web` cannot offer this and says so |
-| A-4: registering another party's key | The proof of §4, checked by the registry, and refused algorithms rather than unverified ones |
-| A-6: a stale view | The observation rules of §5, negative caching only, and rejection when unreachable |
-| A-7: a key that outlives its use | Revocation with the entry kept, and optional expiry per key |
-| Loss of control of a registry | Out of scope (`charter.md` N-5); a deployment that distrusts a registry must not use identifiers from it |
+A-4/A-5 are addressed through authenticated writes and signing-key PoP;
+A-6 through explicit authoritative observation and no positive-cache reuse.
+DID registration does not attest a program's integrity or user intent.
+The protected Client/component boundary is defined in the integration
+profile. Signature-key compromise in that protected boundary remains an
+assumption, not something registry lookup repairs.
 
-An operator that revokes a key SHOULD also rotate any session established
-with it; this specification does not end live sessions on revocation, and
-`05-session.md` bounds their lifetime instead.
+[RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html) supplies HTTP cache
+semantics; SAGE's one-operation policy is stricter. Independent contract
+review, malicious-resolver/reorg testing and measured revocation latency
+remain inspector/deployment work. No such tests were run for this revision.

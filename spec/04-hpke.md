@@ -1,133 +1,152 @@
 # 4. HPKE handshake profile
 
-Vectors: `vectors/hpke.json`. Go sources: `pkg/agent/hpke/` (`types.go`,
-`common.go`, `client.go`, `server.go`) and
-`pkg/agent/crypto/keys/x25519.go`.
+Status: normative design for SAGE `0.10.0`. This corrects the historical
+handshake in `pkg/agent/hpke/`; `vectors/hpke.json` describes the old
+schedule and is not a 0.10.0 conformance vector. Charter requirements:
+[R-12, R-21 to R-23, R-26, R-30, R-35, R-36](../charter.md).
 
-## 1. Suite
+## 1. Suite and prerequisites
 
-| Parameter | Value |
-|---|---|
-| Mode | HPKE Base (RFC 9180 §5.1), export interface only |
-| KEM | DHKEM(X25519, HKDF-SHA256) |
-| KDF | HKDF-SHA256 |
-| AEAD | ChaCha20-Poly1305 (the HPKE AEAD is never used for payload; sessions use their own keys, `05-session.md`) |
-| Suite id string | `hpke-base+x25519+hkdf-sha256` |
-| Combiner id string | `e2e-x25519-hkdf-v1` |
-| Export length | 32 bytes |
+**HPKE-01 (R-12, R-21, R-23).** This version has exactly one suite:
+HPKE Base mode, DHKEM(X25519, HKDF-SHA256) KEM `0x0020`, HKDF-SHA256
+KDF `0x0001`, and ChaCha20-Poly1305 AEAD `0x0003`. Its SAGE name is
+`hpke-base+x25519+hkdf-sha256`; combiner is `e2e-x25519-hkdf-v1`.
+Only the HPKE exporter is used; session records use chapter 05.
+Both peers MUST authenticate the transport envelopes using current proven
+signing keys and resolve the responder's active X25519 key before
+establishment. HPKE Base itself is not sender authentication.
 
-## 2. Info and export context
+All binary JSON fields below use canonical unpadded base64url. Context and
+nonce are taken from the authenticated initiation envelope (chapter 08).
+The context is a fresh UUIDv4 and MUST NOT be reused. `kemKid` is the exact
+responder DID key URL selected before initiation.
 
-Both strings are ASCII and fixed in order and delimiters:
+## 2. Initiation and domain binding
 
-```
-info      = "sage/hpke-info|v1|suite=" suite "|combiner=" combiner "|ctx=" ctxID "|init=" initDID "|resp=" respDID
-exportCtx = "sage/hpke-export|v1|suite=" suite "|combiner=" combiner "|ctx=" ctxID
-```
+**HPKE-02 (R-21, R-26, R-28).** The initiation payload is a closed JSON
+object with exactly `v`, `task`, `ctx`, `initDid`, `respDid`, `initKid`,
+`respKid`, `kemKid`, `suite`, `combiner`, `nonce`, `enc`, `ephC`.
+`v` is `0.10.0`, task is `hpke/init@0.10.0`, both ephemeral fields
+are 32 bytes, and all DID/key references MUST match the authenticated
+participants and selected records. `respKid` selects the expected signing
+key used for completion. This handshake does not use the optional generic `task_id`; the task
+string is inside its signed payload only.
 
-`info` is the HPKE `info` input to `SetupBaseS/R`; `exportCtx` is the HPKE
-export context and also the HKDF salt of the combiner.
-
-## 3. Key agreement
-
-1. The initiator encapsulates to the responder's static X25519 KEM key
-   (published in the agent card / registry as `public_kem_key`) and exports
-   `exporterHPKE = Export(exportCtx, 32)`. The encapsulated key is `enc`
-   (32 bytes).
-2. In parallel the initiator generates an ephemeral X25519 key `ephC` and
-   the responder an ephemeral key `ephS`; `ssE2E = X25519(ephC, ephS)`.
-   An all-zero `ssE2E` MUST be rejected.
-3. Session seed:
+Before producing enc, form object B from those fields excluding `task`,
+`enc`, `ephC`. Define:
 
 ```
-prk  = HKDF-Extract(SHA-256, ikm = exporterHPKE || ssE2E, salt = exportCtx)
-seed = HKDF-Expand(SHA-256, prk, "SAGE-HPKE+E2E-Combiner", 32)
+info = UTF8("sage-hpke-info|0.10.0\n") || JCS(B)
+exportCtx = UTF8("sage-hpke-export|0.10.0\n") || SHA256(info)
 ```
 
-The exporter alone or `ssE2E` alone never becomes a key.
+The initiator MUST create a fresh independent HPKE ephemeral encapsulation
+and an independent X25519 ephemeral pair C. HPKE SetupBaseS to kemKid with
+info yields enc and `exporterHPKE = Export(exportCtx, 32)`. The responder
+recomputes B/info/exportCtx and obtains the same exporter via SetupBaseR.
+No peer-supplied derivation string is trusted. Unknown suite, combiner or
+version is rejected without downgrade negotiation.
 
-## 4. Traffic keys and channel binding
+## 3. Response transcript and combiner
 
-From `seed`, using the counter-mode expansion
-`expand(key, label, n) = HMAC-SHA256(key, label || be32(counter))...`
-truncated to `n` bytes (counter starts at 1):
-
-| Output | Label | Length |
-|---|---|---|
-| C2S key | `SAGE-c2s:key` | 32 |
-| C2S IV | `SAGE-c2s:iv` | 12 |
-| S2C key | `SAGE-s2c:key` | 32 |
-| S2C IV | `SAGE-s2c:iv` | 12 |
-| Channel binding | `SAGE-cb-v1` | 32 |
-
-Note that this expansion is HMAC-based and is not RFC 5869 HKDF-Expand
-(which would also feed the previous block back in). The session layer
-(`05-session.md`) uses standard HKDF; the two must not be confused.
-
-## 5. Acknowledgement tag
-
-Proves to the initiator that the responder derived the same seed and binds
-the whole transcript:
+**HPKE-03 (R-21 to R-23, R-26).** The responder generates fresh X25519
+pair S and a fresh session handle `kid` (UUIDv4, not a registry key URL).
+Transcript T is the complete initiation object plus `ephS` and `kid`;
+there are no overwritten fields. `th = SHA256(JCS(T))`. Define:
 
 ```
-ackKey = expand(seed, "SAGE-ack-key-v1", 32)
-th     = SHA-256(0x00 || info || 0x00 || exportCtx || 0x00 || enc || 0x00 || ephC || 0x00 || ephS || 0x00 || initDID || 0x00 || respDID)
-ackTag = HMAC-SHA256(ackKey, "SAGE-ack-msg|v1|" || len16(ctxID) || len16(nonce) || len16(kid) || th)
+ssE2E = X25519(privateC, publicS) = X25519(privateS, publicC)
+prk = HKDF-Extract(salt=th, IKM=exporterHPKE || ssE2E)
+seed = HKDF-Expand(prk, UTF8("sage-hpke-combiner|0.10.0") || th, 32)
+ackKey = HKDF-Expand(seed, UTF8("sage-hpke-ack|0.10.0") || th, 32)
+ackTag = HMAC-SHA256(ackKey, th)
 ```
 
-`binds_order` in the vector fixes the transcript order. Compare with a
-constant-time equality.
+All HKDF calls use SHA-256 and RFC 5869 argument meanings. Both HPKE KEM
+and direct X25519 operations MUST reject all-zero shared results. Neither
+component alone is used as a session key. The historical HMAC counter
+expansion is removed; there is a single session schedule in chapter 05.
 
-## 6. Messages
+## 4. Completion message
 
-### Init payload (initiator to responder), JSON object
+**HPKE-04 (R-18, R-21, R-26).** The completion payload contains exactly
+`v`, `task`, `transcript`, `ackTagB64`, `sigB64`. v is `0.10.0`, task is
+`hpke/complete@0.10.0`, transcript is T and ackTagB64 decodes to 32 bytes.
+The responder signs
+`UTF8("sage-hpke-complete|0.10.0\n") || JCS(payload without sigB64)`
+with respKid, encoding sigB64 as unpadded base64url. The outer signed
+response additionally binds the initiation request under chapter 08.
 
-| Member | Type | Content |
-|---|---|---|
-| `initDid` | string | initiator DID; MUST equal the DID that signed the transport message |
-| `respDid` | string | responder DID; MUST equal the receiving agent's DID |
-| `info` | string | the `info` bytes of §2 as a JSON string (they are ASCII) |
-| `exportCtx` | string | the `exportCtx` bytes of §2 as a JSON string |
-| `nonce` | string | UUID, unique per context; replay-checked per `ctxID` for 10 minutes |
-| `ts` | string | RFC 3339 with nanoseconds; MUST be within ±2 minutes of the responder's clock |
-| `enc` | base64url-raw | 32-byte encapsulated key |
-| `ephC` | base64url-raw | 32-byte initiator ephemeral X25519 public key |
+The initiator MUST match every echoed initiation field byte-for-byte after
+canonical encoding, check selected current keys, verify both response
+signatures, compute ssE2E/seed and constant-time compare ackTag before
+creating a session. It MUST NOT use a transcript supplied for another
+pending request. Invalid completion destroys pending ephemeral state and
+creates no session. Timeout requires a new context and fresh ephemeral keys.
 
-The responder recomputes `info` and `exportCtx` from `ctxID` and the two
-DIDs and MUST reject the payload when they differ from the received values.
-All rejections return one generic error (`authentication failed`); the
-reason is logged locally only. A suite the responder does not allow is the
-one distinct error.
+## 5. State, lifetime and key confirmation
 
-### Response envelope (responder to initiator), JSON object
+**HPKE-05 (R-21, R-22, R-26, R-36).** States are NEW → INIT_SENT
+(initiator) or RESPONSE_SENT (responder) → ESTABLISHED → CLOSED.
+For the initiator, INIT_SENT starts when initiation is emitted; for the
+responder, RESPONSE_SENT starts when its completion response is emitted.
+A pending state expires at 300 monotonic seconds after that transition or
+at the initiation envelope's expires, whichever is first. RESPONSE_SENT is
+also bounded by the completion envelope's expires. Check these absolute UTC
+expiries with no late-expiry grace; equality is expired. A retransmission or
+clock rollback MUST NOT extend the deadline. Trusted UTC and monotonic time
+are required. The initiator reaches ESTABLISHED only after valid completion.
 
-| Member | Content |
-|---|---|
-| `v` | `"v1"`; anything else MUST be rejected |
-| `task` | `"hpke/complete@v1"` |
-| `ctx` | context id |
-| `kid` | session key id issued by the responder (`kid-<uuid>` by default, or from a `KeyIDBinder`) |
-| `ephS` | base64url-raw responder ephemeral public key |
-| `ackTagB64` | base64url-raw `ackTag` |
-| `ts` | RFC 3339 nanoseconds |
-| `did` | responder DID |
-| `infoHash`, `exportCtxHash` | base64url-raw SHA-256 of the `info` and `exportCtx` bytes |
-| `enc`, `ephC` | echoed from the init payload |
-| `sigB64` | detached: signature over the JCS form of the envelope without `sigB64`, with the responder's signing key (`01-crypto.md`) |
+The responder's RESPONSE_SENT state has exactly one exception to chapter 08's
+established-session requirement: it may receive initiator-role records for
+its pinned tuple before the pending deadline. It MUST first verify envelope
+schema, tuple, freshness, current bound keys, all required signatures and AEAD,
+then atomically check/reserve the transport id/nonce and session sequence and
+transition to ESTABLISHED. At that atomic boundary recheck the pending deadline
+and that the state has not closed. No partial replay insert or state transition
+may survive a failed authentication check. A concurrent record which finds
+ESTABLISHED follows the normal established receive path; the transition occurs
+only once. An exact concurrent duplicate is accepted at most once. The first
+accepted sequence need not be zero: any unseen sequence below 1000 satisfying
+chapter 05 is eligible, so loss/reordering of earlier records does not deadlock
+confirmation.
 
-The initiator verifies `sigB64` against the responder's resolved public key,
-checks `ephS` is not all-zero, recomputes the seed and `ackTag`, and only
-then creates the session with label `sage/hpke+e2e v1` (`05-session.md` §2).
+The first accepted cryptographic record confirms key possession, even if its
+application intent subsequently fails schema or authorization checks. Such
+failure has zero protected effects and does not roll back the cryptographic
+replay reservation or confirmation. The execution ledger is a separate later
+gate under EXEC-04; its rejection is not a cryptographic acceptance failure.
+An invalid signature/tag/tuple leaves provisional state unchanged, except that
+timeout, failed bound-key validation or local resource closure closes it.
+Before confirmation the responder MUST NOT send application data or execute
+a protected operation. Afterwards it may send the specified signed/encrypted
+application rejection. This supplies initiator key confirmation without a
+second dedicated handshake round trip. Retransmitted initiation is rejected
+by the normal nonce guard; it MUST NOT replace an existing session.
 
-## 7. Denial-of-service cookie (optional)
+Every operation rechecks participant/key status under chapter 06. Changed,
+revoked or unavailable authentication/KEM bindings close the session and
+require a new handshake. Ephemeral private keys and exporter/ack material
+MUST be erased once no longer needed; established state retains only the
+session material required by chapter 05. Restart discards sessions; there
+is no 0-RTT, session resumption, suite fallback or implicit shared-secret path.
 
-A responder MAY require a cookie in the transport metadata (`metadata.cookie`)
-before doing any public-key work; the cookie check happens before DID
-resolution (open item O-6 tracks the ordering in the Go core).
+## 6. Bounds and security review
 
-## 8. Open items
+**HPKE-06 (R-30, R-35, R-36).** Handshake payloads MUST be at most 16 KiB;
+DID/key lengths follow chapter 06. Fixed binary fields and closed schemas
+are checked before resolution or DH. A local admission/rate check MAY run
+before authentication but MUST NOT assert peer identity. No interoperable
+cookie exchange is defined in 0.10.0; cookie metadata MUST NOT change the
+transcript or permit unsigned initiation. Failure is generic authentication
+failure, with secrets excluded from logs.
 
-| Id | Item |
-|---|---|
-| O-6 | Cookie check before DID resolution in the Go responder |
-| O-7 | The HMAC counter expansion of §4 differs from HKDF-Expand; decide whether v2 aligns it |
+The composition uses [RFC 9180](https://www.rfc-editor.org/rfc/rfc9180.html)
+HPKE and [RFC 5869](https://www.rfc-editor.org/rfc/rfc5869.html) HKDF.
+Transcript binding and the two-component combiner are SAGE design, not a
+security theorem supplied by either RFC. Forward secrecy depends on fresh
+independent ephemeral contributions and erasure. Formal authentication,
+unknown-key-share, compromise and interleaving analysis plus independent
+schedule vectors remain required verification work, not open wire choices.
+
+Verified RFC 9180 errata 7937 (KEM suite identifier), 7121 (serialized X25519 private-vector clamping) and 7934 (distinct meanings of info arguments) apply when implementing HPKE-01/02. The verified Auth-mode claim correction 7790 is not a proof for this Base-mode composition. See the standards review.

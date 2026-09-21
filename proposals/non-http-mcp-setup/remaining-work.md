@@ -6,7 +6,7 @@ validation. This is a delivery breakdown, not a completion percentage or a time 
 
 | Remaining work package | Current state | Completion evidence |
 |---|---|---|
-| 1. Finalize and adopt one normative contract | IN_PROGRESS: integrated candidate and user-authorized separate-agent review/re-review completed; normative reconciliation and adoption pending | One consistent reviewed text, explicit adoption, reconciled profile/descriptor/compatibility/traceability; no conflicting admission definitions |
+| 1. Finalize and adopt one normative contract | DESIGN_ADOPTED: reviewed contract, baseline mapping, exact descriptor, compatibility and traceability published; runtime evidence remains absent | One consistent reviewed text, explicit adoption, reconciled profile/descriptor/compatibility/traceability; no conflicting admission definitions |
 | 2. Go owner and private gate integration | NOT_IMPLEMENTED for the proposed binding; existing Guard/session primitives already work within their documented scope | Authenticated initialization, one history, output barrier, deadlines, close/admission order and bounded cleanup, with native scenario and race tests |
 | 3. Rust implementation of the same contract | NOT_IMPLEMENTED for the proposed binding; existing primitives retained | Equivalent ownership/cancellation/storage semantics and native scenario tests, without assuming Go callback behavior |
 | 4. Inspector actual protocol execution | NOT_RUN: all 71 catalog cases; earlier primitive/runtime reports remain valid separately | Go/Go, Go/Rust, Rust/Go, Rust/Rust exchanges; exact bytes, journals, effect and admission observations; evidence for each promoted case |
@@ -42,13 +42,12 @@ full protocol cases. The recent iterations therefore improved prerequisites with
 reducing 71 NOT_RUN. Future progress should be reported against the five completion
 conditions above, not counted by the number of merged documentation/checker PRs.
 
-The [integrated candidate](integrated-candidate.md) and effective case plan now
-incorporate the corrected admission contract. The separate-agent [cross-review](cross-review.md) and corrections are complete
-at the document/acceptance-plan level. The next deliverable is normative reconciliation
-and explicit adoption of the exact corrected inputs. Do not add unrelated fixtures or another integrity checker as a substitute
-for that deliverable. Separate-agent review must remain distinguished from a third-party external audit;
-neither document review nor source integrity checks establish runtime conformance.
+The [normative profile](../../profiles/non-http-mcp-security.md) adopts the corrected
+contract. The next deliverable is the Go/Rust owner-aware gate and authenticated setup
+implementation, with the mandatory child schedules and safe runtime evidence. No more
+candidate-only checks are needed to claim design adoption. Separate-agent review is
+not a third-party external audit, and no test status is promoted by adoption.
 
-Cross-review adds 26 mandatory child assertions under existing parents and corrects
-the history-limit test scope. They do not add 26 new top-level protocol cases or
-reduce any NOT_RUN count. The earlier 8/10/53 impact counts describe historical input.
+Cross-review's 26 mandatory child assertions remain within the 71 binding parents.
+The earlier 8/10/53 impact counts describe historical input. Deployment Source and host
+choices remain needed for the final package; design adoption does not supply them.

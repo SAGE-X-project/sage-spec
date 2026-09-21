@@ -1,0 +1,532 @@
+{
+  "schema_version": 1,
+  "review_date": "2026-09-14",
+  "protocol_version": "0.10.0",
+  "method": "local adversarial document review, separate from implementation; not external or multi-model independent audit",
+  "external_qa": "blocked_by_automatic_approval_review_no_verdict",
+  "overall_readiness": "GO_FOR_INSPECTOR_IMPLEMENTATION_NOT_CONFORMANCE",
+  "decision": {
+    "full_inspector": "GO_FOR_IMPLEMENTATION_AGAINST_REVISED_DRAFT",
+    "implementation_started": false,
+    "production_or_full_security_certification": "NO_GO_PENDING_ASSURANCE",
+    "remaining_assurance": [
+      "CST-A1",
+      "CST-A2",
+      "CST-A3"
+    ]
+  },
+  "findings": [
+    {
+      "id": "CST-01",
+      "severity": "P1",
+      "kind": "wire_contract_gap",
+      "title": "Pending duplicate indication has no defined protected encoding",
+      "rules": [
+        "EXEC-05",
+        "EXEC-07",
+        "EXEC-08",
+        "TRANSPORT-03"
+      ],
+      "scenario": "Receive an identical intent while its first execution is still running. EXEC-05 requires duplicate/pending indication, but result.status only permits completed/rejected/unknown. unknown denotes crash uncertainty; a later completed result can conflict with the prior result. Core transport permits one terminal response.",
+      "closure": "Specify the exact authenticated duplicate/pending representation, whether it is terminal, and how the eventual result is retrieved or awaited across direct MCP and HTTP. Retain zero redispatch and no UNKNOWN bypass.",
+      "checks": [
+        "concurrent identical duplicate while RESERVED",
+        "duplicate while EXECUTING then eventual completion",
+        "duplicate after durable completion",
+        "crash UNKNOWN distinct from ordinary pending",
+        "same call with changed intent rejected"
+      ],
+      "blocks": [
+        "execution_guard_state_oracle",
+        "execution_guard_mcp_http_binding"
+      ],
+      "status": "closed_at_document_contract_level",
+      "evidence": "document_analysis_not_runtime_exploit",
+      "checks_status": "mapped_planned_not_executed",
+      "original_refs": [
+        [
+          "profiles/agent-mcp-security.md",
+          137
+        ],
+        [
+          "profiles/agent-mcp-security.md",
+          184
+        ],
+        [
+          "profiles/agent-mcp-security.md",
+          208
+        ]
+      ],
+      "refs": [
+        [
+          "profiles/agent-mcp-security.md",
+          179
+        ],
+        [
+          "profiles/agent-mcp-security.md",
+          260
+        ],
+        [
+          "profiles/agent-mcp-security.md",
+          309
+        ],
+        [
+          "spec/08-transport.md",
+          61
+        ]
+      ],
+      "closure_case_ids": [
+        "CST-01-01",
+        "CST-01-02",
+        "CST-01-03",
+        "CST-01-04",
+        "CST-01-05",
+        "CST-01-06",
+        "CST-01-07",
+        "CST-01-08",
+        "CST-01-09",
+        "CST-01-10"
+      ],
+      "closure_report": "verification/crypto-trust-closure.md"
+    },
+    {
+      "id": "CST-02",
+      "severity": "P2",
+      "kind": "commitment_definition_gap",
+      "title": "Policy digest has no defined committed bytes or explicit deployment-binding contract",
+      "rules": [
+        "EXEC-02",
+        "EXEC-03",
+        "EXEC-04",
+        "EXEC-05"
+      ],
+      "scenario": "Two protected policy engines enforce the same rules but hash raw policy text versus a canonical object. The wire defines 64 hex characters and approval, but neither a derivation nor a versioned opaque-binding contract. Recovery also refers to a policy epoch without specifying its binding to this digest.",
+      "closure": "Define a domain/version-bound policy artifact commitment, or explicitly define policy_digest as a deployment-pinned identifier with immutable byte-to-policy/epoch mapping. A universal policy language is unnecessary. Specify update, rollback and outstanding-intent invalidation.",
+      "checks": [
+        "independent identical policy-binding fixture",
+        "changed effective policy invalidates old authorization",
+        "old epoch rejected after ledger-loss recovery",
+        "peer supplied unknown policy digest rejected"
+      ],
+      "blocks": [
+        "execution_guard_policy_oracle"
+      ],
+      "status": "closed_at_document_contract_level",
+      "evidence": "document_analysis_not_runtime_exploit",
+      "checks_status": "mapped_planned_not_executed",
+      "original_refs": [
+        [
+          "profiles/agent-mcp-security.md",
+          75
+        ],
+        [
+          "profiles/agent-mcp-security.md",
+          116
+        ],
+        [
+          "profiles/agent-mcp-security.md",
+          146
+        ]
+      ],
+      "refs": [
+        [
+          "profiles/agent-mcp-security.md",
+          34
+        ],
+        [
+          "profiles/agent-mcp-security.md",
+          97
+        ],
+        [
+          "profiles/agent-mcp-security.md",
+          140
+        ],
+        [
+          "profiles/agent-mcp-security.md",
+          179
+        ]
+      ],
+      "closure_case_ids": [
+        "CST-02-01",
+        "CST-02-02",
+        "CST-02-03",
+        "CST-02-04",
+        "CST-02-05"
+      ],
+      "closure_report": "verification/crypto-trust-closure.md"
+    },
+    {
+      "id": "CST-03",
+      "severity": "P2",
+      "kind": "boundary_acceptance_ambiguity",
+      "title": "Caller AAD and complete AAD limits need one receiver rule",
+      "rules": [
+        "SESSION-03"
+      ],
+      "scenario": "callerAAD of 4034 bytes satisfies its stated 4096-byte bound but produces 4097 complete bytes. The additional complete-4096 rule names the sender, leaving receiver rejection of a nonconforming peer insufficiently explicit.",
+      "closure": "State that both sender and receiver enforce complete AAD <=4096, giving callerAAD <=4033 for this version, or choose a different explicit common limit. Clarify that the serialized metadata limit is separate.",
+      "checks": [
+        "callerAAD4033 produces complete4096 accepted when otherwise valid",
+        "callerAAD4034 produces complete4097 rejected",
+        "metadata fits4096 but full callerAAD exceeds limit"
+      ],
+      "blocks": [
+        "session_aad_boundary_oracle"
+      ],
+      "status": "closed_at_document_contract_level",
+      "evidence": "document_analysis_not_runtime_exploit",
+      "checks_status": "mapped_planned_not_executed",
+      "original_refs": [
+        [
+          "spec/05-session.md",
+          44
+        ],
+        [
+          "spec/05-session.md",
+          58
+        ]
+      ],
+      "refs": [
+        [
+          "spec/05-session.md",
+          67
+        ]
+      ],
+      "closure_case_ids": [
+        "CST-03-01",
+        "CST-03-02"
+      ],
+      "closure_report": "verification/crypto-trust-closure.md"
+    },
+    {
+      "id": "CST-04",
+      "severity": "P2",
+      "kind": "peer_binding_clarification",
+      "title": "Per-record session identity/key binding is not enumerated",
+      "rules": [
+        "TRANSPORT-01",
+        "SESSION-01",
+        "HPKE-05",
+        "ID-03"
+      ],
+      "scenario": "A legitimate session participant holding another active DID/key constructs a valid new outer signature and AEAD record with the existing sid/context/role. Chapter08 enumerates sid/context/role matches but not the full T participant/key tuple; chapter04 requires unchanged bindings. Implementers can disagree whether another accepted signer is permitted.",
+      "closure": "List stored session tuple and exact per-role did/recipient/kid/context checks, including whether a second active signing key of the same DID requires re-handshake. Make the existing changed-binding closure rule executable.",
+      "checks": [
+        "different sender DID with valid signature and deliberately valid session record",
+        "different recipient DID with valid record",
+        "different active kid same DID",
+        "revoked selected key with another usable key",
+        "correct original participant tuple"
+      ],
+      "blocks": [
+        "session_identity_binding_oracle"
+      ],
+      "status": "closed_at_document_contract_level",
+      "evidence": "document_analysis_not_runtime_exploit",
+      "checks_status": "mapped_planned_not_executed",
+      "original_refs": [
+        [
+          "spec/08-transport.md",
+          29
+        ],
+        [
+          "spec/05-session.md",
+          10
+        ],
+        [
+          "spec/04-hpke.md",
+          100
+        ]
+      ],
+      "refs": [
+        [
+          "spec/08-transport.md",
+          11
+        ],
+        [
+          "spec/05-session.md",
+          10
+        ],
+        [
+          "spec/04-hpke.md",
+          89
+        ],
+        [
+          "spec/06-did-sage.md",
+          65
+        ]
+      ],
+      "closure_case_ids": [
+        "CST-04-01",
+        "CST-04-02",
+        "CST-04-03",
+        "CST-04-04"
+      ],
+      "closure_report": "verification/crypto-trust-closure.md"
+    },
+    {
+      "id": "CST-05",
+      "severity": "P2",
+      "kind": "state_transition_clarification",
+      "title": "Provisional first-record acceptance needs explicit transport exception and transition order",
+      "rules": [
+        "HPKE-05",
+        "TRANSPORT-01",
+        "SESSION-05",
+        "EXEC-04"
+      ],
+      "scenario": "Responder is RESPONSE_SENT and needs its first valid initiator record to become ESTABLISHED, while generic transport language requires an established session. A strict generic state check can reject that necessary first record. The more specific handshake clause suggests an exception but does not enumerate it.",
+      "closure": "State the sole provisional receive exception, the relevant pending deadline, and the ordering of envelope/AEAD/replay/key-confirmation versus execution authorization. Specify whether an authenticated but policy-denied record confirms the session without dispatch.",
+      "checks": [
+        "valid first initiator record before pending deadline",
+        "first record exactly at expired pending deadline",
+        "forged first record leaves provisional state unchanged",
+        "two simultaneous first records transition once",
+        "valid record with denied tool policy causes zero effects"
+      ],
+      "blocks": [
+        "handshake_session_transition_oracle"
+      ],
+      "status": "closed_at_document_contract_level",
+      "evidence": "document_analysis_not_runtime_exploit",
+      "checks_status": "mapped_planned_not_executed",
+      "original_refs": [
+        [
+          "spec/04-hpke.md",
+          89
+        ],
+        [
+          "spec/08-transport.md",
+          34
+        ]
+      ],
+      "refs": [
+        [
+          "spec/04-hpke.md",
+          89
+        ],
+        [
+          "spec/08-transport.md",
+          11
+        ],
+        [
+          "spec/05-session.md",
+          103
+        ],
+        [
+          "profiles/agent-mcp-security.md",
+          140
+        ]
+      ],
+      "closure_case_ids": [
+        "CST-05-01",
+        "CST-05-02",
+        "CST-05-03",
+        "CST-05-04",
+        "CST-05-05",
+        "CST-05-06",
+        "CST-05-07"
+      ],
+      "closure_report": "verification/crypto-trust-closure.md"
+    }
+  ],
+  "assurance_gaps": [
+    {
+      "id": "CST-A1",
+      "type": "missing_assurance_not_proven_break",
+      "summary": "Custom HPKE/exporter/ephemeral combiner needs independent intermediate vectors and compromise/interleaving analysis before security approval; absence does not block building an evidence harness."
+    },
+    {
+      "id": "CST-A2",
+      "type": "deployment_evidence_required",
+      "summary": "Execution Guard protection requires demonstrable isolated capture/key/policy/gate/load/dispatch capabilities for each host; DID and a remote hash do not establish it."
+    },
+    {
+      "id": "CST-A3",
+      "type": "oracle_independence_required",
+      "summary": "Current inspector uses Go core suite definitions and Produce/Verify. Frozen externally derived vectors and independent implementations are required for new protocol evidence."
+    }
+  ],
+  "mechanical_observations": {
+    "git_diff_check": "passed",
+    "aad_prefix_bytes": 63,
+    "max_caller_aad_if_complete_cap_4096": 4033,
+    "synthetic_direction_generation_keys": 8,
+    "synthetic_unique_key_nonce_pairs": 2000,
+    "synthetic_scope": "fixed arbitrary seed/transcript; no HPKE or AEAD execution; no security proof",
+    "existing_planned_case_count": 358,
+    "new_executable_cases": 0
+  },
+  "sources": [
+    {
+      "repo": "sage-spec",
+      "path": "spec/00-overview.md",
+      "sha256": "3ad861a60bcb21d26eb974109da5f753ad8fefffd04780ed2f2b0f2a10a82227",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "spec/01-crypto.md",
+      "sha256": "fe9fd00066b259b99a63e5adab7db739757e3ad2597ccc71e2019fa34319faec",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "spec/02-jcs.md",
+      "sha256": "4d4b202c8ddb5eb00c47a8e8056813a589834526e2174c023fb005a484eb3d94",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "spec/03-rfc9421.md",
+      "sha256": "61bf709c8f7b079eb8a5ca5ff853b9cfedbc88621b326ced838106dc6d7c1694",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "spec/04-hpke.md",
+      "sha256": "4174327813fecfccb557d703aaea6cac0dd5f9364aa89b66fb5140bdabc21fc9",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "spec/05-session.md",
+      "sha256": "9643f5072424201b9cb90eeab9a12904c27939fc5302ef5543cbbe1453b0ccf3",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "spec/06-did-sage.md",
+      "sha256": "5791cc368111216a6539f7c423811abeb9821f9741e0c5d6ce177d5100b0b059",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "spec/07-a2a.md",
+      "sha256": "5ded622fdaf67342d5c6b4327da0f5787bfe9df2dc58b233cdfb500ffc96b042",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "spec/08-transport.md",
+      "sha256": "d2ebfd3e0f028e8f44b9d9cb27ff66c246482f1b4592a04efc4253547ed97a5c",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "spec/09-registry.md",
+      "sha256": "ccd34125fb49b281475534773c81bd58d87b86cc7f6c88544b92f1f9e212f7e3",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "spec/10-resolution.md",
+      "sha256": "7d970c29b55cafba2220206987c15f71a839e5a0c165db6b64d7a5d717deef1f",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "spec/11-registries.md",
+      "sha256": "d68d05a474a136fc8cdaf4c7efe6bc51abbf31d1dcce8b45968f963f7fb62ffe",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "profiles/agent-mcp-security.md",
+      "sha256": "9962e43126d7a6fca78c104388e46a511b105a5db78105d7d8a19a082262a5fc",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "guides/integration.md",
+      "sha256": "d784ea714349ded2319762e260715b6c6b3c5a7a504e353b7be9cb6fca509285",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "verification/traceability.json",
+      "sha256": "55d46c91d08e5b28a09c1db1ddeb310360518c14e0a9ed767eeb38e7023a31b3",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-spec",
+      "path": "verification/inspector-plan.md",
+      "sha256": "b72cbd173ac2cbfaf90bd2e6220514f3190ee266c1f4d325a73cbdd1975efcbd",
+      "snapshot": "pre-review working tree, not HEAD contents"
+    },
+    {
+      "repo": "sage-inspector",
+      "path": "README.md",
+      "sha256": "9a1bc51dba2f3f79bb44088efa981266c6c5f62f88b9f1b48dee70bf83c983b9",
+      "snapshot": "05b890d973cf3b62a82ba412462af746aa5c266d"
+    },
+    {
+      "repo": "sage-inspector",
+      "path": "pkg/inspect/vectors.go",
+      "sha256": "55c326bb4abe33e5e8a8027e45a8370b8cb8bc226c8d24d349cc6ec79133a1b5",
+      "snapshot": "05b890d973cf3b62a82ba412462af746aa5c266d"
+    }
+  ],
+  "initial_decision": {
+    "full_inspector": "NO_GO_PENDING_CST_01_THROUGH_05",
+    "stable_foundation": "SCOPED_GO_ADVISORY_NOT_STARTED",
+    "production_or_full_security_certification": "NO_GO",
+    "allowed_scope": [
+      "version-pinned report schema and case loader",
+      "strict JSON/base64 and primitive fixtures with independent expected sources",
+      "static signature input diagnostics",
+      "separate PASS FAIL UNSUPPORTED NOT_RUN evidence handling"
+    ],
+    "deferred_scope": [
+      "final Execution Guard duplicate/result and policy verdicts",
+      "final session AAD identity and provisional-state verdicts",
+      "full-profile certification or production security approval"
+    ]
+  },
+  "initial_overall_readiness": "REVISE_BEFORE_FULL_INSPECTOR_IMPLEMENTATION",
+  "re_review": {
+    "date": "2026-09-14",
+    "method": "local document and cross-layer scenario review; not external independent audit",
+    "new_cases": 28,
+    "total_planned_cases": 386,
+    "runtime_tests_executed": false,
+    "sources": [
+      {
+        "path": "profiles/agent-mcp-security.md",
+        "sha256": "99d5dc57d12d59d6e33102b2fdaa44efb137e48deab65e8012ff5128838d04b1"
+      },
+      {
+        "path": "spec/04-hpke.md",
+        "sha256": "1420818451ce8363a16e391647dbaca8ec2f06efa56b6507027a4e17f399fdd6"
+      },
+      {
+        "path": "spec/05-session.md",
+        "sha256": "8a45b8bdd3b6bfc399a94c420b2161b8f16db5c6b29ed2e85584a6282b17cce5"
+      },
+      {
+        "path": "spec/08-transport.md",
+        "sha256": "87bb1adc1aae4883e13f8ba52a7c86153c71efb621ffc50458f7e2aa57db3eeb"
+      },
+      {
+        "path": "spec/11-registries.md",
+        "sha256": "b8485756b78b8e561b2a1747b0fb350958eba746ea82229d79168317a2c9d07b"
+      },
+      {
+        "path": "guides/integration.md",
+        "sha256": "535304348249cc68cb84c1014a9aeaec9c38eceb5beb50a13cc21f4eda838a92"
+      },
+      {
+        "path": "verification/traceability.json",
+        "sha256": "c4db008e83ad9491559941ce6cb36960eea4fe3ba1ec6c698d7d77ea91ea009c"
+      },
+      {
+        "path": "verification/inspector-plan.md",
+        "sha256": "a5c6ba25e4cd4d1d1a687034c698bcfd0e07d634173582f74827c36fcd83a33e"
+      },
+      {
+        "path": "verification/crypto-trust-closure.md",
+        "sha256": "85555b082d173b8b4db552561efb4f4f20e3d9389752587a2c5c8653f8fe2d2b"
+      }
+    ]
+  }
+}
