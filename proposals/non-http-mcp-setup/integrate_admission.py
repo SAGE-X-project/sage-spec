@@ -8,6 +8,7 @@ from consolidate import section, replace_once
 
 ROOT = Path(__file__).resolve().parent
 MANIFEST_SHA = '79cc4ec7381152e2eeafee9890a8a456227b19a0cc0e284f3154ac0e2fa5f088'
+AMENDMENT_SHA = '7a90b485205c83b2d2784829ee1c3479c64bf2c43f09a2c7e362f61e50589bdd'
 
 
 def render(root=ROOT):
@@ -21,6 +22,10 @@ def render(root=ROOT):
         if hashlib.sha256(raw).hexdigest() != digest:
             raise ValueError('integration source changed: '+name)
         texts[name] = raw.decode()
+    raw = (root/'cross-review-amendment.json').read_bytes()
+    if hashlib.sha256(raw).hexdigest() != AMENDMENT_SHA:
+        raise ValueError('cross-review amendment changed')
+    amendment = json.loads(raw)
     old = texts['consolidated.md']
     body = '## Scope and compatibility\n\n' + section(old, '## Scope and compatibility', '## Evidence and adoption status')
     old_admission = section(body, '## Final dispatch admission and closure', '## Operation deadline classes')
@@ -54,25 +59,30 @@ and reports remain frozen and are not alternative implementation choices.
 
 Generated with `python3 -B integrate_admission.py --write` from
 [integrated-inputs.json](integrated-inputs.json). `--check` verifies both outputs.
-The [effective case plan](integrated-cases.json) has one assertion per existing case,
+The [effective case plan](integrated-cases.json) has one parent per existing case,
 with historical inputs recorded only as provenance. This integration incorporates
 the expiry-order and finite-cleanup clarifications. It is not external review,
 core execution, normative adoption or reconciliation of the unpublished baseline.
+The hash-pinned cross-review-amendment.json supplies the reviewed clarifications,
+history-limit correction and mandatory child assertions; historical inputs remain fixed.
 
 '''
     footer = '''
 
 ## Effective evidence and adoption status
 
-The effective plan contains **71 NOT_RUN** cases: eight redefined admission assertions,
-ten strengthened observations and fifty-three retained assertions. Full description
+The effective plan contains **71 NOT_RUN** parent cases and 26 mandatory child
+assertions, which are not additional top-level cases. The earlier impact classification
+was eight redefined, ten strengthened and fifty-three retained assertions; cross-review
+also corrects history-capacity scope and adds the mandatory child schedules. Full description
 and expected result are in integrated-cases.json; historical assertions there are
 provenance, not selectable alternatives. The fixed tool descriptor is unchanged.
 No case is satisfied by generating this document or by a historical primitive test.
 
 The 37 historical lifecycle cases remain NOT_RUN; conformance is NOT_ESTABLISHED.
-Existing finite models do not implement this admission candidate. Independent review
-is NOT_PERFORMED. Next: review this exact candidate and effective plan, reconcile the
+Existing finite models do not implement this admission candidate. Separate-agent review
+and re-review are recorded in cross-review.md; external audit is NOT_PERFORMED.
+Next: reconcile this corrected candidate with the
 profile, descriptor adoption, compatibility and traceability, and explicitly adopt
 before claiming implementation of a normative binding. No new private review or
 model result can substitute for that decision. HTTP mapping, general MCP support
@@ -103,12 +113,25 @@ and whole-host protection remain outside this binding's claim.
                 planned_method='unit_and_bounded_local_runtime'))
     if len(cases) != 71 or len({c['id'] for c in cases}) != 71 or set(changes) != {c['id'] for c in cases}:
         raise ValueError('effective case membership')
+    by_id = {c['id']:c for c in cases}
+    for ident, override in amendment['case_overrides'].items():
+        if ident not in by_id or set(override) != {'scenario','expected','planned_method'}:
+            raise ValueError('invalid cross-review override')
+        by_id[ident].update(override)
+        by_id[ident]['cross_review_override'] = True
+    children = amendment['mandatory_subscenarios']
+    if (len(children) != 26 or len({c['id'] for c in children}) != 26 or
+            any(c['parent_case'] not in by_id or c['status'] != 'NOT_RUN' for c in children)):
+        raise ValueError('invalid child scenario membership/status')
     plan = dict(kind='integrated-mcp-admission-plan', status='PROPOSAL_NOT_ADOPTED',
                 external_review='NOT_PERFORMED', conformance='NOT_ESTABLISHED',
                 source_revision=manifest['revision'], input_manifest_sha256=MANIFEST_SHA,
                 protocol_cases={'NOT_RUN':71}, lifecycle={'NOT_RUN':37},
-                change_counts=impact['counts'], cases=cases)
-    return {'integrated-candidate.md':header+body+footer,
+                change_counts=impact['counts'], cases=cases,
+                cross_review_amendment_sha256=AMENDMENT_SHA,
+                mandatory_subscenarios=children,
+                required_observations=amendment['required_observations'])
+    return {'integrated-candidate.md':header+body+'\n\n'+amendment['document']+footer,
             'integrated-cases.json':json.dumps(plan,indent=2)+'\n'}
 
 

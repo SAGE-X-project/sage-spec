@@ -1,0 +1,44 @@
+{
+  "kind": "separate-agent-cross-review",
+  "reviewed_revision": "bf9e1b3e44f8d5a7123248fb7cf82b8f9407e739",
+  "method": "USER_AUTHORIZED_SEPARATE_AGENT_REVIEW_AND_REREVIEW",
+  "status": "FINDINGS_RESOLVED_IN_CANDIDATE",
+  "external_audit": "NOT_PERFORMED",
+  "adoption": "PROPOSAL_NOT_ADOPTED",
+  "conformance": "NOT_ESTABLISHED",
+  "corrected_artifact_sha256": {
+    "integrated-candidate.md": "ea9a3c15f64cf7a69a246fd634b9efa282fe470b8b2677f0000552ab4c659e5e",
+    "integrated-cases.json": "32147552d029306c4c8f041e34899141d0b29817040c4a3f17db0e81f65a1a09",
+    "cross-review-amendment.json": "7a90b485205c83b2d2784829ee1c3479c64bf2c43f09a2c7e362f61e50589bdd"
+  },
+  "reviewers": [
+    {
+      "identity": "/root/contract_review",
+      "findings": [
+        "CR-01",
+        "CR-02",
+        "CR-03"
+      ],
+      "disposition": "RESOLVED_IN_CANDIDATE"
+    },
+    {
+      "identity": "/root/implementation_review",
+      "findings": [
+        "IR-01",
+        "IR-02",
+        "IR-03",
+        "IR-04"
+      ],
+      "disposition": "RESOLVED_IN_CANDIDATE"
+    }
+  ],
+  "protocol_cases": {
+    "NOT_RUN": 71
+  },
+  "mandatory_child_assertions": {
+    "NOT_RUN": 26
+  },
+  "historical_lifecycle": {
+    "NOT_RUN": 37
+  }
+}
