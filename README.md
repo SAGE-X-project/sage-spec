@@ -35,6 +35,8 @@ Implementations are evidence, never authority where the text is silent.
 - [Inspector plan](verification/inspector-plan.md), [traceability](verification/traceability.json),
   [standards review](verification/standards.md), [review evidence](verification/review.md).
 - [Repository roles](architecture/repository-roles.md), [migration](architecture/migration-plan.md).
+- [Preserved design branch review](verification/preserved-design-review.md) records which
+  architecture and standards proposals need revision before a new specification snapshot.
 - [Process](PROCESS.md), [changelog](CHANGELOG.md), [approved Seed](seeds/sage-spec-0.10.0.yaml).
 
 ## Status and limits
