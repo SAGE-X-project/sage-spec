@@ -15,6 +15,15 @@ this guide and the profile differ, the profile governs. Version: 0.10.0.
 | Result consumption | Match signed result to pending intent, verify source/time and representation | Do not inject unverified output into model/context |
 | Retry/subagent/restart | Apply the same gates with durable identities and causal binding | Do not bypass a failed call through another path |
 
+For A→B→C, B's trusted Client treats an authenticated A→B request as new
+captured input, then independently authorizes its exact B→C call under B's
+own policy and identity. C verifies that B-specific authorization. The
+upstream signature, digest or parent call ID records provenance but does not
+delegate the original user's authority. This does not require a human popup
+at each hop; trusted Client code may apply an approved policy automatically.
+If B lacks its own authorization, it must stop before dispatch, and allocating
+a fresh downstream ID cannot clear an upstream denial or UNKNOWN outcome.
+
 The protected original and final intent are different objects. For "weather in Seoul",
 the Client can approve an exact `get_weather` call with an explicit city under local
 policy, without forcing a user popup. If an intermediary changes the city after

@@ -1,12 +1,12 @@
 # Standards and integration decisions for the next specification revision
 
-Status: reviewed design input, **not** an amendment to the normative 0.10.0
-chapters. Reviewed against `sage-spec` revision
+Status: reviewed decisions reflected in the coordinated, unreleased 0.10.0
+normative design; this file remains an informative rationale. Reviewed against `sage-spec` revision
 `82466f488dcdd17f6ec8b6723d394eaf1fb67b5d` and the
 [preserved branch review](preserved-design-review.md). The existing
-[MCP errata adoption](mcp-errata-adoption.json) remains the current normative
-snapshot. This record resolves independent standards and integration choices
-before one coordinated chapter, charter, traceability and compatibility update.
+[MCP errata adoption](mcp-errata-adoption.json) remains a preserved historical
+snapshot. The [current revision record](spec-revision-adoption.json) pins the
+coordinated chapter, charter, traceability and compatibility update.
 
 | Finding | Decision for the coordinated revision | Verification boundary |
 | --- | --- | --- |
@@ -27,12 +27,12 @@ even if a library could transparently decode it.
 
 | Finding | Decision | Limit |
 | --- | --- | --- |
-| DSR-D01, multihop authority | Await the user scope decision between independently captured/authorized requests at each trusted Client hop and a verifiable transitive delegation chain. Until then, the current parent/call IDs express causality only; they do not grant downstream authority. | Agent-to-Agent authentication alone proves neither original-user intent nor delegation to B→C. No delegation field or implicit grant is added. |
+| DSR-D01, multihop authority | At every trusted Client hop, capture incoming authenticated input and independently authorize the exact outgoing request under that Client's authority. B→C therefore needs B's own capture and policy decision; no transitive delegation credential is defined in 0.10.0. | Agent-to-Agent authentication, parent/call IDs and upstream digests record identity or causality but do not grant downstream authority. No mandatory human popup is implied. Missing B authorization denies. |
 | DSR-D02, policy | Keep policy and evaluator under trusted deployment control. Missing, errored, retired or mismatched verdicts deny. A configured permissive policy may explicitly allow broad operations; conformance does not prove policy semantics are safe. | Signature and policy-digest validity alone do not establish a restrictive policy. |
 | DSR-D03, argument provenance | Defer a signed provenance field until the trusted Client can capture and validate its origin through the model/tool loop. | A label derived from untrusted text or code is not origin evidence. |
 | DSR-D04–D05, availability | Specify per-capture work budgets and pre-authentication registry-work limits in a separate availability profile, with bounded resource tests. Keep authoritative positive observations and fail-closed resolver outages. | No positive-cache grace, identity-existence oracle or volumetric denial-of-service guarantee is introduced in this revision. |
-| DSR-D06, DID migration | Before release, document old/new DID grammar, unsupported Solana paths, explicit conversion eligibility and rejection of ambiguous aliases. | Old identifiers are never guessed into new canonical identities. |
-| DSR-D07, evidence counts | Preserve the 77-group/386-case original baseline and 91-group/457-case first MCP adoption as dated evidence. The current MCP amendment has 91 groups, 466 planned parents and 26 mandatory children. | Existing 71-parent Inspector PASS evidence remains pinned to the earlier revision and does not execute the nine new cases. |
+| DSR-D06, DID migration | The migration plan records old/new grammar, unsupported Solana paths, explicit re-enrollment eligibility and rejection of ambiguous aliases. | Old identifiers are never guessed into new canonical identities. |
+| DSR-D07, evidence counts | Preserve the 77-group/386-case original baseline, 91-group/457-case first MCP adoption and 91-group/466-case MCP errata amendment as dated evidence. The coordinated revision has 91 groups, 471 planned parents and 26 mandatory children. | Existing 71-parent Inspector PASS evidence remains pinned to the earlier revision and does not execute the five new cases. |
 
 ## Implementation boundaries after the normative revision
 
@@ -46,8 +46,9 @@ and effect path remain under the trusted owner. A model-selected check or a
 self-reported level is not complete mediation. Go and Rust may use different
 packages and locks while producing the same externally observable verdicts.
 
-The next normative change must update the affected chapters, charter, guide,
-traceability, compatibility account and version decision together; the current
-hash-pinned snapshots and Inspector results remain historical. Only after that
-snapshot is fixed should Go/Rust implementation changes and a new Inspector run
-claim coverage of its clauses. External review and full conformance remain open.
+The coordinated normative change updates the affected chapters, charter, guide,
+traceability and compatibility account while retaining the unreleased 0.10.0
+version. Earlier hash-pinned snapshots and Inspector results remain historical.
+Go/Rust implementation changes and a new Inspector run follow this fixed snapshot;
+neither may inherit coverage of the revised clauses. External review and full
+conformance remain open.

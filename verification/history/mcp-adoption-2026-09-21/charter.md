@@ -42,9 +42,6 @@ payment, reputation and staking do not determine trust in this protocol.
 Each deployment MUST identify the conformance level and actual trusted termination
 points. It MUST NOT advertise stronger guarantees merely because the transport
 uses a SAGE message or a registered key.
-In an A→B→C workflow, B's trusted Client is a new authorising boundary for a
-B→C call. Authentication of A→B does not transfer the original user's authority
-to B or C. The current version defines no transitive delegation credential.
 
 ## 3. Roles and trusted state
 
@@ -94,7 +91,6 @@ to B or C. The current version defines no transitive delegation credential.
 | N-4 | Hiding traffic size, timing and endpoints |
 | N-5 | Broken registry consensus or a stolen authorised registry controller account |
 | N-6 | Agent creation, Card creation or registration already compromised, yielding an initially poisoned identity/baseline; follow-up investigation has no assigned release |
-| N-7 | Proof that an upstream user's authority or intent is delegated across Agent hops solely by message signatures, parent IDs or DID registration |
 
 A stored hash proves a comparison to an approved baseline, not remote runtime
 attestation. A signature proves the signed bytes, not benign intent. An untrusted
@@ -124,7 +120,7 @@ the approved execution integration scope.
 | R-11 | Writes to a record are authorised to the controller or to a party the controller named; no one else can change a record | Interoperability; review of each profile |
 | R-12 | A key-agreement key is published in the record, so that a session can be established with an agent that has never been contacted before | Vector; interoperability |
 | R-13 | Registration, resolution and revocation have a stated cost/latency measurement plan; measured claims require published results in the follow-up verification phase | Measurement |
-| R-14 | The identifier scheme is specified as a decentralised identifier method and produces a document that an independent DID consumer can parse using standard representations. Interoperability is an output-consumption goal to test; current authority and ownership still require the SAGE registry and resolution rules, not arbitrary third-party JWK members | Standard review; independent DID consumer and resolver tests |
+| R-14 | The identifier scheme is specified as a decentralised identifier method and resolves to a document that generic decentralised-identity software can consume, so that ownership of an identifier is verified with standard machinery rather than with rules private to this project | Review against the standard; interoperability with an independent resolver |
 
 ### Message authentication
 
@@ -177,7 +173,7 @@ the approved execution integration scope.
 
 | ID | Requirement | Planned verification |
 |---|---|---|
-| R-37 | Trusted capture and linkage to each exact authorised derived call at every Client hop; an upstream signed message alone never grants downstream execution authority | IG-01 |
+| R-37 | Trusted original capture and linkage to each exact authorised derived call | IG-01 |
 | R-38 | Altered recipient, tool, arguments, policy or original commitment is rejected before effects | IG-02 |
 | R-39 | Prompts, approval bypass, direct calls, missing verdict, timeout and disconnect cannot bypass verification | IG-03 |
 | R-40 | Protected baseline hashes are checked before loading and bound to the executable instance | IG-04 |
@@ -224,7 +220,6 @@ citations are informative. No implementation fills an ambiguity in normative tex
 | Hooks | Mechanism is optional; interception and fail-closed outcomes are mandatory for profile conformance |
 | Evidence | Documentation completeness is not runtime conformance or proof of security |
 | Initial compromise | N-6 deferred without promising 0.11 or 1.1 |
-| Multihop authority | Each trusted Client independently captures and authorises its outgoing call; parent IDs are causal only, and no transitive delegation is defined |
 
 ## Evidence reporting — EVIDENCE-01 (R-13, R-31, R-33)
 

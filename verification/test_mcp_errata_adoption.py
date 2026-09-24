@@ -18,7 +18,7 @@ class ErrataAdoptionTests(unittest.TestCase):
         shutil.copytree(ROOT, self.root, ignore=shutil.ignore_patterns(".git", "__pycache__"))
 
     def change_current_trace(self, mutate):
-        path = self.root / "verification/traceability.json"
+        path = self.root / "verification/history/mcp-errata-2026-09-24/verification/traceability.json"
         plan = json.loads(path.read_text())
         mutate(plan)
         path.write_text(json.dumps(plan, indent=2) + "\n")

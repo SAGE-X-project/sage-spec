@@ -8,10 +8,7 @@ Legacy `vectors/did.json` is not current conformance evidence.
 The JSON DID document has `id`, `verificationMethod`, `authentication`,
 `assertionMethod`, `keyAgreement`, `service`. No `@context` is included:
 this is the JSON representation with media type `application/did+json` in
-[DID Core](https://www.w3.org/TR/did-core/). Key type is `JsonWebKey2020`,
-as documented in the [DID property extensions](https://www.w3.org/TR/did-extensions-properties/#jsonwebkey2020).
-[Controlled Identifiers 1.0](https://www.w3.org/TR/cid/) uses the distinct
-`JsonWebKey` type. This profile does not silently alias or emit that type.
+[DID Core](https://www.w3.org/TR/did-core/). Key type is `JsonWebKey2020`.
 This projection does not claim JSON-LD processing or fetch remote contexts.
 The registry's account/controller representation is management data, not
 a fabricated self-controller DID; it remains in SAGE metadata.
@@ -37,12 +34,6 @@ noncanonical encodings. Algorithm is determined from the authenticated
 registry entry; accepting a JWK does not authorize arbitrary algorithms.
 See [RFC 7517](https://www.rfc-editor.org/rfc/rfc7517.html) and
 [RFC 8037](https://www.rfc-editor.org/rfc/rfc8037.html).
-RFC 7517 permits a generic JWK consumer to ignore unknown additional members.
-The exact member set above is SAGE's authoritative projection and validation
-profile, not a claim that arbitrary third-party JWK documents become registry
-authority. An independent DID consumer must be tested against the produced
-document before generic interoperability is claimed; that test does not replace
-the verifier's current registry observation and key checks.
 
 ## 2. Resolving — RESOLVE-02 (R-4, R-8, R-9, R-36)
 

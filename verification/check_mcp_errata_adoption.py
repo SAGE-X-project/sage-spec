@@ -6,11 +6,12 @@ import json
 import re
 from pathlib import Path
 
-from check_mcp_adoption import verify as verify_historical
+from check_mcp_adoption import pinned_path as original_pinned_path, verify as verify_historical
 from check_mcp_errata_candidate import verify_digest
 
 
 ROOT = Path(__file__).resolve().parents[1]
+HISTORY = Path("verification/history/mcp-errata-2026-09-24")
 OWNERS = {
     "merrata-config-valid": "MSET-01",
     "merrata-config-reject": "MSET-01",
@@ -31,6 +32,14 @@ def require(condition, label):
 
 def sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def pinned_path(root, record, name):
+    expected = record["current_sha256"][name]
+    historical = root / HISTORY / name
+    path = historical if historical.is_file() else root / name
+    require(sha256(path) == expected, "current identity: " + name)
+    return path
 
 
 def verify(root=ROOT):
@@ -61,7 +70,7 @@ def verify(root=ROOT):
         require(sha256(root / "proposals/non-http-mcp-errata" / name) == expected,
                 "candidate input: " + name)
     for name, expected in record["current_sha256"].items():
-        require(sha256(root / name) == expected, "current identity: " + name)
+        pinned_path(root, record, name)
     for name, expected in record["historical_sha256"].items():
         require((name not in old_record["normative_sha256"]
                  or expected == old_record["normative_sha256"][name])
@@ -78,7 +87,7 @@ def verify(root=ROOT):
             "binding vector")
 
     historical = json.loads((root / record["historical_snapshot_root"] / "verification/traceability.json").read_text())
-    current = json.loads((root / "verification/traceability.json").read_text())
+    current = json.loads(pinned_path(root, record, "verification/traceability.json").read_text())
     require(current["status"] == historical["status"] == "verification_plan_not_executed"
             and current["requirements"] == historical["requirements"]
             and current["mandatory_subscenarios"] == historical["mandatory_subscenarios"],
@@ -102,7 +111,10 @@ def verify(root=ROOT):
         require(same == old_same, "historical rule changed: " + ident)
         require(rule["case_ids"] == old["case_ids"] + [case_id for case_id in OWNERS if OWNERS[case_id] == ident],
                 "rule case mapping: " + ident)
-        lines = (root / rule["source"]).read_text().splitlines()
+        source = (pinned_path(root, record, rule["source"])
+                  if rule["source"] in record["current_sha256"]
+                  else original_pinned_path(root, old_record, rule["source"]))
+        lines = source.read_text().splitlines()
         found = [line_no for line_no, line in enumerate(lines, 1)
                  if (line.startswith("#") and re.search(r"\b" + re.escape(ident) + r"\b", line))
                  or re.match(r"^\*\*" + re.escape(ident) + r"\b", line)]

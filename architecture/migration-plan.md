@@ -41,6 +41,21 @@ Gates 4–6 can proceed independently only after their required core and profile
 
 Protocol 0.10.0 is a newly defined pre-1.0 target, not a statement that old 1.0.0-draft messages automatically interoperate. Deployment must explicitly select supported profile/version and trusted peers; negotiation must be authenticated where the normative protocol requires it. Separate old-draft compatibility endpoints/configuration from protected 0.10.0 claims. A rejected message must not trigger unsigned, replay-disabled or weaker-profile retry.
 
+Identifier migration is explicit. The prior Go repository uses forms such as
+`did:sage:ethereum:<agent-id>` and `did:sage:solana:<agent-id>`; these examples
+do not establish a complete or unique old registry grammar. Chapter 06 defines the target grammar as
+`did:sage:<kind>:<locator>:<agent-id>`; the supported chain form uses the
+`eip155` kind with the exact locator and agent-id fields defined in chapters
+09 and 11. Older identifiers lacking that complete registry locator cannot be
+resolved as 0.10.0 identities by guessing the chain or registry. `solana` is
+reserved but unsupported in 0.10.0, so old Solana paths return
+`id.unknown-kind`. A migration must prove control of the target identifier
+under its registry profile, create a new record and Card, and explicitly
+record the old/new mapping and old-key revocation disposition. Neither
+resolution nor transport accepts an alias or automatically converts an old
+DID. Compatibility tests must cover missing locator segments, unsupported
+kind, cross-registry collision and ambiguous alias rejection.
+
 A library/SDK release identifies its supported protocol/profile separately from API semver. If a canary fails, stop or route only to a previously approved compatible deployment; rollback cannot bypass freshness/replay/key-revocation requirements. Replay state and key/session migration require an explicit procedure and tests before restart/rollback. Do not resume an old session simply because a binary was downgraded.
 
 Before any package deletion or repository move, inventory downstream importers, publish a migration mapping, retain permitted compatibility aliases where safe, and establish license/release ownership using the project's policies. That audit is future work; this document does not authorize destructive operations.

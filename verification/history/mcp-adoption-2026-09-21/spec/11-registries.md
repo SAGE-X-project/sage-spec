@@ -114,12 +114,6 @@ procedure of §1 together with its profile.
 | `Content-Digest` | where a body exists | RFC 9530 field | `03-rfc9421.md` |
 
 Headers beginning `X-SAGE-X-` are for private use.
-The signed `X-SAGE-*` names are retained for 0.10.0 compatibility as an
-explicit exception to [BCP 178](https://www.rfc-editor.org/rfc/rfc6648.html)'s
-recommendation against creating new `X-` names. The prefix alone supplies no
-trust or standardization status. A replacement name would change covered HTTP
-components and requires a separately versioned migration, not an alias or
-unsigned fallback.
 
 Optional chapter 08 projection headers are `X-SAGE-Message-ID`,
 `X-SAGE-Context-ID` and `X-SAGE-Task-ID`. When present they equal the corresponding

@@ -33,30 +33,11 @@ principal's trust boundary, never an untrusted transparent intermediary.
 
 ## 2. Capture, derivation and authorisation — EXEC-02
 
-The Client MUST capture the submitted UTF-8 bytes before untrusted expansion,
+The Client MUST capture the user's submitted UTF-8 bytes before untrusted expansion,
 assign an unpredictable request identifier, and retain the immutable original and its
 SHA-256 commitment in its protected store. No Unicode or whitespace normalisation is
 performed for this commitment. The capture boundary (typed prompt, API submission, or
-trusted workflow input) MUST be disclosed in deployment documentation. Every
-capture is an ordered list of inputs (one item for a single prompt). The
-commitment input is `UTF8("sage-original|0.10.0") || 0x00 || be32(item_count)`
-followed by each item encoded as `be64(byte_length) || bytes`; original_digest
-is SHA-256 of this input. At most 1024 inputs and 1 MiB aggregate captured
-bytes are allowed. A changed or extended list receives a new request ID.
-This framing prevents single-input versus bundle ambiguity.
-
-For a chain A→B→C, B's trusted Client MUST treat the authenticated A→B message
-as input to a new local capture, not as permission to execute or delegate the
-original user's request. Before B signs a B→C call, its gate MUST independently
-authorize the exact recipient, tool, arguments, component baseline and policy
-under B's own approved authority, with fresh request and call identities. C
-MUST verify B as the issuer and apply its configured B-specific authorization
-mapping. If B cannot establish its own trusted capture and authorization, it
-MUST deny the downstream call. A parent ID or carried upstream digest MAY aid
-audit but MUST NOT replace any of these checks or imply transitive delegation.
-This rule does not require human confirmation at every hop; that remains a
-trusted Client policy decision. The current version defines no portable
-upstream-user delegation credential or automatic authority inheritance.
+trusted workflow input) MUST be disclosed in deployment documentation. Every capture is an ordered list of inputs (one item for a single prompt). The commitment input is `UTF8("sage-original|0.10.0") || 0x00 || be32(item_count)` followed by each item encoded as `be64(byte_length) || bytes`; original_digest is SHA-256 of this input. At most 1024 inputs and 1 MiB aggregate captured bytes are allowed. A changed or extended list receives a new request ID. This framing prevents single-input versus bundle ambiguity.
 
 A model or tool MAY propose a derived call. The trusted Client MUST authorise the
 exact recipient, tool name, arguments, component manifest and policy before signing.
@@ -256,10 +237,6 @@ is a separately authorised tool call; it does not retroactively erase the origin
 A new desired action receives a new call ID and policy evaluation. Retrying with a
 new ID solely to bypass UNKNOWN is not permitted by the trusted Client policy.
 Parent IDs express causality; they grant no delegated authority or wider permissions.
-A downstream Client MUST NOT create a new call ID merely to escape an upstream
-denial or UNKNOWN outcome; it needs a genuinely new, independently authorized
-request. A receiver MUST NOT treat a parent ID as evidence of the parent's
-issuer policy decision or original-user authorization.
 
 ## 6. Component manifest and load binding — EXEC-06
 
