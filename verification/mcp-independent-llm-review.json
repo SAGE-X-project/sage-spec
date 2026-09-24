@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "kind": "mcp-independent-llm-review",
+  "finding": "ADOPT-06",
+  "protocol_version": "0.10.0",
+  "target_revision": "d86ca1a4d326d6090e50d100b834d38ec204a2c2",
+  "review_package": "verification/mcp-external-review-package.json",
+  "supplemental_target_sha256": {
+    "spec/00-overview.md": "26731b6d91994677548cff3efabfb0f5d9406de53b4e030bfb637f28137e8a85",
+    "spec/11-registries.md": "668a2c0ccf51651463829d4de80bce4206231f48c3860f6a195f9380f1c14a4b"
+  },
+  "status": "REVIEWED_WITH_OPEN_FINDINGS",
+  "method": "two isolated Codex LLM contexts; read-only source review",
+  "organizationally_external": false,
+  "third_party_audit": "NOT_PERFORMED",
+  "implementation_conformance": "NOT_ESTABLISHED",
+  "release_claim": false,
+  "reviewers": [
+    {
+      "id": "LLM-MCP",
+      "identity": "Codex LLM in a fresh context",
+      "affiliation": "same service and workspace as the authoring agent",
+      "conflict": "not organizationally independent",
+      "method": "read-only normative and MCP 2025-06-18 lifecycle, transport, and tools review",
+      "hash_checked_paths": [
+        "profiles/non-http-mcp-security.md",
+        "profiles/non-http-mcp-tool.json",
+        "profiles/agent-mcp-security.md",
+        "spec/01-crypto.md",
+        "spec/03-rfc9421.md",
+        "spec/04-hpke.md",
+        "spec/05-session.md",
+        "spec/08-transport.md",
+        "spec/09-registry.md"
+      ],
+      "finding_ids": [],
+      "limits": "No full RFC 9180 or RFC 8032 audit, runtime test, host test, or live registry test. No finding is a scoped observation, not proof of completeness."
+    },
+    {
+      "id": "LLM-CRYPTO",
+      "identity": "Codex LLM in a separate fresh context",
+      "affiliation": "same service and workspace as the authoring agent",
+      "conflict": "not organizationally independent",
+      "method": "read-only cryptographic and trust-boundary source review; independently checked the pinned descriptor encoding and digest",
+      "finding_ids": ["LLM-01", "LLM-02"],
+      "limits": "No formal cryptographic analysis, implementation interoperability test, host test, or deployed registry test."
+    }
+  ],
+  "findings": [
+    {
+      "id": "LLM-01",
+      "severity": "medium",
+      "status": "OPEN_NORMATIVE",
+      "anchors": ["spec/00-overview.md:64", "spec/09-registry.md:84-93"],
+      "trigger": "A nonempty field in the REG-04 proof-of-possession challenge",
+      "ambiguity": "The global len16(s) includes s, whereas REG-04 appends s separately and redefines len16 as length only.",
+      "consequence": "Conforming readers can derive different signed challenge bytes and disagree on key registration or resolution.",
+      "correction": "Define len16 once as length only, align REG-04, and add exact challenge-byte vectors."
+    },
+    {
+      "id": "LLM-02",
+      "severity": "high",
+      "status": "OPEN_NORMATIVE",
+      "anchors": ["spec/09-registry.md:24-31", "spec/09-registry.md:42-48", "spec/11-registries.md:28-55"],
+      "trigger": "Registration and selection of the required X25519 HPKE key",
+      "ambiguity": "REG-01 requires a chapter-11 alg value and rejects unknown values, but chapter 11 registers only signing alg literals; X25519 is a key type without a specified registry alg literal.",
+      "consequence": "A strict implementation cannot register or select the responder KEM key consistently.",
+      "correction": "Define an exact X25519 registry alg literal and validation rule, exclude it from signature use, and add registration and handshake vectors."
+    }
+  ],
+  "next_gate": "Resolve both normative findings in a separately pinned revision, then independently re-review and run version-bound implementation and Inspector checks before any conformance claim."
+}
