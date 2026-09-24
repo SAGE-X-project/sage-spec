@@ -37,6 +37,10 @@ Implementations are evidence, never authority where the text is silent.
 - [Repository roles](architecture/repository-roles.md), [migration](architecture/migration-plan.md).
 - [Preserved design branch review](verification/preserved-design-review.md) records which
   architecture and standards proposals need revision before a new specification snapshot.
+- [MCP binding errata candidate](proposals/non-http-mcp-errata/candidate.md) defines
+  proposed local binding identity and protected-call ordering for that revision.
+- [Next-revision scope decisions](proposals/non-http-mcp-errata/scope-decisions.md)
+  distinguish changes to carry forward from claims left outside 0.10.0.
 - [Process](PROCESS.md), [changelog](CHANGELOG.md), [approved Seed](seeds/sage-spec-0.10.0.yaml).
 
 ## Status and limits
