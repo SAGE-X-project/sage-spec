@@ -68,11 +68,10 @@ IETF RFC. Examples describe proposed behaviour rather than deployed services.
 
 The [original adoption record](verification/mcp-adoption.json) fixes the reviewed
 non-HTTP MCP 2025-06-18 design and its 457-case historical plan. The
-[errata adoption record](verification/mcp-errata-adoption.json) pins the preserved
-466-case amendment. The [current revision record](verification/spec-revision-adoption.json)
-pins 91 rule groups and 471 top-level planned cases: 386 baseline cases, 71
-original MCP binding parents, nine errata parents and five revision parents,
-with 26 mandatory child assertions.
+[errata adoption record](verification/mcp-errata-adoption.json) pins the current
+profile and traceability. The current plan contains 91 rule groups and 466
+top-level planned cases: 386 baseline cases, 71 original MCP binding parents and
+nine errata parents, with 26 mandatory child assertions.
 All are planned/unexecuted in this normative plan; historical runtime reports remain
 separate and must be mapped by exact case evidence. This is design adoption, not a tag,
 release, third-party audit or a claim that either core supports the whole binding.

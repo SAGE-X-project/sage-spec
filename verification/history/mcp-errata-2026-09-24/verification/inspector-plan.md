@@ -227,13 +227,6 @@ not an extra top-level test count. Run each in
 its declared scope: the isolated 1024-entry owner bound is a unit seam; authenticated
 traffic must stop at the tighter session-record ceiling. Every added parent/child
 remains planned or NOT_RUN. Older 37-case Inspector lifecycle evidence is a separate
-catalog and is neither added nor automatically mapped into this 471-case plan.
+catalog and is neither added nor automatically mapped into this 466-case plan.
 The earlier 457-case snapshot and its 71-case Inspector overlay retain their pinned
 historical revision; none of the nine new cases inherits PASS evidence.
-The preserved MCP errata snapshot has 466 planned parents. The current
-coordinated revision adds five planned parents for independently authorized
-Agent hops and DID/JWK interoperability boundaries. Its 471 parents remain
-unexecuted as a plan; no historical Inspector result is promoted. The added
-cases are `mrevision-hop-authorized`, `mrevision-hop-unapproved`,
-`mrevision-parent-no-grant`, `mrevision-did-consumer` and
-`mrevision-extra-jwk-authority`.

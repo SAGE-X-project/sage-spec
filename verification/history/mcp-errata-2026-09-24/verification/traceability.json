@@ -159,7 +159,7 @@
     },
     {
       "id": "R-14",
-      "description": "A did:sage identifier resolves to a DID document that an independent generic DID consumer can parse; SAGE authority still derives from its specified registry record and strict projection, not from generic consumer acceptance",
+      "description": "The identifier scheme is specified as a decentralised identifier method and resolves to a document that generic decentralised-identity software can consume, so that ownership of an identifier is verified with standard machinery rather than with rules private to this project",
       "rule_ids": [
         "RESOLVE-01",
         "RESOLVE-03",
@@ -476,7 +476,7 @@
     },
     {
       "id": "R-37",
-      "description": "Trusted capture at each Agent Client hop and linkage to each exact independently authorised derived call; upstream authentication, IDs and digests do not convey downstream authority",
+      "description": "Trusted original capture and linkage to each exact authorised derived call",
       "rule_ids": [
         "EXEC-02",
         "EXEC-03"
@@ -595,7 +595,7 @@
     {
       "id": "OVERVIEW-01",
       "source": "spec/00-overview.md",
-      "line": 41,
+      "line": 37,
       "requirements": [
         "R-1",
         "R-28",
@@ -611,7 +611,7 @@
     {
       "id": "OVERVIEW-02",
       "source": "spec/00-overview.md",
-      "line": 78,
+      "line": 74,
       "requirements": [
         "R-31",
         "R-32"
@@ -626,7 +626,7 @@
     {
       "id": "OVERVIEW-03",
       "source": "spec/00-overview.md",
-      "line": 96,
+      "line": 92,
       "requirements": [
         "R-34"
       ],
@@ -642,7 +642,7 @@
     {
       "id": "OVERVIEW-04",
       "source": "spec/00-overview.md",
-      "line": 116,
+      "line": 112,
       "requirements": [
         "R-32",
         "R-33"
@@ -865,7 +865,7 @@
     {
       "id": "MSG-02",
       "source": "spec/03-rfc9421.md",
-      "line": 35,
+      "line": 30,
       "requirements": [
         "R-15",
         "R-16",
@@ -891,7 +891,7 @@
     {
       "id": "MSG-03",
       "source": "spec/03-rfc9421.md",
-      "line": 51,
+      "line": 46,
       "requirements": [
         "R-18",
         "R-20"
@@ -914,7 +914,7 @@
     {
       "id": "MSG-04",
       "source": "spec/03-rfc9421.md",
-      "line": 68,
+      "line": 63,
       "requirements": [
         "R-20",
         "R-30",
@@ -940,7 +940,7 @@
     {
       "id": "MSG-05",
       "source": "spec/03-rfc9421.md",
-      "line": 86,
+      "line": 81,
       "requirements": [
         "R-17"
       ],
@@ -963,7 +963,7 @@
     {
       "id": "MSG-06",
       "source": "spec/03-rfc9421.md",
-      "line": 105,
+      "line": 100,
       "requirements": [
         "R-35"
       ],
@@ -1773,9 +1773,7 @@
         "RESOLVE-01-P",
         "RESOLVE-01-N01",
         "RESOLVE-01-N02",
-        "RESOLVE-01-N03",
-        "mrevision-did-consumer",
-        "mrevision-extra-jwk-authority"
+        "RESOLVE-01-N03"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [
@@ -1786,7 +1784,7 @@
     {
       "id": "RESOLVE-02",
       "source": "spec/10-resolution.md",
-      "line": 47,
+      "line": 38,
       "requirements": [
         "R-4",
         "R-8",
@@ -1810,7 +1808,7 @@
     {
       "id": "RESOLVE-03",
       "source": "spec/10-resolution.md",
-      "line": 67,
+      "line": 58,
       "requirements": [
         "R-4",
         "R-9",
@@ -1831,7 +1829,7 @@
     {
       "id": "RESOLVE-04",
       "source": "spec/10-resolution.md",
-      "line": 85,
+      "line": 76,
       "requirements": [
         "R-8",
         "R-9"
@@ -1853,7 +1851,7 @@
     {
       "id": "RESOLVE-05",
       "source": "spec/10-resolution.md",
-      "line": 94,
+      "line": 85,
       "requirements": [
         "R-14",
         "R-34",
@@ -1992,7 +1990,7 @@
     {
       "id": "TABLE-07",
       "source": "spec/11-registries.md",
-      "line": 128,
+      "line": 122,
       "requirements": [
         "R-35"
       ],
@@ -2050,9 +2048,7 @@
         "CST-02-02",
         "CST-02-03",
         "CST-02-04",
-        "CST-02-05",
-        "mrevision-hop-authorized",
-        "mrevision-hop-unapproved"
+        "CST-02-05"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [
@@ -2064,7 +2060,7 @@
     {
       "id": "EXEC-03",
       "source": "profiles/agent-mcp-security.md",
-      "line": 116,
+      "line": 97,
       "requirements": [
         "R-37",
         "R-38"
@@ -2087,7 +2083,7 @@
     {
       "id": "EXEC-04",
       "source": "profiles/agent-mcp-security.md",
-      "line": 159,
+      "line": 140,
       "requirements": [
         "R-38",
         "R-39",
@@ -2111,7 +2107,7 @@
     {
       "id": "EXEC-05",
       "source": "profiles/agent-mcp-security.md",
-      "line": 205,
+      "line": 186,
       "requirements": [
         "R-39",
         "R-41"
@@ -2126,8 +2122,7 @@
         "CST-01-01",
         "CST-01-05",
         "CST-01-06",
-        "CST-01-08",
-        "mrevision-parent-no-grant"
+        "CST-01-08"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [
@@ -2139,7 +2134,7 @@
     {
       "id": "EXEC-06",
       "source": "profiles/agent-mcp-security.md",
-      "line": 264,
+      "line": 241,
       "requirements": [
         "R-40",
         "R-43",
@@ -2163,7 +2158,7 @@
     {
       "id": "EXEC-07",
       "source": "profiles/agent-mcp-security.md",
-      "line": 297,
+      "line": 274,
       "requirements": [
         "R-42",
         "R-45"
@@ -2191,7 +2186,7 @@
     {
       "id": "EXEC-08",
       "source": "profiles/agent-mcp-security.md",
-      "line": 346,
+      "line": 323,
       "requirements": [
         "R-39",
         "R-43",
@@ -2217,7 +2212,7 @@
     {
       "id": "EXEC-09",
       "source": "profiles/agent-mcp-security.md",
-      "line": 376,
+      "line": 353,
       "requirements": [
         "R-45"
       ],
@@ -2286,7 +2281,7 @@
     {
       "id": "EVIDENCE-01",
       "source": "charter.md",
-      "line": 229,
+      "line": 224,
       "requirements": [
         "R-13",
         "R-31",
@@ -6834,51 +6829,6 @@
       "input": "Two independently authenticated owners share one finite Guard gate",
       "preconditions": "Pinned revised non-HTTP MCP binding; trusted isolated fixture; no attack-capable reproduction code.",
       "expected": "Independent exchange slots retain shared worker, queue and outstanding-I/O bounds without borrowing readiness",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mrevision-hop-authorized",
-      "rule_id": "EXEC-02",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "Authenticated A-to-B input and a fresh exact B-to-C request",
-      "preconditions": "B trusted Client captures authenticated upstream input and its own approved policy authorizes the precise B-to-C target, arguments, peer, fresh request and call IDs; C has the B-specific active binding",
-      "expected": "Allow B-to-C only after B signs and C verifies the exact locally authorized request; no claim that A delegated original-user authority",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mrevision-hop-unapproved",
-      "rule_id": "EXEC-02",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "B forwards authenticated A-to-B content or digest without B-side authorization",
-      "preconditions": "B lacks a trusted capture or matching active policy decision for the proposed B-to-C call; downstream effect counter starts at zero",
-      "expected": "Deny before signing or effects; upstream authentication and digest alone cannot authorize the call",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mrevision-parent-no-grant",
-      "rule_id": "EXEC-05",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "B creates a new downstream ID after an upstream denial or UNKNOWN outcome",
-      "preconditions": "A parent_call_id or upstream digest is present but B has no independent authorization; downstream effect counter starts at zero",
-      "expected": "Deny; a new call ID cannot bypass the unresolved or denied parent and the parent reference itself grants no authority",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mrevision-did-consumer",
-      "rule_id": "RESOLVE-01",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "Produced application/did+json document using JsonWebKey2020",
-      "preconditions": "A valid active SAGE registry record is projected; use an independently implemented generic DID consumer and compare parsed public fields with the record",
-      "expected": "Consumer parses the produced document and public verification method; report interoperability separately from SAGE authority and do not promote consumer parsing to registry proof",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mrevision-extra-jwk-authority",
-      "rule_id": "RESOLVE-01",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "Authoritative SAGE projection input with an extra, contradictory or private JWK member",
-      "preconditions": "Input otherwise names a valid active registry record; receiver applies the strict SAGE projection grammar",
-      "expected": "Reject the extra or contradictory authoritative input without publishing a DID document; generic JWK unknown-member tolerance does not override SAGE authority rules",
       "evidence_status": "planned_not_executed"
     }
   ],

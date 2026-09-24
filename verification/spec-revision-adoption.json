@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "kind": "coordinated-normative-design-revision",
+  "status": "AMENDED_NORMATIVE_DESIGN",
+  "protocol_version": "0.10.0",
+  "prior_revision": "858f8de56a8f04adaeed7380291d55d237842094",
+  "prior_adoption": "verification/mcp-errata-adoption.json",
+  "prior_adoption_sha256": "26df6c8c2e5295642b2331a5b8a10dc727f4ad19b1c79a7beeaa78848bd283aa",
+  "scope": "Each trusted Agent Client hop independently captures and authorizes its outgoing request. Standards and identifier migration boundaries are clarified without adding wire fields.",
+  "counts": {
+    "rule_groups": 91,
+    "historical_parent_cases": 466,
+    "new_parent_cases": 5,
+    "total_parent_cases": 471,
+    "mandatory_children": 26
+  },
+  "changed_requirement_ids": [
+    "R-14",
+    "R-37"
+  ],
+  "new_case_ids": [
+    "mrevision-hop-authorized",
+    "mrevision-hop-unapproved",
+    "mrevision-parent-no-grant",
+    "mrevision-did-consumer",
+    "mrevision-extra-jwk-authority"
+  ],
+  "current_sha256": {
+    "charter.md": "f11192af6397ac95f80287a3ff32ef662a3e94532a57646fab09b6776d938e01",
+    "profiles/agent-mcp-security.md": "0538acbdcfc143d93fb7d99a2a2c09c068fc354388c4e37c7489204305b1913f",
+    "spec/00-overview.md": "26731b6d91994677548cff3efabfb0f5d9406de53b4e030bfb637f28137e8a85",
+    "spec/03-rfc9421.md": "ca6b85e12a0b0e1a4f28b4eb2a9b677d29e2fd2abe9691d1ee30bfa14ee858c9",
+    "spec/10-resolution.md": "e782323b49e05507fca8b5e46e7092c2abee6453b65d4a7f7a62adc0b6d10fa4",
+    "spec/11-registries.md": "668a2c0ccf51651463829d4de80bce4206231f48c3860f6a195f9380f1c14a4b",
+    "verification/traceability.json": "b1034b4c37c19560da5540b29a5ef61e7ca8dd629a04e4e1caa4a57e77989887",
+    "README.md": "2031d4fe30d7573c36cfc60854f39bd69138b188bcf8cbcf842789c8e1cbf2e9",
+    "PROCESS.md": "463fc45f7d635869b4bd625e4dcf34aeee937d522baab12e4bc44c36594443c6",
+    "CHANGELOG.md": "5e496ae05f639f8fe1d96d80b3d8faecef192039ac792ca63b9f81b1c3a6e4f9",
+    "verification/inspector-plan.md": "c393cde7182b49723a0f1a2a6b1752b872881c53169ff3fecc4ff58525ac3a8e",
+    "verification/standards-revision-decisions.md": "e4e3d1714a91fb0ccfa9141fb2f183813a6ea8b31227a436c40129540f3d55ea",
+    "architecture/migration-plan.md": "8ecdd91066fa6ddd6cdfe933936b03c33fe218eea217f7e72db00518b42feeff",
+    "guides/integration.md": "dc9808fc2ddfdfbb08fee395e72d68cd7eafcb603f78efeb9921eeccb6ed3743"
+  },
+  "conformance": "NOT_ESTABLISHED",
+  "inspector_revised_cases": "NOT_RUN",
+  "external_audit": "NOT_PERFORMED",
+  "release_or_tag_created": false,
+  "compatibility": "No new wire field or algorithm. The clarified per-hop authorization and strict identity/JWK acceptance are verdict-affecting; implementations and Inspector must be evaluated against this exact design before claiming support."
+}

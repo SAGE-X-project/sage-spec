@@ -1,16 +1,5 @@
 # Changelog
 
-## 0.10.0 — coordinated trust and standards clarification (2026-09-24)
-
-- Require each trusted Client in a multihop path to capture and independently
-  authorize its exact outgoing request; upstream IDs and digests convey no grant.
-- Clarify DID/JWK consumer interoperability, one-signature HTTP profile and
-  existing signed `X-SAGE-*` naming exception. Record explicit DID migration.
-- Add five unexecuted Inspector parent cases, for 91 groups, 471 parents and
-  26 mandatory children. Pin the prior 466-case design as historical.
-- No wire field, release, audit or conformance claim is added; implementations
-  and Inspector need revision-pinned validation.
-
 ## 0.10.0 — non-HTTP MCP binding errata adoption (2026-09-24)
 
 - Pin trusted local binding identity, exact descriptor JCS digest, peer expectations

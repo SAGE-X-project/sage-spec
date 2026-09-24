@@ -26,10 +26,6 @@ them and cites it.
 Out of scope, as `charter.md` §1 records: the implementation of any
 registry, including the contracts published by
 [sage-contracts](https://github.com/SAGE-X-project/sage-contracts); concrete proxy/client implementations and key-storage mechanisms; payment, reputation and staking signals. Required security integration outcomes ARE specified in the Execution Guard profile.
-Across an Agent chain, each hop's trusted Client captures and authorizes its own
-outgoing operation. Signed transport and causal parent identifiers do not convey
-the upstream user's authority to a later hop; this version defines no
-transitive delegation credential.
 
 ## 2. Conventions
 
@@ -132,7 +128,6 @@ Normative:
 | RFC 6979 | Deterministic usage of DSA and ECDSA |
 | RFC 7748 | Elliptic curves for security (X25519) |
 | RFC 7517, RFC 7518 | JSON Web Key, JSON Web Algorithms |
-| RFC 9110 | HTTP content-coding and negotiation semantics |
 | RFC 8785 | JSON canonicalisation scheme |
 | RFC 8439 | ChaCha20 and Poly1305 |
 | RFC 9180 | Hybrid public key encryption |
@@ -142,7 +137,6 @@ Normative:
 | RFC 9457 | Problem details for HTTP APIs |
 | W3C Decentralized Identifiers 1.0 | Identifier syntax, documents, resolution requirements |
 | W3C Controlled Identifiers 1.0 | Verification methods, services, verification relationships |
-| W3C DID Document Property Extensions | `JsonWebKey2020` vocabulary reference; not an automatic alias for `JsonWebKey` |
 | W3C DID Resolution | Resolution and dereferencing contract |
 | CAIP-2 | Chain-agnostic chain identifiers |
 
