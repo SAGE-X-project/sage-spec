@@ -1,0 +1,69 @@
+{
+  "kind": "mcp-errata-normative-design-adoption",
+  "schema_version": 1,
+  "status": "AMENDED_NORMATIVE_DESIGN",
+  "protocol_version": "0.10.0",
+  "mcp_version": "2025-06-18",
+  "prior_revision": "497c1045e2cc9b9d118d958443e678f212f57803",
+  "prior_adoption": "verification/mcp-adoption.json",
+  "prior_adoption_sha256": "cb18638a96f7099f26b960d7d1dd1d2f679516a39ded0e32b773d3963e26b1bc",
+  "candidate_inputs_sha256": {
+    "candidate.md": "d08028085239047c7f37cd93128b6dcacaf79c220e3d5d0401821a2f8b72d4f1",
+    "descriptor-digest.json": "bee5e62a9269610f677fb320d402b1541831c1d8f0be4a573d1828dca7be38da",
+    "scope-decisions.md": "8265044f09f9b1a17d13e8507fdc61a43e11489085e3aeb469a049a2370a2d9b"
+  },
+  "current_sha256": {
+    "profiles/non-http-mcp-security.md": "9c7851d095208c975792565266e481c120ef754ae8eb9529c62b53bf12a1d4fa",
+    "verification/traceability.json": "db1f762c1ba87b197bdc8fc37f88c4c441cc937b92783f0c00ac3b3bb1367aff",
+    "PROCESS.md": "5b7e51ac2ede09fd02054ce8e6d0c7c69c6b801d334a7b253fe47dcf6a69c43b",
+    "CHANGELOG.md": "f8250d6f2e1f4a97709ca3c3c8dfb726478da2f0fbb767f913f22401ba74d3aa",
+    "README.md": "3e5ba35ad1e8fba2aa5195b17a3bbc172d06a1c28996737daaa4730cc4d46ed4",
+    "verification/inspector-plan.md": "7a36a39978d7d90bdad12e53f38fce56c94b5162c324460889723dc8bd0d7ca4"
+  },
+  "historical_snapshot_root": "verification/history/mcp-adoption-2026-09-21",
+  "historical_sha256": {
+    "profiles/non-http-mcp-security.md": "af38e20cb2fee9ca66f975a3a1c1a21478833178c558df0383b6ad584827e1cc",
+    "verification/traceability.json": "d612fa74803c7bd74a0899958d961a29582e27aa017fba0514c50c9082330964",
+    "PROCESS.md": "38a2fe21d42ca1c0459764d09d890e1cc12f8d2f61ff9fd92a635ee9626f1cab"
+  },
+  "descriptor": "profiles/non-http-mcp-tool.json",
+  "descriptor_file_sha256": "c3edd622a7c90baa028118f63af42a91f354fe7202070ef91a4bd349e4048204",
+  "binding_identifier": "sage-mcp-non-http/0.10.0/mcp-2025-06-18",
+  "descriptor_digest": "sha256-jcs:f40nkKDT3hQs9poaxZxm8Bgw4hUV1f036fGMmIaKPtQ",
+  "counts": {
+    "rule_groups": 91,
+    "historical_parent_cases": 457,
+    "new_parent_cases": 9,
+    "total_parent_cases": 466,
+    "mandatory_children": 26
+  },
+  "new_case_ids": [
+    "merrata-config-valid",
+    "merrata-config-reject",
+    "merrata-config-change",
+    "merrata-local-single-flight",
+    "merrata-server-overlap",
+    "merrata-deferred-frame",
+    "merrata-pending-followup",
+    "merrata-deadline-close",
+    "merrata-shared-owners"
+  ],
+  "conformance": "NOT_ESTABLISHED",
+  "inspector_revised_cases": "NOT_RUN",
+  "external_audit": "NOT_PERFORMED",
+  "release_or_tag_created": false,
+  "compatibility": [
+    "Unreleased 0.10.0 documentation design correction; local acceptance verdicts change, with no new wire member.",
+    "Existing 71-parent Inspector PASS overlay is pinned to the old revision and does not cover the nine new cases.",
+    "Go and Rust owners require implementation updates and revision-pinned Inspector evaluation before a conformance claim.",
+    "Previously approved multihop delegation and remaining design findings are not silently added to this amendment."
+  ],
+  "historical_errata_review": "verification/post-adoption-errata-review.json",
+  "historical_errata_review_sha256": "e1997fdf6a7213c3264ce692eb227a21abbb4918c308c1da93476832382b30a9",
+  "dispositions": {
+    "ADOPT-02": "RESOLVED_IN_AMENDED_DESIGN",
+    "ADOPT-03": "RESOLVED_IN_AMENDED_DESIGN",
+    "ADOPT-05": "OPEN_PROVENANCE",
+    "ADOPT-06": "PENDING_EXTERNAL"
+  }
+}

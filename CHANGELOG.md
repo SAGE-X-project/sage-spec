@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.10.0 — non-HTTP MCP binding errata adoption (2026-09-24)
+
+- Pin trusted local binding identity, exact descriptor JCS digest, peer expectations
+  and construction-time rejection before MCP setup.
+- Require one active protected JSON-RPC exchange per owner, including local busy
+  refusal, authenticated overlap closure, output-barrier ordering and durable
+  outcome preservation.
+- Add nine planned parent cases; 91 groups, 466 parent cases and 26 mandatory
+  child assertions are now in the current plan. The prior 457-case plan remains
+  pinned as historical evidence.
+- This is an unreleased 0.10.0 design correction with changed local admission
+  verdicts. Earlier Inspector PASS results do not establish conformance to it;
+  Go/Rust owners and Inspector require a new revision-pinned implementation and run.
+  No wire field, release, external audit or conformance claim is added.
+
 ## 0.10.0 — non-HTTP MCP normative design adoption (2026-09-21)
 
 - Publish the preserved 0.10.0 design baseline without changing historical vector metadata.

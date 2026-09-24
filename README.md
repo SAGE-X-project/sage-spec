@@ -37,8 +37,8 @@ Implementations are evidence, never authority where the text is silent.
 - [Repository roles](architecture/repository-roles.md), [migration](architecture/migration-plan.md).
 - [Preserved design branch review](verification/preserved-design-review.md) records which
   architecture and standards proposals need revision before a new specification snapshot.
-- [MCP binding errata candidate](proposals/non-http-mcp-errata/candidate.md) defines
-  proposed local binding identity and protected-call ordering for that revision.
+- [MCP binding errata candidate](proposals/non-http-mcp-errata/candidate.md) preserves
+  the reviewed input for the adopted local binding identity and exchange ordering.
 - [Next-revision scope decisions](proposals/non-http-mcp-errata/scope-decisions.md)
   distinguish changes to carry forward from claims left outside 0.10.0.
 - [Process](PROCESS.md), [changelog](CHANGELOG.md), [approved Seed](seeds/sage-spec-0.10.0.yaml).
@@ -66,10 +66,12 @@ IETF RFC. Examples describe proposed behaviour rather than deployed services.
 
 ## Adopted MCP design and historical proposals
 
-The [adoption record](verification/mcp-adoption.json) fixes the reviewed non-HTTP
-MCP 2025-06-18 design, exact descriptor, compatibility decisions and traceability.
-The current plan contains 91 rule groups and 457 top-level planned cases: the preserved
-386 baseline cases plus 71 MCP binding parents, with 26 mandatory child assertions.
+The [original adoption record](verification/mcp-adoption.json) fixes the reviewed
+non-HTTP MCP 2025-06-18 design and its 457-case historical plan. The
+[errata adoption record](verification/mcp-errata-adoption.json) pins the current
+profile and traceability. The current plan contains 91 rule groups and 466
+top-level planned cases: 386 baseline cases, 71 original MCP binding parents and
+nine errata parents, with 26 mandatory child assertions.
 All are planned/unexecuted in this normative plan; historical runtime reports remain
 separate and must be mapped by exact case evidence. This is design adoption, not a tag,
 release, third-party audit or a claim that either core supports the whole binding.

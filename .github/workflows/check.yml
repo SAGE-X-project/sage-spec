@@ -79,3 +79,5 @@ jobs:
           python3 -B verification/check_post_adoption_errata.py
           python3 -B verification/test_mcp_errata_candidate.py
           python3 -B verification/check_mcp_errata_candidate.py
+          python3 -B verification/test_mcp_errata_adoption.py
+          python3 -B verification/check_mcp_errata_adoption.py
