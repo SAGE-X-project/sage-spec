@@ -4,6 +4,8 @@ Reviewed 2026-09-13 against official publications. This document records selecti
 and limitations; it is not a claim of certification, an IETF registration, or a
 security proof. The existing protocol mechanisms are retained where sound, with
 SAGE-specific profiles made explicit. Reported errata are not silently normative.
+The [2026-09-24 standards decisions](standards-revision-decisions.md) record
+later applicability review without rewriting the original evidence snapshot.
 
 ## Adopted constructions and boundaries
 
@@ -17,11 +19,14 @@ SAGE-specific profiles made explicit. Reported errata are not silently normative
 | [RFC 8439](https://www.rfc-editor.org/rfc/rfc8439.html) | ChaCha20-Poly1305 | Sequence nonces, key lifetime and replay state are SAGE responsibilities |
 | [RFC 8032](https://www.rfc-editor.org/rfc/rfc8032.html), [RFC 7748](https://www.rfc-editor.org/rfc/rfc7748.html) | Ed25519, X25519 | Validation and intended relationship are explicit; X25519 is not a signature algorithm |
 | [RFC 7517](https://www.rfc-editor.org/rfc/rfc7517.html), [RFC 8037](https://www.rfc-editor.org/rfc/rfc8037.html) | JWK representation | No claim of JWE or all JOSE algorithms; SAGE Keccak suite is not JOSE ES256K |
+| [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html) | HTTP content-coding negotiation | `Accept-Encoding: identity` is integration guidance; SAGE still omits/rejects `Content-Encoding` in its HTTP profile |
+| [BCP 178 / RFC 6648](https://www.rfc-editor.org/rfc/rfc6648.html) | Extension-name practice | Existing signed `X-SAGE-*` names are retained for 0.10.0 as an explicit naming exception, not proof that `X-` means private or unstandardized |
 | [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119.html), [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174.html) | Capitalised normative vocabulary | Normative design is distinguished from verification status |
 | [RFC 5234](https://www.rfc-editor.org/rfc/rfc5234.html), [RFC 4648](https://www.rfc-editor.org/rfc/rfc4648.html) | Grammar and canonical binary text encodings | Semantic lengths and rejection rules also apply |
 | [RFC 8941](https://www.rfc-editor.org/rfc/rfc8941.html), [RFC 9651](https://www.rfc-editor.org/rfc/rfc9651.html) | Structured fields used by RFC 9421 | This profile uses the RFC 9421 integer/string/byte/list subset; later field types do not expand accepted signature parameters |
 | [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457.html) | HTTP problem details where specified | Authentication failures remain generic; diagnostics do not expose verification oracles |
 | [DID Core](https://www.w3.org/TR/did-core/), [Controlled Identifiers](https://www.w3.org/TR/cid-1.0/) | Method grammar, verification relationships and document representation | SAGE Card proof is explicitly custom; no unsupported W3C suite claim |
+| [DID property extensions](https://www.w3.org/TR/did-extensions-properties/#jsonwebkey2020), [Controlled Identifiers 1.0](https://www.w3.org/TR/cid/) | Verification-method type vocabulary | `JsonWebKey2020` has an extension definition; Controlled Identifiers 1.0 uses `JsonWebKey`; the types are not silently interchangeable |
 | [DID Resolution](https://www.w3.org/TR/did-resolution/) | Resolution concepts and metadata | Concrete SAGE resolution contract is chapter 10; draft evolution does not change it automatically |
 | [CAIP-2](https://chainagnostic.org/CAIPs/caip-2) | Chain namespaces | Registry deployment identity is also required to avoid cross-contract collision |
 

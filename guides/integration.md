@@ -41,6 +41,35 @@ Language SDKs should wrap versioned core contracts rather than reimplement crypt
 ABI ownership, handle lifetimes, error types, thread safety and key ownership belong
 to the [repository design](../architecture/repository-roles.md), not to the wire grammar.
 
+### HTTP content at the protected byte boundary
+
+An HTTP Client using the chapter 03 profile should request
+`Accept-Encoding: identity`, disable automatic request compression and response
+decompression, and retain the exact received HTTP content octets after transfer
+framing removal until signature and `Content-Digest` checks complete. It must
+verify those octets, not
+the body supplied by a library after a hidden transform. `Accept-Encoding` is
+only a preference: chapter 03 independently requires every SAGE sender to omit
+`Content-Encoding` and every receiver to reject it, even when a response could
+be decoded. Do not send `Content-Encoding: identity`; the field is omitted.
+Configure proxies and HTTP libraries so they cannot transform covered fields or
+content behind the verification boundary. A generic `RoundTripper`/`Handler`
+wrapper applies only to this HTTP profile; it does not implement the selected
+non-HTTP MCP binding.
+
+### Shared implementation boundaries
+
+Separate pure canonicalization and digest calculation (L0), cryptographic
+verification and authenticated sessions (L1), trusted identity/policy/execution
+admission (L2), and deployment-specific Client/MCP/SDK/effect integration (L3).
+These are implementation responsibilities, not additional conformance levels or
+prescribed package names. Keep version-specific wire and stateful admission
+contracts explicit at every boundary. A verified message is not an authorized
+call; an authorized call must be bound to the exact bytes, owner, policy and
+effect path that were checked. Missing collaborators fail construction rather
+than defaulting to a permissive path. Opaque handles and typed verdicts reduce
+accidental misuse but do not prove key isolation or complete host mediation.
+
 ## 3. Hook capabilities are not uniform
 
 Official documentation inspected 2026-09-13; this is a capability review, not a
@@ -128,6 +157,13 @@ A receiver with lost ledger state cannot treat that state as an empty ledger.
 
 For explicitly selected MCP 2025-06-18 non-HTTP deployments, implement the
 [adopted owner profile](../profiles/non-http-mcp-security.md). Version checks alone
-are insufficient. Preserve the distinction between durable fencing, queue admission,
-worker claim and actual effects, and follow EXEC-06 queued-work invalidation.
-Go/Rust owner implementation and full protocol runtime checks remain follow-up work.
+are insufficient. Pin the trusted local binding identifier, complete descriptor
+JCS digest and expected peer tuple before MCP setup; a discovered descriptor
+cannot replace that configuration. The owner admits one active protected
+request/response exchange at a time. A local second submission is refused
+without reservation, while an authenticated overlapping server request follows
+the profile's consumed-history and close rule. A `pending` response ends that
+transport exchange but not the original durable Guard call. Preserve the
+distinction between durable fencing, queue admission, worker claim and actual
+effects, and follow EXEC-06 queued-work invalidation. Go/Rust owner changes and
+revision-pinned Inspector checks remain follow-up work.
