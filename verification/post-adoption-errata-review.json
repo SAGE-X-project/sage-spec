@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "kind": "post-adoption-mcp-errata-review",
+  "protocol_version": "0.10.0",
+  "adopted_spec_revision": "520e5ed9a896ff8ba8ade776484f41084957aaa2",
+  "historical_proposal_revision": "70abcda876879697cae91f1182ce5c9148211e8d",
+  "adoption": "ADOPTED_NORMATIVE_DESIGN",
+  "conformance": "NOT_ESTABLISHED",
+  "external_audit": "NOT_PERFORMED",
+  "inspector": {
+    "revision": "2b278fc23e9a55d1dc90554e1b976bc6104ae791",
+    "historical_review": {
+      "path": "docs/mcp-adoption-readiness-review.md",
+      "sha256": "9be0b6d799e4edde500460c5bd779371fed4df58e95c8b1ad3bf55030b676c26"
+    },
+    "integrated_verdict": {
+      "path": "docs/evidence/ins11-integrated-verdict/report.json",
+      "sha256": "04f32025b651107ce60a8bc8f42dc338ecc18280be7b8f79df7ee56c51877e47"
+    },
+    "mcp_binding_report": {
+      "path": "docs/evidence/ins11-integrated-verdict/ci-reports/mcp-binding.json",
+      "sha256": "0f3667fea879cd317fa86491e622d43daba373a1c0a5120e16bb29e584e57dd0"
+    },
+    "source_ci_run_id": 35933387031,
+    "source_ci_artifact_id": 10781767710,
+    "source_ci_artifact_digest": "sha256:701eef92d20f4fddb8fece47e9763d9501f5bd4a44b85f27446b3e7583e8e61d",
+    "ins11": "INCOMPLETE"
+  },
+  "findings": [
+    {"id": "ADOPT-01", "status": "RESOLVED_IN_ADOPTED_DESIGN", "source": "profiles/non-http-mcp-security.md", "anchors": ["While OUTPUT_PENDING, no inbound message or callback may dispatch, publish readiness", "delivered synchronously is queued like an asynchronous completion.", "A full-send completion is eligible only for that exact active operation."]},
+    {"id": "ADOPT-02", "status": "OPEN_NORMATIVE", "source": "profiles/non-http-mcp-security.md", "anchors": ["At most one control request is outstanding.", "Limit outstanding work and queue capacity", "Multiple owners may share a gate but never share readiness."]},
+    {"id": "ADOPT-03", "status": "OPEN_NORMATIVE", "source": "profiles/non-http-mcp-security.md", "anchors": ["Both hosts", "MUST select this binding through trusted deployment configuration", "the complete JCS of the [pinned descriptor]"]},
+    {"id": "ADOPT-04", "status": "RESOLVED_IN_ADOPTED_DESIGN", "source": "profiles/non-http-mcp-security.md", "anchors": ["This profile adopts the reviewed non-HTTP binding as a 0.10.0 normative design.", "The exact descriptor in [non-http-mcp-tool.json]"]},
+    {"id": "ADOPT-05", "status": "OPEN_PROVENANCE", "source": "profiles/non-http-mcp-security.md", "anchors": ["All 71 binding parent cases and 26 mandatory child assertions remain NOT_RUN.", "no prior evidence is promoted by this design adoption."]},
+    {"id": "ADOPT-06", "status": "PENDING_EXTERNAL", "source": "verification/mcp-adoption.json", "anchors": ["\"external_audit\": \"NOT_PERFORMED\""]}
+  ]
+}
