@@ -1,0 +1,12 @@
+{
+  "kind": "mcp-binding-descriptor-digest-candidate",
+  "status": "NOT_NORMATIVE",
+  "spec_revision": "80e3d27f781c062e8d0948d5a5c47370e809390f",
+  "binding_identifier": "sage-mcp-non-http/0.10.0/mcp-2025-06-18",
+  "descriptor": "../../profiles/non-http-mcp-tool.json",
+  "raw_file_sha256": "c3edd622a7c90baa028118f63af42a91f354fe7202070ef91a4bd349e4048204",
+  "canonicalization": "RFC 8785 JCS of the complete descriptor object",
+  "canonical_utf8_bytes": 1141,
+  "jcs_sha256_hex": "7f8d2790a0d3de142cf69a1ac59c66f01830e21515d5fd37e9f18c98868a3ed4",
+  "descriptor_digest": "sha256-jcs:f40nkKDT3hQs9poaxZxm8Bgw4hUV1f036fGMmIaKPtQ"
+}
