@@ -75,3 +75,5 @@ jobs:
           python3 -B proposals/non-http-mcp-setup/integrate_admission.py --check
           python3 -B verification/test_mcp_adoption.py
           python3 -B verification/check_mcp_adoption.py
+          python3 -B verification/test_post_adoption_errata.py
+          python3 -B verification/check_post_adoption_errata.py
