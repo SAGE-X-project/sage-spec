@@ -2298,7 +2298,7 @@
     {
       "id": "MSET-01",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 40,
+      "line": 38,
       "requirements": [
         "R-9",
         "R-21",
@@ -2309,10 +2309,7 @@
       "case_ids": [
         "mset-01-valid-channel",
         "mset-01-wrong-owner",
-        "mset-01-revoked-key",
-        "merrata-config-valid",
-        "merrata-config-reject",
-        "merrata-config-change"
+        "mset-01-revoked-key"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [],
@@ -2321,7 +2318,7 @@
     {
       "id": "MSET-02",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 82,
+      "line": 55,
       "requirements": [
         "R-17",
         "R-18",
@@ -2347,7 +2344,7 @@
     {
       "id": "MSET-03",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 132,
+      "line": 105,
       "requirements": [
         "R-18",
         "R-34",
@@ -2366,7 +2363,7 @@
     {
       "id": "MSET-04",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 159,
+      "line": 132,
       "requirements": [
         "R-18",
         "R-26",
@@ -2386,7 +2383,7 @@
     {
       "id": "MSET-05",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 190,
+      "line": 163,
       "requirements": [
         "R-38",
         "R-39",
@@ -2406,7 +2403,7 @@
     {
       "id": "MSET-06",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 227,
+      "line": 195,
       "requirements": [
         "R-17",
         "R-39",
@@ -2428,7 +2425,7 @@
     {
       "id": "MSET-07",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 255,
+      "line": 223,
       "requirements": [
         "R-9",
         "R-26",
@@ -2448,7 +2445,7 @@
     {
       "id": "MSET-08",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 271,
+      "line": 239,
       "requirements": [
         "R-31",
         "R-32",
@@ -2468,7 +2465,7 @@
     {
       "id": "MOWN-01",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 306,
+      "line": 274,
       "requirements": [
         "R-30",
         "R-38",
@@ -2491,7 +2488,7 @@
     {
       "id": "MOWN-02",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 355,
+      "line": 323,
       "requirements": [
         "R-26",
         "R-39",
@@ -2509,13 +2506,7 @@
         "madd-close-before-handoff",
         "madd-close-after-handoff",
         "madd-cross-language-setup",
-        "madd-restart-consumption",
-        "merrata-local-single-flight",
-        "merrata-server-overlap",
-        "merrata-deferred-frame",
-        "merrata-pending-followup",
-        "merrata-deadline-close",
-        "merrata-shared-owners"
+        "madd-restart-consumption"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [],
@@ -2524,7 +2515,7 @@
     {
       "id": "MOWN-03",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 543,
+      "line": 460,
       "requirements": [
         "R-9",
         "R-38",
@@ -2545,7 +2536,7 @@
     {
       "id": "MOWN-04",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 682,
+      "line": 599,
       "requirements": [
         "R-17",
         "R-39",
@@ -2565,7 +2556,7 @@
     {
       "id": "MOWN-05",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 712,
+      "line": 629,
       "requirements": [
         "R-8",
         "R-19",
@@ -2584,7 +2575,7 @@
     {
       "id": "MOWN-06",
       "source": "profiles/non-http-mcp-security.md",
-      "line": 737,
+      "line": 654,
       "requirements": [
         "R-9",
         "R-30",
@@ -6748,87 +6739,6 @@
       "input": "Participant lacks a suitable active Ed25519 signing key",
       "preconditions": "Explicitly selected SAGE 0.10.0 non-HTTP MCP 2025-06-18 binding; trusted isolated fixture; run all attached mandatory child assertions in their declared scope.",
       "expected": "Binding unsupported; no fallback or substitution",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "merrata-config-valid",
-      "rule_id": "MSET-01",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "Trusted local descriptor JSON file has reordered members but the same complete object; binding, versions, peer tuple and digest match the pinned values",
-      "preconditions": "Pinned revised non-HTTP MCP binding; trusted isolated fixture; no attack-capable reproduction code.",
-      "expected": "Construction may proceed after JCS digest validation; authenticated discovery still requires the canonical complete descriptor and exact member/schema checks",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "merrata-config-reject",
-      "rule_id": "MSET-01",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "Missing, malformed, differently encoded or mismatched binding identifier, version or descriptor digest",
-      "preconditions": "Pinned revised non-HTTP MCP binding; trusted isolated fixture; no attack-capable reproduction code.",
-      "expected": "Reject owner construction before MCP initialize with no protected effect or fallback",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "merrata-config-change",
-      "rule_id": "MSET-01",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "Trusted descriptor or binding configuration changes after owner construction",
-      "preconditions": "Pinned revised non-HTTP MCP binding; trusted isolated fixture; no attack-capable reproduction code.",
-      "expected": "Close the owner; no silent replacement or protected effect under changed configuration",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "merrata-local-single-flight",
-      "rule_id": "MOWN-02",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "Two local protected submissions reach one READY client owner while the first exchange remains active",
-      "preconditions": "Pinned revised non-HTTP MCP binding; trusted isolated fixture; no attack-capable reproduction code.",
-      "expected": "Second is locally refused before ID, cryptographic or ledger reservation, produces no output, and leaves the first exchange intact",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "merrata-server-overlap",
-      "rule_id": "MOWN-02",
-      "mode": "unit_state_machine",
-      "input": "A second authenticated protected request reaches a server owner with an active exchange",
-      "preconditions": "Pinned revised non-HTTP MCP binding; trusted isolated fixture; no attack-capable reproduction code.",
-      "expected": "Consume required request history and close without second Guard admission or effect; preserve the first durable outcome",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "merrata-deferred-frame",
-      "rule_id": "MOWN-02",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "One bounded wire frame arrives while first response is in OUTPUT_PENDING",
-      "preconditions": "Pinned revised non-HTTP MCP binding; trusted isolated fixture; no attack-capable reproduction code.",
-      "expected": "Authenticate and route only after successful first full-send publication; failed send discards without dispatch",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "merrata-pending-followup",
-      "rule_id": "MOWN-02",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "A verified pending snapshot is followed by a status retrieval on the same READY owner",
-      "preconditions": "Pinned revised non-HTTP MCP binding; trusted isolated fixture; no attack-capable reproduction code.",
-      "expected": "Release transport slot after verified response; use fresh inner/outer IDs while retaining original Guard identity and durable state",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "merrata-deadline-close",
-      "rule_id": "MOWN-02",
-      "mode": "unit_state_machine",
-      "input": "Wrong or late response, fixed PROTECTED deadline, or owner closure races completion",
-      "preconditions": "Pinned revised non-HTTP MCP binding; trusted isolated fixture; no attack-capable reproduction code.",
-      "expected": "No result consumption, slot transfer, redispatch, false rollback or callback reopening",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "merrata-shared-owners",
-      "rule_id": "MOWN-02",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "Two independently authenticated owners share one finite Guard gate",
-      "preconditions": "Pinned revised non-HTTP MCP binding; trusted isolated fixture; no attack-capable reproduction code.",
-      "expected": "Independent exchange slots retain shared worker, queue and outstanding-I/O bounds without borrowing readiness",
       "evidence_status": "planned_not_executed"
     }
   ],

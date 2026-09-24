@@ -5,7 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 
-from check_mcp_adoption import verify as verify_adoption
+from check_mcp_adoption import pinned_path, verify as verify_adoption
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -46,7 +46,7 @@ def verify_record(root, record, inspector_root=None):
         require(f"| {ident} | `{status}` |" in document, "document disposition: " + ident)
         source = finding["source"]
         require(source in adoption["normative_sha256"] or source == "verification/mcp-adoption.json", "finding source: " + ident)
-        content = (root / source).read_text()
+        content = (pinned_path(root, adoption, source) if source in adoption['normative_sha256'] else root / source).read_text()
         require(finding["anchors"] and all(anchor in content for anchor in finding["anchors"]), "source anchors: " + ident)
     inspector = record["inspector"]
     require(inspector["revision"] == "2b278fc23e9a55d1dc90554e1b976bc6104ae791", "inspector revision")

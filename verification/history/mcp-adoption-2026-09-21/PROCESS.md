@@ -78,13 +78,7 @@ repository separation; this process does not authorise immediate code migration.
 The reviewed binding is adopted as a 0.10.0 normative design in
 [profiles/non-http-mcp-security.md](profiles/non-http-mcp-security.md). The earlier
 proposal statuses describe historical snapshots, not a second normative source.
-The [original adoption record](verification/mcp-adoption.json) binds its review, input
-baseline, compatibility decisions and preserved historical traceability. The
-[errata adoption record](verification/mcp-errata-adoption.json) binds the current
-profile and expanded plan. This correction remains within the explicitly approved,
-unreleased 0.10.0 documentation design; it changes local admission verdicts and
-requires version-pinned implementation and Inspector re-evaluation before any
-conformance claim. A released 0.10.0 would instead require a new exact version
-under section 5 of the overview. Adopting implementation requirements
+The [adoption record](verification/mcp-adoption.json) binds the review, input baseline,
+compatibility decisions and current traceability. Adopting implementation requirements
 precedes core implementation; it does not satisfy verification or stabilisation gates.
 The preserved original working-tree files are not overwritten by the isolated adoption.

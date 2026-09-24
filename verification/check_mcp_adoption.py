@@ -6,23 +6,35 @@ import re
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
+HISTORY=Path('verification/history/mcp-adoption-2026-09-21')
 
 def digest(raw):return hashlib.sha256(raw).hexdigest()
 def canonical(value):return json.dumps(value,sort_keys=True,separators=(',',':')).encode()
 def require(ok,label):
     if not ok:raise ValueError(label)
 
+def pinned_path(root,record,name):
+    expected=record['normative_sha256'][name]
+    current=root/name
+    historical=root/HISTORY/name
+    if historical.is_file():
+        require(digest(historical.read_bytes())==expected,'normative identity: '+name)
+        return historical
+    require(current.is_file() and digest(current.read_bytes())==expected,
+            'normative identity: '+name)
+    return current
+
 def verify(root=ROOT):
     record=json.loads((root/'verification/mcp-adoption.json').read_text())
     require(record['status']=='ADOPTED_NORMATIVE_DESIGN' and record['protocol_version']=='0.10.0','adoption identity')
     require(record['conformance']=='NOT_ESTABLISHED' and record['external_audit']=='NOT_PERFORMED' and record['release_or_tag_created'] is False,'unsupported promotion')
-    for name,h in record['normative_sha256'].items():
-        require(digest((root/name).read_bytes())==h,'normative identity: '+name)
+    for name in record['normative_sha256']:
+        pinned_path(root,record,name)
     base=root/'proposals/non-http-mcp-setup'
     for name,h in record['reviewed_candidate_sha256'].items():
         require(digest((base/name).read_bytes())==h,'reviewed input: '+name)
     require((root/record['descriptor']).read_bytes()==(base/'tool.json').read_bytes(),'descriptor changed')
-    trace=json.loads((root/record['traceability']).read_text())
+    trace=json.loads(pinned_path(root,record,record['traceability']).read_text())
     require(trace['status']=='verification_plan_not_executed','trace promotion')
     rules={r['id']:r for r in trace['rules']};cases={c['id']:c for c in trace['cases']};requirements={r['id']:r for r in trace['requirements']}
     require(len(rules)==len(trace['rules'])==91,'rule membership')
@@ -37,7 +49,7 @@ def verify(root=ROOT):
         require(r['evidence_status']=='planned_not_executed','rule promotion')
         require(set(r['requirements'])<=requirements.keys() and r['requirements'],'rule requirements')
         require(set(r['case_ids'])<=cases.keys() and r['case_ids'],'rule cases')
-        lines=(root/r['source']).read_text().splitlines()
+        lines=pinned_path(root,record,r['source']).read_text().splitlines()
         headings=[i for i,line in enumerate(lines,1) if line.startswith('#') and re.search(r'\b'+re.escape(r['id'])+r'\b',line)]
         labels=[i for i,line in enumerate(lines,1) if re.match(r'^\*\*'+re.escape(r['id'])+r'\b',line)]
         require(bool(headings or labels) and r['line']==(headings or labels)[0],'rule defining location')

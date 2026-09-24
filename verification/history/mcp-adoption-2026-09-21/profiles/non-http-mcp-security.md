@@ -1,11 +1,9 @@
 # Authenticated non-HTTP MCP binding for SAGE 0.10.0
 
-Status: **AMENDED_NORMATIVE_DESIGN**. This profile sets implementation requirements;
+Status: **ADOPTED_NORMATIVE_DESIGN**. This profile sets implementation requirements;
 full protocol runtime conformance remains **NOT_ESTABLISHED**. It is not a release or
 third-party security certification. It applies only to deployments explicitly selecting
 this custom non-HTTP binding and MCP 2025-06-18.
-The [errata adoption record](../verification/mcp-errata-adoption.json) pins this
-revision; the original adoption record remains a historical snapshot.
 
 The baseline chapters and [Execution Guard](agent-mcp-security.md) continue to apply.
 The MSET and MOWN rule groups below own the additional binding requirements. A group's
@@ -53,31 +51,6 @@ or plugin inputs cannot assert readiness. Readiness is local, unexported state, 
 a wire capability, and cannot transfer to another session, peer, role or connection.
 Every message still requires current registry checks and normal session validation.
 Handshake, registry, lifetime and replay protections are not weakened by this profile.
-
-Before owner construction, trusted deployment configuration MUST pin the ASCII
-binding identifier `sage-mcp-non-http/0.10.0/mcp-2025-06-18`, SAGE `0.10.0`,
-MCP `2025-06-18`, the complete local descriptor object and its digest, the
-expected peer identity/key tuple, and the expected peer binding identifier and
-digest. Both configured identifiers MUST equal that identifier. Both configured
-digests MUST equal
-`sha256-jcs:f40nkKDT3hQs9poaxZxm8Bgw4hUV1f036fGMmIaKPtQ`.
-The digest is SHA-256 of the RFC 8785 JCS encoding of the complete
-[pinned descriptor](non-http-mcp-tool.json), encoded as canonical unpadded
-base64url with the `sha256-jcs:` prefix. The JCS encoding is 1,141 UTF-8 bytes;
-the digest bytes in hex are
-`7f8d2790a0d3de142cf69a1ac59c66f01830e21515d5fd37e9f18c98868a3ed4`.
-The repository file hash is a different value and cannot replace this digest.
-The descriptor must pass chapter 02's JSON and I-JSON rejection rules before
-canonicalization. These values are trusted local configuration, not wire fields,
-DIDs, authorization tokens or evidence of the remote host's configuration.
-
-Missing, malformed, differently encoded or mismatched configuration MUST reject
-owner construction before MCP initialize, without a protected call. The host MUST
-NOT substitute a peer-supplied descriptor, silently select another profile or
-retry with unchecked configuration. A detected descriptor or trusted binding
-change during the owner's lifetime closes the owner. A changed descriptor needs
-an explicitly approved configuration and a fresh authenticated setup. Local
-matching does not waive authenticated discovery or any current registry check.
 
 ## MSET-02 — Message carriage and bounds
 
@@ -198,12 +171,7 @@ jsonrpc, that id and result; result has exactly tools. Its one tool object MUST 
 the complete JCS of the [pinned descriptor](non-http-mcp-tool.json), including the exact member
 set, not just a projection of name/inputSchema. Reject nextCursor, outputSchema,
 annotations, descriptions, titles and unknown metadata in this narrow discovery
-binding. Received schema never replaces the trusted baseline. The client MUST
-compute the same JCS digest over the complete discovered object, compare it to
-the configured digest, and compare the object to its pinned complete descriptor;
-matching a digest alone does not waive the exact schema/member check. The server
-sends only its pinned descriptor and cannot infer the client's local digest
-from the absence of a wire field.
+binding. Received schema never replaces the trusted baseline.
 
 General MCP permits additional tool description fields, including outputSchema;
 this restriction is a deliberate smaller binding, not a statement that those fields
@@ -466,57 +434,6 @@ exact RPC bytes, invocation identity, authenticated peer/session binding and cur
 Guard checks. It cannot return a reusable permit that the caller can apply to changed
 bytes or another session. The server uses the ordinary durable Guard reservation and
 result path; the client uses the ordinary authenticated terminal consumption path.
-
-### One active protected exchange per owner
-
-Each owner permits one active protected JSON-RPC request/response exchange.
-The client exchange starts when the serialized owner accepts a local submission
-and ends only after its sole correlated authenticated response is fully validated
-and consumed, or on closure. The server exchange starts when it accepts an
-authenticated protected request and ends when its correlated response clears
-OUTPUT_PENDING on bounded full-send success, or on closure. A signed `pending`
-snapshot ends the transport exchange without completing the underlying durable
-Guard call. A subsequent status request is a new exchange with fresh inner and
-outer request IDs, while retaining the original signed Guard call identity and
-durable state.
-
-A client in READY MAY acquire its free exchange slot only with no pending output
-and after normal session and Guard predicates pass. It MUST acquire the slot under
-owner serialization before reserving request ID, sequence, nonce, signature or
-ledger state. A second local submission while occupied MUST return a local
-busy/denied result without any such reservation, bytes or tool effect, and MUST
-leave the first exchange untouched. This result is not a signed MCP or Guard
-rejection. Failure before any reservation releases the slot with a local error;
-failure after a reservation follows the existing close and no-reuse rules.
-
-The server MUST reserve each syntactically valid authenticated request ID in its
-single lifetime history before routing. Under owner serialization, it MUST
-acquire a free slot before Guard verification or durable reservation. A second
-authenticated protected request routed while occupied closes the owner without
-a second Guard reservation, queue insertion, signed replacement response or
-effect. Accepted outer replay/sequence and request-ID history remain consumed.
-The first call's durable outcome remains governed by the normal before/after
-admission rules; closing the owner does not prove that an admitted effect did not
-occur. A wire frame deferred behind OUTPUT_PENDING remains unauthenticated until
-the first full-send publication succeeds and releases the slot. Only then may
-the owner authenticate and route that frame. Failed send or closure discards it
-without dispatch. The existing one-frame bound and one-output barrier apply.
-
-The client retains the exact sent outer envelope and both IDs until the one
-matching response is authenticated or the owner closes. Wrong, unsolicited,
-duplicate or late responses close without releasing a result for use. The server
-publishes only the active exchange's correlated response. The fixed PROTECTED
-deadline applies throughout Guard work, output and response; waiting never
-extends session, intent or registry freshness. At or after the deadline, or on
-close/revocation, retire the slot and close under the existing failure rules.
-A late callback cannot reopen this or a replacement owner. An admitted or
-uncertain durable outcome is preserved and cannot be automatically redispatched.
-
-The slot is per owner. Distinct owners sharing a gate have independent slots but
-remain subject to the gate's finite worker, queue and outstanding-I/O limits.
-Capacity for admitted work survives owner closure until completion or safe
-cancellation. No slot decision bypasses policy, signing, result verification or
-durable execution checks.
 
 Preparation, reservation and durable fencing are not final admission. The final dispatch admission
 rules below define one shared ordering with owner closure; implementations must

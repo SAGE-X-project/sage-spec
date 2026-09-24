@@ -219,10 +219,14 @@ expected outcomes are in [traceability.json](traceability.json).
 
 ## Adopted non-HTTP MCP binding plan
 
-The current traceability file retains all 386 baseline case IDs and adds 71 distinct
-binding parents under MSET-01..08 and MOWN-01..06. Its 26 mandatory child assertions
-are obligations inside those parents, not an extra top-level test count. Run each in
+The current traceability file retains all 386 baseline case IDs and 71 original
+binding parents under MSET-01..08 and MOWN-01..06. The revised profile adds nine
+planned binding parents for local configuration and one active protected exchange
+per owner. Its 26 mandatory child assertions are obligations inside those parents,
+not an extra top-level test count. Run each in
 its declared scope: the isolated 1024-entry owner bound is a unit seam; authenticated
 traffic must stop at the tighter session-record ceiling. Every added parent/child
 remains planned or NOT_RUN. Older 37-case Inspector lifecycle evidence is a separate
-catalog and is neither added nor automatically mapped into this 457-case plan.
+catalog and is neither added nor automatically mapped into this 466-case plan.
+The earlier 457-case snapshot and its 71-case Inspector overlay retain their pinned
+historical revision; none of the nine new cases inherits PASS evidence.
