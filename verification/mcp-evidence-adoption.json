@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "kind": "mcp-post-adoption-evidence-addendum",
+  "protocol_version": "0.10.0",
+  "status": "EVIDENCE_LINKED_WITH_SCOPE_LIMITS",
+  "conformance": "NOT_ESTABLISHED",
+  "external_audit": "NOT_PERFORMED",
+  "source_spec_revision": "5df183d10a3c8018518dfa40ece9152a34b56fc1",
+  "reviewed_binding_revision": "520e5ed9a896ff8ba8ade776484f41084957aaa2",
+  "source_sha256": {
+    "verification/mcp-adoption.json": "cb18638a96f7099f26b960d7d1dd1d2f679516a39ded0e32b773d3963e26b1bc",
+    "verification/mcp-errata-adoption.json": "26df6c8c2e5295642b2331a5b8a10dc727f4ad19b1c79a7beeaa78848bd283aa",
+    "verification/post-adoption-errata-review.json": "e1997fdf6a7213c3264ce692eb227a21abbb4918c308c1da93476832382b30a9",
+    "profiles/non-http-mcp-security.md": "9c7851d095208c975792565266e481c120ef754ae8eb9529c62b53bf12a1d4fa",
+    "verification/traceability.json": "b1034b4c37c19560da5540b29a5ef61e7ca8dd629a04e4e1caa4a57e77989887",
+    "verification/history/mcp-adoption-2026-09-21/verification/traceability.json": "d612fa74803c7bd74a0899958d961a29582e27aa017fba0514c50c9082330964"
+  },
+  "dispositions": {
+    "ADOPT-01": "RESOLVED_IN_ADOPTED_DESIGN",
+    "ADOPT-02": "RESOLVED_IN_AMENDED_DESIGN",
+    "ADOPT-03": "RESOLVED_IN_AMENDED_DESIGN",
+    "ADOPT-04": "RESOLVED_IN_ADOPTED_DESIGN",
+    "ADOPT-05": "EVIDENCE_LINKED_WITH_SCOPE_LIMITS",
+    "ADOPT-06": "PENDING_EXTERNAL"
+  },
+  "historical_plan": {
+    "binding_parent_cases": 71,
+    "mandatory_children": 26,
+    "execution": "NOT_RUN",
+    "current_total_parent_cases": 471,
+    "later_parent_cases_outside_pinned_overlay": 14,
+    "later_cases_execution": "NOT_RUN"
+  },
+  "inspector": {
+    "checkout_revision": "58cffde89e45096b12d834fb562ea856d46b1c0b",
+    "integrated_verdict_revision": "2b278fc23e9a55d1dc90554e1b976bc6104ae791",
+    "files": {
+      "docs/evidence/ins11-integrated-verdict/report.json": "04f32025b651107ce60a8bc8f42dc338ecc18280be7b8f79df7ee56c51877e47",
+      "docs/evidence/ins11-integrated-verdict/ci-reports/mcp-binding.json": "0f3667fea879cd317fa86491e622d43daba373a1c0a5120e16bb29e584e57dd0",
+      "docs/evidence/mcp-client-provenance/report.json": "ca1b008621da0c31c445a10d7ba627d2029324b595d6d5556788c452ccc753f4"
+    },
+    "binding_overlay": {
+      "parent_pass": 71,
+      "mandatory_children_per_core": 26,
+      "protected_pairs_pass": 4,
+      "restart_pass": 8,
+      "go_revision": "1f2dd87643e42b7ed3beda6956158ff23dcc7ea2",
+      "rust_revision": "40b5a8c6d76d952131013d8a034f819fd31b7ca0"
+    },
+    "source_ci": {
+      "run_id": 35933387031,
+      "head_sha": "690a8e0f85897e0615abb1cd0c7980442100c50e",
+      "artifact_id": 10781767710,
+      "artifact_name": "mcp-native-interop-690a8e0f85897e0615abb1cd0c7980442100c50e",
+      "artifact_digest": "sha256:701eef92d20f4fddb8fece47e9763d9501f5bd4a44b85f27446b3e7583e8e61d",
+      "conclusion": "success"
+    },
+    "ins11": "INCOMPLETE",
+    "deployed_host": "NOT_RUN",
+    "live_registry": "NOT_RUN"
+  },
+  "scope_limits": {
+    "nine_mcp_errata_cases": "NOT_RUN",
+    "five_later_spec_cases": "NOT_RUN",
+    "supplementary_core_provenance": "CORE_BOUNDARY_OBSERVED_ONLY",
+    "same_revision_full_protocol_execution": false,
+    "external_review": "NOT_PERFORMED"
+  }
+}
