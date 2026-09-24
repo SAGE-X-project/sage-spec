@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kind": "mcp-external-review-package",
+  "protocol_version": "0.10.0",
+  "finding": "ADOPT-06",
+  "status": "READY_FOR_EXTERNAL_REVIEW",
+  "external_audit": "NOT_PERFORMED",
+  "reviewer": null,
+  "review_report": null,
+  "conformance": "NOT_ESTABLISHED",
+  "release_claim": false,
+  "target_repository": "SAGE-X-project/sage-spec",
+  "target_revision": "d86ca1a4d326d6090e50d100b834d38ec204a2c2",
+  "inspector_revision": "58cffde89e45096b12d834fb562ea856d46b1c0b",
+  "target_sha256": {
+    "profiles/non-http-mcp-security.md": "9c7851d095208c975792565266e481c120ef754ae8eb9529c62b53bf12a1d4fa",
+    "profiles/non-http-mcp-tool.json": "c3edd622a7c90baa028118f63af42a91f354fe7202070ef91a4bd349e4048204",
+    "profiles/agent-mcp-security.md": "0538acbdcfc143d93fb7d99a2a2c09c068fc354388c4e37c7489204305b1913f",
+    "spec/01-crypto.md": "fe9fd00066b259b99a63e5adab7db739757e3ad2597ccc71e2019fa34319faec",
+    "spec/03-rfc9421.md": "ca6b85e12a0b0e1a4f28b4eb2a9b677d29e2fd2abe9691d1ee30bfa14ee858c9",
+    "spec/04-hpke.md": "1420818451ce8363a16e391647dbaca8ec2f06efa56b6507027a4e17f399fdd6",
+    "spec/05-session.md": "8a45b8bdd3b6bfc399a94c420b2161b8f16db5c6b29ed2e85584a6282b17cce5",
+    "spec/08-transport.md": "87bb1adc1aae4883e13f8ba52a7c86153c71efb621ffc50458f7e2aa57db3eeb",
+    "spec/09-registry.md": "ccd34125fb49b281475534773c81bd58d87b86cc7f6c88544b92f1f9e212f7e3",
+    "verification/traceability.json": "b1034b4c37c19560da5540b29a5ef61e7ca8dd629a04e4e1caa4a57e77989887",
+    "verification/inspector-plan.md": "c393cde7182b49723a0f1a2a6b1752b872881c53169ff3fecc4ff58525ac3a8e",
+    "verification/standards.md": "b3eed9362e0f5d5edfee61112a1acd5c0e20b9b931c2cd2ffcc61bfface2ffac",
+    "verification/standards-revision-decisions.md": "e4e3d1714a91fb0ccfa9141fb2f183813a6ea8b31227a436c40129540f3d55ea",
+    "verification/post-adoption-errata-review.md": "f41ac5da1ea6a1c202bdc755d89ebead0f70a157a72b6ae5ad205cc6d3a8fafa",
+    "verification/mcp-evidence-adoption.json": "f10d4b9457b28b475f786822c49d8706bd996ced9ced5df4efa4d7db778a75d9",
+    "verification/mcp-evidence-adoption.md": "931d84ad11ffea532789af18b0db87bf210e8624a4109b0faaac90fac0ef6f5b",
+    "verification/mcp-errata-adoption.json": "26df6c8c2e5295642b2331a5b8a10dc727f4ad19b1c79a7beeaa78848bd283aa",
+    "verification/spec-revision-adoption.json": "5012ef0c4e7932303f21ba3bd544c88251ffc2b7ae450988d0558d0b649e1579"
+  },
+  "review_areas": [
+    "cryptographic-key-and-signature-role-separation",
+    "outer-signature-aead-and-message-correlation",
+    "setup-state-machine-and-fixed-acknowledgement",
+    "output-publication-and-callback-ordering",
+    "protected-call-admission-and-close-ordering",
+    "deadlines-replay-recovery-and-resource-exhaustion",
+    "trusted-agent-host-registry-and-component-boundaries",
+    "excluded-transports-and-version-compatibility"
+  ],
+  "evidence_limits": {
+    "old_binding_overlay_parent_pass": 71,
+    "later_spec_cases_not_run": 14,
+    "deployed_agent_host": "NOT_RUN",
+    "live_registry_source": "NOT_RUN",
+    "ins11": "INCOMPLETE"
+  }
+}
