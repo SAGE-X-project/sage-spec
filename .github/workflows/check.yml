@@ -62,6 +62,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: SAGE-X-project/sage-inspector
+          ref: 58cffde89e45096b12d834fb562ea856d46b1c0b
+          path: .inspector
       - name: Check document controls and planned cases
         run: |
           python3 proposals/non-http-mcp-setup/verify.py --self-test
@@ -83,3 +88,5 @@ jobs:
           python3 -B verification/check_mcp_errata_adoption.py
           python3 -B verification/test_spec_revision_adoption.py
           python3 -B verification/check_spec_revision_adoption.py
+          python3 -B verification/test_mcp_evidence_adoption.py
+          python3 -B verification/check_mcp_evidence_adoption.py --inspector-root .inspector
