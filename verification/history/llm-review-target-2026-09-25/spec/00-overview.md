@@ -61,7 +61,7 @@ Encodings:
 | `base64url-raw` | RFC 4648 URL-safe alphabet, no padding |
 | `base58` | Bitcoin alphabet |
 | `be64(n)` | 64-bit unsigned big-endian |
-| `len16(s)` | only the 16-bit unsigned big-endian byte length of `s`; valid when `0 <= len(s) <= 65535` |
+| `len16(s)` | 16-bit unsigned big-endian length of `s` followed by `s` |
 | `a ‖ b` | byte concatenation |
 
 ## 3. Layering

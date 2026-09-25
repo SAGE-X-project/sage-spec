@@ -5,7 +5,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from check_mcp_adoption import ROOT, HISTORY, verify, digest
+from check_mcp_adoption import ROOT, HISTORY, REVIEW_HISTORY, verify, digest
 
 
 class AdoptionTests(unittest.TestCase):
@@ -22,6 +22,10 @@ class AdoptionTests(unittest.TestCase):
             if (ROOT/historical).is_file():
                 dest=self.root/historical;dest.parent.mkdir(parents=True,exist_ok=True)
                 shutil.copyfile(ROOT/historical,dest)
+            reviewed=REVIEW_HISTORY/name
+            if (ROOT/reviewed).is_file():
+                dest=self.root/reviewed;dest.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(ROOT/reviewed,dest)
 
     def mutate_trace(self,fn):
         p=self.root/HISTORY/'verification/traceability.json';t=json.loads(p.read_text());fn(t);p.write_text(json.dumps(t))

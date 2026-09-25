@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from check_mcp_evidence_adoption import verify as verify_evidence
+from review_target import pinned_path as reviewed_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -76,7 +77,7 @@ def verify_record(root, record):
             'review target changed')
     require(set(record['target_sha256']) == SOURCES, 'target file inventory')
     for name, digest in record['target_sha256'].items():
-        require(sha(root / name) == digest, 'target file differs: ' + name)
+        reviewed_path(root, name, digest)
     require(record['target_sha256']['verification/mcp-evidence-adoption.json']
             == 'f10d4b9457b28b475f786822c49d8706bd996ced9ced5df4efa4d7db778a75d9',
             'adoption evidence identity')

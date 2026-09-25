@@ -1,16 +1,5 @@
 # Changelog
 
-## 0.10.0 — registry proof and KEM role clarification (2026-09-25)
-
-- Define `len16` as length only and pin exact PoP challenge bytes for signing
-  keys and endorsed X25519 keys.
-- Register exact `x25519` as a KEM-only registry `alg`; reject aliases, role
-  mismatches and message-signature use.
-- Add eight planned Inspector cases, for 91 groups and 479 parents. Preserve
-  the prior 471-case plan and LLM review target as historical snapshots.
-- This unreleased design correction changes acceptance decisions. Core and
-  Inspector conformance remains unestablished until revision-bound execution.
-
 ## 0.10.0 — coordinated trust and standards clarification (2026-09-24)
 
 - Require each trusted Client in a multihop path to capture and independently

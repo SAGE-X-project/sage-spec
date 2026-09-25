@@ -46,7 +46,7 @@ class ExternalReviewPackageTests(unittest.TestCase):
 
     def test_source_digest_cannot_change(self):
         self.changed(lambda r: r['target_sha256'].update({'profiles/non-http-mcp-security.md': '0' * 64}),
-                     'target file differs')
+                     'review target identity')
 
 
 if __name__ == '__main__':

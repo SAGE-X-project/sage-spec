@@ -22,12 +22,7 @@ UTF-8 bytes and follows chapter 02.
 | `version` | decimal string, 1 through 18446744073709551615, no leading zero |
 
 A key has exactly `name`, `alg`, `key`, `proof`, `state`, and optionally
-`expires`. Name is chapter 06 `key-id`; `alg` is exactly a signature algorithm
-name from chapter 11 TABLE-02 for a signing key, or exactly `x25519` for an
-X25519 HPKE KEM key under TABLE-03. The literal `x25519` is never a signature
-algorithm. The `alg` value fixes the key's permitted role and how its raw
-bytes are decoded; the record has no separate `key_type` field. Raw 32-byte
-values alone do not prove which private-key algorithm generated them. `key` is
+`expires`. Name is chapter 06 `key-id`; algorithm is chapter 11; `key` is
 unpadded canonical base64url of chapter 11 raw bytes; state is `accepted`
 or `revoked`. Optional expiry is integer Unix seconds, 0 through
 9007199254740991; it is unusable when `now >= expires`. Names and key bytes
@@ -47,7 +42,7 @@ to validate a record. Cards bind this array without a second key store.
 For signatures the exact named accepted, unexpired key MUST be used, never
 trial verification over alternatives. An `active` record must have at least
 one usable signing key. For a new handshake choose the accepted, unexpired
-`alg` = `x25519` key whose name sorts first in ASCII order; the handshake MUST name
+`x25519` key whose name sorts first in ASCII order; the handshake MUST name
 that full key URL and bind it to its transcript. Rotation in flight cannot
 silently substitute another key. A record without an eligible KEM key
 cannot establish a session; signed-message verification can still work.
@@ -94,8 +89,8 @@ challenge = ASCII("sage-pop-0.10.0")
           || len16(keyBytes) || keyBytes
 ```
 
-`len16(x)` has the length-only meaning in chapter 00; each field appears
-exactly once after its length. Text fields are canonical ASCII and `keyBytes` is decoded
+Here `len16(x)` is the unsigned two-byte big-endian byte length (not the
+field itself); text fields are canonical ASCII and `keyBytes` is decoded
 public key material. The key name prevents rebinding a captured proof to a
 new key entry. A signing entry's `proof` is exactly `{ "signer": full-key-URL,
 "value": unpadded-base64url-signature }`; signer MUST equal its own key URL.
@@ -103,16 +98,13 @@ Sign the challenge with the algorithm of chapter 01; the registry and
 resolver both check it. There is no separate SHA-256 exception for
 secp256k1. A proof is at most 87 encoded signature characters.
 
-An entry with `alg` = `x25519` has the same proof shape but its signer names an accepted,
+An X25519 entry has the same proof shape but its signer names an accepted,
 unexpired signing key in the same proposed/current record. Signing keys
 are validated first. This proves **controller-authorized endorsement of the
 KEM key, not possession of its private key**. Actual KEM possession is
 confirmed by the authenticated handshake. On later reads an endorsement
 may be verified with its retained historical signer even if that signer
 is now revoked/expired; that signer is not thereby usable for messages.
-The KEM entry MUST NOT sign its own proof or any message. A KEM key with a
-non-32-byte public value, an invalid encoding under its declared `alg`, or a
-proof naming the KEM entry as signer is rejected before handshake selection.
 A deployment can revoke the endorsed key separately if compromise requires
 it. The registry's authenticated mutation supplies authorization; a PoP
 alone MUST NOT authorize create/update or a controller substitution.

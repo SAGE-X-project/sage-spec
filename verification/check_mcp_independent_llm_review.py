@@ -1,10 +1,10 @@
 """Validate the scoped ADOPT-06 LLM review without promoting its claims."""
 
-import hashlib
 import json
 from pathlib import Path
 
 from check_mcp_external_review_package import ROOT, TARGET, verify as verify_package
+from review_target import pinned_path as reviewed_path
 
 
 def require(condition, message):
@@ -40,8 +40,9 @@ def verify_record(root, record):
     require(supplemental == {
         'spec/00-overview.md': '26731b6d91994677548cff3efabfb0f5d9406de53b4e030bfb637f28137e8a85',
         'spec/11-registries.md': '668a2c0ccf51651463829d4de80bce4206231f48c3860f6a195f9380f1c14a4b',
-    } and all(hashlib.sha256((root / path).read_bytes()).hexdigest() == digest
-              for path, digest in supplemental.items()), 'supplemental target identity')
+    }, 'supplemental target identity')
+    for name, digest in supplemental.items():
+        reviewed_path(root, name, digest)
     require([f['id'] for f in record['findings']] == ['LLM-01', 'LLM-02']
             and [f['severity'] for f in record['findings']] == ['medium', 'high']
             and all(f['status'] == 'OPEN_NORMATIVE' for f in record['findings']),

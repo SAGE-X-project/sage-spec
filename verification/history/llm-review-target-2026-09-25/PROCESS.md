@@ -82,13 +82,9 @@ The [original adoption record](verification/mcp-adoption.json) binds its review,
 baseline, compatibility decisions and preserved historical traceability. The
 [errata adoption record](verification/mcp-errata-adoption.json) binds the current
 profile and 466-case historical plan. The
-[earlier revision record](verification/spec-revision-adoption.json) binds the
+[current revision record](verification/spec-revision-adoption.json) binds the
 coordinated multihop and standards clarification with 471 planned parents.
-The [registry proof correction](verification/registry-proof-revision.md) then
-resolves two LLM review findings and adds eight planned parents, for 479 total.
-The earlier hash-pinned records remain historical; the new local fixture is
-not Go/Rust or Inspector execution evidence.
-These corrections remain within the explicitly approved,
+This correction remains within the explicitly approved,
 unreleased 0.10.0 documentation design; it changes local admission verdicts and
 requires version-pinned implementation and Inspector re-evaluation before any
 conformance claim. A released 0.10.0 would instead require a new exact version

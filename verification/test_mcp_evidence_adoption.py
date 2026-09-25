@@ -44,7 +44,7 @@ class EvidenceAdoptionTests(unittest.TestCase):
 
     def test_source_digest_cannot_change(self):
         self.check_changed(lambda r: r['source_sha256'].update({'profiles/non-http-mcp-security.md': '0' * 64}),
-                           'specification source')
+                           'review target identity')
 
     def test_external_finding_remains_pending(self):
         self.check_changed(lambda r: r['dispositions'].update({'ADOPT-06': 'RESOLVED'}),

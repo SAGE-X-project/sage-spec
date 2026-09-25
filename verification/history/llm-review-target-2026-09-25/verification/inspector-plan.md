@@ -105,10 +105,10 @@ cases report nonconformance rather than sending meaningless network fixtures.
 | TRANSPORT-04 | R-17, R-30, R-35, R-36 | Atomic outer acceptance after every required verification | valid outer invalid inner; concurrent duplicate; session decryption fail; same id new nonce |
 | TRANSPORT-05 | R-15, R-16, R-18, R-34 | HTTP and body signatures accepted once with equal fields | mismatched nonce/time/keyid; missing signature; unsigned header projection authority |
 | TRANSPORT-06 | R-15, R-16, R-17, R-18, R-30 | One authenticated UTF-8 envelope per WS message | compressed frame; binary frame; oversized fragmented message; direct unsigned local bypass |
-| REG-01 | R-4, R-6, R-28, R-30 | Complete closed record obeying types, bounds and exact `x25519` KEM `alg` | duplicate key name; duplicate service id; fragment collision; over128 lifetime key tombstones; unknown or case-folded KEM `alg` |
-| REG-02 | R-7, R-8, R-12 | Deterministic accepted key selection and immutable key identity | unproven selected key; revoked key used to authenticate a message; changed key material under same name; signing key selected as KEM |
+| REG-01 | R-4, R-6, R-28, R-30 | Complete closed record obeying types and bounds | duplicate key name; duplicate service id; fragment collision; over128 lifetime key tombstones |
+| REG-02 | R-7, R-8, R-12 | Deterministic accepted key selection and immutable key identity | unproven selected key; revoked key used to authenticate a message; changed key material under same name |
 | REG-03 | R-3, R-5, R-7, R-10, R-11 | Authorised atomic compare-and-swap lifecycle transition | stale expected version; concurrent mutation; inactive write; unauthorised operator |
-| REG-04 | R-5, R-6, R-12, R-29 | Exact length-only `len16` challenge bytes, signing PoP and KEM endorsement validated against historical signer even if now revoked; historical signer never authenticates new messages | PoP copied to another registry; changed controller; X25519 claimed signing proof; invalid key; duplicated challenge fields |
+| REG-04 | R-5, R-6, R-12, R-29 | Signing PoP bound to identity/key and KEM endorsement validated against historical signer even if now revoked; historical signer never authenticates new messages | PoP copied to another registry; changed controller; X25519 claimed signing proof; invalid key |
 | REG-05 | R-9, R-13 | One authoritative snapshot at fresh dispatch gate | mixed blocks; latest-only unfinalised RPC; withheld head; revoked observed key; observation older5s |
 | REG-06 | R-2, R-3, R-5, R-11, R-13 | eip155 binding includes registry code/ABI/finality authority | unknown deployment; code hash change; missing ABI; inconsistent state read |
 | REG-07 | R-2, R-3 | Solana kind recognised as reserved and unsupported | Solana record accepted as conformant 0.10.0 |
@@ -119,8 +119,8 @@ cases report nonconformance rather than sending meaningless network fixtures.
 | RESOLVE-04 | R-8, R-9 | Exact accepted key dereferenced from fresh DID document | missing fragment; unknown key; revoked key; service fragment used as key; wrong relationship |
 | RESOLVE-05 | R-14, R-34, R-35 | HTTP resolution binding preserves document and errors | wrong media type; redirect authority change; oversized response; cached positive reuse |
 | TABLE-01 | R-3, R-32, R-34 | Defined registered values preserve existing meanings | reuse retired code; silent incompatible extension; unknown private value accepted |
-| TABLE-02 | R-19, R-29 | All signature suite identifiers match chapter01 | legacy es256k; JOSE mapping inferred from private Keccak name; `x25519` used as signature `alg` |
-| TABLE-03 | R-29 | Key encodings and exact registry KEM `alg` match declared role and record/document binding | compressed secp when raw required; wrong coordinate length; KEM key with 31-byte public value |
+| TABLE-02 | R-19, R-29 | All suite identifiers match chapter01 | legacy es256k; JOSE mapping inferred from private Keccak name |
+| TABLE-03 | R-29 | Key encodings match record/document binding | compressed secp when raw required; wrong coordinate length |
 | TABLE-04 | R-19, R-28, R-34 | Labels equal exact bytes in each construction | old label with new version; omitted newline/NUL; wrong HKDF domain |
 | TABLE-05 | R-2, R-3 | Supported registry kind plus valid deployment binding | reserved kind advertised supported; unknown kind accepted |
 | TABLE-06 | R-15, R-34 | Mandatory version/DID and matching optional projections | header body mismatch; unsigned header used for routing |
@@ -227,7 +227,7 @@ not an extra top-level test count. Run each in
 its declared scope: the isolated 1024-entry owner bound is a unit seam; authenticated
 traffic must stop at the tighter session-record ceiling. Every added parent/child
 remains planned or NOT_RUN. Older 37-case Inspector lifecycle evidence is a separate
-catalog and is neither added nor automatically mapped into this 479-case plan.
+catalog and is neither added nor automatically mapped into this 471-case plan.
 The earlier 457-case snapshot and its 71-case Inspector overlay retain their pinned
 historical revision; none of the nine new cases inherits PASS evidence.
 The preserved MCP errata snapshot has 466 planned parents. The current
@@ -236,11 +236,4 @@ Agent hops and DID/JWK interoperability boundaries. Its 471 parents remain
 unexecuted as a plan; no historical Inspector result is promoted. The added
 cases are `mrevision-hop-authorized`, `mrevision-hop-unapproved`,
 `mrevision-parent-no-grant`, `mrevision-did-consumer` and
-`mrevision-extra-jwk-authority`. The 2026-09-25 registry clarification adds
-eight further planned parents: `mllm-kem-alg-valid`, `mllm-kem-alg-case`,
-`mllm-kem-selection`, `mllm-pop-exact-bytes`, `mllm-pop-duplicate-field`,
-`mllm-kem-signature-reject`, `mllm-kem-type-valid`, and
-`mllm-kem-key-length`. The resulting 479 parents are unexecuted Inspector
-cases. The [fixed local fixture](vectors/registry-proof-0.10.0.json) checks
-challenge bytes and the KEM role/selection contract; it does not execute a
-core implementation, registration transaction, or handshake.
+`mrevision-extra-jwk-authority`.

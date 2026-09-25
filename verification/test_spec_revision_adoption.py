@@ -18,7 +18,7 @@ class SpecRevisionTests(unittest.TestCase):
         shutil.copytree(ROOT, self.root, ignore=shutil.ignore_patterns(".git", "__pycache__"))
 
     def change_trace(self, change):
-        path = self.root / "verification/traceability.json"
+        path = self.root / "verification/history/llm-review-target-2026-09-25/verification/traceability.json"
         plan = json.loads(path.read_text())
         change(plan)
         path.write_text(json.dumps(plan, indent=2) + "\n")
@@ -52,7 +52,7 @@ class SpecRevisionTests(unittest.TestCase):
     def test_normative_file_cannot_drift(self):
         with (self.root / "profiles/agent-mcp-security.md").open("a") as stream:
             stream.write("\nChanged trust rule\n")
-        with self.assertRaisesRegex(ValueError, "current identity"):
+        with self.assertRaisesRegex(ValueError, "review target identity"):
             verify(self.root)
 
 
