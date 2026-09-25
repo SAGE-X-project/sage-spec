@@ -66,6 +66,7 @@ demo and repository extraction work. A package layout is an implementation
 choice; the normative profile and its evidence determine compatibility.
 
 See the [current design graph](../analysis/current-design-overlay.md), the
+[Guard and MCP clause review](../verification/guard-binding-ownership-review.md),
 [repository ownership map](repository-roles.md), the
 [normative overview](../spec/00-overview.md), the
 [Agent/MCP security profile](../profiles/agent-mcp-security.md), the
