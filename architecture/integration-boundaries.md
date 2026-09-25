@@ -65,7 +65,8 @@ gaps, rerun Inspector against the exact snapshot, and evaluate SDK, service,
 demo and repository extraction work. A package layout is an implementation
 choice; the normative profile and its evidence determine compatibility.
 
-See the [repository ownership map](repository-roles.md), the
+See the [current design graph](../analysis/current-design-overlay.md), the
+[repository ownership map](repository-roles.md), the
 [normative overview](../spec/00-overview.md), the
 [Agent/MCP security profile](../profiles/agent-mcp-security.md), the
 [non-HTTP MCP profile](../profiles/non-http-mcp-security.md), and the
