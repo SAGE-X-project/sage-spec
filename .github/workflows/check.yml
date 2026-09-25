@@ -69,6 +69,7 @@ jobs:
           path: .inspector
       - name: Check document controls and planned cases
         run: |
+          python3 -B analysis/build-current-design-overlay.py --check
           python3 proposals/non-http-mcp-setup/verify.py --self-test
           python3 proposals/non-http-mcp-setup/verify.py
           python3 proposals/non-http-mcp-setup/verify_addendum.py --self-test
