@@ -94,3 +94,7 @@ jobs:
           python3 -B verification/check_mcp_external_review_package.py --inspector-root .inspector
           python3 -B verification/test_mcp_independent_llm_review.py
           python3 -B verification/check_mcp_independent_llm_review.py --inspector-root .inspector
+          python3 -B verification/test_registry_proof_revision.py
+          python3 -B verification/check_registry_proof_revision.py
+          python3 -B verification/test_registry_proof_adoption.py
+          python3 -B verification/check_registry_proof_adoption.py --inspector-root .inspector

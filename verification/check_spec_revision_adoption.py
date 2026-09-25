@@ -7,6 +7,7 @@ import re
 from pathlib import Path
 
 from check_mcp_errata_adoption import ROOT, pinned_path, verify as verify_prior
+from review_target import pinned_path as reviewed_path
 
 
 OWNERS = {
@@ -60,10 +61,11 @@ def verify(root=ROOT):
                       "architecture/migration-plan.md", "guides/integration.md"}
     require(set(record["current_sha256"]) == required_files, "snapshot files")
     for name, expected in record["current_sha256"].items():
-        require(sha256(root / name) == expected, "current identity: " + name)
+        reviewed_path(root, name, expected)
 
     old = json.loads(pinned_path(root, prior, "verification/traceability.json").read_text())
-    current = json.loads((root / "verification/traceability.json").read_text())
+    current = json.loads(reviewed_path(root, "verification/traceability.json",
+                                       record["current_sha256"]["verification/traceability.json"]).read_text())
     require(current["protocol_version"] == old["protocol_version"] == "0.10.0"
             and current["status"] == old["status"] == "verification_plan_not_executed"
             and current["mandatory_subscenarios"] == old["mandatory_subscenarios"]
@@ -104,7 +106,9 @@ def verify(root=ROOT):
         require(rule["case_ids"] == previous["case_ids"]
                 + [case_id for case_id, owner in OWNERS.items() if owner == ident],
                 "rule case mapping: " + ident)
-        lines = (root / rule["source"]).read_text().splitlines()
+        source = rule["source"]
+        historical = root / "verification/history/llm-review-target-2026-09-25" / source
+        lines = (historical if historical.is_file() else root / source).read_text().splitlines()
         found = [number for number, line in enumerate(lines, 1)
                  if (line.startswith("#") and re.search(r"\b" + re.escape(ident) + r"\b", line))
                  or re.match(r"^\*\*" + re.escape(ident) + r"\b", line)]

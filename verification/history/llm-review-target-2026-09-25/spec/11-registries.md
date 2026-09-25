@@ -43,9 +43,6 @@ names. Unsupported algorithms fail closed. RSA is not supported in 0.10.0.
 Names beginning `x-` are for private use and MUST NOT appear in a record or
 a message that leaves a deployment.
 
-The literal `x25519` is not in TABLE-02 and MUST NOT appear as a message
-signature `alg` or a signing verification method algorithm.
-
 ## 3. Key types and encodings — TABLE-03 (R-29)
 
 How a public key appears in a registry record and in a resolved document.
@@ -56,14 +53,6 @@ How a public key appears in a registry record and in a resolved document.
 | secp256k1 | signing | 65 bytes, uncompressed, `0x04` prefix | JSON Web Key, `EC`, curve `secp256k1` |
 | P-256 | signing | 65 bytes, uncompressed, `0x04` prefix | JSON Web Key, `EC`, curve `P-256` |
 | X25519 | key agreement | 32 bytes | JSON Web Key, `OKP`, curve `X25519` |
-
-For a registry X25519 key, the exact `alg` value is lowercase ASCII `x25519`.
-It denotes only the HPKE X25519 KEM role. A registry MUST validate the
-public key as exactly 32 bytes under the declared `alg` and MUST reject
-unknown aliases or case variants. It MUST reject any attempt to use an
-`alg` = `x25519` entry to verify a message signature or to sign its own
-endorsement. No algorithm alias or case folding is permitted. The raw bytes
-cannot establish independent provenance between Ed25519 and X25519.
 
 Raw record bytes are serialized as canonical unpadded base64url. JWK
 coordinates are likewise unpadded base64url; chapter 10 fixes exact members.

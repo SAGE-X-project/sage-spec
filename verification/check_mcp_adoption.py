@@ -7,6 +7,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 HISTORY=Path('verification/history/mcp-adoption-2026-09-21')
+REVIEW_HISTORY=Path('verification/history/llm-review-target-2026-09-25')
 
 def digest(raw):return hashlib.sha256(raw).hexdigest()
 def canonical(value):return json.dumps(value,sort_keys=True,separators=(',',':')).encode()
@@ -20,6 +21,10 @@ def pinned_path(root,record,name):
     if historical.is_file():
         require(digest(historical.read_bytes())==expected,'normative identity: '+name)
         return historical
+    reviewed=root/REVIEW_HISTORY/name
+    if reviewed.is_file():
+        require(digest(reviewed.read_bytes())==expected,'normative identity: '+name)
+        return reviewed
     require(current.is_file() and digest(current.read_bytes())==expected,
             'normative identity: '+name)
     return current

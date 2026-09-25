@@ -1596,9 +1596,7 @@
         "REG-01-N01",
         "REG-01-N02",
         "REG-01-N03",
-        "REG-01-N04",
-        "mllm-kem-alg-valid",
-        "mllm-kem-alg-case"
+        "REG-01-N04"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [
@@ -1609,7 +1607,7 @@
     {
       "id": "REG-02",
       "source": "spec/09-registry.md",
-      "line": 45,
+      "line": 40,
       "requirements": [
         "R-7",
         "R-8",
@@ -1619,8 +1617,7 @@
         "REG-02-P",
         "REG-02-N01",
         "REG-02-N02",
-        "REG-02-N03",
-        "mllm-kem-selection"
+        "REG-02-N03"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [
@@ -1631,7 +1628,7 @@
     {
       "id": "REG-03",
       "source": "spec/09-registry.md",
-      "line": 55,
+      "line": 50,
       "requirements": [
         "R-3",
         "R-5",
@@ -1655,7 +1652,7 @@
     {
       "id": "REG-04",
       "source": "spec/09-registry.md",
-      "line": 86,
+      "line": 81,
       "requirements": [
         "R-5",
         "R-6",
@@ -1667,9 +1664,7 @@
         "REG-04-N01",
         "REG-04-N02",
         "REG-04-N03",
-        "REG-04-N04",
-        "mllm-pop-exact-bytes",
-        "mllm-pop-duplicate-field"
+        "REG-04-N04"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [
@@ -1680,7 +1675,7 @@
     {
       "id": "REG-05",
       "source": "spec/09-registry.md",
-      "line": 120,
+      "line": 112,
       "requirements": [
         "R-9",
         "R-13"
@@ -1702,7 +1697,7 @@
     {
       "id": "REG-06",
       "source": "spec/09-registry.md",
-      "line": 149,
+      "line": 141,
       "requirements": [
         "R-2",
         "R-3",
@@ -1726,7 +1721,7 @@
     {
       "id": "REG-07",
       "source": "spec/09-registry.md",
-      "line": 175,
+      "line": 167,
       "requirements": [
         "R-2",
         "R-3"
@@ -1744,7 +1739,7 @@
     {
       "id": "REG-08",
       "source": "spec/09-registry.md",
-      "line": 184,
+      "line": 176,
       "requirements": [
         "R-2",
         "R-3",
@@ -1909,8 +1904,7 @@
       "case_ids": [
         "TABLE-02-P",
         "TABLE-02-N01",
-        "TABLE-02-N02",
-        "mllm-kem-signature-reject"
+        "TABLE-02-N02"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [
@@ -1921,16 +1915,14 @@
     {
       "id": "TABLE-03",
       "source": "spec/11-registries.md",
-      "line": 49,
+      "line": 46,
       "requirements": [
         "R-29"
       ],
       "case_ids": [
         "TABLE-03-P",
         "TABLE-03-N01",
-        "TABLE-03-N02",
-        "mllm-kem-type-valid",
-        "mllm-kem-key-length"
+        "TABLE-03-N02"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [
@@ -1941,7 +1933,7 @@
     {
       "id": "TABLE-04",
       "source": "spec/11-registries.md",
-      "line": 74,
+      "line": 63,
       "requirements": [
         "R-19",
         "R-28",
@@ -1962,7 +1954,7 @@
     {
       "id": "TABLE-05",
       "source": "spec/11-registries.md",
-      "line": 106,
+      "line": 95,
       "requirements": [
         "R-2",
         "R-3"
@@ -1981,7 +1973,7 @@
     {
       "id": "TABLE-06",
       "source": "spec/11-registries.md",
-      "line": 118,
+      "line": 107,
       "requirements": [
         "R-15",
         "R-34"
@@ -2000,7 +1992,7 @@
     {
       "id": "TABLE-07",
       "source": "spec/11-registries.md",
-      "line": 139,
+      "line": 128,
       "requirements": [
         "R-35"
       ],
@@ -6887,78 +6879,6 @@
       "input": "Authoritative SAGE projection input with an extra, contradictory or private JWK member",
       "preconditions": "Input otherwise names a valid active registry record; receiver applies the strict SAGE projection grammar",
       "expected": "Reject the extra or contradictory authoritative input without publishing a DID document; generic JWK unknown-member tolerance does not override SAGE authority rules",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mllm-kem-alg-valid",
-      "rule_id": "REG-01",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "A registry entry uses exact alg x25519 with a 32-byte X25519 public key and signing-key endorsement",
-      "preconditions": "Use synthetic keys and a pinned 0.10.0 record fixture. Compare exact bytes, role, and accept/reject outcome without sending traffic to live peers.",
-      "expected": "Accept the KEM-role entry only after proof and record checks; it is not a signing key.",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mllm-kem-alg-case",
-      "rule_id": "REG-01",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "An otherwise valid KEM entry uses alg X25519 or an unregistered alias",
-      "preconditions": "Use synthetic keys and a pinned 0.10.0 record fixture. Compare exact bytes, role, and accept/reject outcome without sending traffic to live peers.",
-      "expected": "Reject the record; no case folding or algorithm substitution.",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mllm-kem-selection",
-      "rule_id": "REG-02",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "An active record has multiple accepted unexpired x25519 entries with distinct ASCII names",
-      "preconditions": "Use synthetic keys and a pinned 0.10.0 record fixture. Compare exact bytes, role, and accept/reject outcome without sending traffic to live peers.",
-      "expected": "Select the first ASCII name and bind its full key URL in the handshake; never select a signing key.",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mllm-pop-exact-bytes",
-      "rule_id": "REG-04",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "REG-04 signing-key and KEM-endorsement challenges use length-only len16 followed once by each field",
-      "preconditions": "Use synthetic keys and a pinned 0.10.0 record fixture. Compare exact bytes, role, and accept/reject outcome without sending traffic to live peers.",
-      "expected": "Accept only proofs over the exact fixed challenge bytes for each role.",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mllm-pop-duplicate-field",
-      "rule_id": "REG-04",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "The PoP challenge repeats each field after a len16 encoder that already included the field",
-      "preconditions": "Use synthetic keys and a pinned 0.10.0 record fixture. Compare exact bytes, role, and accept/reject outcome without sending traffic to live peers.",
-      "expected": "Reject the signature over duplicated-field bytes; do not accept either encoding as an alias.",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mllm-kem-signature-reject",
-      "rule_id": "TABLE-02",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "A message signature declares alg x25519 or names a KEM-role entry",
-      "preconditions": "Use synthetic keys and a pinned 0.10.0 record fixture. Compare exact bytes, role, and accept/reject outcome without sending traffic to live peers.",
-      "expected": "Reject before signature verification; x25519 is not a signature algorithm.",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mllm-kem-type-valid",
-      "rule_id": "TABLE-03",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "Registry alg x25519 and 32-byte X25519 public key agree",
-      "preconditions": "Use synthetic keys and a pinned 0.10.0 record fixture. Compare exact bytes, role, and accept/reject outcome without sending traffic to live peers.",
-      "expected": "Accept the key type for HPKE KEM use only, subject to proof and registry state.",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mllm-kem-key-length",
-      "rule_id": "TABLE-03",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "Registry alg x25519 has a 31-byte public key instead of exactly 32 bytes",
-      "preconditions": "Use synthetic keys and a pinned 0.10.0 record fixture. Compare exact bytes, role, and accept/reject outcome without sending traffic to live peers.",
-      "expected": "Reject the record before endorsement or handshake selection.",
       "evidence_status": "planned_not_executed"
     }
   ],

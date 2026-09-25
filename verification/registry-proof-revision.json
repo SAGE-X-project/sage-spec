@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "kind": "registry-proof-normative-correction",
+  "protocol_version": "0.10.0",
+  "status": "NORMATIVE_CORRECTION_LLM_REREVIEWED",
+  "prior_review_revision": "cb02dbd8a773c88e7eb52956bade205f1bd871c8",
+  "review_target_revision": "d86ca1a4d326d6090e50d100b834d38ec204a2c2",
+  "prior_review_report": "verification/mcp-independent-llm-review.json",
+  "prior_review_report_sha256": "c873043816693f192c8209cadd895797ce9085b9a9387850c6ae4a0f3c362e4f",
+  "historical_snapshot_root": "verification/history/llm-review-target-2026-09-25",
+  "historical_sha256": {
+    "spec/00-overview.md": "26731b6d91994677548cff3efabfb0f5d9406de53b4e030bfb637f28137e8a85",
+    "spec/09-registry.md": "ccd34125fb49b281475534773c81bd58d87b86cc7f6c88544b92f1f9e212f7e3",
+    "spec/11-registries.md": "668a2c0ccf51651463829d4de80bce4206231f48c3860f6a195f9380f1c14a4b",
+    "verification/traceability.json": "b1034b4c37c19560da5540b29a5ef61e7ca8dd629a04e4e1caa4a57e77989887",
+    "verification/inspector-plan.md": "c393cde7182b49723a0f1a2a6b1752b872881c53169ff3fecc4ff58525ac3a8e",
+    "README.md": "2031d4fe30d7573c36cfc60854f39bd69138b188bcf8cbcf842789c8e1cbf2e9",
+    "PROCESS.md": "463fc45f7d635869b4bd625e4dcf34aeee937d522baab12e4bc44c36594443c6",
+    "CHANGELOG.md": "5e496ae05f639f8fe1d96d80b3d8faecef192039ac792ca63b9f81b1c3a6e4f9"
+  },
+  "current_sha256": {
+    "spec/00-overview.md": "51618aa65a4090d36338d53c09ce18ab6f717c5141fb8ac7091abc31becd9604",
+    "spec/09-registry.md": "2f7e5468bf87e7a402c7853584fca8e345b5055a0625f7068a71e80e6321eb02",
+    "spec/11-registries.md": "eb673391143bd4ed9283ee8a6a578aeb44e0018a78f6d994ebfeb70160757bf4",
+    "verification/traceability.json": "ec4cef166a7e1aa6993b8345b9b702fbb218b091426a4eab330dc104657028fd",
+    "verification/inspector-plan.md": "bd30bc8fe8a3739cff907ad6e34602ac5cefd7705de837e61a5f93a640915a7b",
+    "README.md": "6af5b1e7a131572bbf7b7e311447f9043c396cef1cbf8574dd32cf3c6d643b10",
+    "PROCESS.md": "9c48106f9d30bb426dcd5661e5bcf83016c1c1f64ff9eccd611a42a3d94204dd",
+    "CHANGELOG.md": "b35fcb306e8d884577ca7146ab63a15a257fb85070b93069d0406c153e600470",
+    "verification/vectors/registry-proof-0.10.0.json": "2eb9e705ee66f649a33b84e836dd2ef2840322d363d997fe8f114cabf891a7d5",
+    "verification/registry-proof-revision.md": "25cc49d4f20ccb159cf562b46a1717877a010f73c58eb99cef533df5cda4ddd5"
+  },
+  "finding_dispositions": {
+    "LLM-01": "CORRECTED_IN_TEXT_PENDING_REREVIEW",
+    "LLM-02": "CORRECTED_IN_TEXT_PENDING_REREVIEW"
+  },
+  "counts": {
+    "rule_groups": 91,
+    "historical_parent_cases": 471,
+    "new_parent_cases": 8,
+    "total_parent_cases": 479,
+    "mandatory_children": 26
+  },
+  "new_case_ids": [
+    "mllm-kem-alg-valid",
+    "mllm-kem-alg-case",
+    "mllm-kem-selection",
+    "mllm-pop-exact-bytes",
+    "mllm-pop-duplicate-field",
+    "mllm-kem-signature-reject",
+    "mllm-kem-type-valid",
+    "mllm-kem-key-length"
+  ],
+  "fixture_check": "PASS_LOCAL_SPECIFICATION_FIXTURE_ONLY",
+  "independent_rereview": "FRESH_CONTEXT_LLM_NO_NEW_FINDINGS",
+  "core_implementation": "NOT_RUN",
+  "inspector_revised_cases": "NOT_RUN",
+  "third_party_audit": "NOT_PERFORMED",
+  "conformance": "NOT_ESTABLISHED",
+  "release_or_tag_created": false,
+  "compatibility": "Unreleased 0.10.0 correction changes accepted PoP bytes and registry KEM-key verdicts; previous implementation and Inspector results do not transfer.",
+  "reviewer": {
+    "identity": "Codex LLM in a fresh context",
+    "affiliation": "same service and workspace as the authoring agent",
+    "organizationally_external": false,
+    "method": "read-only source and exact-byte fixture re-review",
+    "scope": "LLM-01 and LLM-02 normative correction, eight planned cases and local fixture",
+    "first_pass": "unobservable raw-key provenance claim corrected",
+    "second_pass": "no remaining concrete ambiguity found in scope",
+    "limits": "No formal analysis, live registration, full handshake, core or Inspector execution, host test, or third-party audit."
+  }
+}

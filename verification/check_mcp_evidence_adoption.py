@@ -7,6 +7,7 @@ from pathlib import Path
 import subprocess
 
 from check_spec_revision_adoption import verify as verify_spec_revision
+from review_target import pinned_path as reviewed_path
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -63,7 +64,7 @@ def verify_record(root, record, inspector_root=None):
     require(record['dispositions'] == DISPOSITIONS, 'finding disposition')
     require(set(record['source_sha256']) == SOURCES, 'source inventory')
     for name, digest in record['source_sha256'].items():
-        require(sha(root / name) == digest, 'specification source: ' + name)
+        reviewed_path(root, name, digest)
     adoption = json.loads((root / 'verification/mcp-adoption.json').read_text())
     errata = json.loads((root / 'verification/mcp-errata-adoption.json').read_text())
     require(adoption['status'] == 'ADOPTED_NORMATIVE_DESIGN'
@@ -73,7 +74,8 @@ def verify_record(root, record, inspector_root=None):
             and errata['dispositions']['ADOPT-06'] == 'PENDING_EXTERNAL',
             'historical adoption changed')
     historical = json.loads((root / 'verification/history/mcp-adoption-2026-09-21/verification/traceability.json').read_text())
-    current = json.loads((root / 'verification/traceability.json').read_text())
+    current = json.loads(reviewed_path(root, 'verification/traceability.json',
+                                       record['source_sha256']['verification/traceability.json']).read_text())
     plan = record['historical_plan']
     require(plan == {'binding_parent_cases': 71, 'mandatory_children': 26,
                      'execution': 'NOT_RUN', 'current_total_parent_cases': 471,
