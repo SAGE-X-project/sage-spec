@@ -50,7 +50,11 @@ def verify(root=ROOT):
             and record['conformance'] == 'NOT_ESTABLISHED'
             and record['release_or_tag_created'] is False,
             'unsupported evidence promotion')
-    expected_files = {'spec/00-overview.md', 'spec/10-resolution.md',
+    expected_files = {'.github/workflows/check.yml',
+                      'analysis/build-current-design-overlay.py',
+                      'analysis/current-design-overlay.json',
+                      'analysis/current-design-overlay.md',
+                      'spec/00-overview.md', 'spec/10-resolution.md',
                       'verification/standards.md',
                       'verification/standards-application-matrix.md',
                       'verification/traceability.json',

@@ -5,10 +5,10 @@
   "protocol_version": "0.10.0",
   "traceability": {
     "path": "verification/traceability.json",
-    "sha256": "ec4cef166a7e1aa6993b8345b9b702fbb218b091426a4eab330dc104657028fd",
+    "sha256": "a83a28338a9e3f15cd7846ce251db2f915d9ffffaf7162bc749b7f38d784aae7",
     "requirements": 45,
     "rule_groups": 91,
-    "planned_cases": 479
+    "planned_cases": 481
   },
   "historical_ast_graph": {
     "path": "analysis/graphs.json",
@@ -23,8 +23,8 @@
     "Historical AST edges are not current implementation conformance."
   ],
   "counts": {
-    "nodes": 635,
-    "edges": 885
+    "nodes": 637,
+    "edges": 887
   },
   "nodes": [
     {"evidence_status": "planned_not_executed", "id": "case:CARD-01-N01", "kind": "planned_case", "label": "CARD-01-N01", "mode": "independent_fixture_and_live_adapter", "rule_id": "CARD-01"},
@@ -506,11 +506,13 @@
     {"evidence_status": "planned_not_executed", "id": "case:mset-08-historical-evidence", "kind": "planned_case", "label": "mset-08-historical-evidence", "mode": "unit_and_bounded_local_runtime", "rule_id": "MSET-08"},
     {"evidence_status": "planned_not_executed", "id": "case:mset-08-http-not-defined", "kind": "planned_case", "label": "mset-08-http-not-defined", "mode": "unit_and_bounded_local_runtime", "rule_id": "MSET-08"},
     {"evidence_status": "planned_not_executed", "id": "case:mset-08-proposal-scope", "kind": "planned_case", "label": "mset-08-proposal-scope", "mode": "unit_and_bounded_local_runtime", "rule_id": "MSET-08"},
-    {"evidence": "authored_normative_trace", "id": "doc:sage-spec:PROCESS.md", "kind": "current_trace_source", "path": "PROCESS.md", "sha256": "9c48106f9d30bb426dcd5661e5bcf83016c1c1f64ff9eccd611a42a3d94204dd"},
+    {"evidence_status": "planned_not_executed", "id": "case:mstand-problem-fields", "kind": "planned_case", "label": "mstand-problem-fields", "mode": "unit_and_bounded_local_runtime", "rule_id": "RESOLVE-05"},
+    {"evidence_status": "planned_not_executed", "id": "case:mstand-problem-type-publication", "kind": "planned_case", "label": "mstand-problem-type-publication", "mode": "deployment_or_document_review", "rule_id": "RESOLVE-05"},
+    {"evidence": "authored_normative_trace", "id": "doc:sage-spec:PROCESS.md", "kind": "current_trace_source", "path": "PROCESS.md", "sha256": "2ebc54e5fd908bed118bc4b6005f8a81f6cc482d9407a4bef8a96977ddce55f3"},
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:charter.md", "kind": "current_trace_source", "path": "charter.md", "sha256": "f11192af6397ac95f80287a3ff32ef662a3e94532a57646fab09b6776d938e01"},
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:profiles/agent-mcp-security.md", "kind": "current_trace_source", "path": "profiles/agent-mcp-security.md", "sha256": "0538acbdcfc143d93fb7d99a2a2c09c068fc354388c4e37c7489204305b1913f"},
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:profiles/non-http-mcp-security.md", "kind": "current_trace_source", "path": "profiles/non-http-mcp-security.md", "sha256": "9c7851d095208c975792565266e481c120ef754ae8eb9529c62b53bf12a1d4fa"},
-    {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/00-overview.md", "kind": "current_trace_source", "path": "spec/00-overview.md", "sha256": "51618aa65a4090d36338d53c09ce18ab6f717c5141fb8ac7091abc31becd9604"},
+    {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/00-overview.md", "kind": "current_trace_source", "path": "spec/00-overview.md", "sha256": "82493ba53f38cc783a2e76ffab3a70dc069b6ac3e534c7422840369fc90d9978"},
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/01-crypto.md", "kind": "current_trace_source", "path": "spec/01-crypto.md", "sha256": "fe9fd00066b259b99a63e5adab7db739757e3ad2597ccc71e2019fa34319faec"},
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/02-jcs.md", "kind": "current_trace_source", "path": "spec/02-jcs.md", "sha256": "4d4b202c8ddb5eb00c47a8e8056813a589834526e2174c023fb005a484eb3d94"},
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/03-rfc9421.md", "kind": "current_trace_source", "path": "spec/03-rfc9421.md", "sha256": "ca6b85e12a0b0e1a4f28b4eb2a9b677d29e2fd2abe9691d1ee30bfa14ee858c9"},
@@ -520,7 +522,7 @@
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/07-a2a.md", "kind": "current_trace_source", "path": "spec/07-a2a.md", "sha256": "5ded622fdaf67342d5c6b4327da0f5787bfe9df2dc58b233cdfb500ffc96b042"},
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/08-transport.md", "kind": "current_trace_source", "path": "spec/08-transport.md", "sha256": "87bb1adc1aae4883e13f8ba52a7c86153c71efb621ffc50458f7e2aa57db3eeb"},
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/09-registry.md", "kind": "current_trace_source", "path": "spec/09-registry.md", "sha256": "2f7e5468bf87e7a402c7853584fca8e345b5055a0625f7068a71e80e6321eb02"},
-    {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/10-resolution.md", "kind": "current_trace_source", "path": "spec/10-resolution.md", "sha256": "e782323b49e05507fca8b5e46e7092c2abee6453b65d4a7f7a62adc0b6d10fa4"},
+    {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/10-resolution.md", "kind": "current_trace_source", "path": "spec/10-resolution.md", "sha256": "12466dfeec90465c3fe014700972549d76917c7db87c207ce28d63867fbbe55c"},
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/11-registries.md", "kind": "current_trace_source", "path": "spec/11-registries.md", "sha256": "eb673391143bd4ed9283ee8a6a578aeb44e0018a78f6d994ebfeb70160757bf4"},
     {"evidence": "reviewed_design", "id": "layer:L0", "kind": "implementation_responsibility", "label": "Exact bytes and canonical representation"},
     {"evidence": "reviewed_design", "id": "layer:L1", "kind": "implementation_responsibility", "label": "Cryptographic validity under supplied inputs"},
@@ -1435,6 +1437,8 @@
     {"evidence": "authored_normative_trace", "from": "rule:RESOLVE-05", "kind": "planned_verification", "to": "case:RESOLVE-05-N03"},
     {"evidence": "authored_normative_trace", "from": "rule:RESOLVE-05", "kind": "planned_verification", "to": "case:RESOLVE-05-N04"},
     {"evidence": "authored_normative_trace", "from": "rule:RESOLVE-05", "kind": "planned_verification", "to": "case:RESOLVE-05-P"},
+    {"evidence": "authored_normative_trace", "from": "rule:RESOLVE-05", "kind": "planned_verification", "to": "case:mstand-problem-fields"},
+    {"evidence": "authored_normative_trace", "from": "rule:RESOLVE-05", "kind": "planned_verification", "to": "case:mstand-problem-type-publication"},
     {"evidence": "authored_normative_trace", "from": "rule:RESOLVE-05", "kind": "specified_by", "to": "doc:sage-spec:spec/10-resolution.md"},
     {"evidence": "authored_normative_trace", "from": "rule:SESSION-01", "kind": "planned_verification", "to": "case:CST-04-01"},
     {"evidence": "authored_normative_trace", "from": "rule:SESSION-01", "kind": "planned_verification", "to": "case:CST-04-02"},

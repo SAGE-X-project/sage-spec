@@ -8,6 +8,7 @@
   own resolution contract. Fix the public RFC 9457 error titles and statuses.
 - Add two planned Inspector cases, for 91 groups and 481 parents. Preserve the
   479-case registry-correction snapshot and all earlier evidence separately.
+  Refresh the current design graph for the expanded plan.
 - No new wire field, core execution result, external audit or conformance claim.
 
 ## 0.10.0 — registry proof and KEM role clarification (2026-09-25)

@@ -20,16 +20,20 @@
     "mstand-problem-type-publication"
   ],
   "current_sha256": {
+    ".github/workflows/check.yml": "2d0e2627012bb44f1e5e8772d05b3e0f157152f7a9a06a360930a4d72d638e1e",
+    "CHANGELOG.md": "32cd65b2a3dcf5a7193cf9b3e11c5b9f404da5adf581673789aa8ce64895f296",
+    "PROCESS.md": "2ebc54e5fd908bed118bc4b6005f8a81f6cc482d9407a4bef8a96977ddce55f3",
+    "README.md": "5f55b16af72e492dbd89bebf82b3d33d66e3ed68152ea3c12aa3ada7889762de",
+    "analysis/build-current-design-overlay.py": "1ae2fd43b4ac0b73ce756f7dd08900fbb2e02d58d43a4eb41a0e6b2378dd12b8",
+    "analysis/current-design-overlay.json": "641291ef657fc079e049c79ef712a8bdeb669ce486eeecb959b1da479ba6dab7",
+    "analysis/current-design-overlay.md": "06399a9f538d602e2413d113273ab62b48aa52c7bcd69c4cbcb5076f5f8a566a",
     "spec/00-overview.md": "82493ba53f38cc783a2e76ffab3a70dc069b6ac3e534c7422840369fc90d9978",
     "spec/10-resolution.md": "12466dfeec90465c3fe014700972549d76917c7db87c207ce28d63867fbbe55c",
-    "verification/standards.md": "353fd21acc904983fc5e2c7a4b2c6e681e6917e239bb232e179a8178d92c3ac8",
-    "verification/standards-application-matrix.md": "7b8f2209ee6295db8ebd10eb864a39dba04fe12cf6b45297001371fbc3d38ef4",
-    "verification/traceability.json": "a83a28338a9e3f15cd7846ce251db2f915d9ffffaf7162bc749b7f38d784aae7",
+    "verification/check_registry_proof_adoption.py": "2ea805724f375ad9ddfe227b935cac28205b84730bcc84168917733a24aac84d",
     "verification/inspector-plan.md": "356d1f467731fb56853875b866a610256b8801d8598d2db114ffafa4be965973",
-    "README.md": "5f55b16af72e492dbd89bebf82b3d33d66e3ed68152ea3c12aa3ada7889762de",
-    "PROCESS.md": "2ebc54e5fd908bed118bc4b6005f8a81f6cc482d9407a4bef8a96977ddce55f3",
-    "CHANGELOG.md": "3ccacb755230bb331566565c601b162984438c00e93dac19d38f67ea9a8ce34b",
-    "verification/check_registry_proof_adoption.py": "2ea805724f375ad9ddfe227b935cac28205b84730bcc84168917733a24aac84d"
+    "verification/standards-application-matrix.md": "7b8f2209ee6295db8ebd10eb864a39dba04fe12cf6b45297001371fbc3d38ef4",
+    "verification/standards.md": "353fd21acc904983fc5e2c7a4b2c6e681e6917e239bb232e179a8178d92c3ac8",
+    "verification/traceability.json": "a83a28338a9e3f15cd7846ce251db2f915d9ffffaf7162bc749b7f38d784aae7"
   },
   "core_implementation": "NOT_RUN",
   "inspector_new_cases": "NOT_RUN",
