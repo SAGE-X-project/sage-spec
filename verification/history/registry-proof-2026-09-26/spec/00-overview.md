@@ -128,13 +128,11 @@ Normative:
 | RFC 2119, RFC 8174 | Key words for use in RFCs |
 | RFC 5234 | Augmented BNF for syntax specifications |
 | RFC 4648 | Base16, Base32 and Base64 data encodings |
-| RFC 5869 | HKDF extract and expand used by the SAGE session schedule |
 | RFC 8032 | Edwards-curve digital signature algorithm |
 | RFC 6979 | Deterministic usage of DSA and ECDSA |
 | RFC 7748 | Elliptic curves for security (X25519) |
-| RFC 7517, RFC 7518, RFC 8037 | JSON Web Key, JSON Web Algorithms and OKP key representation; SAGE does not adopt JOSE signature suites by reference |
+| RFC 7517, RFC 7518 | JSON Web Key, JSON Web Algorithms |
 | RFC 9110 | HTTP content-coding and negotiation semantics |
-| RFC 9111 | HTTP cache semantics used by the web-registry profile |
 | RFC 8785 | JSON canonicalisation scheme |
 | RFC 8439 | ChaCha20 and Poly1305 |
 | RFC 9180 | Hybrid public key encryption |
@@ -144,17 +142,12 @@ Normative:
 | RFC 9457 | Problem details for HTTP APIs |
 | W3C Decentralized Identifiers 1.0 | Identifier syntax, documents, resolution requirements |
 | W3C Controlled Identifiers 1.0 | Verification methods, services, verification relationships |
-| W3C DID Document Property Extensions (Group Note, 11 December 2025) | `JsonWebKey2020` vocabulary reference; not a completed W3C Recommendation or an automatic alias for `JsonWebKey` |
+| W3C DID Document Property Extensions | `JsonWebKey2020` vocabulary reference; not an automatic alias for `JsonWebKey` |
+| W3C DID Resolution | Resolution and dereferencing contract |
 | CAIP-2 | Chain-agnostic chain identifiers |
 
-Informative standards input:
-
-| Reference | Scope and status |
-|---|---|
-| [W3C DID Resolution Candidate Recommendation Draft, 28 August 2026](https://www.w3.org/TR/2026/CRD-did-resolution-1.0-20260828/) | Resolution concepts and result structure inform chapter 10. This is a work in progress, not a completed W3C Recommendation. Chapter 10 defines the SAGE 0.10.0 contract; later draft changes do not alter it automatically. |
-
 Scope and process: [charter](../charter.md), [process](../PROCESS.md).
-Reference applicability and errata are recorded in [standards review](../verification/standards.md). The [application matrix](../verification/standards-application-matrix.md) identifies the applied rules, SAGE restrictions and outstanding evidence. References inform the adopted rules; a future revision or reported erratum does not silently change this version.
+Reference applicability and errata are recorded in [standards review](../verification/standards.md). References inform the adopted rules; a future revision or reported erratum does not silently change this version.
 
 The non-HTTP MCP profile is adopted as a normative design, not a runtime conformance
 claim. The baseline remains transport-independent unless that binding is explicitly

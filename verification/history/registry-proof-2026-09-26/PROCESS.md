@@ -86,11 +86,7 @@ profile and 466-case historical plan. The
 coordinated multihop and standards clarification with 471 planned parents.
 The [registry proof correction](verification/registry-proof-revision.md) then
 resolves two LLM review findings and adds eight planned parents, for 479 total.
-The [standards application matrix](verification/standards-application-matrix.md)
-adds two planned RFC 9457 cases, for 481 current parents; its
-[revision record](verification/standards-scope-revision.json) pins the new
-document and case-plan bytes. The earlier
-hash-pinned records remain historical; the new local fixture is
+The earlier hash-pinned records remain historical; the new local fixture is
 not Go/Rust or Inspector execution evidence.
 These corrections remain within the explicitly approved,
 unreleased 0.10.0 documentation design; it changes local admission verdicts and

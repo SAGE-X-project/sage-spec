@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "analysis/current-design-overlay.json"
 TRACE_PATH = "verification/traceability.json"
 HISTORICAL_GRAPH_PATH = "analysis/graphs.json"
-EXPECTED_TRACE_SHA256 = "ec4cef166a7e1aa6993b8345b9b702fbb218b091426a4eab330dc104657028fd"
+EXPECTED_TRACE_SHA256 = "a83a28338a9e3f15cd7846ce251db2f915d9ffffaf7162bc749b7f38d784aae7"
 EXPECTED_HISTORICAL_GRAPH_SHA256 = "9ebc83fd13d9abd96f1080e5c95ab8e35f148d94ec81a88e64b8f137d6026f3c"
 
 # A document can span several implementation responsibilities. These edges are
@@ -61,7 +61,7 @@ def build():
     rules = trace["rules"]
     cases = trace["cases"]
     if (trace["protocol_version"], len(requirements), len(rules), len(cases)) != (
-        "0.10.0", 45, 91, 479
+        "0.10.0", 45, 91, 481
     ):
         raise ValueError("unexpected normative trace inventory")
     sources = {rule["source"] for rule in rules}

@@ -108,26 +108,14 @@ record validation, not only the bare document.
 Errors use [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457.html)
 `application/problem+json`, with `type` equal to
 `https://sage-x-project.github.io/sage-spec/errors/` plus the local code,
-`title` and `status` as specified below. The HTTP response status MUST equal
-the problem `status`. The `type` URI is an identifier, never a URL to fetch
-while deciding whether a resolution response is trustworthy. Publishers of
-this binding MUST document the exact type URI, title and status for every
-emitted code and SHOULD make the type URI resolve to human-readable guidance.
-Until the listed URI endpoints and an independent RFC 9457 consumer have been
-checked, this document does not claim the optional HTTP binding interoperates
-with generic problem-detail clients.
+`title` a short description and `status` matching HTTP status.
 
-| Code | Title | HTTP/problem status |
-|---|---|---|
-| `id.malformed` | Malformed identifier | 400 |
-| `id.unknown-kind` | Unsupported registry kind | 400 |
-| `version.unsupported` | Unsupported protocol version | 400 |
-| `record.not-found` | Record not found | 404 |
-| `key.not-in-record` | Key not found | 404 |
-| `record.unreachable` | Registry unavailable | 502 |
-| `record.stale` | Registry observation stale | 502 |
-| `record.invalid` | Registry record invalid | 502 |
-| `size.exceeded` | Input too large | 413 |
+| Code | HTTP status |
+|---|---|
+| `id.malformed`, `id.unknown-kind`, `version.unsupported` | 400 |
+| `record.not-found`, `key.not-in-record` | 404 |
+| `record.unreachable`, `record.stale`, `record.invalid` | 502 |
+| `size.exceeded` | 413 |
 
 No partial document is returned on failure. These diagnostics describe
 public resolution, not the check that failed on a signed application
