@@ -1869,9 +1869,7 @@
         "RESOLVE-05-N01",
         "RESOLVE-05-N02",
         "RESOLVE-05-N03",
-        "RESOLVE-05-N04",
-        "mstand-problem-fields",
-        "mstand-problem-type-publication"
+        "RESOLVE-05-N04"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [
@@ -6961,24 +6959,6 @@
       "input": "Registry alg x25519 has a 31-byte public key instead of exactly 32 bytes",
       "preconditions": "Use synthetic keys and a pinned 0.10.0 record fixture. Compare exact bytes, role, and accept/reject outcome without sending traffic to live peers.",
       "expected": "Reject the record before endorsement or handshake selection.",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mstand-problem-fields",
-      "rule_id": "RESOLVE-05",
-      "mode": "unit_and_bounded_local_runtime",
-      "input": "For each public resolution error, compare the exact RFC 9457 type URI, title and numeric status with the actual HTTP status; include a deliberately mismatched status and an unknown code as negative cases.",
-      "preconditions": "Use an isolated 0.10.0 resolution binding with fixed public errors and no live registry mutation or authentication decision.",
-      "expected": "Each emitted code uses its fixed type URI and title and matching HTTP/problem status. A mismatched status or undocumented error type fails conformance; no partial DID document is returned.",
-      "evidence_status": "planned_not_executed"
-    },
-    {
-      "id": "mstand-problem-type-publication",
-      "rule_id": "RESOLVE-05",
-      "mode": "deployment_or_document_review",
-      "input": "For each emitted problem type URI, review stable ownership, published human-readable documentation and an independent problem-details consumer.",
-      "preconditions": "Use a pinned deployment URL and deployed documentation revision; a local Markdown page alone is not proof of published URI resolution.",
-      "expected": "Record exact reachable documentation and consumer behavior, or retain NOT_RUN/no generic-interoperability claim where publication or independent observation is absent.",
       "evidence_status": "planned_not_executed"
     }
   ],

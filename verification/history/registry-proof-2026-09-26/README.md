@@ -33,9 +33,7 @@ Implementations are evidence, never authority where the text is silent.
 - [Document/code graph](analysis/graphs.md), [JSON graph](analysis/graphs.json),
   [purpose and vision](analysis/purpose-and-vision.md).
 - [Inspector plan](verification/inspector-plan.md), [traceability](verification/traceability.json),
-  [standards review](verification/standards.md),
-  [standards application matrix](verification/standards-application-matrix.md),
-  [review evidence](verification/review.md).
+  [standards review](verification/standards.md), [review evidence](verification/review.md).
 - [Repository roles](architecture/repository-roles.md), [migration](architecture/migration-plan.md).
 - [Preserved design branch review](verification/preserved-design-review.md) records which
   architecture and standards proposals need revision before a new specification snapshot.
@@ -74,12 +72,8 @@ non-HTTP MCP 2025-06-18 design and its 457-case historical plan. The
 466-case amendment. The [earlier revision record](verification/spec-revision-adoption.json)
 pins 91 rule groups and 471 top-level planned cases. The
 [registry proof correction](verification/registry-proof-revision.md) adds eight
-planned parents, for a preserved 479-case snapshot: 386 baseline cases, 71
-original MCP binding parents, nine errata parents, five earlier revision
-parents and eight registry cases. The [standards application matrix](verification/standards-application-matrix.md)
-adds two planned RFC 9457 resolution-binding cases, bringing the current plan
-to 481 parents. The [standards scope record](verification/standards-scope-revision.json)
-pins this current document and case-plan revision without promoting evidence.
+planned parents, for 479 total: 386 baseline cases, 71 original MCP binding
+parents, nine errata parents, five earlier revision parents and eight registry cases.
 The plan also has 26 mandatory child assertions.
 All are planned/unexecuted in this normative plan; historical runtime reports remain
 separate and must be mapped by exact case evidence. This is design adoption, not a tag,

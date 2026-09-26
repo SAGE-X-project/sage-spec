@@ -10,6 +10,7 @@ from check_registry_proof_revision import verify as verify_fixture
 
 
 ROOT = Path(__file__).resolve().parents[1]
+CORRECTION_SNAPSHOT = Path('verification/history/registry-proof-2026-09-26')
 OWNERS = {
     'mllm-kem-alg-valid': 'REG-01',
     'mllm-kem-alg-case': 'REG-01',
@@ -32,6 +33,9 @@ def sha(path):
 
 
 def verify_record(root, record):
+    # The record's "current" files are the source at its adoption, retained
+    # separately so later specification revisions cannot rewrite that evidence.
+    correction_root = root / CORRECTION_SNAPSHOT
     require(record['schema_version'] == 1
             and record['kind'] == 'registry-proof-normative-correction'
             and record['protocol_version'] == '0.10.0'
@@ -55,7 +59,7 @@ def verify_record(root, record):
         require(sha(root / record['historical_snapshot_root'] / name) == digest,
                 'historical source: ' + name)
     for name, digest in record['current_sha256'].items():
-        require(sha(root / name) == digest, 'current source: ' + name)
+        require(sha(correction_root / name) == digest, 'correction source: ' + name)
     require(record['finding_dispositions'] == {
         'LLM-01': 'CORRECTED_IN_TEXT_PENDING_REREVIEW',
         'LLM-02': 'CORRECTED_IN_TEXT_PENDING_REREVIEW',
@@ -82,7 +86,7 @@ def verify_record(root, record):
             and record['new_case_ids'] == list(OWNERS), 'plan counts or cases')
     old = json.loads((root / record['historical_snapshot_root'] /
                       'verification/traceability.json').read_text())
-    current = json.loads((root / 'verification/traceability.json').read_text())
+    current = json.loads((correction_root / 'verification/traceability.json').read_text())
     require(old['protocol_version'] == current['protocol_version'] == '0.10.0'
             and old['status'] == current['status'] == 'verification_plan_not_executed'
             and old['requirements'] == current['requirements']
@@ -107,7 +111,7 @@ def verify_record(root, record):
                 and rule['case_ids'] == prior['case_ids']
                 + [case_id for case_id, owner in OWNERS.items() if owner == name],
                 'rule mapping: ' + name)
-        lines = (root / rule['source']).read_text().splitlines()
+        lines = (correction_root / rule['source']).read_text().splitlines()
         found = [number for number, line in enumerate(lines, 1)
                  if (line.startswith('#') and re.search(r'\b' + re.escape(name) + r'\b', line))
                  or re.match(r'^\*\*' + re.escape(name) + r'\b', line)]
@@ -119,9 +123,9 @@ def verify_record(root, record):
                 and case['evidence_status'] == 'planned_not_executed'
                 and all(case[key] for key in ('input', 'preconditions', 'expected')),
                 'new case plan: ' + name)
-    overview = (root / 'spec/00-overview.md').read_text()
-    registry = (root / 'spec/09-registry.md').read_text()
-    tables = (root / 'spec/11-registries.md').read_text()
+    overview = (correction_root / 'spec/00-overview.md').read_text()
+    registry = (correction_root / 'spec/09-registry.md').read_text()
+    tables = (correction_root / 'spec/11-registries.md').read_text()
     require('only the 16-bit unsigned big-endian byte length' in overview
             and 'each field appears\nexactly once after its length' in registry
             and 'For a registry X25519 key, the exact `alg` value is lowercase ASCII `x25519`' in tables

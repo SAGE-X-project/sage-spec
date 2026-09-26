@@ -1,15 +1,5 @@
 # Changelog
 
-## 0.10.0 — standards scope and resolution error clarification (2026-09-26)
-
-- Record the exact external-standard editions, SAGE restrictions and remaining
-  verification gates without claiming standards certification.
-- Identify DID Resolution as a Candidate Recommendation Draft informing SAGE's
-  own resolution contract. Fix the public RFC 9457 error titles and statuses.
-- Add two planned Inspector cases, for 91 groups and 481 parents. Preserve the
-  479-case registry-correction snapshot and all earlier evidence separately.
-- No new wire field, core execution result, external audit or conformance claim.
-
 ## 0.10.0 — registry proof and KEM role clarification (2026-09-25)
 
 - Define `len16` as length only and pin exact PoP challenge bytes for signing

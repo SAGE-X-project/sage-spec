@@ -6,8 +6,6 @@ security proof. The existing protocol mechanisms are retained where sound, with
 SAGE-specific profiles made explicit. Reported errata are not silently normative.
 The [2026-09-24 standards decisions](standards-revision-decisions.md) record
 later applicability review without rewriting the original evidence snapshot.
-The [current application matrix](standards-application-matrix.md) pins the
-documented scope and missing verification evidence as of 2026-09-26.
 
 ## Adopted constructions and boundaries
 
@@ -29,7 +27,7 @@ documented scope and missing verification evidence as of 2026-09-26.
 | [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457.html) | HTTP problem details where specified | Authentication failures remain generic; diagnostics do not expose verification oracles |
 | [DID Core](https://www.w3.org/TR/did-core/), [Controlled Identifiers](https://www.w3.org/TR/cid-1.0/) | Method grammar, verification relationships and document representation | SAGE Card proof is explicitly custom; no unsupported W3C suite claim |
 | [DID property extensions](https://www.w3.org/TR/did-extensions-properties/#jsonwebkey2020), [Controlled Identifiers 1.0](https://www.w3.org/TR/cid/) | Verification-method type vocabulary | `JsonWebKey2020` has an extension definition; Controlled Identifiers 1.0 uses `JsonWebKey`; the types are not silently interchangeable |
-| [DID Resolution CR Draft, 28 August 2026](https://www.w3.org/TR/2026/CRD-did-resolution-1.0-20260828/) | Informative resolution concepts and metadata | This is not a completed W3C Recommendation; the normative SAGE contract is chapter 10 and draft evolution does not change it automatically |
+| [DID Resolution](https://www.w3.org/TR/did-resolution/) | Resolution concepts and metadata | Concrete SAGE resolution contract is chapter 10; draft evolution does not change it automatically |
 | [CAIP-2](https://chainagnostic.org/CAIPs/caip-2) | Chain namespaces | Registry deployment identity is also required to avoid cross-contract collision |
 
 ## Informative design references

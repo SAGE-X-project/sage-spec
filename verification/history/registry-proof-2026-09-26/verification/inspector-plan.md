@@ -117,7 +117,7 @@ cases report nonconformance rather than sending meaningless network fixtures.
 | RESOLVE-02 | R-4, R-8, R-9, R-36 | One fresh authoritative lookup obeys fail-closed validation | unknown DID; malformed inactive record; stale observation; unauthenticated authority; positive cache reuse |
 | RESOLVE-03 | R-4, R-9, R-14 | Resolution metadata records one authoritative state; created/deactivated records resolve for inspection but cannot authenticate | cached success treated as current; unknown alias; wrong content type |
 | RESOLVE-04 | R-8, R-9 | Exact accepted key dereferenced from fresh DID document | missing fragment; unknown key; revoked key; service fragment used as key; wrong relationship |
-| RESOLVE-05 | R-14, R-34, R-35 | HTTP resolution binding preserves document and errors | wrong media type; redirect authority change; oversized response; cached positive reuse; RFC 9457 type/title/status mismatch; unverified problem-type publication |
+| RESOLVE-05 | R-14, R-34, R-35 | HTTP resolution binding preserves document and errors | wrong media type; redirect authority change; oversized response; cached positive reuse |
 | TABLE-01 | R-3, R-32, R-34 | Defined registered values preserve existing meanings | reuse retired code; silent incompatible extension; unknown private value accepted |
 | TABLE-02 | R-19, R-29 | All signature suite identifiers match chapter01 | legacy es256k; JOSE mapping inferred from private Keccak name; `x25519` used as signature `alg` |
 | TABLE-03 | R-29 | Key encodings and exact registry KEM `alg` match declared role and record/document binding | compressed secp when raw required; wrong coordinate length; KEM key with 31-byte public value |
@@ -227,7 +227,7 @@ not an extra top-level test count. Run each in
 its declared scope: the isolated 1024-entry owner bound is a unit seam; authenticated
 traffic must stop at the tighter session-record ceiling. Every added parent/child
 remains planned or NOT_RUN. Older 37-case Inspector lifecycle evidence is a separate
-catalog and is neither added nor automatically mapped into this 481-case plan.
+catalog and is neither added nor automatically mapped into this 479-case plan.
 The earlier 457-case snapshot and its 71-case Inspector overlay retain their pinned
 historical revision; none of the nine new cases inherits PASS evidence.
 The preserved MCP errata snapshot has 466 planned parents. The current
@@ -240,10 +240,7 @@ cases are `mrevision-hop-authorized`, `mrevision-hop-unapproved`,
 eight further planned parents: `mllm-kem-alg-valid`, `mllm-kem-alg-case`,
 `mllm-kem-selection`, `mllm-pop-exact-bytes`, `mllm-pop-duplicate-field`,
 `mllm-kem-signature-reject`, `mllm-kem-type-valid`, and
-`mllm-kem-key-length`. Two standards-application parents,
-`mstand-problem-fields` and `mstand-problem-type-publication`, check the
-optional RFC 9457 binding without asserting that its type URLs are already
-published. The resulting 481 parents are unexecuted Inspector
+`mllm-kem-key-length`. The resulting 479 parents are unexecuted Inspector
 cases. The [fixed local fixture](vectors/registry-proof-0.10.0.json) checks
 challenge bytes and the KEM role/selection contract; it does not execute a
 core implementation, registration transaction, or handshake.
