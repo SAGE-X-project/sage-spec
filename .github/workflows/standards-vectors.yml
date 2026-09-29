@@ -1,0 +1,21 @@
+name: Standards vectors
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  independent-vectors:
+    name: Check independent standards vectors
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check reference bytes and verdicts
+        run: |
+          openssl version
+          python3 -B verification/test_standards_vectors.py
+          python3 -B verification/check_standards_vectors.py
