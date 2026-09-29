@@ -1,0 +1,744 @@
+{
+  "schema_version": 1,
+  "protocol_version": "0.10.0",
+  "spec_revision": "44df132fee5925182018ce089dc82435cb353f8a",
+  "traceability_sha256": "410b1ffb7e6da0462d8c3b3ecae4ba6ed2a9c1f0bc14583fe4d17fa4d7ef5ba7",
+  "go_revision": "49379baadc6baec9ca8b4bb7d15bf43d65144bd7",
+  "rust_revision": "ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396",
+  "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
+  "counts": {
+    "rules": 91,
+    "reviewed": 3,
+    "pending": 88
+  },
+  "rules": [
+    {
+      "rule_id": "OVERVIEW-01",
+      "source": "spec/00-overview.md",
+      "case_count": 2,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent",
+      "rust_source_candidate": "src/lib.rs"
+    },
+    {
+      "rule_id": "OVERVIEW-02",
+      "source": "spec/00-overview.md",
+      "case_count": 2,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent",
+      "rust_source_candidate": "src/lib.rs"
+    },
+    {
+      "rule_id": "OVERVIEW-03",
+      "source": "spec/00-overview.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent",
+      "rust_source_candidate": "src/lib.rs"
+    },
+    {
+      "rule_id": "OVERVIEW-04",
+      "source": "spec/00-overview.md",
+      "case_count": 2,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent",
+      "rust_source_candidate": "src/lib.rs"
+    },
+    {
+      "rule_id": "CRYPTO-01",
+      "source": "spec/01-crypto.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/crypto/keys",
+      "rust_source_candidate": "src/crypto"
+    },
+    {
+      "rule_id": "CRYPTO-02",
+      "source": "spec/01-crypto.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/crypto/keys",
+      "rust_source_candidate": "src/crypto"
+    },
+    {
+      "rule_id": "CRYPTO-03",
+      "source": "spec/01-crypto.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/crypto/keys",
+      "rust_source_candidate": "src/crypto"
+    },
+    {
+      "rule_id": "CRYPTO-04",
+      "source": "spec/01-crypto.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/crypto/keys",
+      "rust_source_candidate": "src/crypto"
+    },
+    {
+      "rule_id": "CRYPTO-05",
+      "source": "spec/01-crypto.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/crypto/keys",
+      "rust_source_candidate": "src/crypto"
+    },
+    {
+      "rule_id": "JCS-01",
+      "source": "spec/02-jcs.md",
+      "case_count": 7,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/crypto/jcs",
+      "rust_source_candidate": "src/jcs"
+    },
+    {
+      "rule_id": "JCS-02",
+      "source": "spec/02-jcs.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/crypto/jcs",
+      "rust_source_candidate": "src/jcs"
+    },
+    {
+      "rule_id": "JCS-03",
+      "source": "spec/02-jcs.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/crypto/jcs",
+      "rust_source_candidate": "src/jcs"
+    },
+    {
+      "rule_id": "JCS-04",
+      "source": "spec/02-jcs.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/crypto/jcs",
+      "rust_source_candidate": "src/jcs"
+    },
+    {
+      "rule_id": "MSG-01",
+      "source": "spec/03-rfc9421.md",
+      "case_count": 8,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/core/rfc9421",
+      "rust_source_candidate": "src/rfc9421"
+    },
+    {
+      "rule_id": "MSG-02",
+      "source": "spec/03-rfc9421.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/core/rfc9421",
+      "rust_source_candidate": "src/rfc9421"
+    },
+    {
+      "rule_id": "MSG-03",
+      "source": "spec/03-rfc9421.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/core/rfc9421",
+      "rust_source_candidate": "src/rfc9421"
+    },
+    {
+      "rule_id": "MSG-04",
+      "source": "spec/03-rfc9421.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/core/rfc9421",
+      "rust_source_candidate": "src/rfc9421"
+    },
+    {
+      "rule_id": "MSG-05",
+      "source": "spec/03-rfc9421.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/core/rfc9421",
+      "rust_source_candidate": "src/rfc9421"
+    },
+    {
+      "rule_id": "MSG-06",
+      "source": "spec/03-rfc9421.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/core/rfc9421",
+      "rust_source_candidate": "src/rfc9421"
+    },
+    {
+      "rule_id": "HPKE-01",
+      "source": "spec/04-hpke.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/hpke",
+      "rust_source_candidate": "src/hpke"
+    },
+    {
+      "rule_id": "HPKE-02",
+      "source": "spec/04-hpke.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/hpke",
+      "rust_source_candidate": "src/hpke"
+    },
+    {
+      "rule_id": "HPKE-03",
+      "source": "spec/04-hpke.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/hpke",
+      "rust_source_candidate": "src/hpke"
+    },
+    {
+      "rule_id": "HPKE-04",
+      "source": "spec/04-hpke.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/hpke",
+      "rust_source_candidate": "src/hpke"
+    },
+    {
+      "rule_id": "HPKE-05",
+      "source": "spec/04-hpke.md",
+      "case_count": 11,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/hpke",
+      "rust_source_candidate": "src/hpke"
+    },
+    {
+      "rule_id": "HPKE-06",
+      "source": "spec/04-hpke.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/hpke",
+      "rust_source_candidate": "src/hpke"
+    },
+    {
+      "rule_id": "SESSION-01",
+      "source": "spec/05-session.md",
+      "case_count": 8,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/session",
+      "rust_source_candidate": "src/session"
+    },
+    {
+      "rule_id": "SESSION-02",
+      "source": "spec/05-session.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/session",
+      "rust_source_candidate": "src/session"
+    },
+    {
+      "rule_id": "SESSION-03",
+      "source": "spec/05-session.md",
+      "case_count": 8,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/session",
+      "rust_source_candidate": "src/session"
+    },
+    {
+      "rule_id": "SESSION-04",
+      "source": "spec/05-session.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/session",
+      "rust_source_candidate": "src/session"
+    },
+    {
+      "rule_id": "SESSION-05",
+      "source": "spec/05-session.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/session",
+      "rust_source_candidate": "src/session"
+    },
+    {
+      "rule_id": "SESSION-06",
+      "source": "spec/05-session.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/session",
+      "rust_source_candidate": "src/session"
+    },
+    {
+      "rule_id": "ID-01",
+      "source": "spec/06-did-sage.md",
+      "case_count": 8,
+      "status": "SOURCE_AND_BOUNDED_RUNTIME_GAP",
+      "go_source_candidate": "pkg/agent/did",
+      "rust_source_candidate": "src/did"
+    },
+    {
+      "rule_id": "ID-02",
+      "source": "spec/06-did-sage.md",
+      "case_count": 4,
+      "status": "SOURCE_GAP",
+      "go_source_candidate": "pkg/agent/did",
+      "rust_source_candidate": "src/did"
+    },
+    {
+      "rule_id": "ID-03",
+      "source": "spec/06-did-sage.md",
+      "case_count": 6,
+      "status": "PARTIAL_SOURCE_REVIEW",
+      "go_source_candidate": "pkg/agent/did",
+      "rust_source_candidate": "src/did"
+    },
+    {
+      "rule_id": "ID-04",
+      "source": "spec/06-did-sage.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did",
+      "rust_source_candidate": "src/did"
+    },
+    {
+      "rule_id": "CARD-01",
+      "source": "spec/07-a2a.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did/a2a.go",
+      "rust_source_candidate": "src/did/a2a.rs"
+    },
+    {
+      "rule_id": "CARD-02",
+      "source": "spec/07-a2a.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did/a2a.go",
+      "rust_source_candidate": "src/did/a2a.rs"
+    },
+    {
+      "rule_id": "CARD-03",
+      "source": "spec/07-a2a.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did/a2a.go",
+      "rust_source_candidate": "src/did/a2a.rs"
+    },
+    {
+      "rule_id": "TRANSPORT-01",
+      "source": "spec/08-transport.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/transport",
+      "rust_source_candidate": "src/hpke/completion010"
+    },
+    {
+      "rule_id": "TRANSPORT-02",
+      "source": "spec/08-transport.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/transport",
+      "rust_source_candidate": "src/hpke/completion010"
+    },
+    {
+      "rule_id": "TRANSPORT-03",
+      "source": "spec/08-transport.md",
+      "case_count": 7,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/transport",
+      "rust_source_candidate": "src/hpke/completion010"
+    },
+    {
+      "rule_id": "TRANSPORT-04",
+      "source": "spec/08-transport.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/transport",
+      "rust_source_candidate": "src/hpke/completion010"
+    },
+    {
+      "rule_id": "TRANSPORT-05",
+      "source": "spec/08-transport.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/transport",
+      "rust_source_candidate": "src/hpke/completion010"
+    },
+    {
+      "rule_id": "TRANSPORT-06",
+      "source": "spec/08-transport.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/transport",
+      "rust_source_candidate": "src/hpke/completion010"
+    },
+    {
+      "rule_id": "REG-01",
+      "source": "spec/09-registry.md",
+      "case_count": 7,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "REG-02",
+      "source": "spec/09-registry.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "REG-03",
+      "source": "spec/09-registry.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "REG-04",
+      "source": "spec/09-registry.md",
+      "case_count": 7,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "REG-05",
+      "source": "spec/09-registry.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "REG-06",
+      "source": "spec/09-registry.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "REG-07",
+      "source": "spec/09-registry.md",
+      "case_count": 2,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "REG-08",
+      "source": "spec/09-registry.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "RESOLVE-01",
+      "source": "spec/10-resolution.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did/resolver.go",
+      "rust_source_candidate": "src/did/resolver.rs"
+    },
+    {
+      "rule_id": "RESOLVE-02",
+      "source": "spec/10-resolution.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did/resolver.go",
+      "rust_source_candidate": "src/did/resolver.rs"
+    },
+    {
+      "rule_id": "RESOLVE-03",
+      "source": "spec/10-resolution.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did/resolver.go",
+      "rust_source_candidate": "src/did/resolver.rs"
+    },
+    {
+      "rule_id": "RESOLVE-04",
+      "source": "spec/10-resolution.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did/resolver.go",
+      "rust_source_candidate": "src/did/resolver.rs"
+    },
+    {
+      "rule_id": "RESOLVE-05",
+      "source": "spec/10-resolution.md",
+      "case_count": 7,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did/resolver.go",
+      "rust_source_candidate": "src/did/resolver.rs"
+    },
+    {
+      "rule_id": "TABLE-01",
+      "source": "spec/11-registries.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "TABLE-02",
+      "source": "spec/11-registries.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "TABLE-03",
+      "source": "spec/11-registries.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "TABLE-04",
+      "source": "spec/11-registries.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "TABLE-05",
+      "source": "spec/11-registries.md",
+      "case_count": 3,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "TABLE-06",
+      "source": "spec/11-registries.md",
+      "case_count": 3,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "TABLE-07",
+      "source": "spec/11-registries.md",
+      "case_count": 3,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "EXEC-01",
+      "source": "profiles/agent-mcp-security.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "EXEC-02",
+      "source": "profiles/agent-mcp-security.md",
+      "case_count": 11,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "EXEC-03",
+      "source": "profiles/agent-mcp-security.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "EXEC-04",
+      "source": "profiles/agent-mcp-security.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "EXEC-05",
+      "source": "profiles/agent-mcp-security.md",
+      "case_count": 11,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "EXEC-06",
+      "source": "profiles/agent-mcp-security.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "EXEC-07",
+      "source": "profiles/agent-mcp-security.md",
+      "case_count": 11,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "EXEC-08",
+      "source": "profiles/agent-mcp-security.md",
+      "case_count": 8,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "EXEC-09",
+      "source": "profiles/agent-mcp-security.md",
+      "case_count": 3,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "PROC-01",
+      "source": "PROCESS.md",
+      "case_count": 3,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": null,
+      "rust_source_candidate": null
+    },
+    {
+      "rule_id": "PROC-02",
+      "source": "PROCESS.md",
+      "case_count": 3,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": null,
+      "rust_source_candidate": null
+    },
+    {
+      "rule_id": "PROC-03",
+      "source": "PROCESS.md",
+      "case_count": 3,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": null,
+      "rust_source_candidate": null
+    },
+    {
+      "rule_id": "EVIDENCE-01",
+      "source": "charter.md",
+      "case_count": 3,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": null,
+      "rust_source_candidate": null
+    },
+    {
+      "rule_id": "MSET-01",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "MSET-02",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 9,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "MSET-03",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "MSET-04",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "MSET-05",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "MSET-06",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 7,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "MSET-07",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "MSET-08",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 3,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "MOWN-01",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 8,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "MOWN-02",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 16,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "MOWN-03",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "MOWN-04",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "MOWN-05",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 4,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "MOWN-06",
+      "source": "profiles/non-http-mcp-security.md",
+      "case_count": 8,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/guard010",
+      "rust_source_candidate": "src/guard010"
+    }
+  ]
+}

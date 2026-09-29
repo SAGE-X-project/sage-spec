@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "spec_revision": "44df132fee5925182018ce089dc82435cb353f8a",
+  "scope": "Legacy primitive DID entry point; not a full identity or host verdict.",
+  "subjects": {
+    "go": {
+      "revision": "49379baadc6baec9ca8b4bb7d15bf43d65144bd7",
+      "adapter_sha256": "d38bb983ec644e001637336529ced4104d4117fd18aad0ea3665df556935a1bd",
+      "observations": [
+        {
+          "id": "canonical-web",
+          "did": "did:sage:web:agents.example.com:alice",
+          "expected": "ACCEPT",
+          "actual": "REJECT",
+          "status": "FAIL"
+        },
+        {
+          "id": "legacy-alias",
+          "did": "did:sage:ETH:0xabc",
+          "expected": "REJECT",
+          "actual": "ACCEPT",
+          "status": "FAIL"
+        },
+        {
+          "id": "legacy-chain",
+          "did": "did:sage:ethereum:0xabc",
+          "expected": "REJECT",
+          "actual": "ACCEPT",
+          "status": "FAIL"
+        },
+        {
+          "id": "extra-locator",
+          "did": "did:sage:ethereum:0xabc:extra",
+          "expected": "REJECT",
+          "actual": "ACCEPT",
+          "status": "FAIL"
+        },
+        {
+          "id": "fragment-in-did",
+          "did": "did:sage:ethereum:0xabc#key-1",
+          "expected": "REJECT",
+          "actual": "ACCEPT",
+          "status": "FAIL"
+        },
+        {
+          "id": "uppercase-scheme",
+          "did": "DID:sage:web:agents.example.com:alice",
+          "expected": "REJECT",
+          "actual": "REJECT",
+          "status": "PASS"
+        }
+      ]
+    },
+    "rust": {
+      "revision": "ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396",
+      "adapter_sha256": "5d99976690b31cfd173fb204d39eb0525fb0d644a10584b50a93260734c5af92",
+      "observations": [
+        {
+          "id": "canonical-web",
+          "did": "did:sage:web:agents.example.com:alice",
+          "expected": "ACCEPT",
+          "actual": "REJECT",
+          "status": "FAIL"
+        },
+        {
+          "id": "legacy-alias",
+          "did": "did:sage:ETH:0xabc",
+          "expected": "REJECT",
+          "actual": "ACCEPT",
+          "status": "FAIL"
+        },
+        {
+          "id": "legacy-chain",
+          "did": "did:sage:ethereum:0xabc",
+          "expected": "REJECT",
+          "actual": "ACCEPT",
+          "status": "FAIL"
+        },
+        {
+          "id": "extra-locator",
+          "did": "did:sage:ethereum:0xabc:extra",
+          "expected": "REJECT",
+          "actual": "ACCEPT",
+          "status": "FAIL"
+        },
+        {
+          "id": "fragment-in-did",
+          "did": "did:sage:ethereum:0xabc#key-1",
+          "expected": "REJECT",
+          "actual": "ACCEPT",
+          "status": "FAIL"
+        },
+        {
+          "id": "uppercase-scheme",
+          "did": "DID:sage:web:agents.example.com:alice",
+          "expected": "REJECT",
+          "actual": "REJECT",
+          "status": "PASS"
+        }
+      ]
+    }
+  }
+}

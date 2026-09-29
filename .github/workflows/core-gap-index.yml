@@ -1,0 +1,33 @@
+name: Core gap index
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  source-index:
+    name: Pinned Go and Rust source index
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          path: sage-spec
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: SAGE-X-project/sage
+          ref: 49379baadc6baec9ca8b4bb7d15bf43d65144bd7
+          path: sage
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: SAGE-X-project/rs-sage-core
+          ref: ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396
+          path: rs-sage-core
+      - name: Check every rule and pinned source location
+        run: |
+          cd sage-spec
+          python3 -B verification/build_core_gap_index.py --go-root ../sage --rust-root ../rs-sage-core
+          python3 -B verification/observe-core-identity.py
