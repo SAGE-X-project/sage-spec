@@ -1,6 +1,6 @@
 # Pinned Go/Rust clause gap review
 
-Status: **16 of 91 rule groups reviewed at a bounded source or document level; 75 pending**.
+Status: **22 of 91 rule groups reviewed at a bounded source or document level; 69 pending**.
 This began as the first implementation-gap pass after the 0.10.0 standards revision,
 not an implementation conformance verdict or a change to normative text. The
 [machine-readable index](core-gap-index.json) names **every** rule group in
@@ -10,8 +10,9 @@ traceability bytes. A source candidate is a place to start reading, not a
 claim that the code implements the rule.
 
 The [crypto and JCS review](core-crypto-jcs-review.md) adds nine bounded rule
-assessments, and the [overview review](core-overview-review.md) assesses four
-cross-layer rules. The identity findings below remain attached to the same
+assessments, the [overview review](core-overview-review.md) assesses four
+cross-layer rules, and the [HTTP message-signature review](core-rfc9421-review.md)
+assesses six MSG rules. The identity findings below remain attached to the same
 pinned core revisions.
 
 | Input | Pinned revision |
@@ -57,13 +58,13 @@ The index groups all 91 rules by their authoritative source. Counts are:
 | --- | ---: | --- |
 | Overview | 4 | Bounded cross-layer/document review in the linked addendum |
 | Crypto and JCS | 9 | Bounded review in the linked addendum |
-| RFC 9421, HPKE, session | 18 | Pending |
+| RFC 9421, HPKE, session | 18 | Six MSG rules reviewed; 12 pending |
 | DID method | 4 | ID-01 and ID-02 gap; ID-03 partial; ID-04 pending |
 | Card, transport, registry, resolution, tables | 29 | Pending |
 | Agent/MCP Guard and non-HTTP MCP | 23 | Pending |
 | Process and evidence charter | 4 | Pending repository/evidence review |
 
-The next implementation-map pass must cover the remaining 75 rule groups
+The next implementation-map pass must cover the remaining 69 rule groups
 against actual code and test entry points. For identity, first introduce or
 identify one explicit strict 0.10.0 parser shared by DID and key URL uses,
 without changing the legacy public API's behavior implicitly. Separate
