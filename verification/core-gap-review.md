@@ -1,6 +1,6 @@
-# Pinned Go/Rust clause gap review: identity first pass
+# Pinned Go/Rust clause gap review
 
-Status: **12 of 91 rule groups reviewed at a bounded source level; 79 pending**.
+Status: **16 of 91 rule groups reviewed at a bounded source or document level; 75 pending**.
 This began as the first implementation-gap pass after the 0.10.0 standards revision,
 not an implementation conformance verdict or a change to normative text. The
 [machine-readable index](core-gap-index.json) names **every** rule group in
@@ -9,8 +9,9 @@ each core, and its review state. The index is checked against exact
 traceability bytes. A source candidate is a place to start reading, not a
 claim that the code implements the rule.
 
-The next [crypto and JCS review](core-crypto-jcs-review.md) adds nine bounded
-rule assessments. The identity findings below remain attached to the same
+The [crypto and JCS review](core-crypto-jcs-review.md) adds nine bounded rule
+assessments, and the [overview review](core-overview-review.md) assesses four
+cross-layer rules. The identity findings below remain attached to the same
 pinned core revisions.
 
 | Input | Pinned revision |
@@ -54,7 +55,7 @@ The index groups all 91 rules by their authoritative source. Counts are:
 
 | Source | Rules | Review state |
 | --- | ---: | --- |
-| Overview | 4 | Pending cross-layer review |
+| Overview | 4 | Bounded cross-layer/document review in the linked addendum |
 | Crypto and JCS | 9 | Bounded review in the linked addendum |
 | RFC 9421, HPKE, session | 18 | Pending |
 | DID method | 4 | ID-01 and ID-02 gap; ID-03 partial; ID-04 pending |
@@ -62,7 +63,7 @@ The index groups all 91 rules by their authoritative source. Counts are:
 | Agent/MCP Guard and non-HTTP MCP | 23 | Pending |
 | Process and evidence charter | 4 | Pending repository/evidence review |
 
-The next implementation-map pass must cover the remaining 79 rule groups
+The next implementation-map pass must cover the remaining 75 rule groups
 against actual code and test entry points. For identity, first introduce or
 identify one explicit strict 0.10.0 parser shared by DID and key URL uses,
 without changing the legacy public API's behavior implicitly. Separate
