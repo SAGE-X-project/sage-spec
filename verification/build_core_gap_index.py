@@ -1,0 +1,102 @@
+"""Keep every 0.10.0 rule in the pinned Go/Rust source-review queue."""
+
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+
+
+ROOT = Path(__file__).resolve().parents[1]
+SPEC_REVISION = '44df132fee5925182018ce089dc82435cb353f8a'
+GO_REVISION = '49379baadc6baec9ca8b4bb7d15bf43d65144bd7'
+RUST_REVISION = 'ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396'
+OUTPUT = ROOT / 'verification/core-gap-index.json'
+
+# These are starting locations, not claims that an implementation meets a rule.
+CANDIDATES = {
+    'spec/00-overview.md': ('pkg/agent', 'src/lib.rs'),
+    'spec/01-crypto.md': ('pkg/agent/crypto/keys', 'src/crypto'),
+    'spec/02-jcs.md': ('pkg/agent/crypto/jcs', 'src/jcs'),
+    'spec/03-rfc9421.md': ('pkg/agent/core/rfc9421', 'src/rfc9421'),
+    'spec/04-hpke.md': ('pkg/agent/hpke', 'src/hpke'),
+    'spec/05-session.md': ('pkg/agent/session', 'src/session'),
+    'spec/06-did-sage.md': ('pkg/agent/did', 'src/did'),
+    'spec/07-a2a.md': ('pkg/agent/did/a2a.go', 'src/did/a2a.rs'),
+    'spec/08-transport.md': ('pkg/agent/transport', 'src/hpke/completion010'),
+    'spec/09-registry.md': ('pkg/agent/registry010', 'src/registry010'),
+    'spec/10-resolution.md': ('pkg/agent/did/resolver.go', 'src/did/resolver.rs'),
+    'spec/11-registries.md': ('pkg/agent/registry010', 'src/registry010'),
+    'profiles/agent-mcp-security.md': ('pkg/agent/guard010', 'src/guard010'),
+    'profiles/non-http-mcp-security.md': ('pkg/agent/guard010', 'src/guard010'),
+    'PROCESS.md': (None, None),
+    'charter.md': (None, None),
+}
+REVIEWED = {
+    'ID-01': 'SOURCE_AND_BOUNDED_RUNTIME_GAP',
+    'ID-02': 'SOURCE_GAP',
+    'ID-03': 'PARTIAL_SOURCE_REVIEW',
+}
+
+
+def build():
+    source = (ROOT / 'verification/traceability.json').read_bytes()
+    trace = json.loads(source)
+    if len(trace['rules']) != 91 or {r['source'] for r in trace['rules']} != set(CANDIDATES):
+        raise ValueError('rule count or source set changed; update the index deliberately')
+    rows = []
+    for rule in trace['rules']:
+        go, rust = CANDIDATES[rule['source']]
+        rows.append({
+            'rule_id': rule['id'], 'source': rule['source'],
+            'case_count': len(rule['case_ids']),
+            'status': REVIEWED.get(rule['id'], 'PENDING_CLAUSE_REVIEW'),
+            'go_source_candidate': go, 'rust_source_candidate': rust,
+        })
+    return {
+        'schema_version': 1, 'protocol_version': '0.10.0',
+        'spec_revision': SPEC_REVISION,
+        'traceability_sha256': hashlib.sha256(source).hexdigest(),
+        'go_revision': GO_REVISION, 'rust_revision': RUST_REVISION,
+        'scope': ('Source candidates are navigation hints, not conformance; '
+                  'only the named reviewed rules have bounded findings.'),
+        'counts': {'rules': len(rows), 'reviewed': len(REVIEWED),
+                   'pending': len(rows) - len(REVIEWED)},
+        'rules': rows,
+    }
+
+
+def check_core_paths(result, go_root, rust_root):
+    for name, root, revision in (
+            ('go_source_candidate', go_root, GO_REVISION),
+            ('rust_source_candidate', rust_root, RUST_REVISION)):
+        if root is None:
+            continue
+        actual = subprocess.check_output(
+            ['git', 'rev-parse', 'HEAD'], cwd=root, text=True).strip()
+        if actual != revision:
+            raise ValueError(f'{root}: expected {revision}, got {actual}')
+        for row in result['rules']:
+            candidate = row[name]
+            if candidate and not (root / candidate).exists():
+                raise ValueError(f"{row['rule_id']}: missing {root / candidate}")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--write', action='store_true')
+    parser.add_argument('--go-root', type=Path)
+    parser.add_argument('--rust-root', type=Path)
+    args = parser.parse_args()
+    result = build()
+    check_core_paths(result, args.go_root, args.rust_root)
+    encoded = (json.dumps(result, indent=2) + '\n').encode()
+    if args.write:
+        OUTPUT.write_bytes(encoded)
+    elif OUTPUT.read_bytes() != encoded:
+        raise ValueError('core gap index differs from pinned traceability')
+    print(json.dumps(result['counts'], sort_keys=True))
+
+
+if __name__ == '__main__':
+    main()
