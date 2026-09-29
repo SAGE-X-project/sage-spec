@@ -1,0 +1,303 @@
+{
+  "schema_version": 1,
+  "kind": "standards-clause-independent-fixtures",
+  "protocol_version": "0.10.0",
+  "status": "OFFLINE_REFERENCE_VECTORS_NOT_IMPLEMENTATION_RESULTS",
+  "normative_revision": "1c97e509424f06ffe48161fb948778563adbd62b",
+  "source_sha256": {
+    "spec/01-crypto.md": "35463137986ae692593cb12a3654085270f3337acea3aa3d7efcdde8cea78a0a",
+    "spec/03-rfc9421.md": "b28d567cbf3f7a6a256c73fd35696865b5c0ebdc814de57624b90df082d49407",
+    "spec/06-did-sage.md": "8e0d5f72fc36d46bd5f8c51446f46cb80b644db1ebcd85039c0a342f33bfe50b",
+    "spec/08-transport.md": "e11e8200d67ee913fcd1a47781c6d31a353556c9dfd4e4ce0a88dbe97e10bba6",
+    "spec/10-resolution.md": "7bcabda3ba4708afd432f7c12c41bc632d9a635aba13b0ef1fb66aa65716016c",
+    "spec/11-registries.md": "9627286c4051ae6b0ce352baf402300fbc1a5c8503264dd0b0c265cdcca0b224",
+    "verification/traceability.json": "410b1ffb7e6da0462d8c3b3ecae4ba6ed2a9c1f0bc14583fe4d17fa4d7ef5ba7"
+  },
+  "provenance": {
+    "construction": "Fixed component order and field bytes transcribed from SAGE MSG-01/02 and RFC 9421 section 2.5; SHA-256 computed over the stated UTF-8 body.",
+    "signatures": "Fresh synthetic keys generated outside the SAGE cores with Python cryptography 50.0.0; static public-only signatures independently verifiable with OpenSSL.",
+    "limitations": "The inert probe body is not a SAGE wire envelope. The fixtures exercise algorithm, key-reference, DID-prefix and JWK-representation seams only; no full HTTP request/response, replay, registry freshness or protected dispatch is certified."
+  },
+  "http_request": {
+    "method": "POST",
+    "target_uri": "https://processor.example.com/sage/messages",
+    "authority": "processor.example.com",
+    "content_type": "application/json",
+    "body_utf8": "{\"probe\":\"sage-0.10.0\"}",
+    "content_digest": "sha-256=:RWxcnP+cdxpKxcUU3GtGtMR+Ehf7tRVTUwFiHnK21I4=:",
+    "x_sage_did": "did:sage:web:agents.example.com:billing-bot",
+    "x_sage_version": "0.10.0",
+    "covered_components": [
+      "\"@method\"",
+      "\"@target-uri\"",
+      "\"@authority\"",
+      "\"content-type\"",
+      "\"content-digest\"",
+      "\"x-sage-did\"",
+      "\"x-sage-version\""
+    ],
+    "created": 1790000000,
+    "expires": 1790000300,
+    "nonce": "3N_sd7jwweJvGYeh8XI6Qg",
+    "tag": "sage-0.10.0"
+  },
+  "http_response": {
+    "status": 200,
+    "body_utf8": "{\"probe\":\"reply\"}",
+    "content_digest": "sha-256=:+TZ9Bi/9jkzHg4JBNtDaYmnKpIvdccQD3uSgE64VwB0=:",
+    "content_type": "application/json",
+    "x_sage_did": "did:sage:web:processor.example.com:processor",
+    "x_sage_version": "0.10.0",
+    "covered_components": [
+      "\"@status\"",
+      "\"@method\";req",
+      "\"@target-uri\";req",
+      "\"@authority\";req",
+      "\"content-digest\";req",
+      "\"signature\";req",
+      "\"x-sage-version\";req",
+      "\"content-type\"",
+      "\"content-digest\"",
+      "\"x-sage-did\"",
+      "\"x-sage-version\""
+    ],
+    "created": 1790000005,
+    "expires": 1790000305,
+    "nonce": "4S9wmoJjMcQOe9FZSKXC7w",
+    "tag": "sage-0.10.0"
+  },
+  "cases": [
+    {
+      "case_id": "msca-http-ed25519",
+      "kind": "http-signature-seam",
+      "suite_support": "mandatory",
+      "alg": "ed25519",
+      "inner_kid": "did:sage:web:agents.example.com:billing-bot#sign-ed",
+      "outer_keyid": "did:sage:web:agents.example.com:billing-bot#sign-ed",
+      "record_key": {
+        "kid": "did:sage:web:agents.example.com:billing-bot#sign-ed",
+        "alg": "ed25519",
+        "state": "accepted",
+        "public_spki_der_b64": "MCowBQYDK2VwAyEABRfNYYwoK/OXDYe4e4HPGhC+qeh6/KSVU1taL6j6SuY="
+      },
+      "signature_input": "sig1=(\"@method\" \"@target-uri\" \"@authority\" \"content-type\" \"content-digest\" \"x-sage-did\" \"x-sage-version\");keyid=\"did:sage:web:agents.example.com:billing-bot#sign-ed\";alg=\"ed25519\";created=1790000000;expires=1790000300;nonce=\"3N_sd7jwweJvGYeh8XI6Qg\";tag=\"sage-0.10.0\"",
+      "signature_base_ascii": "\"@method\": POST\n\"@target-uri\": https://processor.example.com/sage/messages\n\"@authority\": processor.example.com\n\"content-type\": application/json\n\"content-digest\": sha-256=:RWxcnP+cdxpKxcUU3GtGtMR+Ehf7tRVTUwFiHnK21I4=:\n\"x-sage-did\": did:sage:web:agents.example.com:billing-bot\n\"x-sage-version\": 0.10.0\n\"@signature-params\": (\"@method\" \"@target-uri\" \"@authority\" \"content-type\" \"content-digest\" \"x-sage-did\" \"x-sage-version\");keyid=\"did:sage:web:agents.example.com:billing-bot#sign-ed\";alg=\"ed25519\";created=1790000000;expires=1790000300;nonce=\"3N_sd7jwweJvGYeh8XI6Qg\";tag=\"sage-0.10.0\"",
+      "signature_b64": "n9ob9g1jerEoaQmbJjmmRu9ya7dqnZeVdcu3lOQJiWPqJj/AA+ahU0P61NBdaRHQopoRR0Sr2lg+aPBEnRI7Bw==",
+      "signature_field": "sig1=:n9ob9g1jerEoaQmbJjmmRu9ya7dqnZeVdcu3lOQJiWPqJj/AA+ahU0P61NBdaRHQopoRR0Sr2lg+aPBEnRI7Bw==:",
+      "expected": {
+        "algorithm": "ALLOW",
+        "key_binding": "MATCH",
+        "cryptographic_signature": "VALID",
+        "whole_http_and_envelope": "NOT_EVALUATED"
+      },
+      "response": {
+        "case_id": "msca-http-ed25519-response",
+        "alg": "ed25519",
+        "keyid": "did:sage:web:processor.example.com:processor#sign-ed",
+        "record_key": {
+          "kid": "did:sage:web:processor.example.com:processor#sign-ed",
+          "alg": "ed25519",
+          "state": "accepted",
+          "public_spki_der_b64": "MCowBQYDK2VwAyEA4H6YbOVfjeEVh15u33WDmHCGVD4eWDI1teRrCue2if8="
+        },
+        "signature_input": "sig1=(\"@status\" \"@method\";req \"@target-uri\";req \"@authority\";req \"content-digest\";req \"signature\";req \"x-sage-version\";req \"content-type\" \"content-digest\" \"x-sage-did\" \"x-sage-version\");keyid=\"did:sage:web:processor.example.com:processor#sign-ed\";alg=\"ed25519\";created=1790000005;expires=1790000305;nonce=\"4S9wmoJjMcQOe9FZSKXC7w\";tag=\"sage-0.10.0\"",
+        "signature_base_ascii": "\"@status\": 200\n\"@method\";req: POST\n\"@target-uri\";req: https://processor.example.com/sage/messages\n\"@authority\";req: processor.example.com\n\"content-digest\";req: sha-256=:RWxcnP+cdxpKxcUU3GtGtMR+Ehf7tRVTUwFiHnK21I4=:\n\"signature\";req: sig1=:n9ob9g1jerEoaQmbJjmmRu9ya7dqnZeVdcu3lOQJiWPqJj/AA+ahU0P61NBdaRHQopoRR0Sr2lg+aPBEnRI7Bw==:\n\"x-sage-version\";req: 0.10.0\n\"content-type\": application/json\n\"content-digest\": sha-256=:+TZ9Bi/9jkzHg4JBNtDaYmnKpIvdccQD3uSgE64VwB0=:\n\"x-sage-did\": did:sage:web:processor.example.com:processor\n\"x-sage-version\": 0.10.0\n\"@signature-params\": (\"@status\" \"@method\";req \"@target-uri\";req \"@authority\";req \"content-digest\";req \"signature\";req \"x-sage-version\";req \"content-type\" \"content-digest\" \"x-sage-did\" \"x-sage-version\");keyid=\"did:sage:web:processor.example.com:processor#sign-ed\";alg=\"ed25519\";created=1790000005;expires=1790000305;nonce=\"4S9wmoJjMcQOe9FZSKXC7w\";tag=\"sage-0.10.0\"",
+        "signature_b64": "5KaUdLkF4ZeuHVNK/Gy+4B5D14jHcx8cyOTxV4tBMZIbvkubt/FYrH8QdCMllovO6orzLXPC0CPKCGProbEbCw==",
+        "signature_field": "sig1=:5KaUdLkF4ZeuHVNK/Gy+4B5D14jHcx8cyOTxV4tBMZIbvkubt/FYrH8QdCMllovO6orzLXPC0CPKCGProbEbCw==:",
+        "expected": {
+          "request_signature_binding": "EXACT_RECEIVED_FIELD",
+          "cryptographic_signature": "VALID",
+          "whole_response": "NOT_EVALUATED"
+        }
+      }
+    },
+    {
+      "case_id": "msca-http-p256",
+      "kind": "http-signature-seam",
+      "suite_support": "optional",
+      "alg": "ecdsa-p256-sha256",
+      "inner_kid": "did:sage:web:agents.example.com:billing-bot#sign-p256",
+      "outer_keyid": "did:sage:web:agents.example.com:billing-bot#sign-p256",
+      "record_key": {
+        "kid": "did:sage:web:agents.example.com:billing-bot#sign-p256",
+        "alg": "ecdsa-p256-sha256",
+        "state": "accepted",
+        "public_spki_der_b64": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEnCn8TixjKkHH2/Iw/JsRmJOOHp8mr/94eHfnDfFxi23wrYthy9t8JlZUTwD3t519JfUEVbbIBxwmVVD/9tPDnQ=="
+      },
+      "signature_input": "sig1=(\"@method\" \"@target-uri\" \"@authority\" \"content-type\" \"content-digest\" \"x-sage-did\" \"x-sage-version\");keyid=\"did:sage:web:agents.example.com:billing-bot#sign-p256\";alg=\"ecdsa-p256-sha256\";created=1790000000;expires=1790000300;nonce=\"3N_sd7jwweJvGYeh8XI6Qg\";tag=\"sage-0.10.0\"",
+      "signature_base_ascii": "\"@method\": POST\n\"@target-uri\": https://processor.example.com/sage/messages\n\"@authority\": processor.example.com\n\"content-type\": application/json\n\"content-digest\": sha-256=:RWxcnP+cdxpKxcUU3GtGtMR+Ehf7tRVTUwFiHnK21I4=:\n\"x-sage-did\": did:sage:web:agents.example.com:billing-bot\n\"x-sage-version\": 0.10.0\n\"@signature-params\": (\"@method\" \"@target-uri\" \"@authority\" \"content-type\" \"content-digest\" \"x-sage-did\" \"x-sage-version\");keyid=\"did:sage:web:agents.example.com:billing-bot#sign-p256\";alg=\"ecdsa-p256-sha256\";created=1790000000;expires=1790000300;nonce=\"3N_sd7jwweJvGYeh8XI6Qg\";tag=\"sage-0.10.0\"",
+      "signature_b64": "xLoiBo0GLTU7mKXGoEhQlu32bYneWcJ+pPQgY1/L5vUPRSwRU8Q0jwQ3M7ji4Eh1iP4XaOje6/svYu8ImhviwA==",
+      "signature_field": "sig1=:xLoiBo0GLTU7mKXGoEhQlu32bYneWcJ+pPQgY1/L5vUPRSwRU8Q0jwQ3M7ji4Eh1iP4XaOje6/svYu8ImhviwA==:",
+      "expected": {
+        "algorithm": "ALLOW",
+        "key_binding": "MATCH",
+        "cryptographic_signature": "VALID",
+        "whole_http_and_envelope": "NOT_EVALUATED"
+      },
+      "response": {
+        "case_id": "msca-http-p256-response",
+        "alg": "ecdsa-p256-sha256",
+        "keyid": "did:sage:web:processor.example.com:processor#sign-p256",
+        "record_key": {
+          "kid": "did:sage:web:processor.example.com:processor#sign-p256",
+          "alg": "ecdsa-p256-sha256",
+          "state": "accepted",
+          "public_spki_der_b64": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAERTGtq6rxX0yi7EvGlqD8GG7X81kyHJMC3TSnIxG3bw6OOIV37sD88KezEPHuWgim2v8V6QQq3frFe395wm/byw=="
+        },
+        "signature_input": "sig1=(\"@status\" \"@method\";req \"@target-uri\";req \"@authority\";req \"content-digest\";req \"signature\";req \"x-sage-version\";req \"content-type\" \"content-digest\" \"x-sage-did\" \"x-sage-version\");keyid=\"did:sage:web:processor.example.com:processor#sign-p256\";alg=\"ecdsa-p256-sha256\";created=1790000005;expires=1790000305;nonce=\"4S9wmoJjMcQOe9FZSKXC7w\";tag=\"sage-0.10.0\"",
+        "signature_base_ascii": "\"@status\": 200\n\"@method\";req: POST\n\"@target-uri\";req: https://processor.example.com/sage/messages\n\"@authority\";req: processor.example.com\n\"content-digest\";req: sha-256=:RWxcnP+cdxpKxcUU3GtGtMR+Ehf7tRVTUwFiHnK21I4=:\n\"signature\";req: sig1=:xLoiBo0GLTU7mKXGoEhQlu32bYneWcJ+pPQgY1/L5vUPRSwRU8Q0jwQ3M7ji4Eh1iP4XaOje6/svYu8ImhviwA==:\n\"x-sage-version\";req: 0.10.0\n\"content-type\": application/json\n\"content-digest\": sha-256=:+TZ9Bi/9jkzHg4JBNtDaYmnKpIvdccQD3uSgE64VwB0=:\n\"x-sage-did\": did:sage:web:processor.example.com:processor\n\"x-sage-version\": 0.10.0\n\"@signature-params\": (\"@status\" \"@method\";req \"@target-uri\";req \"@authority\";req \"content-digest\";req \"signature\";req \"x-sage-version\";req \"content-type\" \"content-digest\" \"x-sage-did\" \"x-sage-version\");keyid=\"did:sage:web:processor.example.com:processor#sign-p256\";alg=\"ecdsa-p256-sha256\";created=1790000005;expires=1790000305;nonce=\"4S9wmoJjMcQOe9FZSKXC7w\";tag=\"sage-0.10.0\"",
+        "signature_b64": "eZLeg1PU7gYkyGEseHFcFEUPwYSxmQfAJMdDCLRbEr1cImVqrDT3ZnlAstXkwhfLFfXPR/zQZQbPMNdUQMq4Xg==",
+        "signature_field": "sig1=:eZLeg1PU7gYkyGEseHFcFEUPwYSxmQfAJMdDCLRbEr1cImVqrDT3ZnlAstXkwhfLFfXPR/zQZQbPMNdUQMq4Xg==:",
+        "expected": {
+          "request_signature_binding": "EXACT_RECEIVED_FIELD",
+          "cryptographic_signature": "VALID",
+          "whole_response": "NOT_EVALUATED"
+        }
+      }
+    },
+    {
+      "case_id": "msca-http-private-alg",
+      "kind": "http-algorithm-seam",
+      "alg": "sage-secp256k1-keccak256",
+      "inner_kid": "did:sage:web:agents.example.com:billing-bot#sign-k1",
+      "outer_keyid": "did:sage:web:agents.example.com:billing-bot#sign-k1",
+      "record_keys": [
+        {
+          "kid": "did:sage:web:agents.example.com:billing-bot#sign-k1",
+          "alg": "sage-secp256k1-keccak256",
+          "state": "accepted"
+        }
+      ],
+      "signature_input": "sig1=(\"@method\" \"@target-uri\" \"@authority\" \"content-type\" \"content-digest\" \"x-sage-did\" \"x-sage-version\");keyid=\"did:sage:web:agents.example.com:billing-bot#sign-k1\";alg=\"sage-secp256k1-keccak256\";created=1790000000;expires=1790000300;nonce=\"3N_sd7jwweJvGYeh8XI6Qg\";tag=\"sage-0.10.0\"",
+      "signature_base_ascii": "\"@method\": POST\n\"@target-uri\": https://processor.example.com/sage/messages\n\"@authority\": processor.example.com\n\"content-type\": application/json\n\"content-digest\": sha-256=:RWxcnP+cdxpKxcUU3GtGtMR+Ehf7tRVTUwFiHnK21I4=:\n\"x-sage-did\": did:sage:web:agents.example.com:billing-bot\n\"x-sage-version\": 0.10.0\n\"@signature-params\": (\"@method\" \"@target-uri\" \"@authority\" \"content-type\" \"content-digest\" \"x-sage-did\" \"x-sage-version\");keyid=\"did:sage:web:agents.example.com:billing-bot#sign-k1\";alg=\"sage-secp256k1-keccak256\";created=1790000000;expires=1790000300;nonce=\"3N_sd7jwweJvGYeh8XI6Qg\";tag=\"sage-0.10.0\"",
+      "expected": {
+        "decision": "REJECT_HTTP_ALG",
+        "remote_status": 401,
+        "dispatch_count": 0
+      }
+    },
+    {
+      "case_id": "msca-http-only-private-key",
+      "kind": "http-key-selection-seam",
+      "alg": "ed25519",
+      "inner_kid": "did:sage:web:agents.example.com:billing-bot#sign-k1",
+      "outer_keyid": "did:sage:web:agents.example.com:billing-bot#sign-k1",
+      "record_keys": [
+        {
+          "kid": "did:sage:web:agents.example.com:billing-bot#sign-k1",
+          "alg": "sage-secp256k1-keccak256",
+          "state": "accepted"
+        }
+      ],
+      "expected": {
+        "decision": "REJECT_NO_MATCHING_HTTP_KEY",
+        "dispatch_count": 0
+      }
+    },
+    {
+      "case_id": "msca-http-no-substitution",
+      "kind": "http-key-selection-seam",
+      "alg": "ed25519",
+      "inner_kid": "did:sage:web:agents.example.com:billing-bot#sign-k1",
+      "outer_keyid": "did:sage:web:agents.example.com:billing-bot#sign-ed",
+      "record_keys": [
+        {
+          "kid": "did:sage:web:agents.example.com:billing-bot#sign-k1",
+          "alg": "sage-secp256k1-keccak256",
+          "state": "accepted"
+        },
+        {
+          "kid": "did:sage:web:agents.example.com:billing-bot#sign-ed",
+          "alg": "ed25519",
+          "state": "accepted"
+        }
+      ],
+      "expected": {
+        "decision": "REJECT_KEYID_MISMATCH",
+        "dispatch_count": 0
+      }
+    },
+    {
+      "case_id": "msca-did-prefix-case",
+      "kind": "did-prefix-seam",
+      "identifiers": [
+        {
+          "value": "did:sage:web:agents.example.com:billing-bot",
+          "expected": "VALID_PREFIX"
+        },
+        {
+          "value": "DID:sage:web:agents.example.com:billing-bot",
+          "expected": "id.malformed"
+        },
+        {
+          "value": "did:SAGE:web:agents.example.com:billing-bot",
+          "expected": "id.malformed"
+        }
+      ],
+      "expected": {
+        "lookup_count_for_rejected": 0
+      }
+    },
+    {
+      "case_id": "msca-did-url-prefix-case",
+      "kind": "did-prefix-seam",
+      "identifiers": [
+        {
+          "value": "did:sage:web:agents.example.com:billing-bot#sign-ed",
+          "expected": "VALID_PREFIX"
+        },
+        {
+          "value": "DID:sage:web:agents.example.com:billing-bot#sign-ed",
+          "expected": "id.malformed"
+        },
+        {
+          "value": "did:SAGE:web:agents.example.com:billing-bot#sign-ed",
+          "expected": "id.malformed"
+        }
+      ],
+      "expected": {
+        "lookup_count_for_rejected": 0
+      }
+    },
+    {
+      "case_id": "msca-private-suite-non-http-scope",
+      "kind": "non-http-suite-seam",
+      "binding": "wire-envelope",
+      "alg": "sage-secp256k1-keccak256",
+      "kid": "did:sage:web:agents.example.com:billing-bot#sign-k1",
+      "record_keys": [
+        {
+          "kid": "did:sage:web:agents.example.com:billing-bot#sign-k1",
+          "alg": "sage-secp256k1-keccak256",
+          "state": "accepted"
+        }
+      ],
+      "expected": {
+        "decision": "ELIGIBLE_FOR_NON_HTTP_SUITE_CHECKS",
+        "cryptographic_signature": "NOT_EVALUATED",
+        "whole_envelope": "NOT_EVALUATED"
+      }
+    }
+  ],
+  "jwk_representation": {
+    "rule_ids": [
+      "RESOLVE-01",
+      "TABLE-03"
+    ],
+    "source": "RFC 8812 section 3.1",
+    "jwk": {
+      "kty": "EC",
+      "crv": "secp256k1",
+      "x": "3Y6WMMTXzOWb3lkXCtMsFh97vIRdNSWsE7L0qcBPZMM",
+      "y": "eBSPqD7StYZ3wekS5qPqOXF52yZWcx8cBakvZrQrRkE"
+    },
+    "public_sec1_hex": "04dd8e9630c4d7cce59bde59170ad32c161f7bbc845d3525ac13b2f4a9c04f64c378148fa83ed2b58677c1e912e6a3ea397179db2656731f1c05a92f66b42b4641",
+    "public_spki_der_b64": "MFYwEAYHKoZIzj0CAQYFK4EEAAoDQgAE3Y6WMMTXzOWb3lkXCtMsFh97vIRdNSWsE7L0qcBPZMN4FI+oPtK1hnfB6RLmo+o5cXnbJlZzHxwFqS9mtCtGQQ==",
+    "expected": {
+      "key_representation": "VALID_UNCOMPRESSED_POINT_SHAPE",
+      "jose_algorithm": "NOT_INFERRED",
+      "sage_signing_suite": "NOT_INFERRED",
+      "whole_resolution": "NOT_EVALUATED"
+    }
+  }
+}
