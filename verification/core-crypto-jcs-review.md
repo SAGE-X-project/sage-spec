@@ -2,8 +2,9 @@
 
 Status: **9 additional rule groups assessed at bounded source or primitive
 runtime scope**. Together with the [identity review](core-gap-review.md), the
-[complete 91-rule index](core-gap-index.json) has 16 reviewed and 75 pending
-after the [overview review](core-overview-review.md).
+[complete 91-rule index](core-gap-index.json) has 22 reviewed and 69 pending
+after the [overview review](core-overview-review.md) and
+[HTTP message-signature review](core-rfc9421-review.md).
 No normative clause, core implementation or latest 489-parent Inspector
 conformance verdict changes here.
 
@@ -51,7 +52,7 @@ The existing Go `crypto/jcs` and `crypto/keys` unit packages passed, as did
 Rust's four JCS and 178 crypto library tests. Their success verifies the
 existing code's tested behavior; it does not override the independent
 0.10.0 rejection mismatches above.
-The next work is RFC 9421 and the other 75 pending rule groups in traceability
+The next work is HPKE and the other 69 pending rule groups in traceability
 order. The core owners
 must select explicit strict API boundaries with consumer compatibility notes
 before changing the general legacy behavior. Inspector must rerun complete

@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 16,
-    "pending": 75
+    "reviewed": 22,
+    "pending": 69
   },
   "rules": [
     {
@@ -120,7 +120,7 @@
       "rule_id": "MSG-01",
       "source": "spec/03-rfc9421.md",
       "case_count": 8,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "SOURCE_GAP_FOR_P256_AND_PARTIAL_ED25519_REVIEW",
       "go_source_candidate": "pkg/agent/core/rfc9421",
       "rust_source_candidate": "src/rfc9421"
     },
@@ -128,7 +128,7 @@
       "rule_id": "MSG-02",
       "source": "spec/03-rfc9421.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent/core/rfc9421",
       "rust_source_candidate": "src/rfc9421"
     },
@@ -136,7 +136,7 @@
       "rule_id": "MSG-03",
       "source": "spec/03-rfc9421.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent/core/rfc9421",
       "rust_source_candidate": "src/rfc9421"
     },
@@ -144,7 +144,7 @@
       "rule_id": "MSG-04",
       "source": "spec/03-rfc9421.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent/core/rfc9421",
       "rust_source_candidate": "src/rfc9421"
     },
@@ -152,7 +152,7 @@
       "rule_id": "MSG-05",
       "source": "spec/03-rfc9421.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent/core/rfc9421",
       "rust_source_candidate": "src/rfc9421"
     },
@@ -160,7 +160,7 @@
       "rule_id": "MSG-06",
       "source": "spec/03-rfc9421.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "HOST_BOUNDARY_NOT_ESTABLISHED",
       "go_source_candidate": "pkg/agent/core/rfc9421",
       "rust_source_candidate": "src/rfc9421"
     },
