@@ -8,15 +8,15 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 12,
-    "pending": 79
+    "reviewed": 16,
+    "pending": 75
   },
   "rules": [
     {
       "rule_id": "OVERVIEW-01",
       "source": "spec/00-overview.md",
       "case_count": 2,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_REVIEW_WITH_GRAMMAR_GAP",
       "go_source_candidate": "pkg/agent",
       "rust_source_candidate": "src/lib.rs"
     },
@@ -24,7 +24,7 @@
       "rule_id": "OVERVIEW-02",
       "source": "spec/00-overview.md",
       "case_count": 2,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_REVIEW",
       "go_source_candidate": "pkg/agent",
       "rust_source_candidate": "src/lib.rs"
     },
@@ -32,7 +32,7 @@
       "rule_id": "OVERVIEW-03",
       "source": "spec/00-overview.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent",
       "rust_source_candidate": "src/lib.rs"
     },
@@ -40,7 +40,7 @@
       "rule_id": "OVERVIEW-04",
       "source": "spec/00-overview.md",
       "case_count": 2,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "DOCUMENT_CONTROL_REVIEW",
       "go_source_candidate": "pkg/agent",
       "rust_source_candidate": "src/lib.rs"
     },
