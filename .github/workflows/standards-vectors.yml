@@ -19,3 +19,5 @@ jobs:
           openssl version
           python3 -B verification/test_standards_vectors.py
           python3 -B verification/check_standards_vectors.py
+          python3 -B verification/test_wire_http_vectors.py
+          python3 -B verification/check_wire_http_vectors.py
