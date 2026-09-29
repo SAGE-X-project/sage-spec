@@ -27,18 +27,23 @@ diagnostic code can be introduced without editing the chapters that use it
 
 ## 2. Signature algorithms — TABLE-02 (R-19, R-29)
 
-Names as they appear in the `alg` parameter of a message signature
-(`03-rfc9421.md`) and in a verification method (`10-resolution.md`).
+SAGE signing-suite names in records and verification methods
+(`10-resolution.md`). Only rows marked HTTP-allowed may appear as the
+`alg` parameter of a chapter 03 HTTP message signature.
 
-| Name | Key type | Digest | Signature encoding | Chapter | Status |
-|---|---|---|---|---|---|
-| `ed25519` | Ed25519 | none (pure) | 64 bytes, RFC 8032 | `01-crypto.md` | mandatory |
-| `sage-secp256k1-keccak256` | secp256k1 | Keccak-256 | 65 bytes, `r ‖ s ‖ v`, low-S | `01-crypto.md` | optional |
-| `ecdsa-p256-sha256` | P-256 | SHA-256 | 64 bytes, `r ‖ s`, low-S | `01-crypto.md` | optional |
+| Name | Key type | Digest | Signature encoding | Chapter | Status | HTTP `alg` |
+|---|---|---|---|---|---|---|
+| `ed25519` | Ed25519 | none (pure) | 64 bytes, RFC 8032 | `01-crypto.md` | mandatory | allowed |
+| `sage-secp256k1-keccak256` | secp256k1 | Keccak-256 | 65 bytes, `r ‖ s ‖ v`, low-S | `01-crypto.md` | optional | forbidden |
+| `ecdsa-p256-sha256` | P-256 | SHA-256 | 64 bytes, `r ‖ s`, low-S | `01-crypto.md` | optional | allowed when supported |
 
-`sage-secp256k1-keccak256` is a SAGE-private HTTP signature algorithm,
-not JOSE `ES256K` (which uses SHA-256). Implementations MUST NOT alias those
-names. Unsupported algorithms fail closed. RSA is not supported in 0.10.0.
+`ed25519` and `ecdsa-p256-sha256` are registered HTTP Signature Algorithms;
+chapter 03 permits only these two exact names for HTTP `alg`. The SAGE-private
+`sage-secp256k1-keccak256` is not registered for HTTP, nor is it JOSE `ES256K`
+(which uses SHA-256). It remains usable only where a non-HTTP SAGE binding
+explicitly permits it. Implementations MUST NOT alias those names, select a
+different signing key to satisfy the HTTP restriction, or downgrade after
+rejection. Unsupported algorithms fail closed. RSA is not supported in 0.10.0.
 
 Names beginning `x-` are for private use and MUST NOT appear in a record or
 a message that leaves a deployment.
@@ -56,6 +61,10 @@ How a public key appears in a registry record and in a resolved document.
 | secp256k1 | signing | 65 bytes, uncompressed, `0x04` prefix | JSON Web Key, `EC`, curve `secp256k1` |
 | P-256 | signing | 65 bytes, uncompressed, `0x04` prefix | JSON Web Key, `EC`, curve `P-256` |
 | X25519 | key agreement | 32 bytes | JSON Web Key, `OKP`, curve `X25519` |
+
+The secp256k1 `EC` JWK public-key representation is specified by
+[RFC 8812 §3.1](https://www.rfc-editor.org/rfc/rfc8812.html#section-3.1);
+its `ES256K` signature suite is distinct from the SAGE Keccak suite.
 
 For a registry X25519 key, the exact `alg` value is lowercase ASCII `x25519`.
 It denotes only the HPKE X25519 KEM role. A registry MUST validate the

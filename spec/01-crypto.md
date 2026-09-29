@@ -14,7 +14,7 @@ explicit active proven key in the resolved sender record. X25519 MUST NOT
 be used for signatures. Registry type integers are registry-specific and
 MUST NOT be interpreted as a wire algorithm identifier.
 
-| Key | Wire public key | Signature | Wire algorithm |
+| Key | Wire public key | Signature | SAGE signing-suite identifier |
 |---|---|---|---|
 | Ed25519 | 32 bytes | 64-byte R followed by S | `ed25519` |
 | secp256k1 | 65-byte uncompressed SEC1, `04` followed by X and Y | 65-byte r, s, v | `sage-secp256k1-keccak256` |
@@ -26,6 +26,12 @@ The secp256k1 identifier is a SAGE-local identifier, not an IANA assignment
 or JOSE ES256K. Compressed keys, DER signatures, extra bytes and legacy RSA
 signatures MUST be rejected in this version. This resolves the historical
 RSA-PSS identifier/PKCS#1 v1.5 operation mismatch by excluding RSA entirely.
+For the HTTP `alg` signature parameter, chapter 03 permits only the registered
+`ed25519` and `ecdsa-p256-sha256` values. The optional secp256k1/Keccak suite
+remains a SAGE signing suite for bindings that define it independently of
+RFC 9421, but `sage-secp256k1-keccak256` MUST NOT be emitted or accepted as an
+HTTP `alg`. A sender with only a secp256k1 signing key has no protected HTTP
+path in this profile; it MUST NOT substitute another key or suite silently.
 
 ## 2. Signing and verification
 

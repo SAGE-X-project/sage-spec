@@ -36,7 +36,10 @@ private `d`, wrong curves, invalid points, extra/contradictory members and
 noncanonical encodings. Algorithm is determined from the authenticated
 registry entry; accepting a JWK does not authorize arbitrary algorithms.
 See [RFC 7517](https://www.rfc-editor.org/rfc/rfc7517.html) and
-[RFC 8037](https://www.rfc-editor.org/rfc/rfc8037.html).
+[RFC 8037](https://www.rfc-editor.org/rfc/rfc8037.html) for JWK and OKP;
+[RFC 8812 §3.1](https://www.rfc-editor.org/rfc/rfc8812.html#section-3.1)
+defines the `EC`/`secp256k1` public-key representation. RFC 8812's JOSE
+`ES256K` uses SHA-256 and does not define SAGE's Keccak signing suite.
 RFC 7517 permits a generic JWK consumer to ignore unknown additional members.
 The exact member set above is SAGE's authoritative projection and validation
 profile, not a claim that arbitrary third-party JWK documents become registry

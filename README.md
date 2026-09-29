@@ -79,7 +79,11 @@ original MCP binding parents, nine errata parents, five earlier revision
 parents and eight registry cases. The [standards application matrix](verification/standards-application-matrix.md)
 adds two planned RFC 9457 resolution-binding cases, bringing the current plan
 to 481 parents. The [standards scope record](verification/standards-scope-revision.json)
-pins this current document and case-plan revision without promoting evidence.
+pins that historical document and case-plan revision. The
+[standards clause revision](verification/standards-clause-revision.md) narrows HTTP
+signature algorithms, fixes DID prefix case and cites the secp256k1 JWK source.
+It adds eight planned cases, bringing the current plan to 489 parents without
+promoting execution evidence.
 The plan also has 26 mandatory child assertions.
 All are planned/unexecuted in this normative plan; historical runtime reports remain
 separate and must be mapped by exact case evidence. This is design adoption, not a tag,

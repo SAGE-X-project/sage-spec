@@ -65,6 +65,12 @@ Configure proxies and HTTP libraries so they cannot transform covered fields or
 content behind the verification boundary. A generic `RoundTripper`/`Handler`
 wrapper applies only to this HTTP profile; it does not implement the selected
 non-HTTP MCP binding.
+Configure the protected HTTP signer and verifier for only `ed25519` or a
+supported `ecdsa-p256-sha256` key named by the exact inner `kid`. A record
+with only a secp256k1/Keccak signing key cannot use this HTTP profile.
+Do not replace the key, drop the outer signature or retry through an unsigned
+path. This HTTP restriction does not rename the SAGE-private suite for a
+separately specified non-HTTP binding.
 
 ### Shared implementation boundaries
 

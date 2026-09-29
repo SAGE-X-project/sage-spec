@@ -5,6 +5,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from check_standards_clause_revision import verify_current_sources
+
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = '5bcf511e604579afa63f434013447f44b6858828'
@@ -22,6 +24,7 @@ SOURCE_PATHS = {
     'spec/11-registries.md',
     'verification/vectors/registry-proof-0.10.0.json',
 }
+HISTORICAL_ROOT = 'verification/history/standards-clauses-base-2026-09-29'
 
 
 def require(condition, message):
@@ -34,6 +37,9 @@ def digest(raw):
 
 
 def verify_record(root, record):
+    # Preserve the old review inputs while independently rejecting changes to
+    # the active specification. The historical copy cannot satisfy this gate.
+    verify_current_sources(root)
     require(record['schema_version'] == 1 and
             record['kind'] == 'mcp-independent-llm-rereview' and
             record['finding'] == 'ADOPT-06' and
@@ -63,9 +69,10 @@ def verify_record(root, record):
             SOURCE_MANIFEST_SHA256,
             'reviewed source manifest')
     for name, expected in source.items():
-        require(digest((root / name).read_bytes()) == expected,
+        require(digest((root / HISTORICAL_ROOT / name).read_bytes()) == expected,
                 'reviewed source bytes: ' + name)
-    descriptor = json.loads((root / 'profiles/non-http-mcp-tool.json').read_text())
+    descriptor = json.loads((root / HISTORICAL_ROOT /
+                             'profiles/non-http-mcp-tool.json').read_text())
     canonical = json.dumps(descriptor, sort_keys=True,
                            separators=(',', ':'), ensure_ascii=False).encode()
     descriptor_sha = hashlib.sha256(canonical).digest()

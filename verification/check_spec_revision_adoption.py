@@ -108,7 +108,9 @@ def verify(root=ROOT):
                 "rule case mapping: " + ident)
         source = rule["source"]
         historical = root / "verification/history/llm-review-target-2026-09-25" / source
-        lines = (historical if historical.is_file() else root / source).read_text().splitlines()
+        revised = root / 'verification/history/standards-clauses-base-2026-09-29' / source
+        lines = (historical if historical.is_file() else
+                 revised if revised.is_file() else root / source).read_text().splitlines()
         found = [number for number, line in enumerate(lines, 1)
                  if (line.startswith("#") and re.search(r"\b" + re.escape(ident) + r"\b", line))
                  or re.match(r"^\*\*" + re.escape(ident) + r"\b", line)]

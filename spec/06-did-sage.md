@@ -9,7 +9,7 @@ document an identifier resolves to is in `10-resolution.md`.
 ## 1. Syntax — ID-01 (R-1, R-2, R-30)
 
 ```abnf
-did-sage     = "did:sage:" registry-id ":" agent-id
+did-sage     = %s"did:sage:" registry-id ":" agent-id
 registry-id  = kind ":" locator
 kind         = lowercase *( lowercase / DIGIT / "-" )
 locator      = segment *( ":" segment )
@@ -26,6 +26,10 @@ locator ends; it reports `id.unknown-kind`.
 A DID MUST be at most 256 ASCII bytes and a DID URL at most 289 bytes.
 Only the profile syntax in chapter 09 is accepted. Paths, queries, empty
 segments and additional fragments MUST be rejected.
+The ASCII `did:sage:` prefix is case-sensitive and MUST appear exactly as
+shown in both a DID and a DID URL. A mixed-case scheme or method prefix
+MUST be rejected as `id.malformed`; it is not normalized or treated as an
+alias. The `%s` syntax is the case-sensitive ABNF form of RFC 7405.
 
 A key inside a record is named by a fragment:
 

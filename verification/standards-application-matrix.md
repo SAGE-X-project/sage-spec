@@ -1,8 +1,11 @@
 # Standards application matrix for SAGE 0.10.0
 
-Status: informative, document-level applicability review as of 2026-09-26.
-Reviewed against `sage-spec` base revision
-`bdbe5598c2cf63dada68c6939cfdeb28073cf71f` and the official publications
+Status: informative, document-level applicability review updated 2026-09-29.
+The earlier 2026-09-26 matrix is preserved in
+`verification/history/standards-clauses-base-2026-09-29/`. This update applies
+the SCA-01..03 decisions to the unreleased 0.10.0 design, checked against
+`sage-spec` base revision `e24994324fe11c526c717d805a512623c7d26d61`
+and the official publications
 linked below. This matrix does not certify an implementation, an IETF or W3C
 endorsement, or the security of SAGE's composition. The owning SAGE chapters
 remain normative. A later edition or erratum does not silently change 0.10.0.
@@ -15,17 +18,17 @@ without a general conformance claim.
 | Source and edition | SAGE owner and adopted part | SAGE restriction or independent rule | Evidence still required |
 | --- | --- | --- | --- |
 | [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119.html), [RFC 8174](https://www.rfc-editor.org/rfc/rfc8174.html) | `spec/00-overview.md` §2; capitalized requirement words; DESIGNED | Lower-case prose is not an additional RFC-style mandate. | Review every normative statement against a rule ID and planned case. |
-| [RFC 5234](https://www.rfc-editor.org/rfc/rfc5234.html) | `spec/06-did-sage.md` §1; ABNF; DESIGNED | Prose length, canonical-form and supported-kind checks apply in addition to syntax. | Independent positive and rejected-identifier parsers. |
+| [RFC 5234](https://www.rfc-editor.org/rfc/rfc5234.html), [RFC 7405](https://www.rfc-editor.org/rfc/rfc7405.html) | `spec/06-did-sage.md` §1; ABNF and exact `%s"did:sage:"` prefix; DESIGNED | Mixed-case scheme or method prefixes are rejected rather than normalized. Length, canonical-form and supported-kind checks also apply. | Independent positive and mixed-case DID/key-URL rejection parsers. |
 | [RFC 4648](https://www.rfc-editor.org/rfc/rfc4648.html) | `spec/00-overview.md` §2 and `spec/08-transport.md` §1; binary text; DESIGNED | Raw URL-safe base64 is canonical where stated; RFC 9421 and RFC 9530 fields use standard padded base64. | Exact-byte and malformed-padding vectors at each field boundary. |
 | [RFC 8032](https://www.rfc-editor.org/rfc/rfc8032.html) | `spec/01-crypto.md` §2; pure Ed25519; DESIGNED | SAGE additionally requires prime-order, nonidentity decoded points and the uncofactored verification equation. This is a narrower acceptance profile, not a claim that every RFC 8032 verifier makes those checks. | Independent Go/Rust signature and rejection vectors. |
 | [RFC 7748](https://www.rfc-editor.org/rfc/rfc7748.html) | `spec/04-hpke.md` §§1–3; X25519; DESIGNED | X25519 is a KEM/agreement key, never a signing algorithm; all-zero shared results fail. | Independent DH and role-selection vectors. |
 | [RFC 6979](https://www.rfc-editor.org/rfc/rfc6979.html) | `spec/01-crypto.md` §2; deterministic ECDSA nonce guidance; REFERENCE | Deterministic signing is recommended, while secure randomized signing is permitted. SAGE verification and low-S rules remain mandatory for supported suites. | ECDSA positive/negative byte and verdict tests; no identical-signature claim. |
-| [RFC 7517](https://www.rfc-editor.org/rfc/rfc7517.html), [RFC 7518](https://www.rfc-editor.org/rfc/rfc7518.html), [RFC 8037](https://www.rfc-editor.org/rfc/rfc8037.html) | `spec/10-resolution.md` §1 and `spec/11-registries.md` §§2–3; public JWK/OKP projection; DESIGNED | SAGE accepts only its authoritative record projection as a key source. Its secp256k1/Keccak suite is not JOSE ES256K. Generic JWK consumers may accept additional members; SAGE's closed authority-input schema is a local rule. | Independent DID/JWK consumer acceptance and SAGE rejection cases for contradictory/private/extra authority input. |
+| [RFC 7517](https://www.rfc-editor.org/rfc/rfc7517.html), [RFC 7518](https://www.rfc-editor.org/rfc/rfc7518.html), [RFC 8037](https://www.rfc-editor.org/rfc/rfc8037.html), [RFC 8812 §3.1](https://www.rfc-editor.org/rfc/rfc8812.html#section-3.1) | `spec/10-resolution.md` §1 and `spec/11-registries.md` §§2–3; public JWK/OKP/secp256k1 projection; DESIGNED | SAGE accepts only its authoritative record projection as a key source. RFC 8812 defines the secp256k1 JWK representation but its ES256K/SHA-256 signature is not SAGE's Keccak suite. Generic JWK consumers may accept additional members; SAGE's closed authority-input schema is a local rule. | Independent DID/JWK consumer acceptance and SAGE rejection cases for contradictory/private/extra authority input. |
 | [RFC 8785](https://www.rfc-editor.org/rfc/rfc8785.html) | `spec/02-jcs.md` §§1–2; exact canonical bytes; DESIGNED | Signed SAGE input rejects negative-zero tokens and malformed/duplicate JSON before JCS; HTTP content is never reserialized for its digest. The token rejection is a SAGE input restriction, not a different JCS serialization algorithm. | Independent canonical-byte, Unicode, number and duplicate-member vectors. |
 | [RFC 9180](https://www.rfc-editor.org/rfc/rfc9180.html) | `spec/04-hpke.md` §§1–3; Base mode exporter; DESIGNED | Sender authentication, the second ephemeral X25519 contribution, transcript binding and acknowledgement are SAGE composition. HPKE Base alone does not authenticate a sender or guarantee forward secrecy after recipient static-key compromise. | HPKE known-answer and cross-core schedule tests; independent composition analysis. |
 | [RFC 5869](https://www.rfc-editor.org/rfc/rfc5869.html) | `spec/04-hpke.md` §3 and `spec/05-session.md`; HKDF extract/expand; DESIGNED | Exact salt, IKM, info, labels and transcript bytes are SAGE-defined. | Independent derivation vectors at every schedule boundary. |
 | [RFC 8439](https://www.rfc-editor.org/rfc/rfc8439.html) | `spec/05-session.md`; ChaCha20-Poly1305; DESIGNED | Direction, nonce construction, sequence/replay state and key lifetime are SAGE-defined. | Cross-core record, key-rotation and replay tests. |
-| [RFC 9421](https://www.rfc-editor.org/rfc/rfc9421.html) | `spec/03-rfc9421.md` §§1–4; HTTP signature base and response `;req` components; DESIGNED | Exactly one `sig1`, exact ordered coverage, algorithm, key role and freshness are a deliberately narrower application profile. HTTP verification does not itself authorize a tool call. | Independent signature-base vectors, HTTP round trips, duplicate-header and transformed-proxy rejection. |
+| [RFC 9421 §3.3](https://www.rfc-editor.org/rfc/rfc9421.html#section-3.3), [IANA HTTP Signature Algorithms](https://www.iana.org/assignments/http-message-signature) | `spec/03-rfc9421.md` §§1–4; HTTP signature base, registered `alg` and response `;req` components; DESIGNED | Only exact `ed25519` or supported `ecdsa-p256-sha256` is permitted for HTTP `alg`; the SAGE-private secp256k1/Keccak suite remains outside that HTTP parameter. Exactly one `sig1`, fixed coverage, key role and freshness are narrower profile rules. HTTP verification alone does not authorize a tool call. | Independent positive and negative algorithm/role vectors, signature bases, HTTP round trips, duplicate-header and transformed-proxy rejection. |
 | [RFC 9530](https://www.rfc-editor.org/rfc/rfc9530.html) | `spec/03-rfc9421.md` §§1–3; `Content-Digest`; DESIGNED | The digest covers received HTTP content bytes and is itself signed. Content coding is excluded by the SAGE HTTP profile; an unsigned digest grants no authenticity. | Received-byte tests, including whitespace, framing, and forbidden content coding. |
 | [RFC 8941](https://www.rfc-editor.org/rfc/rfc8941.html), [RFC 9651](https://www.rfc-editor.org/rfc/rfc9651.html) | `spec/03-rfc9421.md` §1; Structured Field parsing and serialization; DESIGNED | RFC 9651 obsoletes RFC 8941, while RFC 9421 cites RFC 8941. SAGE pins the RFC 9421 signature-field subset; newer Structured Field types do not expand accepted signature parameters. | Cross-parser exact-byte and malformed-field tests against the selected subset. |
 | [RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html), [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html) | `spec/03-rfc9421.md` and `spec/09-registry.md` §8; HTTP content and cache semantics; DESIGNED | `Accept-Encoding: identity` is integration guidance; protected HTTP messages must omit content coding. Web registry responses cannot become authority merely through cache freshness. | Proxy/automatic-decompression checks and registry cache-control integration tests. |
@@ -39,8 +42,8 @@ without a general conformance claim.
 
 ## Open evidence and publication gates
 
-1. Preserve the earlier 479-case snapshot and the current 481-case Inspector
-   plan as planned evidence; do not
+1. Preserve the earlier 479-case and 481-case snapshots and the successor
+   Inspector plan as planned evidence; do not
    infer standards conformance from the historical vectors or selected PASS runs.
 2. Derive independent positive and negative byte/verdict vectors from each source
    standard and its SAGE profile. Cross-check both cores and an external

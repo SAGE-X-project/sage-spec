@@ -126,13 +126,13 @@ Normative:
 | Reference | Title |
 |---|---|
 | RFC 2119, RFC 8174 | Key words for use in RFCs |
-| RFC 5234 | Augmented BNF for syntax specifications |
+| RFC 5234, RFC 7405 | Augmented BNF and case-sensitive string literals for canonical DID syntax |
 | RFC 4648 | Base16, Base32 and Base64 data encodings |
 | RFC 5869 | HKDF extract and expand used by the SAGE session schedule |
 | RFC 8032 | Edwards-curve digital signature algorithm |
 | RFC 6979 | Deterministic usage of DSA and ECDSA |
 | RFC 7748 | Elliptic curves for security (X25519) |
-| RFC 7517, RFC 7518, RFC 8037 | JSON Web Key, JSON Web Algorithms and OKP key representation; SAGE does not adopt JOSE signature suites by reference |
+| RFC 7517, RFC 7518, RFC 8037, RFC 8812 §3.1 | JSON Web Key, JSON Web Algorithms, OKP and secp256k1 public-key representation; SAGE does not adopt JOSE signature suites by reference |
 | RFC 9110 | HTTP content-coding and negotiation semantics |
 | RFC 9111 | HTTP cache semantics used by the web-registry profile |
 | RFC 8785 | JSON canonicalisation scheme |

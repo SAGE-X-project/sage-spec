@@ -679,7 +679,7 @@
     {
       "id": "CRYPTO-02",
       "source": "spec/01-crypto.md",
-      "line": 32,
+      "line": 38,
       "requirements": [
         "R-19",
         "R-29"
@@ -701,7 +701,7 @@
     {
       "id": "CRYPTO-03",
       "source": "spec/01-crypto.md",
-      "line": 44,
+      "line": 50,
       "requirements": [
         "R-19"
       ],
@@ -721,7 +721,7 @@
     {
       "id": "CRYPTO-04",
       "source": "spec/01-crypto.md",
-      "line": 52,
+      "line": 58,
       "requirements": [
         "R-8",
         "R-15",
@@ -742,7 +742,7 @@
     {
       "id": "CRYPTO-05",
       "source": "spec/01-crypto.md",
-      "line": 59,
+      "line": 65,
       "requirements": [
         "R-19",
         "R-22"
@@ -852,7 +852,10 @@
         "MSG-01-N01",
         "MSG-01-N02",
         "MSG-01-N03",
-        "MSG-01-N04"
+        "MSG-01-N04",
+        "msca-http-ed25519",
+        "msca-http-p256",
+        "msca-http-private-alg"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [
@@ -865,7 +868,7 @@
     {
       "id": "MSG-02",
       "source": "spec/03-rfc9421.md",
-      "line": 35,
+      "line": 41,
       "requirements": [
         "R-15",
         "R-16",
@@ -891,7 +894,7 @@
     {
       "id": "MSG-03",
       "source": "spec/03-rfc9421.md",
-      "line": 51,
+      "line": 57,
       "requirements": [
         "R-18",
         "R-20"
@@ -914,7 +917,7 @@
     {
       "id": "MSG-04",
       "source": "spec/03-rfc9421.md",
-      "line": 68,
+      "line": 74,
       "requirements": [
         "R-20",
         "R-30",
@@ -940,7 +943,7 @@
     {
       "id": "MSG-05",
       "source": "spec/03-rfc9421.md",
-      "line": 86,
+      "line": 96,
       "requirements": [
         "R-17"
       ],
@@ -963,7 +966,7 @@
     {
       "id": "MSG-06",
       "source": "spec/03-rfc9421.md",
-      "line": 105,
+      "line": 115,
       "requirements": [
         "R-35"
       ],
@@ -1288,7 +1291,9 @@
         "ID-01-N02",
         "ID-01-N03",
         "ID-01-N04",
-        "ID-01-N05"
+        "ID-01-N05",
+        "msca-did-prefix-case",
+        "msca-did-url-prefix-case"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [
@@ -1300,7 +1305,7 @@
     {
       "id": "ID-02",
       "source": "spec/06-did-sage.md",
-      "line": 45,
+      "line": 49,
       "requirements": [
         "R-2"
       ],
@@ -1320,7 +1325,7 @@
     {
       "id": "ID-03",
       "source": "spec/06-did-sage.md",
-      "line": 65,
+      "line": 69,
       "requirements": [
         "R-8",
         "R-9",
@@ -1345,7 +1350,7 @@
     {
       "id": "ID-04",
       "source": "spec/06-did-sage.md",
-      "line": 89,
+      "line": 93,
       "requirements": [
         "R-3",
         "R-10",
@@ -1547,7 +1552,9 @@
         "TRANSPORT-05-P",
         "TRANSPORT-05-N01",
         "TRANSPORT-05-N02",
-        "TRANSPORT-05-N03"
+        "TRANSPORT-05-N03",
+        "msca-http-only-private-key",
+        "msca-http-no-substitution"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [
@@ -1559,7 +1566,7 @@
     {
       "id": "TRANSPORT-06",
       "source": "spec/08-transport.md",
-      "line": 129,
+      "line": 134,
       "requirements": [
         "R-15",
         "R-16",
@@ -1791,7 +1798,7 @@
     {
       "id": "RESOLVE-02",
       "source": "spec/10-resolution.md",
-      "line": 47,
+      "line": 50,
       "requirements": [
         "R-4",
         "R-8",
@@ -1815,7 +1822,7 @@
     {
       "id": "RESOLVE-03",
       "source": "spec/10-resolution.md",
-      "line": 67,
+      "line": 70,
       "requirements": [
         "R-4",
         "R-9",
@@ -1836,7 +1843,7 @@
     {
       "id": "RESOLVE-04",
       "source": "spec/10-resolution.md",
-      "line": 85,
+      "line": 88,
       "requirements": [
         "R-8",
         "R-9"
@@ -1858,7 +1865,7 @@
     {
       "id": "RESOLVE-05",
       "source": "spec/10-resolution.md",
-      "line": 94,
+      "line": 97,
       "requirements": [
         "R-14",
         "R-34",
@@ -1912,7 +1919,8 @@
         "TABLE-02-P",
         "TABLE-02-N01",
         "TABLE-02-N02",
-        "mllm-kem-signature-reject"
+        "mllm-kem-signature-reject",
+        "msca-private-suite-non-http-scope"
       ],
       "evidence_status": "planned_not_executed",
       "threats": [
@@ -1923,7 +1931,7 @@
     {
       "id": "TABLE-03",
       "source": "spec/11-registries.md",
-      "line": 49,
+      "line": 54,
       "requirements": [
         "R-29"
       ],
@@ -1943,7 +1951,7 @@
     {
       "id": "TABLE-04",
       "source": "spec/11-registries.md",
-      "line": 74,
+      "line": 83,
       "requirements": [
         "R-19",
         "R-28",
@@ -1964,7 +1972,7 @@
     {
       "id": "TABLE-05",
       "source": "spec/11-registries.md",
-      "line": 106,
+      "line": 115,
       "requirements": [
         "R-2",
         "R-3"
@@ -1983,7 +1991,7 @@
     {
       "id": "TABLE-06",
       "source": "spec/11-registries.md",
-      "line": 118,
+      "line": 127,
       "requirements": [
         "R-15",
         "R-34"
@@ -2002,7 +2010,7 @@
     {
       "id": "TABLE-07",
       "source": "spec/11-registries.md",
-      "line": 139,
+      "line": 148,
       "requirements": [
         "R-35"
       ],
@@ -6979,6 +6987,78 @@
       "input": "For each emitted problem type URI, review stable ownership, published human-readable documentation and an independent problem-details consumer.",
       "preconditions": "Use a pinned deployment URL and deployed documentation revision; a local Markdown page alone is not proof of published URI resolution.",
       "expected": "Record exact reachable documentation and consumer behavior, or retain NOT_RUN/no generic-interoperability claim where publication or independent observation is absent.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "msca-http-ed25519",
+      "rule_id": "MSG-01",
+      "mode": "unit_and_bounded_local_runtime",
+      "input": "A protected HTTP request and response use an active Ed25519 key and exact alg ed25519",
+      "preconditions": "Synthetic registered Ed25519 peers, fixed body and received HTTP components; exercise both directions with one replay transaction",
+      "expected": "Accept only if the HTTP and inner signatures, exact key URL, body binding and all profile checks succeed.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "msca-http-p256",
+      "rule_id": "MSG-01",
+      "mode": "unit_and_bounded_local_runtime",
+      "input": "A protected HTTP request and response use an active P-256 key and exact alg ecdsa-p256-sha256",
+      "preconditions": "Synthetic P-256 peers in an implementation that advertises the optional suite; otherwise report UNSUPPORTED, never substitute Ed25519",
+      "expected": "Accept only under the exact registered P-256 suite and full profile; unsupported implementations refuse cleanly.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "msca-http-private-alg",
+      "rule_id": "MSG-01",
+      "mode": "unit_and_bounded_local_runtime",
+      "input": "An otherwise valid synthetic HTTP signature declares sage-secp256k1-keccak256 as alg",
+      "preconditions": "Use inert HTTP fixture bytes and a synthetic active secp256k1 record; no live endpoint or protected tool effect",
+      "expected": "Reject the HTTP message with generic remote authentication failure; do not try the private suite through RFC 9421.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "msca-http-only-private-key",
+      "rule_id": "TRANSPORT-05",
+      "mode": "unit_and_bounded_local_runtime",
+      "input": "The sender record has only a valid secp256k1/Keccak signing key and attempts protected HTTP carriage",
+      "preconditions": "Use an isolated record and inert request; keep the HTTP recipient and effect sink fixed",
+      "expected": "Reject before protected dispatch because no eligible matching HTTP signing key exists.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "msca-http-no-substitution",
+      "rule_id": "TRANSPORT-05",
+      "mode": "unit_and_bounded_local_runtime",
+      "input": "The inner kid names a secp256k1 key while the outer signature names a different Ed25519 or P-256 key",
+      "preconditions": "Both synthetic keys belong to the same active record; compare exact inner and outer key references",
+      "expected": "Reject the mismatch; no alternate key, unsigned retry or weaker transport fallback authorizes the request.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "msca-did-prefix-case",
+      "rule_id": "ID-01",
+      "mode": "unit_and_bounded_local_runtime",
+      "input": "A DID uses mixed-case scheme or method prefix such as DID:sage: or did:SAGE:",
+      "preconditions": "Use otherwise valid bounded eip155 and web identifiers with only prefix case changed",
+      "expected": "Reject as id.malformed without normalization or alias lookup.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "msca-did-url-prefix-case",
+      "rule_id": "ID-01",
+      "mode": "unit_and_bounded_local_runtime",
+      "input": "A key URL uses a mixed-case did:sage prefix with an otherwise valid fragment",
+      "preconditions": "Use an otherwise valid synthetic active key URL and fixed expected peer",
+      "expected": "Reject the key URL as id.malformed before key selection; do not match the lowercase DID.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "msca-private-suite-non-http-scope",
+      "rule_id": "TABLE-02",
+      "mode": "unit_and_bounded_local_runtime",
+      "input": "A transport-independent signed envelope declares a permitted secp256k1/Keccak key without an HTTP alg parameter",
+      "preconditions": "Use an isolated synthetic record and the exact non-HTTP envelope domain; no HTTP carriage or live effects",
+      "expected": "Evaluate only under the explicit non-HTTP suite and full registry/profile checks; the HTTP restriction alone does not reject this suite.",
       "evidence_status": "planned_not_executed"
     }
   ],

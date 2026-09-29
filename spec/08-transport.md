@@ -123,6 +123,11 @@ header projections. HTTP signature keyid, times and nonce MUST equal the
 body values. Both signatures are required: the inner signature protects
 transport-independent identity/context, the outer binds HTTP routing/status.
 One acceptance transaction covers both, not two independent replay inserts.
+The outer `alg` follows MSG-01's registered HTTP allowlist and MUST match
+the algorithm of that exact inner `kid`. A record with only a private
+secp256k1/Keccak signing key cannot use this HTTP binding. An implementation
+MUST NOT switch to a different key, omit the outer signature, or fall back to
+an unsigned or weaker transport after that rejection.
 
 ## 6. WebSocket and local adapters
 
