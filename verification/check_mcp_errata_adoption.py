@@ -6,6 +6,8 @@ import json
 import re
 from pathlib import Path
 
+from check_standards_clause_revision import CURRENT_PATHS, verify_current_sources
+
 from check_mcp_adoption import pinned_path as original_pinned_path, verify as verify_historical
 from check_mcp_errata_candidate import verify_digest
 
@@ -37,8 +39,12 @@ def sha256(path):
 def pinned_path(root, record, name):
     expected = record["current_sha256"][name]
     historical = root / HISTORY / name
-    path = historical if historical.is_file() else root / name
+    standards = root / 'verification/history/standards-clauses-base-2026-09-29' / name
+    path = historical if historical.is_file() else (
+        standards if name in CURRENT_PATHS and standards.is_file() else root / name)
     require(sha256(path) == expected, "current identity: " + name)
+    if (root / 'verification/standards-clause-revision.json').is_file():
+        verify_current_sources(root)
     return path
 
 

@@ -5,7 +5,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from check_mcp_adoption import ROOT, HISTORY, REVIEW_HISTORY, verify, digest
+from check_mcp_adoption import ROOT, HISTORY, REVIEW_HISTORY, STANDARDS_HISTORY, verify, digest
 
 
 class AdoptionTests(unittest.TestCase):
@@ -13,7 +13,8 @@ class AdoptionTests(unittest.TestCase):
         self.temp=tempfile.TemporaryDirectory();self.addCleanup(self.temp.cleanup)
         self.root=Path(self.temp.name)
         record=json.loads((ROOT/'verification/mcp-adoption.json').read_text())
-        names=set(record['normative_sha256'])|{'verification/mcp-adoption.json','verification/check_mcp_adoption.py'}
+        names=set(record['normative_sha256'])|{'verification/mcp-adoption.json','verification/check_mcp_adoption.py',
+                                                'verification/check_standards_clause_revision.py'}
         names|={'proposals/non-http-mcp-setup/'+n for n in record['reviewed_candidate_sha256']}
         names.add('proposals/non-http-mcp-setup/tool.json')
         for name in names:
@@ -26,6 +27,10 @@ class AdoptionTests(unittest.TestCase):
             if (ROOT/reviewed).is_file():
                 dest=self.root/reviewed;dest.parent.mkdir(parents=True,exist_ok=True)
                 shutil.copyfile(ROOT/reviewed,dest)
+            standards=STANDARDS_HISTORY/name
+            if (ROOT/standards).is_file():
+                dest=self.root/standards;dest.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(ROOT/standards,dest)
 
     def mutate_trace(self,fn):
         p=self.root/HISTORY/'verification/traceability.json';t=json.loads(p.read_text());fn(t);p.write_text(json.dumps(t))

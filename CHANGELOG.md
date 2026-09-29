@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.10.0 — HTTP signature and DID clause correction (2026-09-29)
+
+- Restrict HTTP message signature `alg` to registered Ed25519 and optionally
+  supported P-256; reject private secp256k1/Keccak identifiers and key fallback.
+- Require the exact lowercase `did:sage:` prefix and cite RFC 8812 for
+  secp256k1 JWK representation without equating ES256K with SAGE Keccak.
+- Add eight planned Inspector cases, for 91 groups and 489 parents. Preserve
+  the earlier 481-case plan as a historical snapshot.
+- No core execution result, organizationally external audit or conformance claim.
+
 ## 0.10.0 — standards scope and resolution error clarification (2026-09-26)
 
 - Record the exact external-standard editions, SAGE restrictions and remaining

@@ -74,7 +74,7 @@ cases report nonconformance rather than sending meaningless network fixtures.
 | JCS-02 | R-28 | Boundary-safe nonnegative protocol integer | fraction; negative timestamp; integer above safe range; wrong JSON type |
 | JCS-03 | R-20, R-28 | Equivalent member orders yield exactly equal JCS bytes | array order mutation; Unicode normalisation; non-JCS number rendering |
 | JCS-04 | R-20, R-28 | Only exact owning signature member omitted | remove nested proof metadata; remove all proof objects; alter authenticated alg |
-| MSG-01 | R-19, R-20, R-34 | sig1 with required exact parameters and sha-256 digest | second signature label; duplicate parameter; unknown parameter; bad digest encoding |
+| MSG-01 | R-19, R-20, R-34 | sig1 with required exact parameters, registered Ed25519 or supported P-256 HTTP `alg`, and sha-256 digest | second signature label; duplicate parameter; unknown or private `alg`; bad digest encoding |
 | MSG-02 | R-15, R-16, R-20, R-34 | Exact method target authority body digest DID and version coverage | wrong target; forwarded-header spoof; unsigned body; missing version; unknown version |
 | MSG-03 | R-18, R-20 | Response verified against stored original signed request | different request Signature; absent request context; wrong response peer; unsigned success |
 | MSG-04 | R-20, R-30, R-35, R-36 | Bounded well-framed request and zero effects until verification | duplicate header; contradictory framing; 16MiB+1 body; 32KiB+1 fields; resolver timeout |
@@ -92,7 +92,7 @@ cases report nonconformance rather than sending meaningless network fixtures.
 | SESSION-04 | R-24, R-27 | Concurrent sends allocate distinct sequence/key nonce pairs | reuse allocated seq after failed send; legacy separate MAC; new plaintext with old nonce |
 | SESSION-05 | R-17, R-24 | Unseen authenticated reordered sequence accepted once | concurrent same seq; bad tag advances window; duplicate seq; out-of-window value |
 | SESSION-06 | R-9, R-22, R-26 | Fresh handshake after closed state | revoked key; unreachable current state; expired key; restored reset counter; plaintext fallback |
-| ID-01 | R-1, R-2, R-30 | Canonical DID/key URL inside grammar and length bounds | alias; percent escape; mixed case disallowed component; overlong DID; absent key fragment |
+| ID-01 | R-1, R-2, R-30 | Canonical DID/key URL with exact lowercase `did:sage:` prefix inside grammar and length bounds | alias; percent escape; changed prefix case; mixed case disallowed component; overlong DID; absent key fragment |
 | ID-02 | R-2 | Same authoritative registry namespace gives same identity | different registry same agent local ID; chain alias; string normalisation collision |
 | ID-03 | R-8, R-9, R-15, R-19 | One named active accepted key for exact sender | unknown key; revoked key; expired key; mismatched alg; unrelated registered signer |
 | ID-04 | R-3, R-10, R-11 | Lifecycle invocation permitted by registry contract | unauthorised controller; rotation changes DID; key name reuse |
@@ -103,7 +103,7 @@ cases report nonconformance rather than sending meaningless network fixtures.
 | TRANSPORT-02 | R-15, R-16, R-19, R-28 | Whole-request signature over exact payload/metadata | change recipient; mutate tool payload; strip metadata; wrong sender kid |
 | TRANSPORT-03 | R-18, R-28 | Terminal response bound to stored exact signed request | wrong request hash; plaintext response to encrypted request; wrong response session role; second terminal success; missing error on false; unsolicited response |
 | TRANSPORT-04 | R-17, R-30, R-35, R-36 | Atomic outer acceptance after every required verification | valid outer invalid inner; concurrent duplicate; session decryption fail; same id new nonce |
-| TRANSPORT-05 | R-15, R-16, R-18, R-34 | HTTP and body signatures accepted once with equal fields | mismatched nonce/time/keyid; missing signature; unsigned header projection authority |
+| TRANSPORT-05 | R-15, R-16, R-18, R-34 | HTTP and body signatures accepted once with equal fields and exact active signing key | mismatched nonce/time/keyid; private-only signing key; key substitution; missing signature; unsigned header projection authority |
 | TRANSPORT-06 | R-15, R-16, R-17, R-18, R-30 | One authenticated UTF-8 envelope per WS message | compressed frame; binary frame; oversized fragmented message; direct unsigned local bypass |
 | REG-01 | R-4, R-6, R-28, R-30 | Complete closed record obeying types, bounds and exact `x25519` KEM `alg` | duplicate key name; duplicate service id; fragment collision; over128 lifetime key tombstones; unknown or case-folded KEM `alg` |
 | REG-02 | R-7, R-8, R-12 | Deterministic accepted key selection and immutable key identity | unproven selected key; revoked key used to authenticate a message; changed key material under same name; signing key selected as KEM |
@@ -119,7 +119,7 @@ cases report nonconformance rather than sending meaningless network fixtures.
 | RESOLVE-04 | R-8, R-9 | Exact accepted key dereferenced from fresh DID document | missing fragment; unknown key; revoked key; service fragment used as key; wrong relationship |
 | RESOLVE-05 | R-14, R-34, R-35 | HTTP resolution binding preserves document and errors | wrong media type; redirect authority change; oversized response; cached positive reuse; RFC 9457 type/title/status mismatch; unverified problem-type publication |
 | TABLE-01 | R-3, R-32, R-34 | Defined registered values preserve existing meanings | reuse retired code; silent incompatible extension; unknown private value accepted |
-| TABLE-02 | R-19, R-29 | All signature suite identifiers match chapter01 | legacy es256k; JOSE mapping inferred from private Keccak name; `x25519` used as signature `alg` |
+| TABLE-02 | R-19, R-29 | SAGE signature suites match chapter01 and only registered algorithms are carried in HTTP `alg` | legacy es256k; private Keccak name in HTTP `alg`; JOSE mapping inferred from private Keccak name; `x25519` used as signature `alg` |
 | TABLE-03 | R-29 | Key encodings and exact registry KEM `alg` match declared role and record/document binding | compressed secp when raw required; wrong coordinate length; KEM key with 31-byte public value |
 | TABLE-04 | R-19, R-28, R-34 | Labels equal exact bytes in each construction | old label with new version; omitted newline/NUL; wrong HKDF domain |
 | TABLE-05 | R-2, R-3 | Supported registry kind plus valid deployment binding | reserved kind advertised supported; unknown kind accepted |
@@ -227,7 +227,8 @@ not an extra top-level test count. Run each in
 its declared scope: the isolated 1024-entry owner bound is a unit seam; authenticated
 traffic must stop at the tighter session-record ceiling. Every added parent/child
 remains planned or NOT_RUN. Older 37-case Inspector lifecycle evidence is a separate
-catalog and is neither added nor automatically mapped into this 481-case plan.
+catalog and is neither added nor automatically mapped into the historical
+481-case plan or the current 489-case plan.
 The earlier 457-case snapshot and its 71-case Inspector overlay retain their pinned
 historical revision; none of the nine new cases inherits PASS evidence.
 The preserved MCP errata snapshot has 466 planned parents. The current
@@ -243,7 +244,16 @@ eight further planned parents: `mllm-kem-alg-valid`, `mllm-kem-alg-case`,
 `mllm-kem-key-length`. Two standards-application parents,
 `mstand-problem-fields` and `mstand-problem-type-publication`, check the
 optional RFC 9457 binding without asserting that its type URLs are already
-published. The resulting 481 parents are unexecuted Inspector
+published. The historical 481 parents remain unexecuted Inspector
 cases. The [fixed local fixture](vectors/registry-proof-0.10.0.json) checks
 challenge bytes and the KEM role/selection contract; it does not execute a
 core implementation, registration transaction, or handshake.
+
+The 2026-09-29 standards clause revision adds eight planned parents:
+`msca-http-ed25519`, `msca-http-p256`, `msca-http-private-alg`,
+`msca-http-only-private-key`, `msca-http-no-substitution`,
+`msca-did-prefix-case`, `msca-did-url-prefix-case`, and
+`msca-private-suite-non-http-scope`. The current plan has 489 distinct
+parents; none of the eight inherits a historical PASS result. P-256 is an
+optional supported HTTP profile: unsupported implementations report
+UNSUPPORTED rather than substituting another key or algorithm.

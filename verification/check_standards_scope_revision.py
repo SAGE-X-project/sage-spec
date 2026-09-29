@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from check_registry_proof_adoption import verify_record as verify_prior_record
+from check_standards_clause_revision import verify_current_sources
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,6 +14,7 @@ NEW_CASES = {
     'mstand-problem-fields': 'unit_and_bounded_local_runtime',
     'mstand-problem-type-publication': 'deployment_or_document_review',
 }
+HISTORICAL_ROOT = 'verification/history/standards-clauses-base-2026-09-29'
 
 
 def require(condition, label):
@@ -25,6 +27,9 @@ def sha(path):
 
 
 def verify(root=ROOT):
+    # Both the current clause revision and this historical 481-case snapshot
+    # must validate; pinning old bytes must not mask current-source changes.
+    verify_current_sources(root)
     record = json.loads((root / 'verification/standards-scope-revision.json').read_text())
     prior_path = root / record['prior_record']
     prior = json.loads(prior_path.read_text())
@@ -63,11 +68,13 @@ def verify(root=ROOT):
                       'verification/check_registry_proof_adoption.py'}
     require(set(record['current_sha256']) == expected_files, 'source inventory')
     for name, digest in record['current_sha256'].items():
-        require(sha(root / name) == digest, 'current source: ' + name)
+        require(sha(root / HISTORICAL_ROOT / name) == digest,
+                'historical source: ' + name)
 
     previous = json.loads((root / record['prior_source_snapshot_root'] /
                            'verification/traceability.json').read_text())
-    current = json.loads((root / 'verification/traceability.json').read_text())
+    current = json.loads((root / HISTORICAL_ROOT /
+                          'verification/traceability.json').read_text())
     require(previous['protocol_version'] == current['protocol_version'] == '0.10.0'
             and previous['status'] == current['status'] == 'verification_plan_not_executed'
             and previous['requirements'] == current['requirements']
@@ -98,9 +105,10 @@ def verify(root=ROOT):
                 and all(case[key] for key in ('input', 'preconditions', 'expected')),
                 'new case plan: ' + name)
 
-    overview = (root / 'spec/00-overview.md').read_text()
-    resolution = (root / 'spec/10-resolution.md').read_text()
-    matrix = (root / 'verification/standards-application-matrix.md').read_text()
+    overview = (root / HISTORICAL_ROOT / 'spec/00-overview.md').read_text()
+    resolution = (root / HISTORICAL_ROOT / 'spec/10-resolution.md').read_text()
+    matrix = (root / HISTORICAL_ROOT /
+              'verification/standards-application-matrix.md').read_text()
     require('DID Resolution Candidate Recommendation Draft, 28 August 2026' in overview
             and '2026/CRD-did-resolution-1.0-20260828/' in overview
             and 'HTTP response status MUST equal' in resolution
