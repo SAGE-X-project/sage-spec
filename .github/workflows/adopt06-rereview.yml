@@ -1,0 +1,18 @@
+name: ADOPT-06 LLM re-review
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    name: Check scoped review evidence
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - run: python3 -B verification/test_mcp_independent_llm_rereview.py
+      - run: python3 -B verification/check_mcp_independent_llm_rereview.py

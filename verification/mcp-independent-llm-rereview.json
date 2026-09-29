@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "kind": "mcp-independent-llm-rereview",
+  "finding": "ADOPT-06",
+  "protocol_version": "0.10.0",
+  "target_revision": "5bcf511e604579afa63f434013447f44b6858828",
+  "previous_review": "verification/mcp-independent-llm-review.json",
+  "previous_review_sha256": "c873043816693f192c8209cadd895797ce9085b9a9387850c6ae4a0f3c362e4f",
+  "status": "SCOPED_LLM_REREVIEW_COMPLETE",
+  "organizationally_external": false,
+  "third_party_audit": "NOT_PERFORMED",
+  "implementation_conformance": "NOT_ESTABLISHED",
+  "release_claim": false,
+  "reviewer": {
+    "identity": "Codex LLM in a separate fresh context",
+    "affiliation": "same service and workspace as the authoring agent",
+    "conflict": "not organizationally independent",
+    "method": "read-only git-show review of the pinned normative commit; independent reconstruction of both PoP challenge bytes, SHA-256 values and the fixed descriptor digest",
+    "scope": "seven non-HTTP MCP trust boundaries in the ADOPT-06 review package, plus the two previous normative findings",
+    "limits": "No formal cryptographic proof, implementation execution, Agent-host enforcement, live Registry Source observation, or organizationally independent third-party audit."
+  },
+  "source_sha256": {
+    "profiles/non-http-mcp-security.md": "9c7851d095208c975792565266e481c120ef754ae8eb9529c62b53bf12a1d4fa",
+    "profiles/non-http-mcp-tool.json": "c3edd622a7c90baa028118f63af42a91f354fe7202070ef91a4bd349e4048204",
+    "profiles/agent-mcp-security.md": "0538acbdcfc143d93fb7d99a2a2c09c068fc354388c4e37c7489204305b1913f",
+    "spec/00-overview.md": "82493ba53f38cc783a2e76ffab3a70dc069b6ac3e534c7422840369fc90d9978",
+    "spec/01-crypto.md": "fe9fd00066b259b99a63e5adab7db739757e3ad2597ccc71e2019fa34319faec",
+    "spec/02-jcs.md": "4d4b202c8ddb5eb00c47a8e8056813a589834526e2174c023fb005a484eb3d94",
+    "spec/03-rfc9421.md": "ca6b85e12a0b0e1a4f28b4eb2a9b677d29e2fd2abe9691d1ee30bfa14ee858c9",
+    "spec/04-hpke.md": "1420818451ce8363a16e391647dbaca8ec2f06efa56b6507027a4e17f399fdd6",
+    "spec/05-session.md": "8a45b8bdd3b6bfc399a94c420b2161b8f16db5c6b29ed2e85584a6282b17cce5",
+    "spec/06-did-sage.md": "5791cc368111216a6539f7c423811abeb9821f9741e0c5d6ce177d5100b0b059",
+    "spec/07-a2a.md": "5ded622fdaf67342d5c6b4327da0f5787bfe9df2dc58b233cdfb500ffc96b042",
+    "spec/08-transport.md": "87bb1adc1aae4883e13f8ba52a7c86153c71efb621ffc50458f7e2aa57db3eeb",
+    "spec/09-registry.md": "2f7e5468bf87e7a402c7853584fca8e345b5055a0625f7068a71e80e6321eb02",
+    "spec/10-resolution.md": "12466dfeec90465c3fe014700972549d76917c7db87c207ce28d63867fbbe55c",
+    "spec/11-registries.md": "eb673391143bd4ed9283ee8a6a578aeb44e0018a78f6d994ebfeb70160757bf4",
+    "verification/vectors/registry-proof-0.10.0.json": "2eb9e705ee66f649a33b84e836dd2ef2840322d363d997fe8f114cabf891a7d5"
+  },
+  "descriptor_check": {
+    "jcs_bytes": 1141,
+    "sha256_hex": "7f8d2790a0d3de142cf69a1ac59c66f01830e21515d5fd37e9f18c98868a3ed4",
+    "sha256_jcs": "sha256-jcs:f40nkKDT3hQs9poaxZxm8Bgw4hUV1f036fGMmIaKPtQ"
+  },
+  "previous_finding_dispositions": [
+    {
+      "id": "LLM-01",
+      "status": "RESOLVED_IN_NORMATIVE_TEXT",
+      "anchors": ["spec/00-overview.md:64", "spec/09-registry.md:88-98"],
+      "evidence": "len16 encodes only the 16-bit byte length; REG-04 appends each field once; both pinned challenge bytes and SHA-256 values were independently reconstructed",
+      "limit": "The fixtures do not verify a live proof or registry mutation."
+    },
+    {
+      "id": "LLM-02",
+      "status": "RESOLVED_IN_NORMATIVE_TEXT",
+      "anchors": ["spec/09-registry.md:24-36", "spec/09-registry.md:45-53", "spec/09-registry.md:106-115", "spec/11-registries.md:46-66"],
+      "evidence": "The registry alg is exact lowercase x25519 with a 32-byte KEM key, signing-key endorsement and no signature role; eligible keys are selected by ASCII name",
+      "limit": "The fixture does not register a key or perform an authenticated handshake."
+    }
+  ],
+  "new_non_http_mcp_findings": [],
+  "previously_recorded_separate_findings": ["SCA-01", "SCA-02", "SCA-03"],
+  "next_gate": "Preserve this scoped LLM result, handle the separate standards findings in a coordinated specification revision, then run revision-bound implementation, Inspector, host and Registry Source checks; organizationally independent audit remains open."
+}
