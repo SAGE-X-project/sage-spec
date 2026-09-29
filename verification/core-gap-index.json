@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 3,
-    "pending": 88
+    "reviewed": 12,
+    "pending": 79
   },
   "rules": [
     {
@@ -48,7 +48,7 @@
       "rule_id": "CRYPTO-01",
       "source": "spec/01-crypto.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "SOURCE_AND_BOUNDED_RUNTIME_GAP",
       "go_source_candidate": "pkg/agent/crypto/keys",
       "rust_source_candidate": "src/crypto"
     },
@@ -56,7 +56,7 @@
       "rule_id": "CRYPTO-02",
       "source": "spec/01-crypto.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "SOURCE_AND_BOUNDED_RUNTIME_GAP",
       "go_source_candidate": "pkg/agent/crypto/keys",
       "rust_source_candidate": "src/crypto"
     },
@@ -64,7 +64,7 @@
       "rule_id": "CRYPTO-03",
       "source": "spec/01-crypto.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_REVIEW",
       "go_source_candidate": "pkg/agent/crypto/keys",
       "rust_source_candidate": "src/crypto"
     },
@@ -72,7 +72,7 @@
       "rule_id": "CRYPTO-04",
       "source": "spec/01-crypto.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_REVIEW",
       "go_source_candidate": "pkg/agent/crypto/keys",
       "rust_source_candidate": "src/crypto"
     },
@@ -80,7 +80,7 @@
       "rule_id": "CRYPTO-05",
       "source": "spec/01-crypto.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_REVIEW",
       "go_source_candidate": "pkg/agent/crypto/keys",
       "rust_source_candidate": "src/crypto"
     },
@@ -88,7 +88,7 @@
       "rule_id": "JCS-01",
       "source": "spec/02-jcs.md",
       "case_count": 7,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "SOURCE_AND_BOUNDED_RUNTIME_GAP",
       "go_source_candidate": "pkg/agent/crypto/jcs",
       "rust_source_candidate": "src/jcs"
     },
@@ -96,7 +96,7 @@
       "rule_id": "JCS-02",
       "source": "spec/02-jcs.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_REVIEW",
       "go_source_candidate": "pkg/agent/crypto/jcs",
       "rust_source_candidate": "src/jcs"
     },
@@ -104,7 +104,7 @@
       "rule_id": "JCS-03",
       "source": "spec/02-jcs.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_RUNTIME_REVIEW",
       "go_source_candidate": "pkg/agent/crypto/jcs",
       "rust_source_candidate": "src/jcs"
     },
@@ -112,7 +112,7 @@
       "rule_id": "JCS-04",
       "source": "spec/02-jcs.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "SOURCE_GAP",
       "go_source_candidate": "pkg/agent/crypto/jcs",
       "rust_source_candidate": "src/jcs"
     },
