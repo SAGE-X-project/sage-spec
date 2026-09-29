@@ -26,8 +26,14 @@ jobs:
           repository: SAGE-X-project/rs-sage-core
           ref: ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396
           path: rs-sage-core
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: SAGE-X-project/sage-inspector
+          ref: f104c8c3ce072e7a64d5a0092623e45ffb8d287b
+          path: sage-inspector
       - name: Check every rule and pinned source location
         run: |
           cd sage-spec
           python3 -B verification/build_core_gap_index.py --go-root ../sage --rust-root ../rs-sage-core
           python3 -B verification/observe-core-identity.py
+          python3 -B verification/check_core_primitive_reports.py --inspector-root ../sage-inspector
