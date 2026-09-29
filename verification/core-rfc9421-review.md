@@ -2,7 +2,8 @@
 
 Status: **six MSG rule groups assessed at bounded source and existing-test
 scope; no complete parent-case verdict**. The [91-rule index](core-gap-index.json)
-has 22 reviewed and 69 pending. This review preserves the normative
+has 28 reviewed and 63 pending after the [HPKE review](core-hpke-review.md).
+This review preserves the normative
 `sage-spec` revision `44df132fee5925182018ce089dc82435cb353f8a`, Go
 `sage` revision `49379baadc6baec9ca8b4bb7d15bf43d65144bd7`, and Rust
 `rs-sage-core` revision `ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396`.
@@ -36,7 +37,7 @@ cases or a conformance claim. The current Inspector evidence is pinned to
 earlier normative revisions; it retains its own `FAIL`, `PARTIAL`,
 `UNSUPPORTED` and `NOT_RUN` labels.
 
-Next, review the HPKE rules in traceability order. Before promoting any MSG
+Next, review the session rules in traceability order. Before promoting any MSG
 parent-case verdict, Inspector needs exact-revision positive Ed25519 and P-256
 paths, exact-component and request-context checks, bounded framing, a trusted
 HTTP/TLS host, durable cross-transport replay and generic error mapping.

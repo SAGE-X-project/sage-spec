@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 22,
-    "pending": 69
+    "reviewed": 28,
+    "pending": 63
   },
   "rules": [
     {
@@ -168,7 +168,7 @@
       "rule_id": "HPKE-01",
       "source": "spec/04-hpke.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent/hpke",
       "rust_source_candidate": "src/hpke"
     },
@@ -176,7 +176,7 @@
       "rule_id": "HPKE-02",
       "source": "spec/04-hpke.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent/hpke",
       "rust_source_candidate": "src/hpke"
     },
@@ -184,7 +184,7 @@
       "rule_id": "HPKE-03",
       "source": "spec/04-hpke.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent/hpke",
       "rust_source_candidate": "src/hpke"
     },
@@ -192,7 +192,7 @@
       "rule_id": "HPKE-04",
       "source": "spec/04-hpke.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent/hpke",
       "rust_source_candidate": "src/hpke"
     },
@@ -200,7 +200,7 @@
       "rule_id": "HPKE-05",
       "source": "spec/04-hpke.md",
       "case_count": 11,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent/hpke",
       "rust_source_candidate": "src/hpke"
     },
@@ -208,7 +208,7 @@
       "rule_id": "HPKE-06",
       "source": "spec/04-hpke.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_REVIEW_HOST_BOUNDARY_PENDING",
       "go_source_candidate": "pkg/agent/hpke",
       "rust_source_candidate": "src/hpke"
     },
