@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 40,
-    "pending": 51
+    "reviewed": 44,
+    "pending": 47
   },
   "rules": [
     {
@@ -336,7 +336,7 @@
       "rule_id": "TRANSPORT-03",
       "source": "spec/08-transport.md",
       "case_count": 7,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_RESPONSE_BINDING_WITH_PROFILE_GAP",
       "go_source_candidate": "pkg/agent/transport",
       "rust_source_candidate": "src/hpke/completion010"
     },
@@ -344,7 +344,7 @@
       "rule_id": "TRANSPORT-04",
       "source": "spec/08-transport.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_REPLAY_TRANSACTION_WITH_HOST_BOUNDARY_PENDING",
       "go_source_candidate": "pkg/agent/transport",
       "rust_source_candidate": "src/hpke/completion010"
     },
@@ -352,7 +352,7 @@
       "rule_id": "TRANSPORT-05",
       "source": "spec/08-transport.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_HTTP_BINDING_WITH_SUITE_AND_HOST_GAP",
       "go_source_candidate": "pkg/agent/transport",
       "rust_source_candidate": "src/hpke/completion010"
     },
@@ -360,7 +360,7 @@
       "rule_id": "TRANSPORT-06",
       "source": "spec/08-transport.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "WIRE_TRANSPORT_HOST_PATH_NOT_ESTABLISHED",
       "go_source_candidate": "pkg/agent/transport",
       "rust_source_candidate": "src/hpke/completion010"
     },

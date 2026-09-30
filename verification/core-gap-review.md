@@ -1,6 +1,6 @@
 # Pinned Go/Rust clause gap review
 
-Status: **40 of 91 rule groups reviewed at a bounded source or document level; 51 pending**.
+Status: **44 of 91 rule groups reviewed at a bounded source or document level; 47 pending**.
 This began as the first implementation-gap pass after the 0.10.0 standards revision,
 not an implementation conformance verdict or a change to normative text. The
 [machine-readable index](core-gap-index.json) names **every** rule group in
@@ -15,7 +15,8 @@ cross-layer rules, the [HTTP message-signature review](core-rfc9421-review.md)
 assesses six MSG rules, the [HPKE review](core-hpke-review.md) assesses six
 handshake rules, and the [session review](core-session-review.md) assesses six
 record and lifecycle rules. The [Agent Card review](core-card-review.md)
-assesses CARD-01 through CARD-03. The identity findings below remain attached to
+assesses CARD-01 through CARD-03, and the [transport review](core-transport-review.md)
+assesses TRANSPORT-01 through TRANSPORT-06. The identity findings below remain attached to
 the same pinned core revisions.
 
 | Input | Pinned revision |
@@ -75,12 +76,12 @@ The index groups all 91 rules by their authoritative source. Counts are:
 | Crypto and JCS | 9 | Bounded review in the linked addendum |
 | RFC 9421, HPKE, session | 18 | All 18 reviewed at bounded source/test scope |
 | DID method | 4 | ID-01 and ID-02 parser gaps; ID-03 partial; ID-04 mutation API gap |
-| Card, transport, registry, resolution, tables | 29 | [CARD-01 through CARD-03](core-card-review.md) source gaps and [TRANSPORT-01..02](core-transport-review.md) partial strict subset and signed request coverage gap; 24 pending |
+| Card, transport, registry, resolution, tables | 29 | [CARD-01 through CARD-03](core-card-review.md) source gaps and [TRANSPORT-01..06](core-transport-review.md) bounded source and test findings; 20 pending |
 | Agent/MCP Guard and non-HTTP MCP | 23 | Pending |
 | Process and evidence charter | 4 | Pending repository/evidence review |
 
-The next implementation-map pass must cover the remaining 51 rule groups
-against actual code and test entry points, beginning with `TRANSPORT-03`. For
+The next implementation-map pass must cover the remaining 47 rule groups
+against actual code and test entry points, beginning with `REG-01`. For
 identity, first introduce or identify one explicit strict 0.10.0 parser shared
 by DID and key URL uses,
 without changing the legacy public API's behavior implicitly. Separate
