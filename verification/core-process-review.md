@@ -2,7 +2,7 @@
 
 Status: **PROC-01 through PROC-03 assessed at bounded document/repository
 scope; no complete parent-case verdict**. The [91-rule index](core-gap-index.json)
-has 85 reviewed and 6 pending. The normative input is pinned to
+has 91 reviewed and 0 pending. The normative input is pinned to
 `44df132fee5925182018ce089dc82435cb353f8a`; the Go/Rust revisions in
 the index are source navigation pins, not evidence that code implements a
 document-control rule. The preserved Inspector
@@ -18,5 +18,5 @@ and reports all nine PROC cases `PARTIAL`, not conformance.
 
 The local index, traceability and document verification tests passed, and the
 preserved Inspector process-evidence checker passed. These are process and
-document checks, not implementation security evidence. The next unreviewed
-rule is `EVIDENCE-01`.
+document checks, not implementation security evidence. The subsequent
+`EVIDENCE-01` review is recorded in [the evidence review](core-evidence-review.md).

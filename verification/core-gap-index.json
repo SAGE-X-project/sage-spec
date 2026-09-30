@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 85,
-    "pending": 6
+    "reviewed": 91,
+    "pending": 0
   },
   "rules": [
     {
@@ -696,7 +696,7 @@
       "rule_id": "MOWN-01",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 8,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_COMPLETE_MESSAGE_BOUNDS_WITH_HOST_BOUNDARY",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -704,7 +704,7 @@
       "rule_id": "MOWN-02",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 16,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_PRIVATE_OWNER_WITH_DEPENDENCY_BOUNDARY",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -712,7 +712,7 @@
       "rule_id": "MOWN-03",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_QUEUE_ADMISSION_AND_CLOSE_ORDER",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -720,7 +720,7 @@
       "rule_id": "MOWN-04",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_OPERATION_DEADLINE_CLASSES",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -728,7 +728,7 @@
       "rule_id": "MOWN-05",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_ED25519_ROLE_BOUNDARY",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -736,7 +736,7 @@
       "rule_id": "MOWN-06",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 8,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_CLAIM_INVALIDATION_AND_SCHEDULE_REVIEW",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     }

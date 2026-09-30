@@ -2,7 +2,7 @@
 
 Status: **MSET-01 through MSET-08 assessed at bounded source, document and
 existing-test scope; no complete parent-case verdict**. The [91-rule
-index](core-gap-index.json) has 85 reviewed and 6 pending. Normative
+index](core-gap-index.json) has 91 reviewed and 0 pending. Normative
 `sage-spec` is pinned to `44df132fee5925182018ce089dc82435cb353f8a`,
 Go `sage` to `49379baadc6baec9ca8b4bb7d15bf43d65144bd7`, and Rust
 `rs-sage-core` to `ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396`.
@@ -30,4 +30,4 @@ revisions. Inspector's setup/binding checker unit tests passed; this review
 did not rerun their archived core and interoperability programs. The
 trusted local descriptor/configuration, deployed host interception, source
 authority and live transport ownership must be verified before a complete
-MSET verdict. The next unreviewed rule is `MOWN-01`.
+MSET verdict. All 91 rule groups have bounded reviews.

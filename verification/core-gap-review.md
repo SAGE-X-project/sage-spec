@@ -1,6 +1,6 @@
 # Pinned Go/Rust clause gap review
 
-Status: **85 of 91 rule groups reviewed at a bounded source or document level; 6 pending**.
+Status: **91 of 91 rule groups reviewed at a bounded source or document level; 0 pending**.
 This began as the first implementation-gap pass after the 0.10.0 standards revision,
 not an implementation conformance verdict or a change to normative text. The
 [machine-readable index](core-gap-index.json) names **every** rule group in
@@ -79,13 +79,13 @@ The index groups all 91 rules by their authoritative source. Counts are:
 | RFC 9421, HPKE, session | 18 | All 18 reviewed at bounded source/test scope |
 | DID method | 4 | ID-01 and ID-02 parser gaps; ID-03 partial; ID-04 mutation API gap |
 | Card, transport, registry, resolution, tables | 29 | [CARD-01 through CARD-03](core-card-review.md) source gaps, [TRANSPORT-01..06](core-transport-review.md) bounded findings and [REG-01..08](core-registry-review.md) registry/deployment findings and [RESOLVE-01..05](core-resolution-review.md) resolution findings and [TABLE-01..07](core-registry-tables-review.md) registry-table findings; all 29 reviewed |
-| Agent/MCP Guard and non-HTTP MCP | 23 | [EXEC-01..09](core-execution-guard-review.md) and [MSET-01..08](core-mcp-setup-review.md) bounded findings; 6 pending |
+| Agent/MCP Guard and non-HTTP MCP | 23 | [EXEC-01..09](core-execution-guard-review.md), [MSET-01..08](core-mcp-setup-review.md) and [MOWN-01..06](core-mcp-owner-review.md) bounded findings; all 23 reviewed |
 | Process and evidence charter | 4 | [PROC-01..03](core-process-review.md) and [EVIDENCE-01](core-evidence-review.md) bounded document/evidence reviews |
 
-The next implementation-map pass must cover the remaining 6 rule groups
-against actual code and test entry points, beginning with `MOWN-01`. For
-identity, first introduce or identify one explicit strict 0.10.0 parser shared
-by DID and key URL uses,
+All 91 rule groups have bounded source/document findings. The next phase is
+implementation closure and exact-revision Inspector verification, not another
+source-review status promotion. For identity, introduce or identify one explicit
+strict 0.10.0 parser shared by DID and key URL uses,
 without changing the legacy public API's behavior implicitly. Separate
 profile-specific locator validation from generic syntax and keep trusted
 Source validation, exact key selection and signature verification distinct.
