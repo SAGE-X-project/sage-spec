@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 73,
-    "pending": 18
+    "reviewed": 76,
+    "pending": 15
   },
   "rules": [
     {
@@ -600,7 +600,7 @@
       "rule_id": "PROC-01",
       "source": "PROCESS.md",
       "case_count": 3,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "DOCUMENT_TRACEABILITY_REVIEW",
       "go_source_candidate": null,
       "rust_source_candidate": null
     },
@@ -608,7 +608,7 @@
       "rule_id": "PROC-02",
       "source": "PROCESS.md",
       "case_count": 3,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "VERSIONED_CHANGE_AND_EVIDENCE_REVIEW",
       "go_source_candidate": null,
       "rust_source_candidate": null
     },
@@ -616,7 +616,7 @@
       "rule_id": "PROC-03",
       "source": "PROCESS.md",
       "case_count": 3,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "CANONICAL_DOCUMENT_OWNERSHIP_REVIEW",
       "go_source_candidate": null,
       "rust_source_candidate": null
     },

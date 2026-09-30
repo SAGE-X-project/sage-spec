@@ -1,6 +1,6 @@
 # Pinned Go/Rust clause gap review
 
-Status: **73 of 91 rule groups reviewed at a bounded source or document level; 18 pending**.
+Status: **76 of 91 rule groups reviewed at a bounded source or document level; 15 pending**.
 This began as the first implementation-gap pass after the 0.10.0 standards revision,
 not an implementation conformance verdict or a change to normative text. The
 [machine-readable index](core-gap-index.json) names **every** rule group in
@@ -80,10 +80,10 @@ The index groups all 91 rules by their authoritative source. Counts are:
 | DID method | 4 | ID-01 and ID-02 parser gaps; ID-03 partial; ID-04 mutation API gap |
 | Card, transport, registry, resolution, tables | 29 | [CARD-01 through CARD-03](core-card-review.md) source gaps, [TRANSPORT-01..06](core-transport-review.md) bounded findings and [REG-01..08](core-registry-review.md) registry/deployment findings and [RESOLVE-01..05](core-resolution-review.md) resolution findings and [TABLE-01..07](core-registry-tables-review.md) registry-table findings; all 29 reviewed |
 | Agent/MCP Guard and non-HTTP MCP | 23 | [EXEC-01..09](core-execution-guard-review.md) bounded findings; 14 pending |
-| Process and evidence charter | 4 | Pending repository/evidence review |
+| Process and evidence charter | 4 | [PROC-01..03](core-process-review.md) document review; EVIDENCE-01 pending |
 
-The next implementation-map pass must cover the remaining 18 rule groups
-against actual code and test entry points, beginning with `PROC-01`. For
+The next implementation-map pass must cover the remaining 15 rule groups
+against actual code and test entry points, beginning with `EVIDENCE-01`. For
 identity, first introduce or identify one explicit strict 0.10.0 parser shared
 by DID and key URL uses,
 without changing the legacy public API's behavior implicitly. Separate
