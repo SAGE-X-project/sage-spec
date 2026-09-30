@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 77,
-    "pending": 14
+    "reviewed": 85,
+    "pending": 6
   },
   "rules": [
     {
@@ -632,7 +632,7 @@
       "rule_id": "MSET-01",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_CHANNEL_OWNERSHIP_WITH_CONFIG_BOUNDARY",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -640,7 +640,7 @@
       "rule_id": "MSET-02",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 9,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SESSION_CARRIAGE_AND_OUTPUT_BARRIER",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -648,7 +648,7 @@
       "rule_id": "MSET-03",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_INITIALIZE_STATE_MACHINE",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -656,7 +656,7 @@
       "rule_id": "MSET-04",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_NOTIFICATION_ACKNOWLEDGEMENT",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -664,7 +664,7 @@
       "rule_id": "MSET-05",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_DISCOVERY_WITH_HOST_READINESS_BOUNDARY",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -672,7 +672,7 @@
       "rule_id": "MSET-06",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 7,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_DEADLINE_AND_CLOSURE_WITH_HOST_BOUNDARY",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -680,7 +680,7 @@
       "rule_id": "MSET-07",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_RECONNECT_WITH_DURABLE_STATE_BOUNDARY",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -688,7 +688,7 @@
       "rule_id": "MSET-08",
       "source": "profiles/non-http-mcp-security.md",
       "case_count": 3,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "DOCUMENT_ADOPTION_AND_NON_HTTP_SCOPE_REVIEW",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
