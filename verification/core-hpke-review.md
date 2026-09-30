@@ -2,7 +2,7 @@
 
 Status: **six HPKE rule groups assessed at bounded source and existing-test
 scope; no complete parent-case verdict**. The [91-rule index](core-gap-index.json)
-has 64 reviewed and 27 pending after the [session review](core-session-review.md),
+has 73 reviewed and 18 pending after the [session review](core-session-review.md),
 [ID-04 review](core-gap-review.md), and [Agent Card review](core-card-review.md).
 Normative `sage-spec` revision
 `44df132fee5925182018ce089dc82435cb353f8a` remains fixed; Go `sage` is

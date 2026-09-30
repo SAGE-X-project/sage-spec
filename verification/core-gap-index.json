@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 64,
-    "pending": 27
+    "reviewed": 73,
+    "pending": 18
   },
   "rules": [
     {
@@ -528,7 +528,7 @@
       "rule_id": "EXEC-01",
       "source": "profiles/agent-mcp-security.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "TRUSTED_HOST_CAPABILITY_BOUNDARY_NOT_ESTABLISHED",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -536,7 +536,7 @@
       "rule_id": "EXEC-02",
       "source": "profiles/agent-mcp-security.md",
       "case_count": 11,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_COMMITMENT_AND_POLICY_WITH_CAPTURE_BOUNDARY",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -544,7 +544,7 @@
       "rule_id": "EXEC-03",
       "source": "profiles/agent-mcp-security.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_STRICT_INTENT_AND_ED25519_PROOF",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -552,7 +552,7 @@
       "rule_id": "EXEC-04",
       "source": "profiles/agent-mcp-security.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_LOCAL_DISPATCH_WITH_HOST_BOUNDARY",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -560,7 +560,7 @@
       "rule_id": "EXEC-05",
       "source": "profiles/agent-mcp-security.md",
       "case_count": 11,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_DURABLE_REPLAY_WITH_DISTRIBUTED_BOUNDARY",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -568,7 +568,7 @@
       "rule_id": "EXEC-06",
       "source": "profiles/agent-mcp-security.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_MANIFEST_WITH_LOADED_INSTANCE_BOUNDARY",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -576,7 +576,7 @@
       "rule_id": "EXEC-07",
       "source": "profiles/agent-mcp-security.md",
       "case_count": 11,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SIGNED_RESULT_AND_CLIENT_CONSUMPTION",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -584,7 +584,7 @@
       "rule_id": "EXEC-08",
       "source": "profiles/agent-mcp-security.md",
       "case_count": 8,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_MCP_WRAPPER_WITH_INTERCEPTION_BOUNDARY",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
@@ -592,7 +592,7 @@
       "rule_id": "EXEC-09",
       "source": "profiles/agent-mcp-security.md",
       "case_count": 3,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "DOCUMENT_CLAIM_BOUNDARY_REVIEW",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
     },
