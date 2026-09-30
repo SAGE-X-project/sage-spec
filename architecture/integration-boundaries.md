@@ -65,6 +65,11 @@ gaps, rerun Inspector against the exact snapshot, and evaluate SDK, service,
 demo and repository extraction work. A package layout is an implementation
 choice; the normative profile and its evidence determine compatibility.
 
+The [0.10.0 implementation contract](implementation-contract-0.10.0.md)
+records the current proposed public entry points, trusted ports, failure
+semantics and compatibility migration for those gates. It is informative and
+does not convert the existing source reviews into conformance evidence.
+
 See the [current design graph](../analysis/current-design-overlay.md), the
 [Guard and MCP clause review](../verification/guard-binding-ownership-review.md),
 [repository ownership map](repository-roles.md), the
