@@ -2,7 +2,7 @@
 
 Status: **TRANSPORT-01 through TRANSPORT-06 assessed at bounded source and
 existing-test scope; no complete parent-case verdict**. The
-[91-rule index](core-gap-index.json) has 76 reviewed and 15 pending.
+[91-rule index](core-gap-index.json) has 77 reviewed and 14 pending.
 Normative `sage-spec` is pinned to
 `44df132fee5925182018ce089dc82435cb353f8a`, Go `sage` to
 `49379baadc6baec9ca8b4bb7d15bf43d65144bd7`, and Rust `rs-sage-core` to
@@ -172,4 +172,4 @@ The four preserved Inspector evidence checkers passed here, but all use the
 older normative revision. Selected Go completion, record, HTTP and legacy
 WebSocket tests and Rust completion tests exercise bounded implementation
 behavior; none promotes a complete parent case or crosses the host and
-deployment boundaries identified above. The next unreviewed rule is `EVIDENCE-01`.
+deployment boundaries identified above. The next unreviewed rule is `MSET-01`.

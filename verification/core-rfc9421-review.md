@@ -2,7 +2,7 @@
 
 Status: **six MSG rule groups assessed at bounded source and existing-test
 scope; no complete parent-case verdict**. The [91-rule index](core-gap-index.json)
-has 76 reviewed and 15 pending after the [HPKE review](core-hpke-review.md),
+has 77 reviewed and 14 pending after the [HPKE review](core-hpke-review.md),
 [session review](core-session-review.md), [ID-04 review](core-gap-review.md),
 and [Agent Card review](core-card-review.md).
 This review preserves the normative
@@ -39,7 +39,7 @@ cases or a conformance claim. The current Inspector evidence is pinned to
 earlier normative revisions; it retains its own `FAIL`, `PARTIAL`,
 `UNSUPPORTED` and `NOT_RUN` labels.
 
-The session, ID-04 and CARD-01..03 rules have bounded findings in the linked reviews; `EVIDENCE-01` is next
+The session, ID-04 and CARD-01..03 rules have bounded findings in the linked reviews; `MSET-01` is next
 in the review queue. Before promoting any MSG
 parent-case verdict, Inspector needs exact-revision positive Ed25519 and P-256
 paths, exact-component and request-context checks, bounded framing, a trusted

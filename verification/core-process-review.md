@@ -2,7 +2,7 @@
 
 Status: **PROC-01 through PROC-03 assessed at bounded document/repository
 scope; no complete parent-case verdict**. The [91-rule index](core-gap-index.json)
-has 76 reviewed and 15 pending. The normative input is pinned to
+has 77 reviewed and 14 pending. The normative input is pinned to
 `44df132fee5925182018ce089dc82435cb353f8a`; the Go/Rust revisions in
 the index are source navigation pins, not evidence that code implements a
 document-control rule. The preserved Inspector
