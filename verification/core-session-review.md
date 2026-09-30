@@ -2,7 +2,7 @@
 
 Status: **six SESSION rule groups assessed at bounded source and existing-test
 scope; no complete parent-case verdict**. The [91-rule index](core-gap-index.json)
-has 73 reviewed and 18 pending after the [ID-04 review](core-gap-review.md)
+has 76 reviewed and 15 pending after the [ID-04 review](core-gap-review.md)
 and [Agent Card review](core-card-review.md).
 The normative `sage-spec` revision is
 `44df132fee5925182018ce089dc82435cb353f8a`; Go `sage` is
@@ -38,7 +38,7 @@ traceability cases. Earlier Inspector
 is pinned to an older normative revision and retains its own partial and
 unsupported labels; its verdicts are not transferred.
 
-The next unreviewed rule is `PROC-01`. Before any session parent-case promotion,
+The next unreviewed rule is `EVIDENCE-01`. Before any session parent-case promotion,
 Inspector needs an exact-revision authenticated host path with current selected
 keys, retained transcript and tuple, durable replay transaction, concurrent
 copies, restart/expiry behavior and an independent application-effect check.

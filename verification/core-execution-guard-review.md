@@ -2,7 +2,7 @@
 
 Status: **EXEC-01 through EXEC-09 assessed at bounded source, document and
 existing-test scope; no complete parent-case verdict**. The [91-rule
-index](core-gap-index.json) has 73 reviewed and 18 pending. Normative
+index](core-gap-index.json) has 76 reviewed and 15 pending. Normative
 `sage-spec` is pinned to `44df132fee5925182018ce089dc82435cb353f8a`,
 Go `sage` to `49379baadc6baec9ca8b4bb7d15bf43d65144bd7`, and Rust
 `rs-sage-core` to `ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396`.
@@ -29,4 +29,4 @@ Where runtime fixtures are cited, their sinks are inert and the archived
 Inspector runs remain on the earlier normative revision. A complete Guard
 verdict needs a version-matched deployed host, protected source/key/policy
 providers, immutable loaded component, shared ledger, compulsory interception
-and end-to-end result consumption. The next unreviewed rule is `PROC-01`.
+and end-to-end result consumption. The next unreviewed rule is `EVIDENCE-01`.
