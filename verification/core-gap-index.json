@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 39,
-    "pending": 52
+    "reviewed": 40,
+    "pending": 51
   },
   "rules": [
     {
@@ -328,7 +328,7 @@
       "rule_id": "TRANSPORT-02",
       "source": "spec/08-transport.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SIGNED_SUBSET_WITH_COVERAGE_GAP",
       "go_source_candidate": "pkg/agent/transport",
       "rust_source_candidate": "src/hpke/completion010"
     },

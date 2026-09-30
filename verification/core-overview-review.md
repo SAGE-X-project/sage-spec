@@ -2,7 +2,7 @@
 
 Status: **four overview rule groups assessed at bounded source, existing-test,
 or document-control scope; no full parent-case verdict**. The
-[91-rule index](core-gap-index.json) now has 39 reviewed and 52 pending after
+[91-rule index](core-gap-index.json) now has 40 reviewed and 51 pending after
 the [HTTP message-signature review](core-rfc9421-review.md) and
 [HPKE review](core-hpke-review.md) and
 [session review](core-session-review.md), [ID-04 review](core-gap-review.md),

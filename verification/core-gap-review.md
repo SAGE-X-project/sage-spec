@@ -1,6 +1,6 @@
 # Pinned Go/Rust clause gap review
 
-Status: **39 of 91 rule groups reviewed at a bounded source or document level; 52 pending**.
+Status: **40 of 91 rule groups reviewed at a bounded source or document level; 51 pending**.
 This began as the first implementation-gap pass after the 0.10.0 standards revision,
 not an implementation conformance verdict or a change to normative text. The
 [machine-readable index](core-gap-index.json) names **every** rule group in
@@ -75,12 +75,12 @@ The index groups all 91 rules by their authoritative source. Counts are:
 | Crypto and JCS | 9 | Bounded review in the linked addendum |
 | RFC 9421, HPKE, session | 18 | All 18 reviewed at bounded source/test scope |
 | DID method | 4 | ID-01 and ID-02 parser gaps; ID-03 partial; ID-04 mutation API gap |
-| Card, transport, registry, resolution, tables | 29 | [CARD-01 through CARD-03](core-card-review.md) source gaps and [TRANSPORT-01](core-transport-review.md) partial strict subset; 25 pending |
+| Card, transport, registry, resolution, tables | 29 | [CARD-01 through CARD-03](core-card-review.md) source gaps and [TRANSPORT-01..02](core-transport-review.md) partial strict subset and signed request coverage gap; 24 pending |
 | Agent/MCP Guard and non-HTTP MCP | 23 | Pending |
 | Process and evidence charter | 4 | Pending repository/evidence review |
 
-The next implementation-map pass must cover the remaining 52 rule groups
-against actual code and test entry points, beginning with `TRANSPORT-02`. For
+The next implementation-map pass must cover the remaining 51 rule groups
+against actual code and test entry points, beginning with `TRANSPORT-03`. For
 identity, first introduce or identify one explicit strict 0.10.0 parser shared
 by DID and key URL uses,
 without changing the legacy public API's behavior implicitly. Separate

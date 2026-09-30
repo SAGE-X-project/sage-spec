@@ -1,12 +1,15 @@
 # Pinned Go/Rust transport-envelope review
 
-Status: **TRANSPORT-01 assessed at bounded source and existing-test scope; no
-complete parent-case verdict**. The [91-rule index](core-gap-index.json) has
-39 reviewed and 52 pending. Normative `sage-spec` is pinned to
+Status: **TRANSPORT-01 and TRANSPORT-02 assessed at bounded source and
+existing-test scope; no complete parent-case verdict**. The
+[91-rule index](core-gap-index.json) has 40 reviewed and 51 pending.
+Normative `sage-spec` is pinned to
 `44df132fee5925182018ce089dc82435cb353f8a`, Go `sage` to
 `49379baadc6baec9ca8b4bb7d15bf43d65144bd7`, and Rust `rs-sage-core` to
 `ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396`. No normative text, core
 code or Inspector case verdict changed.
+
+## TRANSPORT-01: common envelope schema
 
 [TRANSPORT-01](../spec/08-transport.md) requires a closed JSON envelope with
 the named common fields, optional members omitted rather than null, canonical
@@ -40,4 +43,43 @@ accepts the permitted optional fields, enforces metadata and all common
 limits, selects the intended trusted receive path, and checks independent
 positive/negative cases through the host without protected effects on failure.
 
-The next unreviewed rule is `TRANSPORT-02`.
+## TRANSPORT-02: complete request signature
+
+[TRANSPORT-02](../spec/08-transport.md) requires an unpadded base64url
+`payload` of at most 8 MiB decoded and signs the JCS request with only
+`signature` removed, prefixed by `sage-wire-request|0.10.0` and a newline.
+Sender, recipient, named key, version, context, metadata and payload all
+remain within the signature. The algorithm follows the resolved named key;
+HTTP method and target additionally need chapter 03 binding. A plain
+handshake payload must be the chapter 04 JCS object, and a session payload
+the complete chapter 05 binary record. Neither signing arbitrary bytes nor
+validating a detached signature alone establishes those payload semantics.
+
+| Boundary | Pinned source observation | Finding |
+| --- | --- | --- |
+| Go strict request paths | [`sign010` and `verifyWire010`](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/hpke/completion010.go#L180-L245) use the required request domain and remove only `signature` from the parsed object. The [plain receive path](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/hpke/completion010.go#L582-L595) compares the initiation body and selects the current signing key before verification. The [session receive path](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/hpke/record010.go#L214-L245) checks the participant tuple and current key before verifying the wire signature and opening the record. | **PARTIAL SIGNED SUBSET; COVERAGE GAP**. The fixed parser rejects optional signed `metadata` and `task_id`, so these permitted members cannot be authenticated in this path. Plain and session request payloads are capped at 16 KiB decoded, below the 8 MiB profile maximum. These checks do not prove that a host binds every logical tool/resource/executable input to the authenticated payload or selects the protected HTTP route. |
+| Rust strict request paths | [`signed` and `verify_wire`](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/hpke/completion010.rs#L152-L173) use the same domain and whole parsed unsigned object. The [plain responder](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/hpke/completion010.rs#L438-L468) checks the canonical initiation and selected key. The [session opener](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/hpke/completion010/record010.rs#L231-L300) checks tuple and current key before signature and AEAD acceptance. | **PARTIAL SIGNED SUBSET; COVERAGE GAP**. The closed field lists omit permitted metadata/task fields, and the decoded payload cap is 16 KiB. The selected source paths do not show a complete application/tool-input binding or all HTTP host uses. |
+| Legacy Go transport | The older [`WireMessage`](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/transport/wire.go#L23-L42) carries a signature and payload but lacks the required 0.10.0 identity, key, timing and version fields. | It cannot be treated as a 0.10.0 whole-request signature path merely because an application verifies its signature elsewhere. |
+
+The pinned Inspector [TRANSPORT-02 evidence](https://github.com/SAGE-X-project/sage-inspector/blob/f104c8c3ce072e7a64d5a0092623e45ffb8d287b/docs/current-spec-transport02-evidence.md)
+uses older normative revision `5bcf511e604579afa63f434013447f44b6858828`.
+Its five fixtures include a valid signed request, changed recipient, changed
+payload, removed metadata and a re-signed wrong-owner key URL. All five
+complete cases remain `UNSUPPORTED` in both core adapters: neither exposes
+`sage.transport.request.verify`. The separate generic signature run rejects
+the three changed-byte cases, but accepts the re-signed wrong-owner key; it
+does not check key ownership or full request admission. The fixed plain
+payload is not a complete handshake. The evidence checker passed here, and
+no old case result is transferred to the pinned normative revision.
+
+At the pinned core revisions, selected Go completion, record and HTTP binding
+tests passed. Rust's 102 completion tests, including bounded local loopback
+runtime cases, passed with local socket access. These are implementation
+tests, not complete TRANSPORT-02 cases. A complete verdict needs a
+version-matched request verifier with valid optional metadata/task fields,
+the specified payload range, independent signature and key-ownership cases,
+and host-level evidence that authenticated payload values control protected
+tool execution. Cross-layer JCS and HTTP binding findings remain in their
+separate reviews.
+
+The next unreviewed rule is `TRANSPORT-03`.
