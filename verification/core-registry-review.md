@@ -29,3 +29,8 @@ chain finality or application admission. A complete parent-case verdict needs
 an exact-revision record validator, deployed source binding, relevant host
 assembly and independent positive/negative cases. The subsequent
 `RESOLVE-01` review is recorded in [the resolution review](core-resolution-review.md).
+
+The later [web-origin media correction](web-registry-media-contract.md) now
+defines the REG-08 response type and the `REG-08-N04` expected rejection.
+This pinned source review and its older Inspector observations are not
+retroactively reclassified as results for the corrected normative source.

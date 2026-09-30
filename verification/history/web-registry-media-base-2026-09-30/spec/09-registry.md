@@ -196,31 +196,10 @@ ASCII A-label form. Agent ID follows section 6. Read exactly
 redirects, HTTP downgrade, intermediated positive-cache responses, `304`
 and non-200 responses fail resolution. Fetch MUST use `Cache-Control:
 no-cache, no-store`; the origin MUST return `Cache-Control: no-store` and
-freshly produce the record. The response header section MUST contain exactly
-one `Content-Type` field line whose parsed type and subtype are `application/json`
-with no parameters. Compare type and subtype case-insensitively as in
-[RFC 9110 §8.3.1](https://www.rfc-editor.org/rfc/rfc9110.html#section-8.3.1);
-the origin SHOULD emit lowercase `application/json`. Missing, repeated,
-comma-combined, malformed or parameterized `Content-Type` values MUST be
-rejected, even if one value names `application/json`. The origin MUST NOT send
-`Content-Encoding`; a receiver MUST reject any `Content-Encoding` field
-without automatic decompression. A `Content-Type` or `Content-Encoding` field
-in the trailer section MUST also be rejected. Neither `application/did+json` nor the
-three-member public resolution envelope of chapter 10 is this origin record
-response. A receiver MUST NOT infer a type by sniffing the body or fall back
-to another registry profile. A type or content-coding violation fails the
-observation as `record.invalid` and cannot authorize a protected operation.
-
-The response content is one UTF-8 JSON object with exactly `record`, `issued`,
-`expires`, parsed under chapter 02 before duplicate names can be lost;
-`record` is section 1 and timestamps are integer Unix seconds. Require
-`issued <= now < expires`, `expires-issued <= 5` and positive lifetime. The
-complete response content is at most 69632 bytes before JSON parsing; the
-receiver MUST stop accepting content at the first byte beyond that limit.
-Exceeding that bound fails as `size.exceeded`. The section 1 record's separate
-65536-byte bound still applies. HTTP field and framing limits remain the
-responsibility of the trusted HTTP adapter, which MUST reject ambiguous
-framing before any record is consumed.
+freshly produce the record. Response is an object with exactly `record`,
+`issued`, `expires`; record is section 1 and timestamps are integer Unix
+seconds. Require `issued <= now < expires`, `expires-issued <= 5` and
+positive lifetime. Maximum response is 69632 bytes.
 
 The domain authority controls creation and writes; it MUST authenticate the
 controller/operator, enforce section 3 atomically and retain tombstones.
@@ -242,11 +221,6 @@ profile. Signature-key compromise in that protected boundary remains an
 assumption, not something registry lookup repairs.
 
 [RFC 9111](https://www.rfc-editor.org/rfc/rfc9111.html) supplies HTTP cache
-semantics; SAGE's one-operation policy is stricter. [RFC 9110 §8.3](https://www.rfc-editor.org/rfc/rfc9110.html#section-8.3)
-defines HTTP `Content-Type`, while [RFC 8259 §11](https://www.rfc-editor.org/rfc/rfc8259.html#section-11)
-registers `application/json` without a `charset` parameter. The singleton,
-parameter-free, no-content-coding acceptance rule above is SAGE's narrower
-web-origin profile, not a claim that HTTP or JSON generally rejects parameters.
-Independent contract
+semantics; SAGE's one-operation policy is stricter. Independent contract
 review, malicious-resolver/reorg testing and measured revocation latency
 remain inspector/deployment work. No such tests were run for this revision.
