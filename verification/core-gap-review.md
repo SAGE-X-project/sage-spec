@@ -1,6 +1,6 @@
 # Pinned Go/Rust clause gap review
 
-Status: **57 of 91 rule groups reviewed at a bounded source or document level; 34 pending**.
+Status: **64 of 91 rule groups reviewed at a bounded source or document level; 27 pending**.
 This began as the first implementation-gap pass after the 0.10.0 standards revision,
 not an implementation conformance verdict or a change to normative text. The
 [machine-readable index](core-gap-index.json) names **every** rule group in
@@ -18,7 +18,7 @@ record and lifecycle rules. The [Agent Card review](core-card-review.md)
 assesses CARD-01 through CARD-03, the [transport review](core-transport-review.md) assesses TRANSPORT-01
 through TRANSPORT-06, and the [registry review](core-registry-review.md)
 assesses REG-01 through REG-08. The [resolution review](core-resolution-review.md)
-assesses RESOLVE-01 through RESOLVE-05. The identity findings below remain attached to
+assesses RESOLVE-01 through RESOLVE-05. The [registry-table review](core-registry-tables-review.md) assesses TABLE-01 through TABLE-07. The identity findings below remain attached to
 the same pinned core revisions.
 
 | Input | Pinned revision |
@@ -78,12 +78,12 @@ The index groups all 91 rules by their authoritative source. Counts are:
 | Crypto and JCS | 9 | Bounded review in the linked addendum |
 | RFC 9421, HPKE, session | 18 | All 18 reviewed at bounded source/test scope |
 | DID method | 4 | ID-01 and ID-02 parser gaps; ID-03 partial; ID-04 mutation API gap |
-| Card, transport, registry, resolution, tables | 29 | [CARD-01 through CARD-03](core-card-review.md) source gaps, [TRANSPORT-01..06](core-transport-review.md) bounded findings and [REG-01..08](core-registry-review.md) registry/deployment findings and [RESOLVE-01..05](core-resolution-review.md) resolution findings; 7 pending |
+| Card, transport, registry, resolution, tables | 29 | [CARD-01 through CARD-03](core-card-review.md) source gaps, [TRANSPORT-01..06](core-transport-review.md) bounded findings and [REG-01..08](core-registry-review.md) registry/deployment findings and [RESOLVE-01..05](core-resolution-review.md) resolution findings and [TABLE-01..07](core-registry-tables-review.md) registry-table findings; all 29 reviewed |
 | Agent/MCP Guard and non-HTTP MCP | 23 | Pending |
 | Process and evidence charter | 4 | Pending repository/evidence review |
 
-The next implementation-map pass must cover the remaining 34 rule groups
-against actual code and test entry points, beginning with `TABLE-01`. For
+The next implementation-map pass must cover the remaining 27 rule groups
+against actual code and test entry points, beginning with `EXEC-01`. For
 identity, first introduce or identify one explicit strict 0.10.0 parser shared
 by DID and key URL uses,
 without changing the legacy public API's behavior implicitly. Separate

@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 57,
-    "pending": 34
+    "reviewed": 64,
+    "pending": 27
   },
   "rules": [
     {
@@ -472,7 +472,7 @@
       "rule_id": "TABLE-01",
       "source": "spec/11-registries.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "DOCUMENT_PROCEDURE_REVIEW_WITH_RELEASE_EVIDENCE_PENDING",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -480,7 +480,7 @@
       "rule_id": "TABLE-02",
       "source": "spec/11-registries.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SUITE_REVIEW_WITH_LEGACY_HTTP_ALIAS_GAP",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -488,7 +488,7 @@
       "rule_id": "TABLE-03",
       "source": "spec/11-registries.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_KEY_ROLE_REVIEW_WITH_PROJECTION_GAP",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -496,7 +496,7 @@
       "rule_id": "TABLE-04",
       "source": "spec/11-registries.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_DOMAIN_REVIEW_WITH_HOST_COVERAGE_PENDING",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -504,7 +504,7 @@
       "rule_id": "TABLE-05",
       "source": "spec/11-registries.md",
       "case_count": 3,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "SUPPORTED_KIND_BINDING_NOT_ESTABLISHED",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -512,7 +512,7 @@
       "rule_id": "TABLE-06",
       "source": "spec/11-registries.md",
       "case_count": 3,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_STRICT_HTTP_HEADER_BINDING",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -520,7 +520,7 @@
       "rule_id": "TABLE-07",
       "source": "spec/11-registries.md",
       "case_count": 3,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "DIAGNOSTIC_BOUNDARY_NOT_ESTABLISHED",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
