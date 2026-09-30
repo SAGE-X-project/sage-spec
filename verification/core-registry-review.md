@@ -2,7 +2,7 @@
 
 Status: **REG-01 through REG-08 assessed at bounded source and existing-test
 scope; no complete parent-case verdict**. The [91-rule index](core-gap-index.json)
-has 85 reviewed and 6 pending. Normative `sage-spec` is pinned to
+has 91 reviewed and 0 pending. Normative `sage-spec` is pinned to
 `44df132fee5925182018ce089dc82435cb353f8a`, Go `sage` to
 `49379baadc6baec9ca8b4bb7d15bf43d65144bd7`, and Rust `rs-sage-core` to
 `ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396`. Inspector's preserved
@@ -27,5 +27,5 @@ evidence checkers passed during this review. The local gate tests use injected
 sources, clocks and stores; they do not prove a deployed registry, HTTPS origin,
 chain finality or application admission. A complete parent-case verdict needs
 an exact-revision record validator, deployed source binding, relevant host
-assembly and independent positive/negative cases. The next unreviewed rule is
-`RESOLVE-01`.
+assembly and independent positive/negative cases. The subsequent
+`RESOLVE-01` review is recorded in [the resolution review](core-resolution-review.md).
