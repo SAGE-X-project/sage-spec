@@ -45,8 +45,16 @@ def verify_current_sources(root=ROOT, record=None):
     if record is None:
         record = json.loads((root / 'verification/standards-clause-revision.json').read_text())
     require(set(record['current_sha256']) == CURRENT_PATHS, 'current source inventory')
+    correction = (root / 'verification/web-registry-media-contract.json').is_file()
     for name, digest in record['current_sha256'].items():
-        require(sha(root / name) == digest, 'current source bytes: ' + name)
+        # The old overlay stays pinned to this revision after chapter 09 changes.
+        path = (root / 'verification/history/web-registry-media-base-2026-09-30' / name
+                if correction and name == 'analysis/current-design-overlay.json'
+                else root / name)
+        require(sha(path) == digest, 'current source bytes: ' + name)
+    if correction:
+        from check_web_registry_media_contract import verify as verify_media
+        verify_media(root)
     return record
 
 

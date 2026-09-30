@@ -529,7 +529,7 @@
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/06-did-sage.md", "kind": "current_trace_source", "path": "spec/06-did-sage.md", "sha256": "8e0d5f72fc36d46bd5f8c51446f46cb80b644db1ebcd85039c0a342f33bfe50b"},
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/07-a2a.md", "kind": "current_trace_source", "path": "spec/07-a2a.md", "sha256": "5ded622fdaf67342d5c6b4327da0f5787bfe9df2dc58b233cdfb500ffc96b042"},
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/08-transport.md", "kind": "current_trace_source", "path": "spec/08-transport.md", "sha256": "e11e8200d67ee913fcd1a47781c6d31a353556c9dfd4e4ce0a88dbe97e10bba6"},
-    {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/09-registry.md", "kind": "current_trace_source", "path": "spec/09-registry.md", "sha256": "828ce810f851c42ab8da76bbc5cfa1cc61fa523ce197b9f784f4aba0a0b345a9"},
+    {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/09-registry.md", "kind": "current_trace_source", "path": "spec/09-registry.md", "sha256": "2f7e5468bf87e7a402c7853584fca8e345b5055a0625f7068a71e80e6321eb02"},
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/10-resolution.md", "kind": "current_trace_source", "path": "spec/10-resolution.md", "sha256": "7bcabda3ba4708afd432f7c12c41bc632d9a635aba13b0ef1fb66aa65716016c"},
     {"evidence": "authored_normative_trace", "id": "doc:sage-spec:spec/11-registries.md", "kind": "current_trace_source", "path": "spec/11-registries.md", "sha256": "9627286c4051ae6b0ce352baf402300fbc1a5c8503264dd0b0c265cdcca0b224"},
     {"evidence": "reviewed_design", "id": "layer:L0", "kind": "implementation_responsibility", "label": "Exact bytes and canonical representation"},
