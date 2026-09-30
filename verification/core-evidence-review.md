@@ -2,7 +2,7 @@
 
 Status: **EVIDENCE-01 assessed at bounded document, source and preserved-test
 scope; no complete parent-case verdict**. The [91-rule index](core-gap-index.json)
-has 77 reviewed and 14 pending. Normative `sage-spec` is pinned to
+has 85 reviewed and 6 pending. Normative `sage-spec` is pinned to
 `44df132fee5925182018ce089dc82435cb353f8a`; Go `sage` and Rust
 `rs-sage-core` source navigation remains pinned in the index. This is an
 evidence-reporting rule, not a claim that either core is conformant.
@@ -33,4 +33,4 @@ the pinned normative revision.
 are documented and checked in bounded archives; version-matched deployed
 measurements, independent cross-core interoperability and external security
 assessment remain open. The local evidence and index checkers passed during
-this review. The next unreviewed rule is `MSET-01`.
+this review. The next unreviewed rule is `MOWN-01`.
