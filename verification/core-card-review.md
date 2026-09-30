@@ -2,7 +2,7 @@
 
 Status: **CARD-01 through CARD-03 assessed at bounded source and existing-test
 scope; no complete parent-case verdict**. The [91-rule index](core-gap-index.json)
-has 38 reviewed and 53 pending. Normative `sage-spec` is pinned to
+has 39 reviewed and 52 pending. Normative `sage-spec` is pinned to
 `44df132fee5925182018ce089dc82435cb353f8a`, Go `sage` to
 `49379baadc6baec9ca8b4bb7d15bf43d65144bd7`, and Rust `rs-sage-core` to
 `ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396`. No normative text, core
@@ -101,7 +101,7 @@ complete cases. That run does not perform authoritative resolution or
 card-to-record acceptance. Its evidence checker passed here; no old verdict
 is transferred to the current normative revision.
 
-The next unreviewed rule is `TRANSPORT-01`. A complete CARD-03 verdict needs
+The next unreviewed rule is `TRANSPORT-02`. A complete CARD-03 verdict needs
 one version-matched receive path that binds the exact peer and proof key to
 the same fresh authoritative record snapshot, checks whole services and
 version before releasing discovery data, and observes zero protected effects
