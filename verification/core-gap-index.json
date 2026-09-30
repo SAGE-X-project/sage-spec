@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 52,
-    "pending": 39
+    "reviewed": 57,
+    "pending": 34
   },
   "rules": [
     {
@@ -432,7 +432,7 @@
       "rule_id": "RESOLVE-01",
       "source": "spec/10-resolution.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "SOURCE_GAP_FOR_CURRENT_DOCUMENT_PROJECTION",
       "go_source_candidate": "pkg/agent/did/resolver.go",
       "rust_source_candidate": "src/did/resolver.rs"
     },
@@ -440,7 +440,7 @@
       "rule_id": "RESOLVE-02",
       "source": "spec/10-resolution.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "SOURCE_GAP_FOR_AUTHORITY_BOUND_RESOLUTION",
       "go_source_candidate": "pkg/agent/did/resolver.go",
       "rust_source_candidate": "src/did/resolver.rs"
     },
@@ -448,7 +448,7 @@
       "rule_id": "RESOLVE-03",
       "source": "spec/10-resolution.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "SOURCE_GAP_FOR_RESOLUTION_METADATA",
       "go_source_candidate": "pkg/agent/did/resolver.go",
       "rust_source_candidate": "src/did/resolver.rs"
     },
@@ -456,7 +456,7 @@
       "rule_id": "RESOLVE-04",
       "source": "spec/10-resolution.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_EXACT_KEY_SELECTION_WITH_DEREFERENCE_GAP",
       "go_source_candidate": "pkg/agent/did/resolver.go",
       "rust_source_candidate": "src/did/resolver.rs"
     },
@@ -464,7 +464,7 @@
       "rule_id": "RESOLVE-05",
       "source": "spec/10-resolution.md",
       "case_count": 7,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "OPTIONAL_HTTP_BINDING_NOT_ESTABLISHED",
       "go_source_candidate": "pkg/agent/did/resolver.go",
       "rust_source_candidate": "src/did/resolver.rs"
     },
