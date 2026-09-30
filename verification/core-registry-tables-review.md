@@ -2,7 +2,7 @@
 
 Status: **TABLE-01 through TABLE-07 assessed at bounded document/source and
 existing-test scope; no complete parent-case verdict**. The [91-rule
-index](core-gap-index.json) has 76 reviewed and 15 pending. Normative
+index](core-gap-index.json) has 77 reviewed and 14 pending. Normative
 `sage-spec` is pinned to `44df132fee5925182018ce089dc82435cb353f8a`,
 Go `sage` to `49379baadc6baec9ca8b4bb7d15bf43d65144bd7`, and Rust
 `rs-sage-core` to `ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396`.
@@ -23,4 +23,4 @@ transferred. No normative text, core code or Inspector verdict changed.
 Selected strict registry, HTTP and RFC 9421 tests, seven preserved Inspector
 evidence checkers, and the specification verification tests passed. Those tests
 do not confer registry admission, complete key encoding, host routing or
-external error uniformity. The next unreviewed rule is `EVIDENCE-01`.
+external error uniformity. The next unreviewed rule is `MSET-01`.

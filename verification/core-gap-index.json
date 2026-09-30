@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 76,
-    "pending": 15
+    "reviewed": 77,
+    "pending": 14
   },
   "rules": [
     {
@@ -624,7 +624,7 @@
       "rule_id": "EVIDENCE-01",
       "source": "charter.md",
       "case_count": 3,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_EVIDENCE_PROVENANCE_WITH_MEASUREMENTS_PENDING",
       "go_source_candidate": null,
       "rust_source_candidate": null
     },
