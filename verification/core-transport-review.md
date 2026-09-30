@@ -1,8 +1,8 @@
 # Pinned Go/Rust transport-envelope review
 
-Status: **TRANSPORT-01 and TRANSPORT-02 assessed at bounded source and
+Status: **TRANSPORT-01 through TRANSPORT-06 assessed at bounded source and
 existing-test scope; no complete parent-case verdict**. The
-[91-rule index](core-gap-index.json) has 40 reviewed and 51 pending.
+[91-rule index](core-gap-index.json) has 44 reviewed and 47 pending.
 Normative `sage-spec` is pinned to
 `44df132fee5925182018ce089dc82435cb353f8a`, Go `sage` to
 `49379baadc6baec9ca8b4bb7d15bf43d65144bd7`, and Rust `rs-sage-core` to
@@ -82,4 +82,94 @@ and host-level evidence that authenticated payload values control protected
 tool execution. Cross-layer JCS and HTTP binding findings remain in their
 separate reviews.
 
-The next unreviewed rule is `TRANSPORT-03`.
+## TRANSPORT-03: terminal response and request binding
+
+[TRANSPORT-03](../spec/08-transport.md) requires one signed terminal response
+for an internally retained exact signed request, with the complete-request
+SHA-256, matching IDs/context/task presence, opposite identities and the same
+plain or session mode. An application error still uses a signed response and
+one of four closed codes; a lost response does not authorize a second result
+or automatic redispatch.
+
+| Boundary | Pinned source observation | Finding |
+| --- | --- | --- |
+| Go strict completion and session | The [plain completion path](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/hpke/completion010.go#L483-L560) retains the initiation, compares `message_id`, the JCS hash, identities, context, fresh ID/nonce and current signing key. The [session response methods](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/hpke/response010.go#L27-L160) retain the request, enforce terminal state, exact hash, four error codes and encrypted response mode. | **PARTIAL RESPONSE BINDING; PROFILE GAP**. These are distinct fixed handshake and session subsets. The plain completion accepts only success; neither subset carries optional `task_id`, and the 16 KiB response limit is below the profile maximum. There is no evidence that every host consumes results only after this verifier or reconciles a lost response without redispatch. |
+| Rust strict completion and session | The [plain completion path](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/hpke/completion010.rs#L570-L635) checks a retained initiation and complete signed-request hash. The [session response methods](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/hpke/completion010/record010.rs#L361-L519) enforce a retained request, terminal state, closed error codes, session record and matching hash before releasing data. | **PARTIAL RESPONSE BINDING; PROFILE GAP**. The fixed subset has the same optional-field and size limitations. No universal host result-consumption or post-loss reconciliation boundary is proven. |
+
+The pinned Inspector [TRANSPORT-03 evidence](https://github.com/SAGE-X-project/sage-inspector/blob/f104c8c3ce072e7a64d5a0092623e45ffb8d287b/docs/current-spec-transport03-evidence.md)
+uses normative revision `5bcf511e604579afa63f434013447f44b6858828`.
+Its seven complete cases are `UNSUPPORTED` in both primitive adapters. Generic
+Ed25519 checks accept even signed responses with wrong request binding; this
+does not supersede the strict source checks above or establish a new verdict.
+
+## TRANSPORT-04: receive order and replay transaction
+
+[TRANSPORT-04](../spec/08-transport.md) orders cheap schema/timing checks,
+current-key and complete signature/HTTP proof checks, then session AEAD and
+atomic id/nonce/sequence reservation before application admission. Rejection
+must have no protected effect. An accepted ID remains spent even if an
+application later rejects the message; replay state must survive the required
+retention and restart boundary across HTTP, WebSocket and local adapters.
+
+Both cores define a [Go `ReserveRecord` contract](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/hpke/record010.go#L10-L24)
+and [Rust `reserve_record` contract](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/hpke/completion010.rs#L202-L229)
+for durable ID/nonce denial with final validation under exclusive session
+access. The [Go receiver](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/hpke/record010.go#L187-L265)
+and [Rust receiver](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/hpke/completion010/record010.rs#L231-L315)
+check tuple/current key and signature, then open AEAD with replay publication.
+This is **partial source and test evidence**, not proof that every deployed
+store is durable, all transports share the same replay namespace, or the
+application has zero effects on every failure. The Inspector
+[TRANSPORT-04 evidence](https://github.com/SAGE-X-project/sage-inspector/blob/f104c8c3ce072e7a64d5a0092623e45ffb8d287b/docs/current-spec-transport04-evidence.md)
+is pinned to the older normative revision and keeps all five complete cases
+`UNSUPPORTED`; its fixed failed-tag primitive tests only the AEAD operation.
+
+## TRANSPORT-05: joint HTTP and envelope authentication
+
+[TRANSPORT-05](../spec/08-transport.md) requires inner envelope and RFC 9421
+HTTP signatures, equal DID/version and optional body projections, identical
+key/time/nonce values, trusted HTTPS target and one acceptance transaction.
+Neither a different signing key nor an unsigned fallback may repair a failed
+outer binding.
+
+The [Go strict HTTP verifier](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/hpke/http010.go#L310-L350)
+and [Rust strict HTTP verifier](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/hpke/completion010/record010/http010.rs#L277-L294)
+compare signed parameters and body/header projections using the selected
+signing key. The [Go](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/hpke/http010.go#L376-L467)
+and [Rust](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/hpke/completion010/record010/http010.rs#L322-L394)
+session HTTP methods compose outer verification with inner signature/record
+acceptance. **The strict path is partial**: its outer suite is Ed25519 only
+while chapter 03 also permits P-256, its fixed envelope has no `task_id`, and
+these core APIs do not prove that a trusted TLS host supplies the actual
+method, target and authority or that every protected route uses the path.
+The pinned Inspector [TRANSPORT-05 evidence](https://github.com/SAGE-X-project/sage-inspector/blob/f104c8c3ce072e7a64d5a0092623e45ffb8d287b/docs/current-spec-transport05-evidence.md)
+is from the older normative revision: four representative complete cases
+are `UNSUPPORTED` in both primitive adapters. Valid isolated signatures on
+mismatched parameters do not prove joint admission.
+
+## TRANSPORT-06: WebSocket and local carriage
+
+[TRANSPORT-06](../spec/08-transport.md) requires a UTF-8 JSON envelope per
+reassembled WebSocket text message over authenticated TLS, rejects binary and
+compression, and caps the reassembled message at 16 MiB. Each message must
+still pass the same expected-recipient and signature gates; a local adapter
+claiming WireTransport must put those checks in an unavoidable trusted path.
+
+The pinned Go [WebSocket server](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/transport/websocket/server.go#L209-L269)
+has a 1 MiB default read limit and parses the legacy `WireMessage` before
+calling an application handler. This path does not use the strict 0.10.0
+envelope verifier or establish per-message current-key/replay checks. The
+pinned Rust [completion module](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/hpke/COMPLETION010.md#L1-L28)
+explicitly describes its carriage as no general WireTransport implementation;
+no current WebSocket adapter is established by that source. The distinct MCP
+binding does not supply chapter-08 WireTransport conformance. The pinned
+Inspector [TRANSPORT-06 evidence](https://github.com/SAGE-X-project/sage-inspector/blob/f104c8c3ce072e7a64d5a0092623e45ffb8d287b/docs/current-spec-transport06-evidence.md)
+keeps all five complete cases `UNSUPPORTED`; its event parser and detached
+signature checks have no current core/TLS host. **The required host carriage
+path remains unestablished.**
+
+The four preserved Inspector evidence checkers passed here, but all use the
+older normative revision. Selected Go completion, record, HTTP and legacy
+WebSocket tests and Rust completion tests exercise bounded implementation
+behavior; none promotes a complete parent case or crosses the host and
+deployment boundaries identified above. The next unreviewed rule is `REG-01`.
