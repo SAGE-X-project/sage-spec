@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 34,
-    "pending": 57
+    "reviewed": 35,
+    "pending": 56
   },
   "rules": [
     {
@@ -288,7 +288,7 @@
       "rule_id": "ID-04",
       "source": "spec/06-did-sage.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "SOURCE_GAP_FOR_010_MUTATION_API",
       "go_source_candidate": "pkg/agent/did",
       "rust_source_candidate": "src/did"
     },

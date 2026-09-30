@@ -1,6 +1,6 @@
 # Pinned Go/Rust clause gap review
 
-Status: **34 of 91 rule groups reviewed at a bounded source or document level; 57 pending**.
+Status: **35 of 91 rule groups reviewed at a bounded source or document level; 56 pending**.
 This began as the first implementation-gap pass after the 0.10.0 standards revision,
 not an implementation conformance verdict or a change to normative text. The
 [machine-readable index](core-gap-index.json) names **every** rule group in
@@ -30,6 +30,7 @@ the same pinned core revisions.
 | [ID-01](../spec/06-did-sage.md) exact DID and key-URL syntax | [`did.ParseDID`](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/did/manager.go#L324-L341) splits a legacy chain form; `ValidateDID` calls it. [`registry010.Gate.validDID`](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/registry010/gate.go#L132-L139) checks an exact configured registry prefix but is not the public parser. | [`did::parse_did`](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/did/mod.rs#L66-L89) parses the legacy chain form. [`RegistryGate::valid_did`](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/registry010/mod.rs#L189-L201) is a separate configured-prefix admission check. | **GAP** in both public parsers. The canonical `did:sage:web:agents.example.com:alice` is rejected; an old chain form and a fragment presented as a DID are accepted. Neither primitive adapter exposes the new DID URL operation. The gate's scoped positive behavior must not be used to relabel the public parser or complete ID-01 as conformant. |
 | [ID-02](../spec/06-did-sage.md) uniqueness and no aliases | [`ParseChain`](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/did/manager.go#L310-L322) accepts `eth`, `sol` and case-insensitive chain strings; `ParseDID` joins extra `:` segments into the identifier. | [`parse_chain`](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/did/mod.rs#L51-L59) has the same aliases and case folding; `parse_did` leaves extra colons in the identifier. | **GAP** in the legacy public parsing surface. The 0.10.0 identity includes a complete kind/locator and forbids alias inference. This finding does not determine whether any separately configured Registry Source prevents cross-registry collisions. |
 | [ID-03](../spec/06-did-sage.md) exact key selection | [`registry010.Gate.SelectWithTime`](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/registry010/gate.go#L240-L273) requires an active record and exactly `did#name` for an accepted Ed25519 key; no alternate signing key is tried there. | [`RegistryGate::select_with_time`](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/registry010/mod.rs#L285-L314) has the same scoped exact selection. | **PARTIAL SOURCE REVIEW**. Both gates depend on a trusted validating Source and configured registry; this pass did not establish a full DID URL parser, expected-peer binding, signer role across every message type, final signature verification or live host assembly. |
+| [ID-04](../spec/06-did-sage.md) common registry operations | The 0.10.0 [Go gate](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/registry010/gate.go#L205-L212) reads snapshots and advances a denial watermark; it has no mutation method. Legacy [`did.Manager`](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/did/manager.go#L139-L145) delegates writes to chain clients. Its generic [update/deactivate](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/did/manager.go#L228-L241) and [add/revoke](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/did/manager.go#L343-L379) signatures do not carry an expected previous record version. | The [Rust 0.10.0 gate](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/registry010/mod.rs#L112-L145) likewise exposes observation, selection and watermark storage, not lifecycle mutation. [`MemoryDIDResolver::register`](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/did/resolver.rs#L44-L61) inserts test documents, not controller-authorized registry records. | **SOURCE GAP FOR A 0.10.0 MUTATION API** in these cores. The legacy Go write path cannot prove chapter-09 lifecycle semantics without a deployment binding, controller/operator authorization, expected-version compare-and-swap, immutable key names/material, proof checks and atomic state/version effects. All four `ID-04` cases remain unproven; the older Inspector run reports `UNSUPPORTED` for both adapters. |
 
 The [bounded parser observations](identity-parser-observations.json) ran the
 existing Inspector Go and Rust adapters against both pinned cores. Each
@@ -52,6 +53,17 @@ independently preserves the canonical DID failure and unsupported DID URL
 operation. No success/failure here is transferred to the latest 489-parent
 case inventory. No core source was changed in this review.
 
+The pinned Inspector [ID-04 evidence](https://github.com/SAGE-X-project/sage-inspector/blob/f104c8c3ce072e7a64d5a0092623e45ffb8d287b/docs/current-spec-id04-evidence.md)
+uses the older normative revision `5bcf511e604579afa63f434013447f44b6858828`.
+Its four lifecycle fixtures and capability probe establish only that both
+primitive adapters return `UNSUPPORTED` for mutation without changing their
+local journals. They cannot prove authorized create, activate, add-key,
+revoke-key or deactivate transitions, or supply a verdict for the current
+normative revision. At the pinned core revisions, Go `registry010` tests and
+selected DID registry/manager tests passed; Rust's three `registry010::tests::`
+tests passed. The Inspector ID-04 evidence checker also passed. These checks
+do not turn the four parent cases into PASS.
+
 ## Complete review queue and next boundary
 
 The index groups all 91 rules by their authoritative source. Counts are:
@@ -61,13 +73,13 @@ The index groups all 91 rules by their authoritative source. Counts are:
 | Overview | 4 | Bounded cross-layer/document review in the linked addendum |
 | Crypto and JCS | 9 | Bounded review in the linked addendum |
 | RFC 9421, HPKE, session | 18 | All 18 reviewed at bounded source/test scope |
-| DID method | 4 | ID-01 and ID-02 gap; ID-03 partial; ID-04 pending |
+| DID method | 4 | ID-01 and ID-02 parser gaps; ID-03 partial; ID-04 mutation API gap |
 | Card, transport, registry, resolution, tables | 29 | Pending |
 | Agent/MCP Guard and non-HTTP MCP | 23 | Pending |
 | Process and evidence charter | 4 | Pending repository/evidence review |
 
-The next implementation-map pass must cover the remaining 57 rule groups
-against actual code and test entry points, beginning with `ID-04`. For
+The next implementation-map pass must cover the remaining 56 rule groups
+against actual code and test entry points, beginning with `CARD-01`. For
 identity, first introduce or identify one explicit strict 0.10.0 parser shared
 by DID and key URL uses,
 without changing the legacy public API's behavior implicitly. Separate

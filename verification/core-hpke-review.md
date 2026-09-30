@@ -2,7 +2,8 @@
 
 Status: **six HPKE rule groups assessed at bounded source and existing-test
 scope; no complete parent-case verdict**. The [91-rule index](core-gap-index.json)
-has 34 reviewed and 57 pending after the [session review](core-session-review.md).
+has 35 reviewed and 56 pending after the [session review](core-session-review.md)
+and [ID-04 review](core-gap-review.md).
 Normative `sage-spec` revision
 `44df132fee5925182018ce089dc82435cb353f8a` remains fixed; Go `sage` is
 `49379baadc6baec9ca8b4bb7d15bf43d65144bd7` and Rust `rs-sage-core` is
@@ -35,7 +36,7 @@ These implementation tests and the earlier Inspector
 are not complete parent-case results at the pinned normative revision.
 
 The session rules are assessed in the linked review; the next unreviewed rule
-is `ID-04`. Before promoting HPKE cases,
+is `CARD-01`. Before promoting HPKE cases,
 Inspector needs the exact-revision whole handshake and first-record assembly,
 durable replay/clock fault boundaries, current registry binding and independent
 schedule vectors, while preserving `FAIL`, `UNSUPPORTED` and `NOT_RUN` where

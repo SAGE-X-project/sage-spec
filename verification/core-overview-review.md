@@ -2,10 +2,11 @@
 
 Status: **four overview rule groups assessed at bounded source, existing-test,
 or document-control scope; no full parent-case verdict**. The
-[91-rule index](core-gap-index.json) now has 34 reviewed and 57 pending after
+[91-rule index](core-gap-index.json) now has 35 reviewed and 56 pending after
 the [HTTP message-signature review](core-rfc9421-review.md) and
 [HPKE review](core-hpke-review.md) and
-[session review](core-session-review.md). This
+[session review](core-session-review.md) and [ID-04 review](core-gap-review.md).
+This
 review does not change normative text, core code, or the latest Inspector
 conformance report. `OVERVIEW-01..04` are cross-layer requirements; matching
 one parser or passing one test is insufficient to pass any complete group.
