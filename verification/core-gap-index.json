@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 44,
-    "pending": 47
+    "reviewed": 52,
+    "pending": 39
   },
   "rules": [
     {
@@ -368,7 +368,7 @@
       "rule_id": "REG-01",
       "source": "spec/09-registry.md",
       "case_count": 7,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "SOURCE_GAP_FOR_COMPLETE_RECORD_VALIDATION",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -376,7 +376,7 @@
       "rule_id": "REG-02",
       "source": "spec/09-registry.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_KEY_SELECTION_WITH_SOURCE_BOUNDARY",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -384,7 +384,7 @@
       "rule_id": "REG-03",
       "source": "spec/09-registry.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "SOURCE_GAP_FOR_LIFECYCLE_MUTATION",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -392,7 +392,7 @@
       "rule_id": "REG-04",
       "source": "spec/09-registry.md",
       "case_count": 7,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_CHALLENGE_WITH_PROOF_VERIFIER_GAP",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -400,7 +400,7 @@
       "rule_id": "REG-05",
       "source": "spec/09-registry.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_FRESH_OBSERVATION_WITH_DEPLOYMENT_BOUNDARY",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -408,7 +408,7 @@
       "rule_id": "REG-06",
       "source": "spec/09-registry.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "DEPLOYMENT_BINDING_NOT_ESTABLISHED",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -416,7 +416,7 @@
       "rule_id": "REG-07",
       "source": "spec/09-registry.md",
       "case_count": 2,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "RESERVED_PROFILE_REJECTION_NOT_ESTABLISHED",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -424,7 +424,7 @@
       "rule_id": "REG-08",
       "source": "spec/09-registry.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "WEB_PROFILE_BINDING_NOT_ESTABLISHED",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
