@@ -1,8 +1,8 @@
 # Pinned Go/Rust Agent Card review
 
-Status: **CARD-01 and CARD-02 assessed at bounded source and existing-test
+Status: **CARD-01 through CARD-03 assessed at bounded source and existing-test
 scope; no complete parent-case verdict**. The [91-rule index](core-gap-index.json)
-has 37 reviewed and 54 pending. Normative `sage-spec` is pinned to
+has 38 reviewed and 53 pending. Normative `sage-spec` is pinned to
 `44df132fee5925182018ce089dc82435cb353f8a`, Go `sage` to
 `49379baadc6baec9ca8b4bb7d15bf43d65144bd7`, and Rust `rs-sage-core` to
 `ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396`. No normative text, core
@@ -69,8 +69,41 @@ checker passed, but no old verdict is transferred to the current normative
 revision. Neither the legacy tests nor generic signature controls prove a
 complete CARD-02 case.
 
-The next unreviewed rule is `CARD-03`. Before promotion, the cores and
-Inspector need version-matched SAGE proof signing and verification over the
+Before a CARD-02 parent-case verdict, the cores and Inspector need
+version-matched SAGE proof signing and verification over the
 exact copy with only `proofValue` removed, exact type/algorithm/URL checks,
 canonical signature encoding, registry-selected key binding, and bounded
 positive and rejection cases with no discovery output on failure.
+
+## CARD-03: current-registry verification before discovery
+
+[CARD-03](../spec/07-a2a.md) requires size, schema and time checks before
+resolution or signature work, then exact expected-peer binding, a fresh
+authoritative registry observation, active record and selected signing key,
+equal `recordVersion` and complete `services`, and proof verification before
+exposing card data. A stale but still correctly signed card is rejected;
+failure cannot authorize unsigned discovery or a protected effect.
+
+| Boundary | Pinned source observation | Finding |
+| --- | --- | --- |
+| Go legacy DID-assisted card path | [`ValidateA2ACardWithProofAndDID`](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/did/a2a_proof.go#L379-L394) combines older field checks, DID-assisted proof verification and endpoint comparison. The [proof step](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/did/a2a_proof.go#L218-L262) uses the legacy DID parser, a string-prefix method check, a resolver read, active status and matching key bytes; the [endpoint step](https://github.com/SAGE-X-project/sage/blob/49379baadc6baec9ca8b4bb7d15bf43d65144bd7/pkg/agent/did/a2a.go#L271-L331) performs another resolver read and compares only the first endpoint. | **PARTIAL LEGACY CHECKS; SAGE SOURCE GAP**. There is no SAGE card version, `recordVersion` or issued/expiry check, exact complete service-array comparison, trusted fresh observation contract, or single consistent selected-key/record snapshot in this card path. These two resolver reads cannot be assumed to describe the same record version. The older positive tests are not CARD-03 evidence. |
+| Rust legacy card path | [`validate`](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/did/a2a.rs#L220-L258) checks selected relationships within the older card; [`verify_proof`](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/did/a2a.rs#L261-L295) selects its embedded key. The separate [registry gate](https://github.com/SAGE-X-project/rs-sage-core/blob/ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396/src/registry010/mod.rs#L265-L347) can check a trusted snapshot, but this card API does not call it. | **SAGE SOURCE GAP**. No CARD-03 integration with the registry gate, exact named key, record version, services, expected peer, trusted time or discovery-output boundary is shown. The in-memory DID resolver is a test store, not an authoritative source. |
+
+At the pinned core revisions, selected Go DID-assisted A2A tests and Go
+`registry010` tests passed; Rust's A2A card test passed **1/1** and registry
+gate tests passed **3/3**. These are component tests, not one composed card
+receive decision. The pinned Inspector
+[CARD-03 evidence](https://github.com/SAGE-X-project/sage-inspector/blob/f104c8c3ce072e7a64d5a0092623e45ffb8d287b/docs/current-spec-card03-evidence.md)
+uses the older normative revision `5bcf511e604579afa63f434013447f44b6858828`.
+Its five fixtures isolate expiry, changed record version, inactive state and
+changed service, but both core adapters return `UNSUPPORTED` for all five
+complete cases. That run does not perform authoritative resolution or
+card-to-record acceptance. Its evidence checker passed here; no old verdict
+is transferred to the current normative revision.
+
+The next unreviewed rule is `TRANSPORT-01`. A complete CARD-03 verdict needs
+one version-matched receive path that binds the exact peer and proof key to
+the same fresh authoritative record snapshot, checks whole services and
+version before releasing discovery data, and observes zero protected effects
+on each rejected case. Runtime evidence must distinguish unavailable,
+inactive, stale and changed registry results from signature-only failures.

@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 37,
-    "pending": 54
+    "reviewed": 38,
+    "pending": 53
   },
   "rules": [
     {
@@ -312,7 +312,7 @@
       "rule_id": "CARD-03",
       "source": "spec/07-a2a.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "SOURCE_GAP_FOR_CURRENT_REGISTRY_CARD_VALIDATION",
       "go_source_candidate": "pkg/agent/did/a2a.go",
       "rust_source_candidate": "src/did/a2a.rs"
     },
