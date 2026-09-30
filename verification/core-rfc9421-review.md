@@ -2,8 +2,9 @@
 
 Status: **six MSG rule groups assessed at bounded source and existing-test
 scope; no complete parent-case verdict**. The [91-rule index](core-gap-index.json)
-has 35 reviewed and 56 pending after the [HPKE review](core-hpke-review.md),
-[session review](core-session-review.md), and [ID-04 review](core-gap-review.md).
+has 36 reviewed and 55 pending after the [HPKE review](core-hpke-review.md),
+[session review](core-session-review.md), [ID-04 review](core-gap-review.md),
+and [Agent Card review](core-card-review.md).
 This review preserves the normative
 `sage-spec` revision `44df132fee5925182018ce089dc82435cb353f8a`, Go
 `sage` revision `49379baadc6baec9ca8b4bb7d15bf43d65144bd7`, and Rust
@@ -38,7 +39,7 @@ cases or a conformance claim. The current Inspector evidence is pinned to
 earlier normative revisions; it retains its own `FAIL`, `PARTIAL`,
 `UNSUPPORTED` and `NOT_RUN` labels.
 
-The session and ID-04 rules have bounded findings in the linked reviews; `CARD-01` is next
+The session, ID-04 and CARD-01 rules have bounded findings in the linked reviews; `CARD-02` is next
 in the review queue. Before promoting any MSG
 parent-case verdict, Inspector needs exact-revision positive Ed25519 and P-256
 paths, exact-component and request-context checks, bounded framing, a trusted

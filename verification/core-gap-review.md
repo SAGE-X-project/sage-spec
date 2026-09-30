@@ -1,6 +1,6 @@
 # Pinned Go/Rust clause gap review
 
-Status: **35 of 91 rule groups reviewed at a bounded source or document level; 56 pending**.
+Status: **36 of 91 rule groups reviewed at a bounded source or document level; 55 pending**.
 This began as the first implementation-gap pass after the 0.10.0 standards revision,
 not an implementation conformance verdict or a change to normative text. The
 [machine-readable index](core-gap-index.json) names **every** rule group in
@@ -14,7 +14,8 @@ assessments, the [overview review](core-overview-review.md) assesses four
 cross-layer rules, the [HTTP message-signature review](core-rfc9421-review.md)
 assesses six MSG rules, the [HPKE review](core-hpke-review.md) assesses six
 handshake rules, and the [session review](core-session-review.md) assesses six
-record and lifecycle rules. The identity findings below remain attached to
+record and lifecycle rules. The [Agent Card review](core-card-review.md)
+assesses CARD-01. The identity findings below remain attached to
 the same pinned core revisions.
 
 | Input | Pinned revision |
@@ -74,12 +75,12 @@ The index groups all 91 rules by their authoritative source. Counts are:
 | Crypto and JCS | 9 | Bounded review in the linked addendum |
 | RFC 9421, HPKE, session | 18 | All 18 reviewed at bounded source/test scope |
 | DID method | 4 | ID-01 and ID-02 parser gaps; ID-03 partial; ID-04 mutation API gap |
-| Card, transport, registry, resolution, tables | 29 | Pending |
+| Card, transport, registry, resolution, tables | 29 | CARD-01 source gap; 28 pending |
 | Agent/MCP Guard and non-HTTP MCP | 23 | Pending |
 | Process and evidence charter | 4 | Pending repository/evidence review |
 
-The next implementation-map pass must cover the remaining 56 rule groups
-against actual code and test entry points, beginning with `CARD-01`. For
+The next implementation-map pass must cover the remaining 55 rule groups
+against actual code and test entry points, beginning with `CARD-02`. For
 identity, first introduce or identify one explicit strict 0.10.0 parser shared
 by DID and key URL uses,
 without changing the legacy public API's behavior implicitly. Separate
