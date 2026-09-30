@@ -1,6 +1,6 @@
 # Pinned Go/Rust clause gap review
 
-Status: **28 of 91 rule groups reviewed at a bounded source or document level; 63 pending**.
+Status: **34 of 91 rule groups reviewed at a bounded source or document level; 57 pending**.
 This began as the first implementation-gap pass after the 0.10.0 standards revision,
 not an implementation conformance verdict or a change to normative text. The
 [machine-readable index](core-gap-index.json) names **every** rule group in
@@ -12,9 +12,10 @@ claim that the code implements the rule.
 The [crypto and JCS review](core-crypto-jcs-review.md) adds nine bounded rule
 assessments, the [overview review](core-overview-review.md) assesses four
 cross-layer rules, the [HTTP message-signature review](core-rfc9421-review.md)
-assesses six MSG rules, and the [HPKE review](core-hpke-review.md) assesses six
-handshake rules. The identity findings below remain attached to the same
-pinned core revisions.
+assesses six MSG rules, the [HPKE review](core-hpke-review.md) assesses six
+handshake rules, and the [session review](core-session-review.md) assesses six
+record and lifecycle rules. The identity findings below remain attached to
+the same pinned core revisions.
 
 | Input | Pinned revision |
 | --- | --- |
@@ -59,15 +60,16 @@ The index groups all 91 rules by their authoritative source. Counts are:
 | --- | ---: | --- |
 | Overview | 4 | Bounded cross-layer/document review in the linked addendum |
 | Crypto and JCS | 9 | Bounded review in the linked addendum |
-| RFC 9421, HPKE, session | 18 | Six MSG and six HPKE rules reviewed; six pending |
+| RFC 9421, HPKE, session | 18 | All 18 reviewed at bounded source/test scope |
 | DID method | 4 | ID-01 and ID-02 gap; ID-03 partial; ID-04 pending |
 | Card, transport, registry, resolution, tables | 29 | Pending |
 | Agent/MCP Guard and non-HTTP MCP | 23 | Pending |
 | Process and evidence charter | 4 | Pending repository/evidence review |
 
-The next implementation-map pass must cover the remaining 63 rule groups
-against actual code and test entry points. For identity, first introduce or
-identify one explicit strict 0.10.0 parser shared by DID and key URL uses,
+The next implementation-map pass must cover the remaining 57 rule groups
+against actual code and test entry points, beginning with `ID-04`. For
+identity, first introduce or identify one explicit strict 0.10.0 parser shared
+by DID and key URL uses,
 without changing the legacy public API's behavior implicitly. Separate
 profile-specific locator validation from generic syntax and keep trusted
 Source validation, exact key selection and signature verification distinct.

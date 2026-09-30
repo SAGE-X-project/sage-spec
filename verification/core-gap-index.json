@@ -8,8 +8,8 @@
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
     "rules": 91,
-    "reviewed": 28,
-    "pending": 63
+    "reviewed": 34,
+    "pending": 57
   },
   "rules": [
     {
@@ -216,7 +216,7 @@
       "rule_id": "SESSION-01",
       "source": "spec/05-session.md",
       "case_count": 8,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent/session",
       "rust_source_candidate": "src/session"
     },
@@ -224,7 +224,7 @@
       "rule_id": "SESSION-02",
       "source": "spec/05-session.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent/session",
       "rust_source_candidate": "src/session"
     },
@@ -232,7 +232,7 @@
       "rule_id": "SESSION-03",
       "source": "spec/05-session.md",
       "case_count": 8,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW_INTEROPERABILITY_BOUNDARY",
       "go_source_candidate": "pkg/agent/session",
       "rust_source_candidate": "src/session"
     },
@@ -240,7 +240,7 @@
       "rule_id": "SESSION-04",
       "source": "spec/05-session.md",
       "case_count": 4,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent/session",
       "rust_source_candidate": "src/session"
     },
@@ -248,7 +248,7 @@
       "rule_id": "SESSION-05",
       "source": "spec/05-session.md",
       "case_count": 5,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW_WINDOW_MOVEMENT_UNREACHABLE",
       "go_source_candidate": "pkg/agent/session",
       "rust_source_candidate": "src/session"
     },
@@ -256,7 +256,7 @@
       "rule_id": "SESSION-06",
       "source": "spec/05-session.md",
       "case_count": 6,
-      "status": "PENDING_CLAUSE_REVIEW",
+      "status": "PARTIAL_SOURCE_AND_EXISTING_TEST_REVIEW",
       "go_source_candidate": "pkg/agent/session",
       "rust_source_candidate": "src/session"
     },
