@@ -73,7 +73,7 @@ arrange deactivation before exhaustion. The limit is not permission to wrap.
 | add key | active only; new immutable name/material and valid proof; at most 128 lifetime entries |
 | revoke key | accepted to revoked, retained forever; if no usable signing key would remain, deactivate atomically instead |
 | update services | replace the complete bounded services array, active only |
-| authorize/revoke operator | explicit controller-authorized scoped delegation under section 9; operators cannot change controller or delegate further |
+| authorize/revoke operator | explicit controller-authorized scoped delegation; operators cannot change controller or delegate further |
 | deactivate | created or active to deactivated; terminal, record remains readable |
 
 The identifier is never reassigned, and revoked keys never become accepted
@@ -232,88 +232,7 @@ operation only and section 5 still applies. Implementations must explicitly
 allowlist registry origins and network destinations before fetch to avoid
 SSRF; deny inaccessible or unapproved origins, never follow card endpoints.
 
-## 9. Operator transactions — REG-03 and REG-08 (R-3, R-5, R-11)
-
-An operator grant is management-plane state bound to the exact registry,
-record DID and immutable controller. It is one pair `(operator, scope)`;
-`operator` is a 1–256-byte ASCII authorization identifier, compared by exact
-bytes and different from the controller. A deployment MAY use a narrower
-identifier syntax but MUST reject aliases and identifiers that do not map
-uniquely to an authenticated principal. `scope` is exactly one of `activate`,
-`add-key`, `revoke-key`, `update-services` and `deactivate`. A grant MUST NOT
-authorize `create`, `authorize-operator`, `revoke-operator`, controller
-change, another DID or another registry. The grant is not a DID key, Card
-service, transport credential or transferable authorization token. At most
-128 grants may be active for one record; complete grant history remains
-available to the trusted Registry after revocation and deactivation.
-
-Every administrative command names its registry, DID, operation and exact
-expected previous record version. Grant and revoke additionally name the
-target operator and one scope. Expected version uses the canonical decimal
-record `version` of section 1; only `create` uses an empty expected version.
-Absent, differently encoded or stale versions MUST NOT match. The deployment
-MUST authenticate the actor from its trusted credential binding, never from
-the command body, record, Card or an operator claim. A deployment binding
-MUST publish a bounded, unambiguous command encoding and reject unknown,
-duplicate or conflicting fields before authorization. The `web`
-administrative HTTP encoding and chain transaction ABI remain profile
-bindings, not formats inferred from a public record.
-
-Only the authenticated controller MAY authorize or revoke a grant. The
-record MUST be `created` or `active`; no command mutates a `deactivated`
-record. In `created`, only `activate` and `deactivate` are eligible scopes.
-In `active`, only `add-key`, `revoke-key`, `update-services` and `deactivate`
-are eligible scopes. Authorizing an already active pair, revoking an absent
-pair, exceeding the active-grant limit or trying to increment the maximum
-record version MUST fail without mutation. A controller MAY reauthorize a
-previously revoked pair only through a new valid command and version.
-
-A successful grant or revoke increments the public record version exactly
-once. Its `id`, `controller`, `keys`, `services` and `state` MUST otherwise
-remain the same after canonical parsing. The committed history MUST identify
-the management operation, target operator and scope; it MUST NOT be
-indistinguishable from `update-services`. A lifecycle mutation that changes
-state MUST remove grants whose scopes are invalid in the new state in the
-same commit. Deactivation, including automatic deactivation after key
-revocation, removes all active grants. Automatic removals are recorded under
-the triggering mutation without a second version increment. The public
-record does not expose grants or administrative credentials.
-
-An active record whose signing keys have expired remains unusable for
-protected messages. Its authenticated controller MAY still revoke a grant
-or authorize an eligible recovery operator; that management mutation MUST
-NOT make the record usable. A delegated `add-key` is allowed only with the
-exact current grant and a valid, proven new key. All subsequent protected
-operations still apply sections 2 and 5. Expiry or a cached grant MUST NOT
-substitute for a fresh authorization decision.
-
-For each command, the trusted Registry MUST read the current record,
-version, grant set, history and tombstone from one committed state, compare
-the expected version, then check the actor's exact authority and proposed
-transition at the same serialization point. It MUST commit the next record,
-version, grant set, complete history and tombstone as one durable operation
-before reporting success. A public read observes a complete old or complete
-new record, never a mixture with a management decision. A failed command
-changes none of those committed values. Two commands using the same expected
-version cannot both commit. If a revoke linearizes first, the later
-operator write MUST fail; an operator write committed first is not undone.
-
-If the commit outcome is uncertain, the deployment MUST quarantine further
-writes and public success claims dependent on that state until trusted
-recovery proves one complete committed version. A caller that loses a
-response MUST inspect authoritative state and history rather than assume
-failure or replay with a fabricated version. Restart MUST recover grant and
-record histories together; missing, conflicting or rolled-back state fails
-closed. Exhausted durable capacity cannot publish a partial success. The
-deployment binding MUST provide an authenticated, read-only means for an
-authorized inspector to verify version, grant state and ordered history
-without conferring write authority. The `web` origin's response MUST come
-from the same committed state as authenticated writes. Its freshness
-timestamps use the trusted service clock and convey no grant authority.
-These requirements do not establish ownership, clock trust or rollback
-resistance for an unspecified deployment.
-
-## 10. Security and verification status
+## 9. Security and verification status
 
 A-4/A-5 are addressed through authenticated writes and signing-key PoP;
 A-6 through explicit authoritative observation and no positive-cache reuse.

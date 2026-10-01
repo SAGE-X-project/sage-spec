@@ -13,6 +13,7 @@ OLD_OVERLAY_SHA256 = '9c477886bef7fe9bc9983d65d541654dd965f09a656c0de38c5a71d0be
 VECTOR_PATH = 'verification/vectors/web-registry-media-0.10.0.json'
 RECORD_PATH = 'verification/web-registry-media-contract.json'
 OLD_PATH = 'verification/history/web-registry-media-base-2026-09-30/spec/09-registry.md'
+OPERATOR_SNAPSHOT = 'verification/history/registry-operator-base-2026-10-01'
 CASE_IDS = (
     'lowercase-json', 'mixed-case-json', 'wrong-type', 'did-document-type',
     'problem-detail-type', 'missing-type', 'parameterized-json',
@@ -81,6 +82,9 @@ def verify_vectors(vectors):
 
 def verify(root=ROOT):
     record = json.loads((root / RECORD_PATH).read_text())
+    media_root = (root / OPERATOR_SNAPSHOT
+                  if (root / 'verification/registry-operator-adoption.json').is_file()
+                  else root)
     require(record == {
         'schema_version': 1,
         'kind': 'web-registry-media-normative-correction',
@@ -108,18 +112,18 @@ def verify(root=ROOT):
         'release_or_tag_created': False,
     }, 'correction record shape or evidence claim')
     require(sha(root / OLD_PATH) == OLD_SHA256, 'historical source bytes')
-    require(sha(root / record['current_source']) == record['current_sha256']
+    require(sha(media_root / record['current_source']) == record['current_sha256']
             and record['current_sha256'] != OLD_SHA256, 'current source bytes')
     require(sha(root / 'verification/traceability.json') == TRACE_SHA256,
             'unchanged traceability bytes')
     require(sha(root / record['historical_overlay']) == OLD_OVERLAY_SHA256,
             'historical overlay bytes')
-    require(sha(root / record['current_overlay']) == record['current_overlay_sha256']
+    require(sha(media_root / record['current_overlay']) == record['current_overlay_sha256']
             and record['current_overlay_sha256'] != OLD_OVERLAY_SHA256,
             'current overlay bytes')
     require(sha(root / VECTOR_PATH) == record['vectors_sha256'], 'vector bytes')
     old = (root / OLD_PATH).read_text()
-    current = (root / record['current_source']).read_text()
+    current = (media_root / record['current_source']).read_text()
     require('The response header section MUST contain exactly' not in old
             and 'The response header section MUST contain exactly' in current
             and 'a receiver MUST reject any `Content-Encoding` field' in current
@@ -128,7 +132,7 @@ def verify(root=ROOT):
             and '`size.exceeded`' in current,
             'normative media and error decision')
     trace = json.loads((root / 'verification/traceability.json').read_text())
-    overlay = json.loads((root / record['current_overlay']).read_text())
+    overlay = json.loads((media_root / record['current_overlay']).read_text())
     require(overlay['traceability']['sha256'] == TRACE_SHA256
             and overlay['traceability']['planned_cases'] == 489
             and any(node.get('path') == 'spec/09-registry.md'
