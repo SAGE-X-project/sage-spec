@@ -80,6 +80,11 @@ intends operator grant changes to avoid a public version increment, REG-03's
 “each successful atomic mutation” rule needs an explicit, reviewed exception
 instead. That alternative cannot be assumed by the service or Inspector.
 
+The [operator transaction candidate](../proposals/registry-operator-transaction/README.md)
+chooses one versioned, atomic management state and enumerates the decisions
+and refusal cases for a later coordinated normative adoption. It is a
+proposal, not a current 0.10.0 implementation or conformance result.
+
 ## Verification sequence
 
 After the specification fixes the command and transaction model, implement
