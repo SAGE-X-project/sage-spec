@@ -88,9 +88,6 @@ The plan also has 26 mandatory child assertions.
 All are planned/unexecuted in this normative plan; historical runtime reports remain
 separate and must be mapped by exact case evidence. This is design adoption, not a tag,
 release, third-party audit or a claim that either core supports the whole binding.
-The [Registry operator and storage binding review](verification/registry-operator-binding-review.md)
-records the unresolved REG-03/REG-08 management transaction and deployment
-authority decisions without changing these normative cases.
 
 The [cross-review](proposals/non-http-mcp-setup/cross-review.md) records two separate
 agents and their re-review. Proposal files remain frozen with their historical statuses;
