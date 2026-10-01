@@ -1,0 +1,25 @@
+name: Registry operator design
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  operator-adoption:
+    name: Operator adoption and historical checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check adopted design and prior media contract
+        run: |
+          python3 -B analysis/build-current-design-overlay.py --check
+          python3 -B verification/test_web_registry_media_contract.py
+          python3 -B verification/check_web_registry_media_contract.py
+          python3 -B verification/test_standards_clause_revision.py
+          python3 -B verification/check_standards_clause_revision.py
+          python3 -B verification/test_registry_operator_adoption.py
+          python3 -B verification/check_registry_operator_adoption.py

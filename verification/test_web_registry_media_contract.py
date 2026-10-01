@@ -39,14 +39,18 @@ class WebRegistryMediaContractTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             copy_root = Path(directory)
             for name in ('verification/web-registry-media-contract.json',
+                         'verification/registry-operator-adoption.json',
                          'verification/history/web-registry-media-base-2026-09-30/spec/09-registry.md',
                          'verification/history/web-registry-media-base-2026-09-30/analysis/current-design-overlay.json',
+                         'verification/history/registry-operator-base-2026-10-01/spec/09-registry.md',
+                         'verification/history/registry-operator-base-2026-10-01/analysis/current-design-overlay.json',
                          'spec/09-registry.md', 'verification/traceability.json',
                          'analysis/current-design-overlay.json', VECTOR_PATH):
                 target = copy_root / name
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_bytes((ROOT / name).read_bytes())
-            current = copy_root / 'spec/09-registry.md'
+            current = (copy_root / 'verification/history/registry-operator-base-2026-10-01'
+                       / 'spec/09-registry.md')
             current.write_text(current.read_text() + '\nchanged\n')
             with self.assertRaisesRegex(ValueError, 'current source bytes'):
                 verify(copy_root)
