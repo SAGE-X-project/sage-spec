@@ -1,0 +1,21 @@
+name: First-stage baseline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Check frozen sources and case inventory
+        run: |
+          python3 -B verification/test_first_stage_baseline.py
+          python3 -B verification/freeze_first_stage.py
