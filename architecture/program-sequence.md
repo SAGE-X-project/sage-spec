@@ -45,6 +45,11 @@ and [migration plan](migration-plan.md) provide the detailed work contracts.
 The [Inspector remaining-work register](https://github.com/SAGE-X-project/sage-inspector/blob/main/docs/remaining-work.md)
 retains revision-bound implementation and deployment obligations.
 
+The [stage-2 library adoption audit](library-adoption-stage2.md) records the
+pinned source/API and consumer map. It closes the analysis inventory only;
+stage 3 host-port design and stage 4 normative reconciliation remain ordered
+future work.
+
 ## Ordered delivery stages
 
 | Stage | Work | Exit evidence and dependency |
