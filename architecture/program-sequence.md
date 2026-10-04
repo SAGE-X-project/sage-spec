@@ -46,9 +46,10 @@ The [Inspector remaining-work register](https://github.com/SAGE-X-project/sage-i
 retains revision-bound implementation and deployment obligations.
 
 The [stage-2 library adoption audit](library-adoption-stage2.md) records the
-pinned source/API and consumer map. It closes the analysis inventory only;
-stage 3 host-port design and stage 4 normative reconciliation remain ordered
-future work.
+pinned source/API and consumer map. The [stage-3 protected host-port
+contract](host-port-contract.md) defines the ordered integration and current
+product-hook boundaries without changing normative 0.10.0 text. Stage 4
+normative and Inspector reconciliation remains the next ordered work.
 
 ## Ordered delivery stages
 
