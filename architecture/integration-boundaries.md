@@ -69,6 +69,8 @@ The [0.10.0 implementation contract](implementation-contract-0.10.0.md)
 records the current proposed public entry points, trusted ports, failure
 semantics and compatibility migration for those gates. It is informative and
 does not convert the existing source reviews into conformance evidence.
+The [protected host-port contract](host-port-contract.md) applies the pinned
+stage-2 audit to Agent/MCP host ownership and product-specific hook coverage.
 
 See the [current design graph](../analysis/current-design-overlay.md), the
 [Guard and MCP clause review](../verification/guard-binding-ownership-review.md),
