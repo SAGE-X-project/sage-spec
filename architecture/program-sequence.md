@@ -49,7 +49,10 @@ The [stage-2 library adoption audit](library-adoption-stage2.md) records the
 pinned source/API and consumer map. The [stage-3 protected host-port
 contract](host-port-contract.md) defines the ordered integration and current
 product-hook boundaries without changing normative 0.10.0 text. Stage 4
-normative and Inspector reconciliation remains the next ordered work.
+[reconciliation](../verification/host-port-reconciliation.md) maps its host
+ports to existing normative owners and Inspector cases without changing the
+reviewed wire or trust rules. The Inspector's companion inventory records
+the still-unobserved host evidence; core refactoring remains stage 5.
 
 ## Ordered delivery stages
 
