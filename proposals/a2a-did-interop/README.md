@@ -15,7 +15,9 @@ DID Resolution, DID methods and the verifiable credential ecosystem as observed 
 2026-10-11. The [basis](basis.json) pins the reviewed SAGE revision and the exact
 external documents with the SHA-256 of the bytes fetched that day. The
 [review record](review.md) lists the counterexample review that revised this
-draft.
+draft and the project owner's answers of 2026-10-12 to the open decisions and
+the did-go cross-check items. The text below is revised to those answers. The
+answers are not adoption.
 
 Decisions recorded with this proposal (2026-10-11):
 
@@ -61,9 +63,10 @@ implements, and a later revision reopens this proposal.
 ## A2AB-01: The SAGE protocol binding
 
 Protected A2A traffic uses a custom A2A protocol binding, the **SAGE binding**,
-identified in `supportedInterfaces[].protocolBinding` by the binding URI chosen
-at adoption (OPEN-1). The standard `JSONRPC`, `GRPC` and `HTTP+JSON` bindings are
-not protected by this proposal.
+identified in `supportedInterfaces[].protocolBinding` by the binding URI
+`https://sage-x-project.github.io/sage-spec/a2a/0.10.0/binding` (OPEN-1). The
+standard `JSONRPC`, `GRPC` and `HTTP+JSON` bindings are not protected by this
+proposal.
 
 On the SAGE binding:
 
@@ -95,8 +98,9 @@ Because metadata is a JSON object, there is exactly one value; the rule in A2A
 ## A2AB-03: Extension declaration and activation
 
 An agent that offers SAGE protection declares exactly one `AgentExtension` in
-`capabilities.extensions` whose `uri` is the SAGE A2A extension URI (OPEN-1),
-with `required` set to `true` and `params` an object with exactly these members:
+`capabilities.extensions` whose `uri` is the SAGE A2A extension URI
+`https://sage-x-project.github.io/sage-spec/a2a/0.10.0/extension` (OPEN-1), with
+`required` set to `true` and `params` an object with exactly these members:
 
 | Member | Type and value |
 |---|---|
@@ -106,6 +110,11 @@ with `required` set to `true` and `params` an object with exactly these members:
 | `issued`, `expires` | integers, Unix seconds, `0 < expires - issued <= 86400` |
 
 A breaking change to this extension takes a new URI, as A2A §4.6.3 requires.
+The binding URI and the extension URI are compared as exact strings and are
+never fetched while deciding whether a request is protected. The version segment
+of both URIs is the SAGE version, the same value `params.sageVersion` must hold:
+a URI with another version segment is an unknown URI, and a card whose
+`sageVersion` is not `0.10.0` is rejected whatever its URI says.
 
 `a2a_extensions` is a comma-separated list of extension URIs without spaces. It
 MUST contain the SAGE extension URI exactly once. A server MUST reject a request
@@ -208,11 +217,20 @@ A resolver offers two projections of one validated record:
 
 - **DID Core 1.0 projection**: exactly the chapter 10 RESOLVE-01 document, with no
   `@context`, media type `application/did+json` and verification method type
-  `JsonWebKey2020`. It is unchanged by this proposal.
+  `JsonWebKey2020`. This proposal changes it only by omitting empty
+  verification relationships, as the next paragraph states.
 - **DID 1.1 projection**: the same document members with these differences only:
   `@context` is present and is exactly the JSON string
   `https://www.w3.org/ns/did/v1.1`; the media type is `application/did`; each
   verification method `type` is `JsonWebKey` (Controlled Identifiers 1.0).
+
+In both projections a verification relationship (`authentication`,
+`assertionMethod`, `keyAgreement`) that would have no member is omitted. DID Core
+1.0 §5.3 and Controlled Identifiers 1.0 §2.3 make each relationship optional and
+require a present one to hold one or more verification methods, so an empty
+array is not conforming. This applies to `created` and `deactivated` records and
+to any record that has, for example, no accepted X25519 key. `verificationMethod`
+stays an array and is empty when no key is projected.
 
 In both projections `publicKeyJwk` has exactly the members chapter 10 fixes
 (`kty`, `crv`, `x` and, for EC keys, `y`). The DID 1.1 projection does not add
@@ -228,6 +246,11 @@ whether a consumer will perform JSON-LD processing. The context is a local
 constant whose SHA-256 DID 1.1 §6.2.4 gives for
 `https://www.w3.org/ns/did/v1.1`; a DID 1.1 erratum can change that digest. It
 is never fetched.
+
+Because the verification method `type` differs, the DID 1.1 projection is not a
+re-serialization of the DID Core 1.0 document. The component that projects the
+record, a SAGE resolver or a `did:sage` driver, produces each projection from
+the record itself.
 
 A resolver that cannot validate the record returns an error and no document in
 either projection.
@@ -251,6 +274,15 @@ parameters:
 are rejected by a SAGE resolver. `didResolutionMetadata.contentType` equals the
 media type of the returned document. A resolver MUST NOT return a projection the
 caller did not request and MUST NOT fall back from one projection to the other.
+
+The table binds the SAGE resolver and its chapter 10 HTTP binding only. A
+component that presents SAGE resolution through the DID Resolution v1 interface
+(DIDP-05) follows DID Resolution for `accept` matching and for its HTTPS
+binding, including the complete resolution result it returns when `Accept` is
+absent. Every DID document such a component returns is a DIDP-01 projection:
+the DID 1.1 projection when the returned media type is `application/did`, and
+the DID Core 1.0 projection for any other DID media type it supports. DIDP-03
+applies to all of them.
 
 ## DIDP-03: Projection equivalence
 
@@ -283,7 +315,11 @@ and statuses. A component that presents SAGE resolution through the DID
 Resolution v1 interface, such as the separate DID project's `did:sage` driver,
 MUST map them as follows. The emitted problem `type` is the DID Resolution URL;
 the SAGE code is carried in the problem extension member `sageCode`; the HTTP
-status follows DID Resolution §12.1. No document is returned on any error.
+status follows DID Resolution §12.1. No document is returned on any error. The
+component produces these codes and `sageCode` itself. When it is built on a
+general DID resolver whose error mapping would replace a driver error, the
+component stands in front of that resolver and answers SAGE errors before the
+general mapping applies.
 
 | SAGE code | DID Resolution error type |
 |---|---|
@@ -292,22 +328,25 @@ status follows DID Resolution §12.1. No document is returned on any error.
 | `version.unsupported` | `INVALID_OPTIONS` |
 | `record.not-found` | `NOT_FOUND` |
 | `record.unreachable`, `record.stale`, `record.invalid` | `INTERNAL_ERROR`; never `NOT_FOUND`, because a stale view is not absence |
-| `representation.unsupported` | `FEATURE_NOT_SUPPORTED` (DID Resolution §4.4 uses it for an unsupported option) |
+| `representation.unsupported` | `FEATURE_NOT_SUPPORTED` (DID Resolution §4.4 uses it for an unsupported option); through this interface it applies only to an `accept` value the component cannot serve under DID Resolution, not to the DIDP-02 table |
 | `key.not-in-record` (DID URL dereference) | `NOT_FOUND` |
 
 Through that interface a `deactivated` record is reported as DID Resolution
 §4.4 states for a deactivated DID: `didDocument` is null and
 `didDocumentMetadata.deactivated` is `true` (HTTP 410 in its binding). The SAGE
-interface keeps its chapter 10 projection with empty verification
-relationships. Either way the record is never usable for a protected operation
+interface keeps its chapter 10 projection, with the verification relationships
+omitted (DIDP-01). Either way the record is never usable for a protected operation
 (chapter 10 RESOLVE-03). A `created` record is returned as SAGE projects it, with
-empty verification relationships, and is likewise not usable.
+no verification relationships, and is likewise not usable.
 
 ## Amendments required at adoption
 
 Adoption changes existing chapters only in these places (PROC-02):
 
 - chapter 06 ID-03: add the A2A card JWS `kid` to the list of key references;
+- chapter 10 RESOLVE-01: a verification relationship with no member is omitted
+  instead of projected as an empty array, for `created` and `deactivated`
+  records and for any record whose relationship has no member (DIDP-01, DG-1);
 - chapter 10 RESOLVE-03 and RESOLVE-05: the media types and `Accept` matching of
   DIDP-02, and the DID 1.1 projection of DIDP-01;
 - chapter 11: the `A2AInterface` service type (OPEN-4), the TABLE-04 entry for
@@ -316,25 +355,34 @@ Adoption changes existing chapters only in these places (PROC-02):
 Chapters 03, 05 and 08 are not amended: the SAGE binding uses their envelopes,
 covered components and media type as they are.
 
-## Open decisions
+## Decisions on the open items
 
-- **OPEN-1, URIs.** The SAGE binding and the SAGE extension each need a stable
-  URI owned by the project. A2A treats these URIs as identifiers that need not be
-  fetched. The values are chosen at adoption.
-- **OPEN-2, default projection.** The absent-`accept` default stays DID Core 1.0
-  to keep existing consumers working. Moving it to DID 1.1 is reconsidered when
-  DID 1.1 becomes a W3C Recommendation.
-- **OPEN-3, `did:sage` registration.** The method is not in the W3C DID
-  Extensions list. Registration is a public pull request against
-  `w3c/did-extensions` and needs the maintainers' approval after adoption. The
-  W3C list currently states DID Core 1.0 method requirements.
-- **OPEN-4, service type.** Chapter 09 services carry a free `type`. Reserving
-  `A2AInterface` needs a chapter 11 table entry under TABLE-01.
-- **OPEN-5, card lifetime.** A2AB-03 caps a card at 86400 seconds so that a
-  static card file can be served and cached. Chapter 07 caps the SAGE card at
-  300 seconds. The A2A cap is a proposed value to confirm at adoption. Any
-  record change, including an operator grant or revocation, also invalidates
-  every card of that agent.
+The project owner answered each item on 2026-10-12 by accepting the
+recommendation in the [external review guide](external-review.md). The answers
+are recorded in the [review record](review.md) and folded into the rules above.
+They are not adoption, and they become rules only if the proposal is adopted.
+
+- **OPEN-1, URIs.** The binding URI is
+  `https://sage-x-project.github.io/sage-spec/a2a/0.10.0/binding` and the extension URI is
+  `https://sage-x-project.github.io/sage-spec/a2a/0.10.0/extension` (A2AB-01, A2AB-03). Both are
+  identifiers that are compared as exact strings and never fetched.
+- **OPEN-2, default projection.** The absent-`accept` default of the SAGE
+  interface stays DID Core 1.0 to keep existing consumers working. Moving it to
+  DID 1.1 is reconsidered when DID 1.1 becomes a W3C Recommendation and the
+  pinned DID Resolution revision changes.
+- **OPEN-3, `did:sage` registration.** A registration pull request against
+  `w3c/did-extensions` is submitted after adoption and after the RESOLVE-01
+  amendment of DG-1. Registration is not a condition of adoption and needs the
+  maintainers' approval. The W3C list currently states DID Core 1.0 method
+  requirements.
+- **OPEN-4, service type.** `A2AInterface` is reserved in chapter 11 under
+  TABLE-01 and registered in the DID Extensions list together with the method.
+- **OPEN-5, card lifetime.** A2AB-03 keeps the 86400-second cap so that a static
+  card file can be served and cached. Chapter 07 caps the SAGE card at 300
+  seconds. Protection against a revoked or changed key comes from fresh
+  resolution and the `recordVersion` check of A2AB-05: any record change,
+  including an operator grant or revocation, invalidates every card of that
+  agent.
 
 ## Boundary with the separate DID project (informative)
 
@@ -415,8 +463,9 @@ Observations that agree with the proposal:
 
 ### Open items from the cross-check
 
-These items are recorded, not resolved. Neither the proposal nor did-go was
-changed because of them. They are for the external review and for adoption.
+The project owner answered these items on 2026-10-12 ([review record](review.md)).
+Each answer is noted after the item and folded into the rules above. did-go
+code is unchanged; its design note on the SAGE profile is aligned with DG-4.
 
 - **DG-1, empty verification relationships.** Chapter 10 RESOLVE-01, which the
   DID Core 1.0 projection copies exactly, projects a `created` or
@@ -430,7 +479,8 @@ changed because of them. They are for the external review and for adoption.
   accepted. The same applies to any record whose relationship has no member.
   The rule is in the normative chapter, so a fix needs an amendment of
   RESOLVE-01 at adoption. Cases `didp-03-deactivated` and the DIDP-05
-  `created` statement are affected.
+  `created` statement are affected. *Answer:* adoption amends RESOLVE-01 to omit
+  a relationship with no member, for every record (DIDP-01, amendments list).
 - **DG-2, the `sageCode` member.** did-go's `resolution.Error` models only
   `type`, `title`, `status`, `detail` and `instance`, and `DefaultResolver`
   replaces a driver error with a new error: the not-found, unsupported,
@@ -440,7 +490,9 @@ changed because of them. They are for the external review and for adoption.
   malformed identifier such as a mixed-case method is refused as `INVALID_DID`
   before any driver runs. Either did-go gains an extension point for problem
   extension members, or `advanced/sage` fronts the standard resolver, or DIDP-05
-  drops `sageCode`.
+  drops `sageCode`. *Answer:* `sageCode` stays, and `advanced/sage` stands in
+  front of the standard resolver (DIDP-05). did-go's standard core does not gain
+  problem extension members.
 - **DG-3, codes no driver can produce.** DIDP-05 maps `id.unknown-kind` to
   `METHOD_NOT_SUPPORTED` and `version.unsupported` to `INVALID_OPTIONS`. Through
   `DefaultResolver` a driver's unsupported error becomes `FEATURE_NOT_SUPPORTED`
@@ -448,7 +500,8 @@ changed because of them. They are for the external review and for adoption.
   `METHOD_NOT_SUPPORTED` was observed as `INTERNAL_ERROR`. The mapping is
   reachable only if `advanced/sage` does not rely on the standard resolver's
   error mapping, or did-go adds a way for a driver to return a DID Resolution
-  error.
+  error. *Answer:* the mapping stays and is produced by `advanced/sage` in
+  front of the standard resolver, as for DG-2.
 - **DG-4, scope of DIDP-02 on the DID Resolution interface.** DIDP-02 amends
   the SAGE resolver and its chapter 10 binding. It does not say whether its
   table also binds the DIDP-05 component. did-go's standard resolver matches
@@ -461,23 +514,33 @@ changed because of them. They are for the external review and for adoption.
   binding `advanced/sage` (exact single type, no q-values, no transcoding), but
   the resolver offers no such profile option today; its producer and consumer
   are injectable. Case `didp-05-unsupported-accept` depends on this answer.
+  *Answer:* the DIDP-02 table binds only the SAGE interface. The DID Resolution
+  interface follows DID Resolution, including q-values, transcoding and the
+  complete resolution result for an absent `Accept`, and every document it
+  returns is a DIDP-01 projection (DIDP-02). The case now requests a type no
+  DID representation has.
 - **DG-5, where the DID 1.1 projection is produced.** DIDP-01 changes the
   verification method type between projections, so the DID 1.1 projection is
   not a re-serialization of the DID Core 1.0 document. A `did:sage` driver must
   offer both media types itself, as the stub driver did; this matches the
-  planned `advanced/sage` projection file and needs no rule change.
+  planned `advanced/sage` projection file and needs no rule change. *Answer:*
+  confirmed; DIDP-01 now says so.
 
 ## Compatibility and planned evidence
 
-Old and new rules (PROC-02): chapter 07's SAGE card and chapter 10's DID Core
-1.0 projection are unchanged; existing `application/did+json` and
-`application/json` resolution requests return what they return today. New rules
+Old and new rules (PROC-02): chapter 07's SAGE card is unchanged. Chapter 10's
+DID Core 1.0 projection changes in one place: a verification relationship with
+no member is now absent instead of an empty array (DG-1). A consumer that
+requires those members to be present is affected; one that reads them as
+optional, as DID Core 1.0 allows, sees the same keys. Otherwise existing
+`application/did+json` and `application/json` resolution requests return what
+they return today. New rules
 are the SAGE binding, the A2A extension, the card shape and identity binding,
 interface eligibility, the DID 1.1 projection, `Accept` matching and the DID
 Resolution error mapping. Affected implementations are the Go and Rust cores
 (projection and card verification), `sage-adk` (A2A client and server hosts)
 and the planned `advanced/sage` module of did-go. No existing vector changes
-meaning.
+meaning; the vectors do not cover chapter 10 resolution.
 
 The [case plan](cases.json) lists positive and negative cases for every rule
 group, and the [document checker](verify.py) checks traceability only. Inspector

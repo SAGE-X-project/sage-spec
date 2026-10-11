@@ -621,6 +621,16 @@
       "detail": "Both projections carry exactly kty, crv, x, y with identical values; no alg or kid member."
     },
     {
+      "id": "didp-01-no-empty-relationship",
+      "rule": "DIDP-01",
+      "precondition": "Active record with one ed25519 signing key, no x25519 key and one service",
+      "input": "Resolve both projections",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "authentication and assertionMethod list the signing key; keyAgreement is absent, never an empty array."
+    },
+    {
       "id": "didp-01-context-offline",
       "rule": "DIDP-01",
       "precondition": "Resolver has no network access to w3.org",
@@ -683,7 +693,7 @@
     {
       "id": "didp-02-json-ld-rejected",
       "rule": "DIDP-02",
-      "precondition": "Active record with one ed25519 signing key and one service",
+      "precondition": "SAGE interface; active record with one ed25519 signing key and one service",
       "input": "Resolve with accept application/did+ld+json",
       "expected": "ERROR",
       "status": "NOT_RUN",
@@ -693,7 +703,7 @@
     {
       "id": "didp-02-did-resolution-rejected",
       "rule": "DIDP-02",
-      "precondition": "Active record with one ed25519 signing key and one service",
+      "precondition": "SAGE interface; active record with one ed25519 signing key and one service",
       "input": "HTTP GET with Accept: application/did-resolution",
       "expected": "ERROR",
       "status": "NOT_RUN",
@@ -703,7 +713,7 @@
     {
       "id": "didp-02-q-list-rejected",
       "rule": "DIDP-02",
-      "precondition": "Active record with one ed25519 signing key and one service",
+      "precondition": "SAGE interface; active record with one ed25519 signing key and one service",
       "input": "HTTP GET with Accept: application/did;q=0.9, application/did+json",
       "expected": "ERROR",
       "status": "NOT_RUN",
@@ -719,6 +729,16 @@
       "status": "NOT_RUN",
       "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
       "detail": "Request fails with no document; the DID Core 1.0 projection is not returned instead."
+    },
+    {
+      "id": "didp-02-did-resolution-interface",
+      "rule": "DIDP-02",
+      "precondition": "DID Resolution interface over a SAGE core; active record with one ed25519 signing key and one service",
+      "input": "Resolve with accept application/did;q=0.9, application/did+json",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "The DIDP-02 table does not apply: the q-value list is matched under DID Resolution and the returned document is the DIDP-01 projection for its contentType (DID Core 1.0 for application/did+json)."
     },
     {
       "id": "didp-03-equivalent-members",
@@ -748,7 +768,7 @@
       "expected": "PROJECT",
       "status": "NOT_RUN",
       "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
-      "detail": "Both projections have empty verification methods and relationships and deactivated true in metadata."
+      "detail": "Both projections have an empty verificationMethod array, no authentication, assertionMethod or keyAgreement member, and deactivated true in metadata."
     },
     {
       "id": "didp-04-peer-document-ignored",
@@ -822,7 +842,7 @@
       "id": "didp-05-unsupported-accept",
       "rule": "DIDP-05",
       "precondition": "DID Resolution interface over a SAGE core",
-      "input": "Resolve with accept application/did+ld+json",
+      "input": "Resolve with accept text/html, a type no DID representation has",
       "expected": "ERROR",
       "status": "NOT_RUN",
       "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",

@@ -183,7 +183,7 @@ class Integrity(unittest.TestCase):
             validate(*values)
 
     def test_valid(self):
-        self.assertEqual(validate(*self.values), 90)
+        self.assertEqual(validate(*self.values), 92)
 
     def test_promotion(self):
         self.refused(lambda v: v[0].update(status='ADOPTED'))
