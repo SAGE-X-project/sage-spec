@@ -57,6 +57,22 @@ jobs:
           done
           exit $status
 
+  a2a-did-proposal:
+    name: A2A and DID proposal traceability
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Check the proposal basis and planned cases
+        run: |
+          python3 -B proposals/a2a-did-interop/verify.py --self-test
+          python3 -B proposals/a2a-did-interop/verify.py
+      - name: Check the normative chapters still match the reviewed revision
+        run: |
+          base="$(python3 -c "import json; print(json.load(open('proposals/a2a-did-interop/basis.json'))['sage_baseline']['normative_source_revision'])")"
+          git diff --quiet "$base" HEAD -- spec/ profiles/ charter.md
+
   mcp-setup-proposal:
     name: MCP design and historical proposal consistency
     runs-on: ubuntu-latest

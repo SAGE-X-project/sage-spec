@@ -1,0 +1,85 @@
+{
+  "kind": "proposal-basis",
+  "status": "PROPOSAL_NOT_ADOPTED",
+  "conformance": "NOT_ESTABLISHED",
+  "sage_version": "0.10.0",
+  "a2a_protocol_version": "1.0",
+  "did_projections": [
+    "did-core-1.0",
+    "did-1.1"
+  ],
+  "reviewed": "2026-10-11",
+  "sage_baseline": {
+    "normative_source_revision": "1820ab5eafb843e1c13f4c46c34aeeb28d934ac9",
+    "branch_base_revision": "f97378cde7f29006520299c4246d2a50a429545f"
+  },
+  "external_sources": {
+    "a2a-specification": {
+      "url": "https://raw.githubusercontent.com/a2aproject/A2A/v1.0.1/docs/specification.md",
+      "revision": "tag v1.0.1, commit 3303592588e388e62e0f69f701af531d2f4e3991",
+      "status": "A2A 1.0.1 release",
+      "sha256": "627ccfe6ffb1be2c56811c3dcc18780deb419f41cdc98248095c939b2d9dc9cb"
+    },
+    "a2a-proto": {
+      "url": "https://raw.githubusercontent.com/a2aproject/A2A/v1.0.1/specification/a2a.proto",
+      "revision": "tag v1.0.1, commit 3303592588e388e62e0f69f701af531d2f4e3991",
+      "status": "A2A 1.0.1 release",
+      "sha256": "e195bf96ab630c69797851970203e1b2b6b19528f2e9803b7d904b91a5104016"
+    },
+    "did-core-1.0": {
+      "url": "https://www.w3.org/TR/2022/REC-did-core-20220719/",
+      "revision": "REC-did-core-20220719",
+      "status": "W3C Recommendation",
+      "sha256": "5e44345740d9bfaa852d3b66c57e98c9beb6c5bf6083b0126dd5daac377b9993"
+    },
+    "did-1.1": {
+      "url": "https://www.w3.org/TR/2026/CR-did-1.1-20260305/",
+      "revision": "CR-did-1.1-20260305",
+      "status": "W3C Candidate Recommendation Snapshot",
+      "sha256": "4a48022defe07d37d2decc3ec9027a932dc883b2ad164a5aeaf9256e530bd979"
+    },
+    "did-1.1-context": {
+      "url": "https://www.w3.org/ns/did-vocab/v1.1rc1.jsonld",
+      "revision": "v1.1rc1; https://www.w3.org/ns/did/v1.1 answered HTTP 300 pointing to this file on 2026-10-11; digest given by DID 1.1 section 6.2.4",
+      "status": "W3C context file",
+      "sha256": "ea216ecc1cb02cd39b693dba2250141e270ba0bf95890be107dd9a9e8e43de85"
+    },
+    "did-resolution": {
+      "url": "https://www.w3.org/TR/2026/CRD-did-resolution-1.0-20261001/",
+      "revision": "CRD-did-resolution-1.0-20261001",
+      "status": "W3C Candidate Recommendation Draft",
+      "sha256": "2b194843d37f5b7f01a4f5464f64d672dc4be43dafe5f2f49114c6070819586e"
+    },
+    "cid-1.0": {
+      "url": "https://www.w3.org/TR/2025/REC-cid-1.0-20250515/",
+      "revision": "REC-cid-1.0-20250515",
+      "status": "W3C Recommendation",
+      "sha256": "c5e9befba602b53de46669cf98067123d1901357a425f8bff621796b2ac4ac4a"
+    },
+    "rfc8785": {
+      "url": "https://www.rfc-editor.org/rfc/rfc8785.txt",
+      "revision": "RFC 8785",
+      "status": "Informational RFC",
+      "sha256": "63d52294eb0e3f0014174288186d388b4ddbf2c67d1ce8af1d9726eb0c3ab240"
+    },
+    "rfc7515": {
+      "url": "https://www.rfc-editor.org/rfc/rfc7515.txt",
+      "revision": "RFC 7515",
+      "status": "Proposed Standard",
+      "sha256": "ecbf84674118e62526511c1237e1deaa86aada86d25b247623a2a7e04ae62e40"
+    },
+    "rfc9864": {
+      "url": "https://www.rfc-editor.org/rfc/rfc9864.txt",
+      "revision": "RFC 9864",
+      "status": "Proposed Standard",
+      "sha256": "0f9b6dd26b3285fd9fe7f7e0a82e684d06512dee642703d51c6f88a7b0edaa2b"
+    },
+    "rfc9457": {
+      "url": "https://www.rfc-editor.org/rfc/rfc9457.txt",
+      "revision": "RFC 9457",
+      "status": "Proposed Standard",
+      "sha256": "f2b3db92fb0bf3489cb3841a0da0c0d88dff40797b64d40b6123085183886c7b"
+    }
+  },
+  "hash_note": "SHA-256 of the bytes each URL served on 2026-10-11. W3C pages can later gain status banners; a changed hash means the document must be re-reviewed, not that the cited text changed."
+}

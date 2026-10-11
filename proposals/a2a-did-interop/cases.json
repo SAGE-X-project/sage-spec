@@ -1,0 +1,842 @@
+{
+  "kind": "proposal-case-plan",
+  "status": "NOT_RUN",
+  "conformance": "NOT_ESTABLISHED",
+  "cases": [
+    {
+      "id": "a2ab-01-jsonrpc-in-payload",
+      "rule": "A2AB-01",
+      "precondition": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "input": "POST whose envelope payload is one A2A JSON-RPC SendMessage request",
+      "expected": "ACCEPT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-01-bare-jsonrpc-body",
+      "rule": "A2AB-01",
+      "precondition": "Interface uses the SAGE binding",
+      "input": "POST whose HTTP body is a bare A2A JSON-RPC request with no SAGE envelope",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-01-batch-payload",
+      "rule": "A2AB-01",
+      "precondition": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "input": "Envelope payload is a JSON-RPC batch array of two requests",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-01-streaming-method",
+      "rule": "A2AB-01",
+      "precondition": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "input": "Envelope payload calls SendStreamingMessage",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-01-header-parameters-ignored",
+      "rule": "A2AB-01",
+      "precondition": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "input": "HTTP header A2A-Version: 0.3 added beside metadata a2a_version 1.0",
+      "expected": "ACCEPT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-01-a2a-error-in-data",
+      "rule": "A2AB-01",
+      "precondition": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "input": "Request for an unknown task id",
+      "expected": "ACCEPT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision.",
+      "detail": "Response envelope has success true and data holds a JSON-RPC error object with the A2A TaskNotFoundError code."
+    },
+    {
+      "id": "a2ab-02-version-1-0",
+      "rule": "A2AB-02",
+      "precondition": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "input": "metadata a2a_version is 1.0",
+      "expected": "ACCEPT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-02-version-absent",
+      "rule": "A2AB-02",
+      "precondition": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "input": "metadata has no a2a_version member",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-02-version-0-3",
+      "rule": "A2AB-02",
+      "precondition": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "input": "metadata a2a_version is 0.3",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-02-version-patch",
+      "rule": "A2AB-02",
+      "precondition": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "input": "metadata a2a_version is 1.0.1",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-02-version-empty",
+      "rule": "A2AB-02",
+      "precondition": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "input": "metadata a2a_version is the empty string",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-03-declared",
+      "rule": "A2AB-03",
+      "precondition": "Card declares one SAGE extension with required true and exact typed params",
+      "input": "Client verifies the card and activates the extension",
+      "expected": "ACCEPT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-03-required-false",
+      "rule": "A2AB-03",
+      "precondition": "Card declares the SAGE extension with required false",
+      "input": "Client evaluates the card for a protected operation",
+      "expected": "NOT_ELIGIBLE",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-03-two-entries",
+      "rule": "A2AB-03",
+      "precondition": "Card declares the SAGE extension URI twice with different did values",
+      "input": "Client evaluates the card for a protected operation",
+      "expected": "NOT_ELIGIBLE",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-03-numeric-record-version",
+      "rule": "A2AB-03",
+      "precondition": "Card params.recordVersion is the JSON number 7 instead of the string",
+      "input": "Client evaluates the card for a protected operation",
+      "expected": "NOT_ELIGIBLE",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-03-wrong-sage-version",
+      "rule": "A2AB-03",
+      "precondition": "Card params.sageVersion is 0.11.0",
+      "input": "Client evaluates the card for a protected operation",
+      "expected": "NOT_ELIGIBLE",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-03-lifetime-too-long",
+      "rule": "A2AB-03",
+      "precondition": "Card params expires minus issued is 86401 seconds",
+      "input": "Client evaluates the card for a protected operation",
+      "expected": "NOT_ELIGIBLE",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-03-not-activated",
+      "rule": "A2AB-03",
+      "precondition": "Eligible card; metadata a2a_extensions omits the SAGE extension URI",
+      "input": "Server receives the request",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-03-activated-twice",
+      "rule": "A2AB-03",
+      "precondition": "Eligible card; metadata a2a_extensions lists the SAGE extension URI twice",
+      "input": "Server receives the request",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-04-only-sage-interfaces",
+      "rule": "A2AB-04",
+      "precondition": "Card lists two SAGE-binding interfaces with protocolVersion 1.0 and no streaming, push or extended card",
+      "input": "Client evaluates the card",
+      "expected": "ACCEPT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-04-grpc-listed",
+      "rule": "A2AB-04",
+      "precondition": "Card declares the SAGE extension and also lists a GRPC 1.0 interface",
+      "input": "Client evaluates the card",
+      "expected": "NOT_ELIGIBLE",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-04-server-grpc-downgrade",
+      "rule": "A2AB-04",
+      "precondition": "Server card declares the SAGE extension; server also runs a gRPC endpoint",
+      "input": "Attacker calls SendMessage for the same agent over gRPC without SAGE",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-04-server-0-3-downgrade",
+      "rule": "A2AB-04",
+      "precondition": "Server card declares the SAGE extension",
+      "input": "Attacker sends a plain JSON-RPC request with no A2A-Version and no envelope",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-04-streaming-capability",
+      "rule": "A2AB-04",
+      "precondition": "Card declares the SAGE extension and capabilities.streaming true",
+      "input": "Client evaluates the card",
+      "expected": "NOT_ELIGIBLE",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-04-extended-card",
+      "rule": "A2AB-04",
+      "precondition": "Card declares the SAGE extension and capabilities.extendedAgentCard true",
+      "input": "Client evaluates the card",
+      "expected": "NOT_ELIGIBLE",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-04-duplicate-member",
+      "rule": "A2AB-04",
+      "precondition": "Signed card whose JSON repeats the params did member with two values",
+      "input": "Client parses the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-04-unknown-member",
+      "rule": "A2AB-04",
+      "precondition": "Valid signed card with an extra top-level member injected after signing",
+      "input": "Client parses and verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-04-oversized",
+      "rule": "A2AB-04",
+      "precondition": "Card JSON is 262145 bytes",
+      "input": "Client parses the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-ed25519-valid",
+      "rule": "A2AB-05",
+      "precondition": "Card signed with an accepted ed25519 key named by a did:sage kid; record version and lifetime valid",
+      "input": "Client verifies with JOSE alg Ed25519 and typ sage-a2a-card+jws",
+      "expected": "ACCEPT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-p256-low-s",
+      "rule": "A2AB-05",
+      "precondition": "Card signed with an accepted ecdsa-p256-sha256 key, low-S signature",
+      "input": "Client verifies with JOSE alg ES256",
+      "expected": "ACCEPT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-p256-high-s",
+      "rule": "A2AB-05",
+      "precondition": "Same card with the P-256 signature rewritten to high S",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-eddsa-polymorphic",
+      "rule": "A2AB-05",
+      "precondition": "Card signed with an accepted ed25519 key but alg EdDSA",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-unprotected-header",
+      "rule": "A2AB-05",
+      "precondition": "SAGE signature whose unprotected header carries kid of another key",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-jku-present",
+      "rule": "A2AB-05",
+      "precondition": "SAGE signature whose protected header also carries jku",
+      "input": "Client verifies the card without fetching any URL",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-crit-present",
+      "rule": "A2AB-05",
+      "precondition": "SAGE signature whose protected header carries crit and b64 false",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-duplicate-header-member",
+      "rule": "A2AB-05",
+      "precondition": "Protected header JSON repeats kid with two values",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-two-sage-signatures",
+      "rule": "A2AB-05",
+      "precondition": "Card carries two signatures of the SAGE shape, both valid",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-foreign-plus-bad-sage",
+      "rule": "A2AB-05",
+      "precondition": "Card carries a valid ES256 signature with an HTTPS kid and an invalid SAGE signature",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-relative-kid",
+      "rule": "A2AB-05",
+      "precondition": "kid is key-1 without a DID",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-kid-no-fragment",
+      "rule": "A2AB-05",
+      "precondition": "kid is the canonical DID without a fragment",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-kid-x25519",
+      "rule": "A2AB-05",
+      "precondition": "kid names the record's x25519 key-agreement key",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-kid-other-did",
+      "rule": "A2AB-05",
+      "precondition": "kid names a key of a different did:sage record than params.did",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-expected-peer-mismatch",
+      "rule": "A2AB-05",
+      "precondition": "Valid card for agent M; client configured to expect agent A",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-revoked-key",
+      "rule": "A2AB-05",
+      "precondition": "kid names a key that the current record marks revoked",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-deactivated-record",
+      "rule": "A2AB-05",
+      "precondition": "params.did names a deactivated record",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-record-version-old",
+      "rule": "A2AB-05",
+      "precondition": "Signature verifies; params.recordVersion is older than the current record version",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-record-version-ahead",
+      "rule": "A2AB-05",
+      "precondition": "Signature verifies; params.recordVersion is newer than the resolver's fresh view",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-expired-card",
+      "rule": "A2AB-05",
+      "precondition": "Signature verifies; now is equal to params.expires",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-secp256k1-key",
+      "rule": "A2AB-05",
+      "precondition": "kid names an accepted sage-secp256k1-keccak256 key",
+      "input": "Client verifies the card",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-default-field-added",
+      "rule": "A2AB-05",
+      "precondition": "Valid card; an empty repeated field such as extensions on a skill is added after signing",
+      "input": "Client canonicalizes per A2A section 8.4.1 and verifies",
+      "expected": "ACCEPT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-05-presence-field-changed",
+      "rule": "A2AB-05",
+      "precondition": "Valid card; an explicitly set optional field is changed after signing",
+      "input": "Client canonicalizes per A2A section 8.4.1 and verifies",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-06-matching-service",
+      "rule": "A2AB-06",
+      "precondition": "Interface url equals a record service uri of type A2AInterface byte for byte",
+      "input": "Client selects the interface",
+      "expected": "ACCEPT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-06-no-service",
+      "rule": "A2AB-06",
+      "precondition": "Interface url has no matching A2AInterface service in the record",
+      "input": "Client selects the interface",
+      "expected": "NOT_ELIGIBLE",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-06-trailing-slash",
+      "rule": "A2AB-06",
+      "precondition": "Record service uri has a trailing slash that the interface url lacks",
+      "input": "Client selects the interface",
+      "expected": "NOT_ELIGIBLE",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-06-host-case",
+      "rule": "A2AB-06",
+      "precondition": "Interface url host differs from the service uri only in letter case",
+      "input": "Client selects the interface",
+      "expected": "NOT_ELIGIBLE",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-06-default-port",
+      "rule": "A2AB-06",
+      "precondition": "Interface url adds an explicit :443 that the service uri lacks",
+      "input": "Client selects the interface",
+      "expected": "NOT_ELIGIBLE",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-06-recipient-mismatch",
+      "rule": "A2AB-06",
+      "precondition": "Eligible card for agent A",
+      "input": "Request envelope recipient names agent B",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-06-tenant-elsewhere",
+      "rule": "A2AB-06",
+      "precondition": "Shared endpoint serves agents A and B by tenant; envelope recipient is A",
+      "input": "JSON-RPC request tenant routes to agent B",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-06-response-wrong-signer",
+      "rule": "A2AB-06",
+      "precondition": "Valid request to agent A",
+      "input": "Response envelope signed by agent B's key",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-07-abort-no-retry",
+      "rule": "A2AB-07",
+      "precondition": "Trusted configuration requires SAGE for the peer; card verification fails",
+      "input": "Client attempts the operation",
+      "expected": "ABORT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-07-no-standard-binding-retry",
+      "rule": "A2AB-07",
+      "precondition": "SAGE request rejected by the server",
+      "input": "Client considers retrying over the standard JSONRPC binding",
+      "expected": "ABORT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-07-no-version-retry",
+      "rule": "A2AB-07",
+      "precondition": "Server rejects metadata a2a_version 1.0",
+      "input": "Client considers retrying with 0.3",
+      "expected": "ABORT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-07-uniform-error",
+      "rule": "A2AB-07",
+      "precondition": "Two requests fail different checks",
+      "input": "Compare the public errors the server returns",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "a2ab-07-success-no-fallback",
+      "rule": "A2AB-07",
+      "precondition": "Trusted configuration requires SAGE for the peer; every check passes",
+      "input": "Client performs the operation over the SAGE binding",
+      "expected": "ACCEPT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of an A2A 1.0 client and server pair with exact revisions, the card bytes, the request and response envelopes and the decision."
+    },
+    {
+      "id": "didp-01-core-1-0-unchanged",
+      "rule": "DIDP-01",
+      "precondition": "Active record with one ed25519 key, one x25519 key and one service",
+      "input": "Resolve with accept application/did+json",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "Bytes equal the chapter 10 RESOLVE-01 document: no @context, JsonWebKey2020, contentType application/did+json."
+    },
+    {
+      "id": "didp-01-did-1-1-shape",
+      "rule": "DIDP-01",
+      "precondition": "Same active record",
+      "input": "Resolve with accept application/did",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "@context is exactly the string https://www.w3.org/ns/did/v1.1, contentType is application/did, every verification method type is JsonWebKey."
+    },
+    {
+      "id": "didp-01-no-multikey",
+      "rule": "DIDP-01",
+      "precondition": "Same active record",
+      "input": "Resolve with accept application/did and search for Multikey or publicKeyMultibase",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "No Multikey type and no publicKeyMultibase member anywhere in the document."
+    },
+    {
+      "id": "didp-01-jwk-members",
+      "rule": "DIDP-01",
+      "precondition": "Active record with a P-256 signing key",
+      "input": "Resolve both projections and compare JWK member sets",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "Both projections carry exactly kty, crv, x, y with identical values; no alg or kid member."
+    },
+    {
+      "id": "didp-01-context-offline",
+      "rule": "DIDP-01",
+      "precondition": "Resolver has no network access to w3.org",
+      "input": "Resolve with accept application/did",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "The DID 1.1 projection is produced from the local context constant; no context fetch is attempted."
+    },
+    {
+      "id": "didp-01-invalid-record",
+      "rule": "DIDP-01",
+      "precondition": "Authoritative record carries a key whose encoding fails chapter 11 checks",
+      "input": "Resolve with accept application/did",
+      "expected": "ERROR",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "record.invalid and no document in either projection."
+    },
+    {
+      "id": "didp-02-select-1-1",
+      "rule": "DIDP-02",
+      "precondition": "Active record with one ed25519 signing key and one service",
+      "input": "Resolve with accept application/did",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "DID 1.1 projection with contentType application/did."
+    },
+    {
+      "id": "didp-02-default-1-0",
+      "rule": "DIDP-02",
+      "precondition": "Active record with one ed25519 signing key and one service",
+      "input": "Resolve with no accept option",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "DID Core 1.0 projection with contentType application/did+json."
+    },
+    {
+      "id": "didp-02-wildcard",
+      "rule": "DIDP-02",
+      "precondition": "Active record with one ed25519 signing key and one service",
+      "input": "HTTP GET with Accept: */*",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "DID Core 1.0 projection with contentType application/did+json."
+    },
+    {
+      "id": "didp-02-json-envelope",
+      "rule": "DIDP-02",
+      "precondition": "Active record with one ed25519 signing key and one service",
+      "input": "HTTP GET with Accept: application/json",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "Chapter 10 three-member envelope with the DID Core 1.0 projection, unchanged from today."
+    },
+    {
+      "id": "didp-02-json-ld-rejected",
+      "rule": "DIDP-02",
+      "precondition": "Active record with one ed25519 signing key and one service",
+      "input": "Resolve with accept application/did+ld+json",
+      "expected": "ERROR",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "representation.unsupported, HTTP 406, no document."
+    },
+    {
+      "id": "didp-02-did-resolution-rejected",
+      "rule": "DIDP-02",
+      "precondition": "Active record with one ed25519 signing key and one service",
+      "input": "HTTP GET with Accept: application/did-resolution",
+      "expected": "ERROR",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "representation.unsupported, HTTP 406, no document."
+    },
+    {
+      "id": "didp-02-q-list-rejected",
+      "rule": "DIDP-02",
+      "precondition": "Active record with one ed25519 signing key and one service",
+      "input": "HTTP GET with Accept: application/did;q=0.9, application/did+json",
+      "expected": "ERROR",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "representation.unsupported, HTTP 406, no document."
+    },
+    {
+      "id": "didp-02-no-fallback",
+      "rule": "DIDP-02",
+      "precondition": "Resolver cannot produce the DID 1.1 projection for this record",
+      "input": "Resolve with accept application/did",
+      "expected": "ERROR",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "Request fails with no document; the DID Core 1.0 projection is not returned instead."
+    },
+    {
+      "id": "didp-03-equivalent-members",
+      "rule": "DIDP-03",
+      "precondition": "Active record with three keys including one revoked",
+      "input": "Resolve both projections from one observation and compare all members except @context and type",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "id, verification method ids, controllers, JWKs, relationships, services and versionId are identical; the revoked key is absent from both."
+    },
+    {
+      "id": "didp-03-two-observations",
+      "rule": "DIDP-03",
+      "precondition": "Record version changes between the two halves of one dual-projection request",
+      "input": "Request both projections in one operation",
+      "expected": "ERROR",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "The resolver fails or retries from one observation; it never returns two projections with different versionId."
+    },
+    {
+      "id": "didp-03-deactivated",
+      "rule": "DIDP-03",
+      "precondition": "Deactivated record",
+      "input": "Resolve both projections through the SAGE interface",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "Both projections have empty verification methods and relationships and deactivated true in metadata."
+    },
+    {
+      "id": "didp-04-peer-document-ignored",
+      "rule": "DIDP-04",
+      "precondition": "Peer supplies a DID 1.1 document listing an extra signing key",
+      "input": "Verifier checks a message signed with that extra key",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error."
+    },
+    {
+      "id": "didp-04-no-alias-members",
+      "rule": "DIDP-04",
+      "precondition": "Active record with one ed25519 signing key and one service",
+      "input": "Resolve both projections and search for alsoKnownAs, equivalentId and canonicalId",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "None of alsoKnownAs, equivalentId or canonicalId appears in either projection."
+    },
+    {
+      "id": "didp-04-received-alias",
+      "rule": "DIDP-04",
+      "precondition": "Received document lists alsoKnownAs naming another DID",
+      "input": "Verifier decides whether the other DID's key may sign for this agent",
+      "expected": "REJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error."
+    },
+    {
+      "id": "didp-05-malformed",
+      "rule": "DIDP-05",
+      "precondition": "DID Resolution interface over a SAGE core",
+      "input": "Resolve an identifier with a mixed-case method prefix",
+      "expected": "ERROR",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "Problem type https://www.w3.org/ns/did#INVALID_DID, sageCode id.malformed, HTTP 400, no document."
+    },
+    {
+      "id": "didp-05-not-found",
+      "rule": "DIDP-05",
+      "precondition": "DID Resolution interface over a SAGE core",
+      "input": "Resolve an unregistered identifier",
+      "expected": "ERROR",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "Problem type https://www.w3.org/ns/did#NOT_FOUND, sageCode record.not-found, HTTP 404, no document."
+    },
+    {
+      "id": "didp-05-stale-not-absent",
+      "rule": "DIDP-05",
+      "precondition": "DID Resolution interface over a SAGE core whose observation is stale",
+      "input": "Resolve a registered identifier",
+      "expected": "ERROR",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "Problem type https://www.w3.org/ns/did#INTERNAL_ERROR, sageCode record.stale, HTTP 500; never NOT_FOUND."
+    },
+    {
+      "id": "didp-05-unknown-kind",
+      "rule": "DIDP-05",
+      "precondition": "DID Resolution interface over a SAGE core",
+      "input": "Resolve did:sage with an unimplemented registry kind",
+      "expected": "ERROR",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "Problem type https://www.w3.org/ns/did#METHOD_NOT_SUPPORTED, sageCode id.unknown-kind, HTTP 501, no document."
+    },
+    {
+      "id": "didp-05-unsupported-accept",
+      "rule": "DIDP-05",
+      "precondition": "DID Resolution interface over a SAGE core",
+      "input": "Resolve with accept application/did+ld+json",
+      "expected": "ERROR",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "Problem type https://www.w3.org/ns/did#FEATURE_NOT_SUPPORTED, sageCode representation.unsupported, HTTP 501."
+    },
+    {
+      "id": "didp-05-deactivated",
+      "rule": "DIDP-05",
+      "precondition": "DID Resolution interface over a SAGE core",
+      "input": "Resolve a deactivated record",
+      "expected": "PROJECT",
+      "status": "NOT_RUN",
+      "evidence": "Future Inspector observation of a resolver with exact revisions, the authoritative record, the requested media type and the returned bytes or error.",
+      "detail": "didDocument is null, didDocumentMetadata.deactivated is true, HTTP 410."
+    }
+  ]
+}
