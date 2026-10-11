@@ -5,6 +5,11 @@ is `NOT_RUN`. This guide adds no rule. Where it gives a recommendation, the
 recommendation is the authors' suggestion for the reviewers to accept or reject;
 it is not a decision.
 
+On 2026-10-12 the project owner answered every question of sections 7 and 8 by
+accepting the recommendation; the answers are in the [review record](review.md)
+and are folded into the proposal. They are not an independent review, and a
+reviewer may still reject any of them.
+
 ## 1. Why this guide exists
 
 The [proposal](README.md) defines how SAGE would protect A2A 1.0 traffic and how
@@ -29,7 +34,7 @@ Under review are the proposed rules and their reasoning:
 - the "Amendments required at adoption" list, which names every place in the
   normative chapters that adoption would change;
 - the five open decisions (OPEN-1 to OPEN-5) and the cross-check items DG-1 to
-  DG-5 recorded in the README.
+  DG-5 recorded in the README, with the project owner's answers.
 
 Not under review, and not requested from reviewers:
 
@@ -78,7 +83,7 @@ base="$(python3 -c "import json; print(json.load(open('proposals/a2a-did-interop
 git diff --quiet "$base" HEAD -- spec/ profiles/ charter.md && echo unchanged
 ```
 
-The second command prints `{"status": "PROPOSAL_NOT_ADOPTED", "cases": 90,
+The second command prints `{"status": "PROPOSAL_NOT_ADOPTED", "cases": 92,
 "execution": "NOT_RUN"}`. The checker reads the README, the case plan, the basis
 and this guide. It checks that the status is still a proposal, that every source
 and related project is pinned, that every rule group has at least three planned

@@ -23,3 +23,29 @@ and where it is resolved. External review remains required before adoption.
 | The checker counted only negative cases, exempted DIDP-03 and accepted duplicate headings | MEDIUM | `verify.py` requires a positive and a negative case for every rule and unique headings; CI checks that `spec/` matches the reviewed revision. |
 | Missing negative cases for JWS headers, kids, card bodies, URL variants, versions, recipient, tenant, response signer, downgrade and `Accept` matching | MEDIUM | Added to `cases.json` (90 planned cases). |
 | Context digest wording, CID wording, DID Resolution RFC 9457 strength, untestable DIDP-01 case, conditional response coverage, tenant routing, `typ` domain separation, card churn, ID-03 list, version header details | LOW | Each is corrected in the text or recorded under "Amendments required at adoption" and OPEN-5. |
+
+## Project owner review (2026-10-12)
+
+The project owner chose to answer the open decisions and the did-go cross-check
+items of the [external review guide](external-review.md) instead of naming an
+external reviewer. The owner took part in the earlier design decisions, so this
+is not an independent review either. Each answer accepts the recommendation the
+guide offered; the reasons are the ones the guide gives. The answers are folded
+into the proposal text and do not adopt it.
+
+| Item | Answer | Where it is applied |
+|---|---|---|
+| OPEN-1 | HTTPS URIs with the SAGE version in the path, `https://sage-x-project.github.io/sage-spec/a2a/0.10.0/binding` and `.../extension`, compared as exact strings and never fetched | A2AB-01, A2AB-03 |
+| OPEN-2 | The SAGE interface keeps DID Core 1.0 as the default until DID 1.1 is a Recommendation | Decisions on the open items |
+| OPEN-3 | Register `did:sage` in the DID Extensions list after adoption and after the DG-1 amendment; registration is not a condition of adoption | Decisions on the open items |
+| OPEN-4 | Reserve `A2AInterface` in chapter 11 under TABLE-01 and register it with the method | Decisions on the open items, amendments list |
+| OPEN-5 | Keep the 86400-second card cap; revocation is caught by fresh resolution and the `recordVersion` check | A2AB-03, decisions on the open items |
+| DG-1 | Amend RESOLVE-01 at adoption to omit a verification relationship with no member, for every record | DIDP-01, DIDP-05, amendments list, compatibility; cases `didp-03-deactivated` and new `didp-01-no-empty-relationship` |
+| DG-2 | Keep `sageCode`; `advanced/sage` stands in front of the standard resolver, and did-go's standard core gains no problem extension members | DIDP-05 |
+| DG-3 | Keep the mapping; `advanced/sage` produces it in front of the standard resolver | DIDP-05 |
+| DG-4 | The DIDP-02 table binds only the SAGE interface; the DID Resolution interface follows DID Resolution and returns DIDP-01 projections | DIDP-02, DIDP-05; case `didp-05-unsupported-accept` now asks for `text/html`, new case `didp-02-did-resolution-interface` |
+| DG-5 | Confirmed: the DID 1.1 projection is produced from the record, not by re-serializing the DID Core 1.0 document | DIDP-01 |
+
+The case plan grows from 90 to 92 planned cases, all `NOT_RUN`. An independent
+external review is still open: the [guide](external-review.md) stays valid for
+any reviewer, who may also reject these answers.
