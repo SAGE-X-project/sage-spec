@@ -81,5 +81,53 @@
       "sha256": "f2b3db92fb0bf3489cb3841a0da0c0d88dff40797b64d40b6123085183886c7b"
     }
   },
-  "hash_note": "SHA-256 of the bytes each URL served on 2026-10-11. W3C pages can later gain status banners; a changed hash means the document must be re-reviewed, not that the cited text changed."
+  "related_projects": {
+    "did-go": {
+      "repository": "https://github.com/SAGE-X-project/did-go",
+      "revision": "bfaee58170b4e90f6099b88e391cc7b35abc664e",
+      "observed": "2026-10-12",
+      "license": "Apache-2.0",
+      "role": "Separate DID project: DID Core 1.0 and DID 1.1 standard core with no SAGE dependency; advanced/sage, which would implement DIDP-05, is not implemented before adoption",
+      "evidence": []
+    },
+    "did-inspector": {
+      "repository": "https://github.com/SAGE-X-project/did-inspector",
+      "revision": "0b0e7628f2844685e6fc8ad9d325ea35cfe73c5b",
+      "observed": "2026-10-12",
+      "license": "Apache-2.0",
+      "role": "Independent DID conformance inspector; its reports inspect did-go only and are not evidence for did:sage, the A2AB rules or any SAGE core",
+      "evidence": [
+        {
+          "path": "docs/evidence/didgo-did-core-1.0.json",
+          "sha256": "4d61851d2c5df7de5c4cda073d9e92d2db124a114b23014610f73bd1d3094d61",
+          "profile": "did-core-1.0",
+          "subject": "did-go",
+          "subject_revision": "bfaee58170b4",
+          "requirement": {
+            "statements": 172,
+            "PASS": 114,
+            "FAIL": 0,
+            "NOT_APPLICABLE": 1,
+            "NOT_RUN": 57
+          }
+        },
+        {
+          "path": "docs/evidence/didgo-did-1.1.json",
+          "sha256": "68c3df72a6734c425d4d6991956f6f3f51f3bcb979f599506b6a581611b333f7",
+          "profile": "did-1.1",
+          "subject": "did-go",
+          "subject_revision": "bfaee58170b4",
+          "requirement": {
+            "statements": 436,
+            "PASS": 307,
+            "FAIL": 0,
+            "NOT_APPLICABLE": 3,
+            "NOT_RUN": 126
+          }
+        }
+      ]
+    }
+  },
+  "hash_note": "SHA-256 of the bytes each URL served on 2026-10-11. W3C pages can later gain status banners; a changed hash means the document must be re-reviewed, not that the cited text changed.",
+  "related_note": "Related projects are informative. Their revisions are pinned so the boundary section and the cross-check can be reproduced; they adopt no rule and their reports do not run any planned case. The committed inspector reports record inspector revision e5698046bf413222a5b5c7455460e0937de21a7b, the pull request commit that main 0b0e762 squashed; regenerating them at 0b0e762 gave identical statements and totals."
 }
