@@ -1,8 +1,10 @@
 """Check the A2A and DID proposal's traceability only.
 
 This runs no A2A exchange, DID resolution or cryptography. It checks that the
-proposal is still a proposal, that its basis pins exact sources, and that every
-rule group has positive and negative planned cases.
+proposal is still a proposal, that its basis pins exact sources and related
+projects, that every rule group has positive and negative planned cases, and
+that the external review guide neither claims adoption nor drifts from the
+pinned revisions.
 """
 import copy
 import json
@@ -21,6 +23,8 @@ SOURCES = {'a2a-specification', 'a2a-proto', 'did-core-1.0', 'did-1.1', 'did-1.1
 HEX64 = '[0-9a-f]{64}'
 HEX40 = '[0-9a-f]{40}'
 DID11_CONTEXT_SHA256 = 'ea216ecc1cb02cd39b693dba2250141e270ba0bf95890be107dd9a9e8e43de85'
+RELATED = {'did-go', 'did-inspector'}
+DATE = '[0-9]{4}-[0-9]{2}-[0-9]{2}'
 
 
 def unique(pairs):
@@ -43,7 +47,8 @@ def require(value, message):
 
 def check_basis(basis):
     require(set(basis) == {'kind', 'status', 'conformance', 'sage_version', 'a2a_protocol_version',
-                           'did_projections', 'reviewed', 'sage_baseline', 'external_sources', 'hash_note'},
+                           'did_projections', 'reviewed', 'sage_baseline', 'external_sources',
+                           'related_projects', 'hash_note', 'related_note'},
             'closed basis')
     require(basis['kind'] == 'proposal-basis' and basis['status'] == 'PROPOSAL_NOT_ADOPTED' and
             basis['conformance'] == 'NOT_ESTABLISHED', 'proposal promotion')
@@ -64,6 +69,34 @@ def check_basis(basis):
     require(sources['did-1.1']['status'] == 'W3C Candidate Recommendation Snapshot' and
             sources['did-resolution']['status'] == 'W3C Candidate Recommendation Draft' and
             sources['did-core-1.0']['status'] == 'W3C Recommendation', 'W3C maturity is stated, not promoted')
+    check_related(basis['related_projects'])
+    require(type(basis['related_note']) is str and 'adopt no rule' in basis['related_note'], 'related note')
+
+
+def check_related(related):
+    require(set(related) == RELATED, 'related project set')
+    for name, row in related.items():
+        require(set(row) == {'repository', 'revision', 'observed', 'license', 'role', 'evidence'},
+                'related schema: ' + name)
+        require(row['repository'] == 'https://github.com/SAGE-X-project/' + name and
+                re.fullmatch(HEX40, row['revision']) and re.fullmatch(DATE, row['observed']), 'related pin: ' + name)
+        require(type(row['role']) is str and row['role'] and type(row['evidence']) is list, 'related role: ' + name)
+    require('not implemented before adoption' in related['did-go']['role'], 'advanced/sage status')
+    require(related['did-go']['evidence'] == [] and len(related['did-inspector']['evidence']) == 2,
+            'inspector evidence set')
+    for report in related['did-inspector']['evidence']:
+        require(set(report) == {'path', 'sha256', 'profile', 'subject', 'subject_revision', 'requirement'},
+                'evidence schema')
+        require(report['path'].startswith('docs/evidence/') and re.fullmatch(HEX64, report['sha256']), 'evidence pin')
+        require(report['subject'] == 'did-go' and len(report['subject_revision']) >= 7 and
+                related['did-go']['revision'].startswith(report['subject_revision']), 'evidence subject revision')
+        counts = report['requirement']
+        require(set(counts) == {'statements', 'PASS', 'FAIL', 'NOT_APPLICABLE', 'NOT_RUN'} and
+                all(type(v) is int and v >= 0 for v in counts.values()) and
+                counts['statements'] == sum(v for k, v in counts.items() if k != 'statements'),
+                'evidence totals')
+    require([r['profile'] for r in related['did-inspector']['evidence']] == ['did-core-1.0', 'did-1.1'],
+            'evidence profiles')
 
 
 def check_plan(plan, text):
@@ -103,14 +136,40 @@ def check_text(text):
     require('—' not in text, 'em dash in proposal text')
 
 
-def validate(basis, plan, text):
+def check_pins(basis, text, guide):
+    related = basis['related_projects']
+    for name, row in related.items():
+        require(row['revision'] in text and row['revision'] in guide, 'related revision not cited: ' + name)
+    for report in related['did-inspector']['evidence']:
+        counts = report['requirement']
+        phrase = '{} PASS and 0 FAIL of {}'.format(counts['PASS'], counts['statements'])
+        require(counts['FAIL'] > 0 or phrase in ' '.join(text.split()), 'evidence totals not cited: ' + report['profile'])
+
+
+def check_guide(guide):
+    require(guide.startswith('# External review guide: A2A 1.0 binding and DID 1.0/1.1 projections\n'),
+            'guide title')
+    flat = ' '.join(guide.split())
+    for phrase in ('proposed design, not adopted', 'Every planned case is `NOT_RUN`',
+                   'python3 -B proposals/a2a-did-interop/verify.py --self-test'):
+        require(phrase in flat, 'required guide statement: ' + phrase)
+    for n in range(1, 6):
+        require('### OPEN-{}'.format(n) in guide, 'guide lacks OPEN-{}'.format(n))
+    require(flat.count('Recommendation to the reviewers') >= 5, 'recommendations are not marked')
+    require('—' not in guide, 'em dash in guide text')
+
+
+def validate(basis, plan, text, guide):
     check_basis(basis)
     check_text(text)
+    check_guide(guide)
+    check_pins(basis, text, guide)
     return check_plan(plan, text)
 
 
 def inputs():
-    return load(ROOT / 'basis.json'), load(ROOT / 'cases.json'), (ROOT / 'README.md').read_text()
+    return (load(ROOT / 'basis.json'), load(ROOT / 'cases.json'), (ROOT / 'README.md').read_text(),
+            (ROOT / 'external-review.md').read_text())
 
 
 class Integrity(unittest.TestCase):
@@ -149,6 +208,21 @@ class Integrity(unittest.TestCase):
         self.refused(lambda v: v[0]['external_sources'].pop('rfc9864'))
         self.refused(lambda v: v[0]['external_sources']['did-1.1-context'].update(sha256='0' * 64))
         self.refused(lambda v: v[0]['sage_baseline'].update(branch_base_revision='main'))
+
+    def test_related_projects(self):
+        self.refused(lambda v: v[0]['related_projects'].pop('did-inspector'))
+        self.refused(lambda v: v[0]['related_projects']['did-go'].update(revision='main'))
+        self.refused(lambda v: v[0]['related_projects']['did-go'].update(role='implements advanced/sage'))
+        self.refused(lambda v: v[0]['related_projects']['did-inspector']['evidence'][0].update(subject_revision='0000000'))
+        self.refused(lambda v: v[0]['related_projects']['did-inspector']['evidence'][1]['requirement'].update(PASS=308))
+        self.refused(lambda v: v[0]['related_projects']['did-go'].update(revision='0' * 40))
+        self.refused(lambda v: v[0].pop('related_note'))
+
+    def test_guide(self):
+        self.refused(lambda v: v.__setitem__(3, v[3].replace('proposed design, not adopted', 'adopted design')))
+        self.refused(lambda v: v.__setitem__(3, v[3].replace('### OPEN-4', '### Service type')))
+        self.refused(lambda v: v.__setitem__(3, v[3].replace('Recommendation to the reviewers', 'Decision')))
+        self.refused(lambda v: v.__setitem__(3, v[3] + '\nAdopted \u2014 done.\n'))
 
     def test_text(self):
         self.refused(lambda v: v.__setitem__(2, v[2].replace('## DIDP-05: ', '## DIDP-5: ')))

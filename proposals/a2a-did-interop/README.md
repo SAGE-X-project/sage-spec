@@ -23,7 +23,11 @@ Decisions recorded with this proposal (2026-10-11):
    by an agent that offers SAGE protection.
 2. Resolution offers both a DID Core 1.0 projection and a DID 1.1 projection.
 3. A separate DID project, not the SAGE cores, owns general DID and credential
-   support; this proposal states only the boundary SAGE relies on.
+   support; this proposal states only the boundary SAGE relies on. That project
+   now exists as `SAGE-X-project/did-go`, checked by the independent
+   `SAGE-X-project/did-inspector`. The informative boundary section below pins
+   the revisions reviewed on 2026-10-12. Neither repository changes, decides or
+   adopts any rule of this proposal.
 
 ## Sources and their status
 
@@ -334,14 +338,134 @@ covered components and media type as they are.
 
 ## Boundary with the separate DID project (informative)
 
-A separate project, built in Go first, owns the DID 1.0 and DID 1.1 data models,
-their serialization, the DID Resolution interface, method plugins and later the
-issuer, holder and verifier roles. The SAGE cores may use its data model and
-serializer to emit the DIDP-01 projections. Resolution of `did:sage`, freshness,
-key selection and every protected-operation decision stay in the SAGE cores
-under chapters 06, 09 and 10. The DID project's `did:sage` driver wraps a SAGE
-core for external consumers and applies DIDP-05. A general-purpose resolver never
-becomes the source of key authority for a SAGE-protected operation.
+This section is informative. It records what exists outside this repository and
+what was compared; it adds no requirement and changes none. The A2AB and DIDP
+rules above are the only proposed rules, and they stay unadopted.
+
+### What exists now
+
+The separate DID project is
+[`SAGE-X-project/did-go`](https://github.com/SAGE-X-project/did-go), a Go
+library under the Apache License 2.0, reviewed at `main` commit
+`bfaee58170b4e90f6099b88e391cc7b35abc664e` (2026-10-12). Its conformance is
+checked by a separate repository,
+[`SAGE-X-project/did-inspector`](https://github.com/SAGE-X-project/did-inspector),
+reviewed at `main` commit `0b0e7628f2844685e6fc8ad9d325ea35cfe73c5b`. The
+[basis](basis.json) pins both revisions and the digests of the inspector
+reports cited below.
+
+- **Standard core.** did-go implements DID Core 1.0 and DID 1.1 in one superset
+  core, Controlled Identifiers 1.0, DID Resolution v1.0 (Candidate
+  Recommendation Draft 2026-10-01) with a resolver, a DID URL dereferencer and
+  the HTTPS binding, the `did:key` and `did:web` methods, a controller and a
+  relying party. Its documents `docs/12-standard-core-and-sage-extension.md`
+  and `docs/14-implementation-architecture.md` state the rule that standard
+  behavior comes first and that SAGE support is an opt-in extension that can
+  only be stricter than the standards.
+- **No SAGE dependency.** The root module `go.mod` has no `require` entry, and
+  no package in it imports SAGE. Resolution of `did:sage`, freshness, key
+  selection and every protected-operation decision stay in the SAGE cores under
+  chapters 06, 09 and 10. A SAGE core may use did-go's syntax and data model
+  packages to emit the DIDP-01 projections. did-go's `docs/12` section 4 states
+  the same trust boundary as DIDP-04: a general-purpose resolver never becomes
+  the source of key authority for a SAGE-protected operation.
+- **`advanced/sage` waits for adoption.** did-go designs an `advanced/sage`
+  module with its own `go.mod`: a `did:sage` driver that wraps a SAGE core for
+  external DID consumers, the DIDP-01 projections, a stricter consumption
+  profile and the DIDP-05 error mapping. The directory does not exist at the
+  reviewed revision, and did-go `docs/12` section 9 says it is not implemented
+  before this proposal is adopted. DIDP-05 therefore has no implementation yet;
+  it is to be implemented by `advanced/sage`.
+- **Inspector evidence.** The did-inspector reports
+  `docs/evidence/didgo-did-core-1.0.json` and `docs/evidence/didgo-did-1.1.json`
+  inspect did-go `bfaee58`. At requirement level the DID Core 1.0 profile has
+  114 PASS and 0 FAIL of 172 statements (1 NOT_APPLICABLE, 57 NOT_RUN), and the
+  DID 1.1 profile, which also covers Controlled Identifiers 1.0 and DID
+  Resolution, has 307 PASS and 0 FAIL of 436 (3 NOT_APPLICABLE, 126 NOT_RUN).
+  Each profile has one recommendation-level FAIL, on the producer writing terms
+  that the `@context` does not define; did-go records both as the accepted
+  deviation T10 in `docs/08-verification-report.md`. The reports state that
+  they are evidence for one run and not a certification. They say nothing about
+  `did:sage`, the A2AB rules or any SAGE core.
+
+### Cross-check of DIDP-01, DIDP-02 and DIDP-05 against did-go
+
+On 2026-10-12 the DIDP-01 projections and the DIDP-05 mapping were compared
+with did-go `bfaee58`, by reading its source and by a temporary Go program
+that is not delivered with this proposal. The program built both projections
+of one `did:sage:web` record (an Ed25519 signing key, an X25519 key and one
+`A2AInterface` service), consumed them with did-go's consumer in strict mode,
+and resolved them through did-go's `DefaultResolver`, dereferencer and HTTPS
+handler with a stub `sage` driver. The two inspector reports were regenerated
+locally from did-inspector `0b0e762` and matched the committed reports except
+for the recorded inspector revision. None of this executes a planned case;
+every case stays `NOT_RUN`.
+
+Observations that agree with the proposal:
+
+| Rule | Observation in did-go `bfaee58` |
+|---|---|
+| DIDP-01 | The DID 1.1 projection (string `@context` `https://www.w3.org/ns/did/v1.1`, `JsonWebKey`, JWK without `alg` or `kid`) labelled `application/did` is accepted as DID 1.1 JSON-LD with no dropped term. `vm/jwk.go` requires only `kty` and, for EC and OKP keys, `crv`. |
+| DIDP-01 | The DID Core 1.0 projection (no `@context`, `JsonWebKey2020`) labelled `application/did+json` is accepted as DID Core 1.0 JSON. |
+| DIDP-01 | `jsonld/contexts/did-v1.1.jsonld` has SHA-256 `ea216ecc1cb02cd39b693dba2250141e270ba0bf95890be107dd9a9e8e43de85`, the value pinned for `did-1.1-context` in the basis; did-go embeds it and never fetches a context. |
+| DIDP-02 | Media types `application/did` and `application/did+json` are the constants in `spec/profile.go`. A DID 1.1 projection labelled `application/did+json`, and a `v1` context under `application/did`, are both rejected in strict mode, so a consumer detects a mislabelled projection. |
+| DIDP-05 | Problem `type` URLs are `https://www.w3.org/ns/did#` plus the code (`resolution/errors.go`). The statuses match DID Resolution §12.1 as read in the pinned draft: `INVALID_DID` 400, `INVALID_OPTIONS` 400, `NOT_FOUND` 404, `INTERNAL_ERROR` 500, `METHOD_NOT_SUPPORTED` 501, `FEATURE_NOT_SUPPORTED` 501. |
+| DIDP-05 | An unsatisfiable `accept` gives `FEATURE_NOT_SUPPORTED` (501), the same reading of DID Resolution §4.4 that DIDP-05 uses (did-go `docs/12` section 6.2, step 4). |
+| DIDP-05 | A deactivated result has no document and `deactivated` `true`; the HTTPS binding answers 410 with `didDocument` null. A missing key fragment dereferences to `NOT_FOUND` (404). A driver's not-found error gives `NOT_FOUND`; any other driver failure gives `INTERNAL_ERROR`, never `NOT_FOUND`. |
+
+### Open items from the cross-check
+
+These items are recorded, not resolved. Neither the proposal nor did-go was
+changed because of them. They are for the external review and for adoption.
+
+- **DG-1, empty verification relationships.** Chapter 10 RESOLVE-01, which the
+  DID Core 1.0 projection copies exactly, projects a `created` or
+  `deactivated` record with empty verification method and relationship arrays,
+  and DIDP-01 and DIDP-05 keep that shape. DID Core 1.0 §5.3 and Controlled
+  Identifiers 1.0 §2.3 say each relationship property is optional and, if
+  present, MUST be a set of one or more verification methods. did-go rejects
+  such a document in both projections (`INVALID_CONTROLLED_IDENTIFIER_DOCUMENT`,
+  statements `cid10#authentication.2` and `cid10#key-agreement.2`); an empty
+  `verificationMethod` array with the relationship members left out is
+  accepted. The same applies to any record whose relationship has no member.
+  The rule is in the normative chapter, so a fix needs an amendment of
+  RESOLVE-01 at adoption. Cases `didp-03-deactivated` and the DIDP-05
+  `created` statement are affected.
+- **DG-2, the `sageCode` member.** did-go's `resolution.Error` models only
+  `type`, `title`, `status`, `detail` and `instance`, and `DefaultResolver`
+  replaces a driver error with a new error: the not-found, unsupported,
+  invalid-input and invalid-document sentinels map to fixed codes, and any
+  other error becomes `INTERNAL_ERROR` with a fixed detail. A `did:sage` driver
+  plugged into the standard resolver therefore cannot emit `sageCode`. A
+  malformed identifier such as a mixed-case method is refused as `INVALID_DID`
+  before any driver runs. Either did-go gains an extension point for problem
+  extension members, or `advanced/sage` fronts the standard resolver, or DIDP-05
+  drops `sageCode`.
+- **DG-3, codes no driver can produce.** DIDP-05 maps `id.unknown-kind` to
+  `METHOD_NOT_SUPPORTED` and `version.unsupported` to `INVALID_OPTIONS`. Through
+  `DefaultResolver` a driver's unsupported error becomes `FEATURE_NOT_SUPPORTED`
+  and any other error `INTERNAL_ERROR`; a driver-returned
+  `METHOD_NOT_SUPPORTED` was observed as `INTERNAL_ERROR`. The mapping is
+  reachable only if `advanced/sage` does not rely on the standard resolver's
+  error mapping, or did-go adds a way for a driver to return a DID Resolution
+  error.
+- **DG-4, scope of DIDP-02 on the DID Resolution interface.** DIDP-02 amends
+  the SAGE resolver and its chapter 10 binding. It does not say whether its
+  table also binds the DIDP-05 component. did-go's standard resolver matches
+  `accept` with RFC 9110 ranges and q-values and transcodes, so a stub `sage`
+  driver was served as `application/did+ld+json` (a JSON-LD document with the
+  `v1` context and `JsonWebKey2020`) and a q-value list was accepted. Its HTTPS
+  binding answers an absent `Accept`, `*/*` and `application/did-resolution`
+  with the complete resolution result, where DIDP-02 returns the bare DID Core
+  1.0 projection or rejects. did-go `docs/12` section 6.2 reads DIDP-02 as
+  binding `advanced/sage` (exact single type, no q-values, no transcoding), but
+  the resolver offers no such profile option today; its producer and consumer
+  are injectable. Case `didp-05-unsupported-accept` depends on this answer.
+- **DG-5, where the DID 1.1 projection is produced.** DIDP-01 changes the
+  verification method type between projections, so the DID 1.1 projection is
+  not a re-serialization of the DID Core 1.0 document. A `did:sage` driver must
+  offer both media types itself, as the stub driver did; this matches the
+  planned `advanced/sage` projection file and needs no rule change.
 
 ## Compatibility and planned evidence
 
@@ -352,7 +476,8 @@ are the SAGE binding, the A2A extension, the card shape and identity binding,
 interface eligibility, the DID 1.1 projection, `Accept` matching and the DID
 Resolution error mapping. Affected implementations are the Go and Rust cores
 (projection and card verification), `sage-adk` (A2A client and server hosts)
-and the future DID project. No existing vector changes meaning.
+and the planned `advanced/sage` module of did-go. No existing vector changes
+meaning.
 
 The [case plan](cases.json) lists positive and negative cases for every rule
 group, and the [document checker](verify.py) checks traceability only. Inspector
