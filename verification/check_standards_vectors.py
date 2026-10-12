@@ -8,6 +8,7 @@ import re
 import subprocess
 import tempfile
 from pathlib import Path
+from check_a2a_did_adoption import prior_path as at_a2a_did_base
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -166,8 +167,8 @@ def verify_data(root, data):
             'fixture identity or evidence status')
     require(set(data['source_sha256']) == SOURCE_PATHS, 'source inventory')
     for name, digest in data['source_sha256'].items():
-        require(sha(root / name) == digest, 'source bytes: ' + name)
-    trace = json.loads((root / 'verification/traceability.json').read_text())
+        require(sha(at_a2a_did_base(root, name)) == digest, 'source bytes: ' + name)
+    trace = json.loads(at_a2a_did_base(root, 'verification/traceability.json').read_text())
     planned = {case['id']: case for case in trace['cases']}
     require([case['case_id'] for case in data['cases']] == CASE_IDS
             and all(planned[name]['evidence_status'] == 'planned_not_executed'

@@ -2,14 +2,14 @@
   "schema_version": 1,
   "protocol_version": "0.10.0",
   "spec_revision": "44df132fee5925182018ce089dc82435cb353f8a",
-  "traceability_sha256": "410b1ffb7e6da0462d8c3b3ecae4ba6ed2a9c1f0bc14583fe4d17fa4d7ef5ba7",
+  "traceability_sha256": "cb7f06207a3fd88bac403760153fece9b41f3348260bc2599e2b1bc2d05dccce",
   "go_revision": "49379baadc6baec9ca8b4bb7d15bf43d65144bd7",
   "rust_revision": "ef63d76b88fe4d6ddbc7ae0fcfdbce7beab4d396",
   "scope": "Source candidates are navigation hints, not conformance; only the named reviewed rules have bounded findings.",
   "counts": {
-    "rules": 91,
+    "rules": 104,
     "reviewed": 91,
-    "pending": 0
+    "pending": 13
   },
   "rules": [
     {
@@ -469,6 +469,46 @@
       "rust_source_candidate": "src/did/resolver.rs"
     },
     {
+      "rule_id": "DIDP-01",
+      "source": "spec/10-resolution.md",
+      "case_count": 7,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did/resolver.go",
+      "rust_source_candidate": "src/did/resolver.rs"
+    },
+    {
+      "rule_id": "DIDP-02",
+      "source": "spec/10-resolution.md",
+      "case_count": 9,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did/resolver.go",
+      "rust_source_candidate": "src/did/resolver.rs"
+    },
+    {
+      "rule_id": "DIDP-03",
+      "source": "spec/10-resolution.md",
+      "case_count": 3,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did/resolver.go",
+      "rust_source_candidate": "src/did/resolver.rs"
+    },
+    {
+      "rule_id": "DIDP-04",
+      "source": "spec/10-resolution.md",
+      "case_count": 3,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did/resolver.go",
+      "rust_source_candidate": "src/did/resolver.rs"
+    },
+    {
+      "rule_id": "DIDP-05",
+      "source": "spec/10-resolution.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": "pkg/agent/did/resolver.go",
+      "rust_source_candidate": "src/did/resolver.rs"
+    },
+    {
       "rule_id": "TABLE-01",
       "source": "spec/11-registries.md",
       "case_count": 4,
@@ -521,6 +561,14 @@
       "source": "spec/11-registries.md",
       "case_count": 3,
       "status": "DIAGNOSTIC_BOUNDARY_NOT_ESTABLISHED",
+      "go_source_candidate": "pkg/agent/registry010",
+      "rust_source_candidate": "src/registry010"
+    },
+    {
+      "rule_id": "TABLE-08",
+      "source": "spec/11-registries.md",
+      "case_count": 2,
+      "status": "PENDING_CLAUSE_REVIEW",
       "go_source_candidate": "pkg/agent/registry010",
       "rust_source_candidate": "src/registry010"
     },
@@ -739,6 +787,62 @@
       "status": "PARTIAL_CLAIM_INVALIDATION_AND_SCHEDULE_REVIEW",
       "go_source_candidate": "pkg/agent/guard010",
       "rust_source_candidate": "src/guard010"
+    },
+    {
+      "rule_id": "A2AB-01",
+      "source": "profiles/a2a-1.0-binding.md",
+      "case_count": 6,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": null,
+      "rust_source_candidate": null
+    },
+    {
+      "rule_id": "A2AB-02",
+      "source": "profiles/a2a-1.0-binding.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": null,
+      "rust_source_candidate": null
+    },
+    {
+      "rule_id": "A2AB-03",
+      "source": "profiles/a2a-1.0-binding.md",
+      "case_count": 8,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": null,
+      "rust_source_candidate": null
+    },
+    {
+      "rule_id": "A2AB-04",
+      "source": "profiles/a2a-1.0-binding.md",
+      "case_count": 9,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": null,
+      "rust_source_candidate": null
+    },
+    {
+      "rule_id": "A2AB-05",
+      "source": "profiles/a2a-1.0-binding.md",
+      "case_count": 23,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": null,
+      "rust_source_candidate": null
+    },
+    {
+      "rule_id": "A2AB-06",
+      "source": "profiles/a2a-1.0-binding.md",
+      "case_count": 8,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": null,
+      "rust_source_candidate": null
+    },
+    {
+      "rule_id": "A2AB-07",
+      "source": "profiles/a2a-1.0-binding.md",
+      "case_count": 5,
+      "status": "PENDING_CLAUSE_REVIEW",
+      "go_source_candidate": null,
+      "rust_source_candidate": null
     }
   ]
 }

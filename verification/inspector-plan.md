@@ -257,3 +257,13 @@ The 2026-09-29 standards clause revision adds eight planned parents:
 parents; none of the eight inherits a historical PASS result. P-256 is an
 optional supported HTTP profile: unsupported implementations report
 UNSUPPORTED rather than substituting another key or algorithm.
+
+## A2A 1.0 binding and DID projection cases
+
+The 2026-10-12 adoption adds 94 planned parents: 92 from the reviewed
+[proposal case plan](../proposals/a2a-did-interop/cases.json) under A2AB-01 to
+A2AB-07 and DIDP-01 to DIDP-05, and `TABLE-08-P` and `TABLE-08-N01` for the
+reserved service type. The current plan has 583 distinct parents; none inherits
+a historical PASS result. A2A cases need an A2A 1.0 client and server pinned by
+revision; DID cases need an independent DID consumer and resolver, for example
+the separate did-inspector, pinned the same way.

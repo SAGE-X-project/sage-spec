@@ -5,6 +5,7 @@ from pathlib import Path
 
 from check_mcp_external_review_package import ROOT, TARGET, verify as verify_package
 from review_target import pinned_path as reviewed_path
+from check_a2a_did_adoption import prior_path as at_a2a_did_base
 
 
 def require(condition, message):
@@ -33,7 +34,7 @@ def verify_record(root, record):
             and reviewers[0]['finding_ids'] == []
             and reviewers[1]['finding_ids'] == ['LLM-01', 'LLM-02'],
             'reviewer identity or conflict')
-    package = json.loads((root / record['review_package']).read_text())
+    package = json.loads(at_a2a_did_base(root, record['review_package']).read_text())
     require(set(reviewers[0]['hash_checked_paths']).issubset(package['target_sha256']),
             'reviewer scope')
     supplemental = record['supplemental_target_sha256']
@@ -48,7 +49,7 @@ def verify_record(root, record):
             and all(f['status'] == 'OPEN_NORMATIVE' for f in record['findings']),
             'open normative findings')
     for finding in record['findings']:
-        require(all((root / anchor.split(':')[0]).is_file()
+        require(all(at_a2a_did_base(root, anchor.split(':')[0]).is_file()
                     for anchor in finding['anchors'])
                 and all(finding[key] for key in ('trigger', 'ambiguity', 'consequence', 'correction')),
                 'finding evidence')

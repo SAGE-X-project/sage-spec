@@ -7,6 +7,7 @@ from pathlib import Path
 
 from check_mcp_independent_llm_review import verify as verify_review
 from check_registry_proof_revision import verify as verify_fixture
+from check_a2a_did_adoption import prior_path as at_a2a_did_base
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,7 +45,7 @@ def verify_record(root, record):
             and record['review_target_revision'] == 'd86ca1a4d326d6090e50d100b834d38ec204a2c2',
             'revision identity')
     require(record['prior_review_report'] == 'verification/mcp-independent-llm-review.json'
-            and sha(root / record['prior_review_report']) == record['prior_review_report_sha256']
+            and sha(at_a2a_did_base(root, record['prior_review_report'])) == record['prior_review_report_sha256']
             and record['historical_snapshot_root'] == 'verification/history/llm-review-target-2026-09-25',
             'prior review provenance')
     old_files = {'spec/00-overview.md', 'spec/09-registry.md',
@@ -56,7 +57,7 @@ def verify_record(root, record):
                 'verification/vectors/registry-proof-0.10.0.json',
                 'verification/registry-proof-revision.md'}, 'revision source inventory')
     for name, digest in record['historical_sha256'].items():
-        require(sha(root / record['historical_snapshot_root'] / name) == digest,
+        require(sha(at_a2a_did_base(root, record['historical_snapshot_root']) / name) == digest,
                 'historical source: ' + name)
     for name, digest in record['current_sha256'].items():
         require(sha(correction_root / name) == digest, 'correction source: ' + name)
@@ -84,7 +85,7 @@ def verify_record(root, record):
                                  'new_parent_cases': 8, 'total_parent_cases': 479,
                                  'mandatory_children': 26}
             and record['new_case_ids'] == list(OWNERS), 'plan counts or cases')
-    old = json.loads((root / record['historical_snapshot_root'] /
+    old = json.loads((at_a2a_did_base(root, record['historical_snapshot_root']) /
                       'verification/traceability.json').read_text())
     current = json.loads((correction_root / 'verification/traceability.json').read_text())
     require(old['protocol_version'] == current['protocol_version'] == '0.10.0'

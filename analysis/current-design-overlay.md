@@ -15,24 +15,24 @@ overlay describes 45 requirements, 77 rule groups and 386 planned cases at
 that earlier snapshot. Rewriting those nodes in place would make the original
 AST and document evidence appear current. The present
 [traceability plan](../verification/traceability.json) has 45 requirements,
-91 rule groups and 489 distinct planned cases. The new graph records that
+104 rule groups and 583 distinct planned cases. The new graph records that
 current authored trace while referring to the earlier AST graph by hash.
 No source code was reparsed for this update.
 
 | Evidence | Pinned SHA-256 | Scope |
 | --- | --- | --- |
-| Current traceability | 410b1ffb7e6da0462d8c3b3ecae4ba6ed2a9c1f0bc14583fe4d17fa4d7ef5ba7 | 45 requirements, 91 rule groups, 489 planned cases |
+| Current traceability | cb7f06207a3fd88bac403760153fece9b41f3348260bc2599e2b1bc2d05dccce | 45 requirements, 104 rule groups, 583 planned cases |
 | Historical AST/document graph | 9ebc83fd13d9abd96f1080e5c95ab8e35f148d94ec81a88e64b8f137d6026f3c | 58 selected Go packages, 1,777 raw symbols, older normative overlay |
 
-The generated overlay has 645 nodes and 895 edges. A requirement links to
+The generated overlay has 753 nodes and 1036 edges. A requirement links to
 its rule groups; a rule links to its source document and planned cases.
 Eight cases have an additional MOWN-06 rule reference besides their primary
-owner, so 497 rule-to-case edges still describe only 489 distinct cases.
+owner, so 591 rule-to-case edges still describe only 583 distinct cases.
 The graph does not convert any planned case into a PASS.
 
 ## Layer reading
 
-The 36 document-to-layer edges are **candidate implementation
+The 39 document-to-layer edges are **candidate implementation
 responsibilities**. A document may address several layers; these edges do
 not assign every rule in that document to every listed layer. The later
 clause-based Go/Rust gap map must refine them.

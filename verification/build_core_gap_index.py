@@ -27,6 +27,7 @@ CANDIDATES = {
     'spec/09-registry.md': ('pkg/agent/registry010', 'src/registry010'),
     'spec/10-resolution.md': ('pkg/agent/did/resolver.go', 'src/did/resolver.rs'),
     'spec/11-registries.md': ('pkg/agent/registry010', 'src/registry010'),
+    'profiles/a2a-1.0-binding.md': (None, None),
     'profiles/agent-mcp-security.md': ('pkg/agent/guard010', 'src/guard010'),
     'profiles/non-http-mcp-security.md': ('pkg/agent/guard010', 'src/guard010'),
     'PROCESS.md': (None, None),
@@ -130,7 +131,7 @@ REVIEWED = {
 def build():
     source = (ROOT / 'verification/traceability.json').read_bytes()
     trace = json.loads(source)
-    if len(trace['rules']) != 91 or {r['source'] for r in trace['rules']} != set(CANDIDATES):
+    if len(trace['rules']) != 104 or {r['source'] for r in trace['rules']} != set(CANDIDATES):
         raise ValueError('rule count or source set changed; update the index deliberately')
     rows = []
     for rule in trace['rules']:

@@ -101,3 +101,16 @@ conformance claim. A released 0.10.0 would instead require a new exact version
 under section 5 of the overview. Adopting implementation requirements
 precedes core implementation; it does not satisfy verification or stabilisation gates.
 The preserved original working-tree files are not overwritten by the isolated adoption.
+
+## A2A 1.0 binding and DID projection adoption
+
+The reviewed [proposal](proposals/a2a-did-interop/README.md) is adopted as a
+0.10.0 normative design on 2026-10-12. The
+[A2A 1.0 binding](profiles/a2a-1.0-binding.md) owns A2AB-01 to A2AB-07;
+[chapter 10](spec/10-resolution.md) owns DIDP-01 to DIDP-05 and the amended
+RESOLVE-01, RESOLVE-03 and RESOLVE-05; chapter 06 ID-03 and chapter 11
+TABLE-04, TABLE-07 and the new TABLE-08 carry the listed amendments. The
+[adoption record](verification/a2a-did-adoption.json) pins the base revision,
+the preserved pre-adoption files and the 104-group, 583-parent plan. The
+proposal stays a historical snapshot. Adoption is not a release, an
+implementation, an Inspector result or an interoperability claim.

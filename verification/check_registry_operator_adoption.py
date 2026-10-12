@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from check_web_registry_media_contract import verify as verify_media
+from check_a2a_did_adoption import prior_path as at_a2a_did_base
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -84,7 +85,7 @@ def verify(root=ROOT):
         (CANDIDATE, record['candidate_sha256']),
         (VECTOR, record['subconditions_sha256']),
     ):
-        require(sha(root / path) == digest, 'source bytes: ' + path)
+        require(sha(at_a2a_did_base(root, path)) == digest, 'source bytes: ' + path)
     old = (root / HISTORY / SPEC).read_text()
     current = (root / SPEC).read_text()
     require('## 9. Operator transactions' not in old
@@ -95,7 +96,7 @@ def verify(root=ROOT):
             and 'MUST quarantine further' in current
             and 'MUST recover grant and' in current,
             'normative operator clause')
-    trace = json.loads((root / TRACE).read_text())
+    trace = json.loads(at_a2a_did_base(root, TRACE).read_text())
     rules = {item['id']: item for item in trace['rules']}
     cases = {item['id']: item for item in trace['cases']}
     require(len(trace['requirements']) == 45 and len(rules) == 91
@@ -126,7 +127,7 @@ def verify(root=ROOT):
                 and parent in rules[parent[:6]]['case_ids']
                 and cases[parent]['evidence_status'] == 'planned_not_executed',
                 'vector mapping or claim: ' + item['id'])
-    overlay = json.loads((root / OVERLAY).read_text())
+    overlay = json.loads(at_a2a_did_base(root, OVERLAY).read_text())
     require(overlay['traceability']['sha256'] == record['traceability_sha256']
             and overlay['traceability']['planned_cases'] == 489
             and any(node.get('path') == SPEC

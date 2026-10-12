@@ -10,6 +10,7 @@ from check_standards_clause_revision import CURRENT_PATHS, verify_current_source
 
 from check_mcp_adoption import pinned_path as original_pinned_path, verify as verify_historical
 from check_mcp_errata_candidate import verify_digest
+from check_a2a_did_adoption import prior_path as at_a2a_did_base
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,7 +42,7 @@ def pinned_path(root, record, name):
     historical = root / HISTORY / name
     standards = root / 'verification/history/standards-clauses-base-2026-09-29' / name
     path = historical if historical.is_file() else (
-        standards if name in CURRENT_PATHS and standards.is_file() else root / name)
+        standards if name in CURRENT_PATHS and standards.is_file() else at_a2a_did_base(root, name))
     require(sha256(path) == expected, "current identity: " + name)
     if (root / 'verification/standards-clause-revision.json').is_file():
         verify_current_sources(root)
@@ -51,13 +52,13 @@ def pinned_path(root, record, name):
 def verify(root=ROOT):
     verify_historical(root)
     record = json.loads((root / "verification/mcp-errata-adoption.json").read_text())
-    old_record = json.loads((root / record["prior_adoption"]).read_text())
+    old_record = json.loads(at_a2a_did_base(root, record["prior_adoption"]).read_text())
     require(record["kind"] == "mcp-errata-normative-design-adoption" and record["schema_version"] == 1,
             "record identity")
     require(record["status"] == "AMENDED_NORMATIVE_DESIGN" and record["protocol_version"] == "0.10.0"
             and record["mcp_version"] == "2025-06-18", "revision status/version")
     require(record["prior_revision"] == "497c1045e2cc9b9d118d958443e678f212f57803"
-            and sha256(root / record["prior_adoption"]) == record["prior_adoption_sha256"],
+            and sha256(at_a2a_did_base(root, record["prior_adoption"])) == record["prior_adoption_sha256"],
             "prior adoption provenance")
     require(record["conformance"] == "NOT_ESTABLISHED" and record["inspector_revised_cases"] == "NOT_RUN"
             and record["external_audit"] == "NOT_PERFORMED" and record["release_or_tag_created"] is False,
@@ -67,7 +68,7 @@ def verify(root=ROOT):
                                   "mandatory_children": 26}, "counts")
     require(record["new_case_ids"] == list(OWNERS), "new case identities")
     require(record["historical_errata_review"] == "verification/post-adoption-errata-review.json"
-            and sha256(root / record["historical_errata_review"]) == record["historical_errata_review_sha256"]
+            and sha256(at_a2a_did_base(root, record["historical_errata_review"])) == record["historical_errata_review_sha256"]
             and record["dispositions"] == {"ADOPT-02": "RESOLVED_IN_AMENDED_DESIGN",
                                            "ADOPT-03": "RESOLVED_IN_AMENDED_DESIGN",
                                            "ADOPT-05": "OPEN_PROVENANCE",
@@ -80,10 +81,10 @@ def verify(root=ROOT):
     for name, expected in record["historical_sha256"].items():
         require((name not in old_record["normative_sha256"]
                  or expected == old_record["normative_sha256"][name])
-                and sha256(root / record["historical_snapshot_root"] / name) == expected,
+                and sha256(at_a2a_did_base(root, record["historical_snapshot_root"]) / name) == expected,
                 "historical identity: " + name)
 
-    descriptor = (root / record["descriptor"]).read_bytes()
+    descriptor = at_a2a_did_base(root, record["descriptor"]).read_bytes()
     require(hashlib.sha256(descriptor).hexdigest() == record["descriptor_file_sha256"],
             "descriptor file identity")
     manifest = json.loads((root / "proposals/non-http-mcp-errata/descriptor-digest.json").read_text())
@@ -92,7 +93,7 @@ def verify(root=ROOT):
             and record["descriptor_digest"] == manifest["descriptor_digest"],
             "binding vector")
 
-    historical = json.loads((root / record["historical_snapshot_root"] / "verification/traceability.json").read_text())
+    historical = json.loads((at_a2a_did_base(root, record["historical_snapshot_root"]) / "verification/traceability.json").read_text())
     current = json.loads(pinned_path(root, record, "verification/traceability.json").read_text())
     require(current["status"] == historical["status"] == "verification_plan_not_executed"
             and current["requirements"] == historical["requirements"]

@@ -91,6 +91,7 @@ not an alternative encoding. Legacy `v1` labels are not 0.10.0 aliases.
 | `sage-pop-0.10.0` | signing-key possession/KEM endorsement | `09-registry.md` |
 | `sage-claim-0.10.0` | registry claim commitment | `09-registry.md` |
 | `sage-card-0.10.0` | SAGE card proof | `07-a2a.md` |
+| `sage-a2a-card+jws` | JWS `typ` of the SAGE signature on an A2A card | `../profiles/a2a-1.0-binding.md` |
 | `sage-execution-intent\|0.10.0`, `sage-tool-result\|0.10.0` | Execution Guard intent/result (followed by NUL) | `../profiles/agent-mcp-security.md` |
 | `sage-wire-request\|0.10.0`, `sage-wire-response\|0.10.0` | signed transport domains (followed by LF) | `08-transport.md` |
 | `sage-hpke-combiner\|0.10.0`, `sage-hpke-ack\|0.10.0` | handshake derivation and confirmation | `04-hpke.md` |
@@ -178,6 +179,24 @@ returns a single authentication failure and records the code locally.
 | `key.revoked` | the key is revoked |
 | `pop.bad` | a proof of possession did not verify |
 | `session.unknown`, `session.replay`, `session.window`, `session.aead` | session record failures |
+| `representation.unsupported` | the requested resolution media type is not offered (`10-resolution.md` DIDP-02) |
 
 Resolution errors are reported as problem details (RFC 9457) whose type is
 the code above, as `10-resolution.md` §5 defines.
+
+## 8. Service types — TABLE-08 (R-3, R-34)
+
+Registry services (`09-registry.md`) carry a free `type` of 1 to 64 ASCII
+bytes. The types below have a meaning that a SAGE rule depends on. A record MAY
+carry other types; they have no SAGE meaning, and a verifier MUST NOT treat a
+type that differs from a listed one in any byte, including letter case, as that
+listed type.
+
+| Type | Meaning | Defined in |
+|---|---|---|
+| `A2AInterface` | the `uri` is an A2A interface URL of the agent; a card interface is eligible only if its `url` equals such a `uri` byte for byte | `../profiles/a2a-1.0-binding.md` A2AB-06 |
+
+The DID 1.1 `v1.1` context does not define `A2AInterface`, so a consumer that
+performs JSON-LD processing cannot expand it to a defined IRI. Registering the
+type in the W3C DID Extensions list, together with `did:sage`, is planned after
+adoption and is not a condition of this table.

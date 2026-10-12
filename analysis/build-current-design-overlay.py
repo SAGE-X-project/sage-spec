@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "analysis/current-design-overlay.json"
 TRACE_PATH = "verification/traceability.json"
 HISTORICAL_GRAPH_PATH = "analysis/graphs.json"
-EXPECTED_TRACE_SHA256 = "410b1ffb7e6da0462d8c3b3ecae4ba6ed2a9c1f0bc14583fe4d17fa4d7ef5ba7"
+EXPECTED_TRACE_SHA256 = "cb7f06207a3fd88bac403760153fece9b41f3348260bc2599e2b1bc2d05dccce"
 EXPECTED_HISTORICAL_GRAPH_SHA256 = "9ebc83fd13d9abd96f1080e5c95ab8e35f148d94ec81a88e64b8f137d6026f3c"
 
 # A document can span several implementation responsibilities. These edges are
@@ -19,6 +19,7 @@ EXPECTED_HISTORICAL_GRAPH_SHA256 = "9ebc83fd13d9abd96f1080e5c95ab8e35f148d94ec81
 SOURCE_LAYERS = {
     "PROCESS.md": (),
     "charter.md": (),
+    "profiles/a2a-1.0-binding.md": ("L0", "L1", "L2"),
     "profiles/agent-mcp-security.md": ("L2", "L3"),
     "profiles/non-http-mcp-security.md": ("L0", "L1", "L2", "L3"),
     "spec/00-overview.md": ("L0", "L2", "L3"),
@@ -61,7 +62,7 @@ def build():
     rules = trace["rules"]
     cases = trace["cases"]
     if (trace["protocol_version"], len(requirements), len(rules), len(cases)) != (
-        "0.10.0", 45, 91, 489
+        "0.10.0", 45, 104, 583
     ):
         raise ValueError("unexpected normative trace inventory")
     sources = {rule["source"] for rule in rules}

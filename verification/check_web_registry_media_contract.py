@@ -4,6 +4,7 @@ import hashlib
 import json
 import re
 from pathlib import Path
+from check_a2a_did_adoption import prior_path as at_a2a_did_base
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -114,9 +115,9 @@ def verify(root=ROOT):
     require(sha(root / OLD_PATH) == OLD_SHA256, 'historical source bytes')
     require(sha(media_root / record['current_source']) == record['current_sha256']
             and record['current_sha256'] != OLD_SHA256, 'current source bytes')
-    require(sha(root / 'verification/traceability.json') == TRACE_SHA256,
+    require(sha(at_a2a_did_base(root, 'verification/traceability.json')) == TRACE_SHA256,
             'unchanged traceability bytes')
-    require(sha(root / record['historical_overlay']) == OLD_OVERLAY_SHA256,
+    require(sha(at_a2a_did_base(root, record['historical_overlay'])) == OLD_OVERLAY_SHA256,
             'historical overlay bytes')
     require(sha(media_root / record['current_overlay']) == record['current_overlay_sha256']
             and record['current_overlay_sha256'] != OLD_OVERLAY_SHA256,
@@ -131,7 +132,7 @@ def verify(root=ROOT):
             and '`record.invalid`' in current
             and '`size.exceeded`' in current,
             'normative media and error decision')
-    trace = json.loads((root / 'verification/traceability.json').read_text())
+    trace = json.loads(at_a2a_did_base(root, 'verification/traceability.json').read_text())
     overlay = json.loads((media_root / record['current_overlay']).read_text())
     require(overlay['traceability']['sha256'] == TRACE_SHA256
             and overlay['traceability']['planned_cases'] == 489

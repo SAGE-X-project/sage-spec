@@ -7,6 +7,7 @@ from pathlib import Path
 
 from check_registry_proof_adoption import verify_record as verify_prior_record
 from check_standards_clause_revision import verify_current_sources
+from check_a2a_did_adoption import prior_path as at_a2a_did_base
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,7 +32,7 @@ def verify(root=ROOT):
     # must validate; pinning old bytes must not mask current-source changes.
     verify_current_sources(root)
     record = json.loads((root / 'verification/standards-scope-revision.json').read_text())
-    prior_path = root / record['prior_record']
+    prior_path = at_a2a_did_base(root, record['prior_record'])
     prior = json.loads(prior_path.read_text())
     verify_prior_record(root, prior)
     require(record['schema_version'] == 1
@@ -71,7 +72,7 @@ def verify(root=ROOT):
         require(sha(root / HISTORICAL_ROOT / name) == digest,
                 'historical source: ' + name)
 
-    previous = json.loads((root / record['prior_source_snapshot_root'] /
+    previous = json.loads((at_a2a_did_base(root, record['prior_source_snapshot_root']) /
                            'verification/traceability.json').read_text())
     current = json.loads((root / HISTORICAL_ROOT /
                           'verification/traceability.json').read_text())

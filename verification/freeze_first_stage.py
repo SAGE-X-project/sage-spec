@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+from check_a2a_did_adoption import prior_path as at_a2a_did_base
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -38,7 +39,7 @@ def require(value, message):
 
 
 def inspect(root=ROOT):
-    trace = json.loads((root / 'verification/traceability.json').read_bytes())
+    trace = json.loads(at_a2a_did_base(root, 'verification/traceability.json').read_bytes())
     operators = json.loads((root / 'verification/vectors/registry-operator-0.10.0.json').read_bytes())
     standards = (root / 'verification/standards-application-matrix.md').read_text()
     rules = {item['id']: item for item in trace['rules']}
@@ -58,7 +59,7 @@ def inspect(root=ROOT):
                 and row['evidence_status'] == 'planned_not_executed',
                 'unmapped operator subcondition: ' + row['id'])
     for rule in rules.values():
-        source = root / rule['source']
+        source = at_a2a_did_base(root, rule['source'])
         lines = source.read_text().splitlines()
         require(1 <= rule['line'] <= len(lines) and
                 rule['id'] in lines[rule['line'] - 1],
@@ -70,7 +71,7 @@ def inspect(root=ROOT):
             committed = subprocess.check_output(
                 ['git', 'show', f'{SOURCE_REVISION}:{name}'],
                 cwd=root, timeout=10)
-            require((root / name).read_bytes() == committed,
+            require(at_a2a_did_base(root, name).read_bytes() == committed,
                     'source differs from frozen revision: ' + name)
     return {
         'schema_version': 1,
@@ -81,7 +82,7 @@ def inspect(root=ROOT):
         'counts': {'requirements': 45, 'rule_groups': 91, 'parent_cases': 489,
                    'traceability_children': 26, 'operator_subconditions': 17,
                    'standards_sources': 22},
-        'source_sha256': {name: digest(root / name) for name in SOURCES},
+        'source_sha256': {name: digest(at_a2a_did_base(root, name)) for name in SOURCES},
         'implementation_conformance': 'NOT_ESTABLISHED',
         'independent_external_audit': 'NOT_PERFORMED',
     }

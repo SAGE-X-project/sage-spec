@@ -22,10 +22,11 @@ Implementations are evidence, never authority where the text is silent.
 | [07 Agent Card](spec/07-a2a.md) | Card proof and registry binding |
 | [08 Transport](spec/08-transport.md) | Authenticated wire envelopes |
 | [09 Registry](spec/09-registry.md) | Lifecycle, profiles, authoritative state |
-| [10 Resolution](spec/10-resolution.md) | DID document projection and reads |
+| [10 Resolution](spec/10-resolution.md) | DID Core 1.0 and DID 1.1 projections and reads |
 | [11 Registries](spec/11-registries.md) | Algorithms, labels, headers, diagnostics |
 | [Execution Guard](profiles/agent-mcp-security.md) | Mandatory verification and fail-closed execution |
 | [Non-HTTP MCP binding](profiles/non-http-mcp-security.md) | Adopted connection ownership, negotiation and execution admission design |
+| [A2A 1.0 binding](profiles/a2a-1.0-binding.md) | Adopted SAGE binding, card identity and no-downgrade rules for A2A 1.0 |
 | [Integration guide](guides/integration.md) | Agent/SDK/hook/MCP integration |
 
 ## Evidence and follow-up design
@@ -82,8 +83,11 @@ to 481 parents. The [standards scope record](verification/standards-scope-revisi
 pins that historical document and case-plan revision. The
 [standards clause revision](verification/standards-clause-revision.md) narrows HTTP
 signature algorithms, fixes DID prefix case and cites the secp256k1 JWK source.
-It adds eight planned cases, bringing the current plan to 489 parents without
-promoting execution evidence.
+It adds eight planned cases, bringing the plan to 489 parents without
+promoting execution evidence. The
+[A2A and DID adoption](verification/a2a-did-adoption.md) adds 13 rule groups
+(A2AB-01 to A2AB-07, DIDP-01 to DIDP-05 and TABLE-08) and 94 planned cases,
+bringing the current plan to 104 rule groups and 583 parents.
 The plan also has 26 mandatory child assertions.
 All are planned/unexecuted in this normative plan; historical runtime reports remain
 separate and must be mapped by exact case evidence. This is design adoption, not a tag,

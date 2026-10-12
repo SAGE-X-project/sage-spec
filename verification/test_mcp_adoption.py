@@ -14,7 +14,8 @@ class AdoptionTests(unittest.TestCase):
         self.root=Path(self.temp.name)
         record=json.loads((ROOT/'verification/mcp-adoption.json').read_text())
         names=set(record['normative_sha256'])|{'verification/mcp-adoption.json','verification/check_mcp_adoption.py',
-                                                'verification/check_standards_clause_revision.py'}
+                                                'verification/check_standards_clause_revision.py',
+                                                'verification/check_a2a_did_adoption.py'}
         names|={'proposals/non-http-mcp-setup/'+n for n in record['reviewed_candidate_sha256']}
         names.add('proposals/non-http-mcp-setup/tool.json')
         for name in names:

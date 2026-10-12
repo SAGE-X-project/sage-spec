@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.10.0 — A2A 1.0 binding and DID projection adoption (2026-10-12)
+
+- Adopt the A2A 1.0 SAGE binding as a normative profile: custom binding,
+  exact version `1.0`, required extension, card shape, JWS card identity bound
+  to the `did:sage` record, interface eligibility and no downgrade.
+- Add the DID 1.1 projection beside the DID Core 1.0 projection, exact
+  `Accept` selection, projection equivalence, the rule that a DID document is
+  not key authority, and the DID Resolution error mapping.
+- Amend RESOLVE-01 to omit a verification relationship with no member, which
+  DID Core 1.0 §5.3 and Controlled Identifiers 1.0 §2.3 require.
+- Add 13 rule groups and 94 planned cases, for 104 groups and 583 parents.
+  No core execution result, external audit or conformance claim.
+
 ## 0.10.0 — HTTP signature and DID clause correction (2026-09-29)
 
 - Restrict HTTP message signature `alg` to registered Ed25519 and optionally
