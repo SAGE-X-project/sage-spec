@@ -7,6 +7,7 @@ import tempfile
 import unittest
 
 from freeze_first_stage import ROOT, SOURCES, inspect, verify
+from check_a2a_did_adoption import HISTORY as A2A_DID_HISTORY, RECORD as A2A_DID_RECORD
 
 
 class FirstStageBaselineTests(unittest.TestCase):
@@ -20,6 +21,9 @@ class FirstStageBaselineTests(unittest.TestCase):
             shutil.copyfile(ROOT / name, target)
         record = self.root / 'verification/first-stage-baseline.json'
         shutil.copyfile(ROOT / 'verification/first-stage-baseline.json', record)
+        # The baseline pins files that the A2A and DID adoption later changed.
+        shutil.copyfile(ROOT / A2A_DID_RECORD, self.root / A2A_DID_RECORD)
+        shutil.copytree(ROOT / A2A_DID_HISTORY, self.root / A2A_DID_HISTORY)
 
     def test_exact_snapshot_passes(self):
         self.assertEqual(verify(self.root)['counts']['operator_subconditions'], 17)

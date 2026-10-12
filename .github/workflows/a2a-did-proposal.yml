@@ -1,4 +1,4 @@
-name: A2A and DID proposal
+name: A2A and DID adoption
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   traceability:
-    name: A2A and DID proposal traceability
+    name: A2A and DID adoption and proposal snapshot
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -20,7 +20,16 @@ jobs:
         run: |
           python3 -B proposals/a2a-did-interop/verify.py --self-test
           python3 -B proposals/a2a-did-interop/verify.py
-      - name: Check the normative chapters still match the reviewed revision
+      - name: Check the adopted design and its preserved base
         run: |
-          base="$(python3 -c "import json; print(json.load(open('proposals/a2a-did-interop/basis.json'))['sage_baseline']['normative_source_revision'])")"
-          git diff --quiet "$base" HEAD -- spec/ profiles/ charter.md
+          python3 -B verification/test_a2a_did_adoption.py
+          python3 -B verification/check_a2a_did_adoption.py
+          base="$(python3 -c "import json; print(json.load(open('verification/a2a-did-adoption.json'))['base_revision'])")"
+          python3 - "$base" <<'PY'
+          import json, subprocess, sys
+          record = json.load(open('verification/a2a-did-adoption.json'))
+          for name in record['historical_sha256']:
+              old = subprocess.run(['git', 'show', f'{sys.argv[1]}:{name}'], capture_output=True, check=True).stdout
+              if old != open(f"{record['historical_root']}/{name}", 'rb').read():
+                  raise SystemExit('preserved file differs from the base revision: ' + name)
+          PY

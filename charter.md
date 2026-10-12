@@ -14,9 +14,12 @@ provide confidentiality for sessions. Registration supplies identity binding,
 not general permission to execute an operation or proof of benign behaviour.
 
 1. **Identity:** DID and Agent Card, registry model and profiles, registration,
-   key possession/endorsement, resolution, rotation and revocation.
+   key possession/endorsement, resolution with DID Core 1.0 and DID 1.1
+   projections, rotation and revocation.
 2. **Messaging:** request/response authentication, one-round-trip session
-   establishment and directional record protection.
+   establishment and directional record protection. The
+   [A2A 1.0 binding](profiles/a2a-1.0-binding.md) is normative for agents that
+   offer SAGE protection on A2A.
 3. **Execution integration:** trusted original capture, authorisation of exact
    derived tool calls, component baseline verification and fail-closed dispatch.
    The [Agent/MCP profile](profiles/agent-mcp-security.md) is normative; concrete

@@ -12,6 +12,7 @@ from check_standards_vectors import (COVERED, RESPONSE_COVERED,
                                      response_signature_base,
                                      response_signature_input, signature_base,
                                      signature_input)
+from check_a2a_did_adoption import prior_path as at_a2a_did_base
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -197,7 +198,7 @@ def verify_data(root, data):
             'fixture identity or evidence status')
     require(set(data['source_sha256']) == SOURCE_PATHS, 'source inventory')
     for name, digest in data['source_sha256'].items():
-        require(hashlib.sha256((root / name).read_bytes()).hexdigest() == digest,
+        require(hashlib.sha256(at_a2a_did_base(root, name).read_bytes()).hexdigest() == digest,
                 'source bytes: ' + name)
     keys = data['public_keys']
     require(set(keys) == {'initiator', 'responder'} and

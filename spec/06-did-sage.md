@@ -68,7 +68,7 @@ proof of possession made for one registry is not valid in another
 
 ## 3. Which key verifies a message — ID-03 (R-8, R-9, R-15, R-19)
 
-Each signature binding names a full `did-url` with a fragment: HTTP and execution intents use `keyid`, wire envelopes use `kid`, Cards use `verificationMethod`, and handshake completion uses `respKid`. In the procedure below, key reference means that binding-specific field. A verifier:
+Each signature binding names a full `did-url` with a fragment: HTTP and execution intents use `keyid`, wire envelopes use `kid`, Cards use `verificationMethod`, A2A card signatures use the JWS protected header `kid` (`../profiles/a2a-1.0-binding.md` A2AB-05), and handshake completion uses `respKid`. In the procedure below, key reference means that binding-specific field. A verifier:
 
 1. parses the key reference into an identifier and a key name, rejecting a reference
    without a fragment (`sig.malformed`);

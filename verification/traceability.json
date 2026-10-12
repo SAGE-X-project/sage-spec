@@ -36,7 +36,8 @@
         "REG-07",
         "REG-08",
         "TABLE-01",
-        "TABLE-05"
+        "TABLE-05",
+        "TABLE-08"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -50,7 +51,8 @@
         "REG-08",
         "RESOLVE-01",
         "RESOLVE-02",
-        "RESOLVE-03"
+        "RESOLVE-03",
+        "DIDP-03"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -94,7 +96,10 @@
         "REG-02",
         "RESOLVE-02",
         "RESOLVE-04",
-        "MOWN-05"
+        "MOWN-05",
+        "A2AB-05",
+        "A2AB-06",
+        "DIDP-04"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -113,7 +118,9 @@
         "MSET-01",
         "MSET-07",
         "MOWN-03",
-        "MOWN-06"
+        "MOWN-06",
+        "A2AB-05",
+        "DIDP-04"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -163,7 +170,12 @@
       "rule_ids": [
         "RESOLVE-01",
         "RESOLVE-03",
-        "RESOLVE-05"
+        "RESOLVE-05",
+        "DIDP-01",
+        "DIDP-02",
+        "DIDP-03",
+        "DIDP-04",
+        "DIDP-05"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -178,7 +190,10 @@
         "TRANSPORT-02",
         "TRANSPORT-05",
         "TRANSPORT-06",
-        "TABLE-06"
+        "TABLE-06",
+        "A2AB-01",
+        "A2AB-03",
+        "A2AB-06"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -189,7 +204,8 @@
         "MSG-02",
         "TRANSPORT-02",
         "TRANSPORT-05",
-        "TRANSPORT-06"
+        "TRANSPORT-06",
+        "A2AB-01"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -218,7 +234,8 @@
         "TRANSPORT-06",
         "MSET-02",
         "MSET-03",
-        "MSET-04"
+        "MSET-04",
+        "A2AB-06"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -236,7 +253,8 @@
         "TRANSPORT-02",
         "TABLE-02",
         "TABLE-04",
-        "MOWN-05"
+        "MOWN-05",
+        "A2AB-05"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -249,7 +267,8 @@
         "MSG-01",
         "MSG-02",
         "MSG-03",
-        "MSG-04"
+        "MSG-04",
+        "A2AB-01"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -349,7 +368,9 @@
         "TRANSPORT-02",
         "TRANSPORT-03",
         "REG-01",
-        "TABLE-04"
+        "TABLE-04",
+        "A2AB-04",
+        "A2AB-05"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -366,7 +387,8 @@
         "RESOLVE-01",
         "TABLE-02",
         "TABLE-03",
-        "MOWN-05"
+        "MOWN-05",
+        "DIDP-01"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -386,7 +408,8 @@
         "REG-01",
         "MSET-02",
         "MOWN-01",
-        "MOWN-06"
+        "MOWN-06",
+        "A2AB-04"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -444,7 +467,13 @@
         "TABLE-06",
         "PROC-02",
         "MSET-03",
-        "MSET-08"
+        "MSET-08",
+        "A2AB-02",
+        "A2AB-03",
+        "A2AB-07",
+        "DIDP-02",
+        "DIDP-05",
+        "TABLE-08"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -457,7 +486,9 @@
         "HPKE-06",
         "TRANSPORT-04",
         "RESOLVE-05",
-        "TABLE-07"
+        "TABLE-07",
+        "A2AB-07",
+        "DIDP-05"
       ],
       "evidence_status": "planned_not_executed"
     },
@@ -1798,7 +1829,7 @@
     {
       "id": "RESOLVE-02",
       "source": "spec/10-resolution.md",
-      "line": 50,
+      "line": 57,
       "requirements": [
         "R-4",
         "R-8",
@@ -1822,7 +1853,7 @@
     {
       "id": "RESOLVE-03",
       "source": "spec/10-resolution.md",
-      "line": 70,
+      "line": 77,
       "requirements": [
         "R-4",
         "R-9",
@@ -1843,7 +1874,7 @@
     {
       "id": "RESOLVE-04",
       "source": "spec/10-resolution.md",
-      "line": 88,
+      "line": 95,
       "requirements": [
         "R-8",
         "R-9"
@@ -1865,7 +1896,7 @@
     {
       "id": "RESOLVE-05",
       "source": "spec/10-resolution.md",
-      "line": 97,
+      "line": 104,
       "requirements": [
         "R-14",
         "R-34",
@@ -1883,6 +1914,112 @@
       "evidence_status": "planned_not_executed",
       "threats": [
         "A-4",
+        "A-6"
+      ]
+    },
+    {
+      "id": "DIDP-01",
+      "source": "spec/10-resolution.md",
+      "line": 149,
+      "requirements": [
+        "R-14",
+        "R-29"
+      ],
+      "case_ids": [
+        "didp-01-core-1-0-unchanged",
+        "didp-01-did-1-1-shape",
+        "didp-01-no-multikey",
+        "didp-01-jwk-members",
+        "didp-01-no-empty-relationship",
+        "didp-01-context-offline",
+        "didp-01-invalid-record"
+      ],
+      "evidence_status": "planned_not_executed",
+      "threats": [
+        "A-4"
+      ]
+    },
+    {
+      "id": "DIDP-02",
+      "source": "spec/10-resolution.md",
+      "line": 192,
+      "requirements": [
+        "R-14",
+        "R-34"
+      ],
+      "case_ids": [
+        "didp-02-select-1-1",
+        "didp-02-default-1-0",
+        "didp-02-wildcard",
+        "didp-02-json-envelope",
+        "didp-02-json-ld-rejected",
+        "didp-02-did-resolution-rejected",
+        "didp-02-q-list-rejected",
+        "didp-02-no-fallback",
+        "didp-02-did-resolution-interface"
+      ],
+      "evidence_status": "planned_not_executed",
+      "threats": [
+        "A-2"
+      ]
+    },
+    {
+      "id": "DIDP-03",
+      "source": "spec/10-resolution.md",
+      "line": 220,
+      "requirements": [
+        "R-4",
+        "R-14"
+      ],
+      "case_ids": [
+        "didp-03-equivalent-members",
+        "didp-03-two-observations",
+        "didp-03-deactivated"
+      ],
+      "evidence_status": "planned_not_executed",
+      "threats": [
+        "A-6"
+      ]
+    },
+    {
+      "id": "DIDP-04",
+      "source": "spec/10-resolution.md",
+      "line": 231,
+      "requirements": [
+        "R-8",
+        "R-9",
+        "R-14"
+      ],
+      "case_ids": [
+        "didp-04-peer-document-ignored",
+        "didp-04-no-alias-members",
+        "didp-04-received-alias"
+      ],
+      "evidence_status": "planned_not_executed",
+      "threats": [
+        "A-4",
+        "A-6"
+      ]
+    },
+    {
+      "id": "DIDP-05",
+      "source": "spec/10-resolution.md",
+      "line": 244,
+      "requirements": [
+        "R-14",
+        "R-34",
+        "R-35"
+      ],
+      "case_ids": [
+        "didp-05-malformed",
+        "didp-05-not-found",
+        "didp-05-stale-not-absent",
+        "didp-05-unknown-kind",
+        "didp-05-unsupported-accept",
+        "didp-05-deactivated"
+      ],
+      "evidence_status": "planned_not_executed",
+      "threats": [
         "A-6"
       ]
     },
@@ -1972,7 +2109,7 @@
     {
       "id": "TABLE-05",
       "source": "spec/11-registries.md",
-      "line": 115,
+      "line": 116,
       "requirements": [
         "R-2",
         "R-3"
@@ -1991,7 +2128,7 @@
     {
       "id": "TABLE-06",
       "source": "spec/11-registries.md",
-      "line": 127,
+      "line": 128,
       "requirements": [
         "R-15",
         "R-34"
@@ -2010,7 +2147,7 @@
     {
       "id": "TABLE-07",
       "source": "spec/11-registries.md",
-      "line": 148,
+      "line": 149,
       "requirements": [
         "R-35"
       ],
@@ -2022,6 +2159,23 @@
       "evidence_status": "planned_not_executed",
       "threats": [
         "A-2",
+        "A-4"
+      ]
+    },
+    {
+      "id": "TABLE-08",
+      "source": "spec/11-registries.md",
+      "line": 187,
+      "requirements": [
+        "R-3",
+        "R-34"
+      ],
+      "case_ids": [
+        "TABLE-08-P",
+        "TABLE-08-N01"
+      ],
+      "evidence_status": "planned_not_executed",
+      "threats": [
         "A-4"
       ]
     },
@@ -2304,7 +2458,7 @@
     {
       "id": "EVIDENCE-01",
       "source": "charter.md",
-      "line": 229,
+      "line": 232,
       "requirements": [
         "R-13",
         "R-31",
@@ -2629,6 +2783,183 @@
       "evidence_status": "planned_not_executed",
       "threats": [],
       "mapping_kind": "mandatory_child_assertions"
+    },
+    {
+      "id": "A2AB-01",
+      "source": "profiles/a2a-1.0-binding.md",
+      "line": 27,
+      "requirements": [
+        "R-15",
+        "R-16",
+        "R-20"
+      ],
+      "case_ids": [
+        "a2ab-01-jsonrpc-in-payload",
+        "a2ab-01-bare-jsonrpc-body",
+        "a2ab-01-batch-payload",
+        "a2ab-01-streaming-method",
+        "a2ab-01-header-parameters-ignored",
+        "a2ab-01-a2a-error-in-data"
+      ],
+      "evidence_status": "planned_not_executed",
+      "threats": [
+        "A-2",
+        "A-3"
+      ]
+    },
+    {
+      "id": "A2AB-02",
+      "source": "profiles/a2a-1.0-binding.md",
+      "line": 54,
+      "requirements": [
+        "R-34"
+      ],
+      "case_ids": [
+        "a2ab-02-version-1-0",
+        "a2ab-02-version-absent",
+        "a2ab-02-version-0-3",
+        "a2ab-02-version-patch",
+        "a2ab-02-version-empty"
+      ],
+      "evidence_status": "planned_not_executed",
+      "threats": [
+        "A-2"
+      ]
+    },
+    {
+      "id": "A2AB-03",
+      "source": "profiles/a2a-1.0-binding.md",
+      "line": 62,
+      "requirements": [
+        "R-15",
+        "R-34"
+      ],
+      "case_ids": [
+        "a2ab-03-declared",
+        "a2ab-03-required-false",
+        "a2ab-03-two-entries",
+        "a2ab-03-numeric-record-version",
+        "a2ab-03-wrong-sage-version",
+        "a2ab-03-lifetime-too-long",
+        "a2ab-03-not-activated",
+        "a2ab-03-activated-twice"
+      ],
+      "evidence_status": "planned_not_executed",
+      "threats": [
+        "A-2"
+      ]
+    },
+    {
+      "id": "A2AB-04",
+      "source": "profiles/a2a-1.0-binding.md",
+      "line": 87,
+      "requirements": [
+        "R-28",
+        "R-30"
+      ],
+      "case_ids": [
+        "a2ab-04-only-sage-interfaces",
+        "a2ab-04-grpc-listed",
+        "a2ab-04-server-grpc-downgrade",
+        "a2ab-04-server-0-3-downgrade",
+        "a2ab-04-streaming-capability",
+        "a2ab-04-extended-card",
+        "a2ab-04-duplicate-member",
+        "a2ab-04-unknown-member",
+        "a2ab-04-oversized"
+      ],
+      "evidence_status": "planned_not_executed",
+      "threats": [
+        "A-2",
+        "A-9"
+      ]
+    },
+    {
+      "id": "A2AB-05",
+      "source": "profiles/a2a-1.0-binding.md",
+      "line": 106,
+      "requirements": [
+        "R-8",
+        "R-9",
+        "R-19",
+        "R-28"
+      ],
+      "case_ids": [
+        "a2ab-05-ed25519-valid",
+        "a2ab-05-p256-low-s",
+        "a2ab-05-p256-high-s",
+        "a2ab-05-eddsa-polymorphic",
+        "a2ab-05-unprotected-header",
+        "a2ab-05-jku-present",
+        "a2ab-05-crit-present",
+        "a2ab-05-duplicate-header-member",
+        "a2ab-05-two-sage-signatures",
+        "a2ab-05-foreign-plus-bad-sage",
+        "a2ab-05-relative-kid",
+        "a2ab-05-kid-no-fragment",
+        "a2ab-05-kid-x25519",
+        "a2ab-05-kid-other-did",
+        "a2ab-05-expected-peer-mismatch",
+        "a2ab-05-revoked-key",
+        "a2ab-05-deactivated-record",
+        "a2ab-05-record-version-old",
+        "a2ab-05-record-version-ahead",
+        "a2ab-05-expired-card",
+        "a2ab-05-secp256k1-key",
+        "a2ab-05-default-field-added",
+        "a2ab-05-presence-field-changed"
+      ],
+      "evidence_status": "planned_not_executed",
+      "threats": [
+        "A-4",
+        "A-6"
+      ]
+    },
+    {
+      "id": "A2AB-06",
+      "source": "profiles/a2a-1.0-binding.md",
+      "line": 150,
+      "requirements": [
+        "R-8",
+        "R-15",
+        "R-18"
+      ],
+      "case_ids": [
+        "a2ab-06-matching-service",
+        "a2ab-06-no-service",
+        "a2ab-06-trailing-slash",
+        "a2ab-06-host-case",
+        "a2ab-06-default-port",
+        "a2ab-06-recipient-mismatch",
+        "a2ab-06-tenant-elsewhere",
+        "a2ab-06-response-wrong-signer"
+      ],
+      "evidence_status": "planned_not_executed",
+      "threats": [
+        "A-4",
+        "A-10"
+      ]
+    },
+    {
+      "id": "A2AB-07",
+      "source": "profiles/a2a-1.0-binding.md",
+      "line": 170,
+      "requirements": [
+        "R-34",
+        "R-35"
+      ],
+      "case_ids": [
+        "a2ab-07-abort-no-retry",
+        "a2ab-07-no-standard-binding-retry",
+        "a2ab-07-no-version-retry",
+        "a2ab-07-uniform-error",
+        "a2ab-07-success-no-fallback"
+      ],
+      "evidence_status": "planned_not_executed",
+      "threats": [
+        "A-2",
+        "A-9"
+      ]
     }
   ],
   "cases": [
@@ -5306,6 +5637,24 @@
       "evidence_status": "planned_not_executed"
     },
     {
+      "id": "TABLE-08-P",
+      "rule_id": "TABLE-08",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Record service of type A2AInterface whose uri equals a card interface url",
+      "preconditions": "Active record and a card that passes A2AB-04 and A2AB-05",
+      "expected": "ACCEPT. The interface is eligible under A2AB-06.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "TABLE-08-N01",
+      "rule_id": "TABLE-08",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Record service of type a2ainterface (different letter case) whose uri equals the card interface url",
+      "preconditions": "Active record and a card that passes A2AB-04 and A2AB-05",
+      "expected": "NOT_ELIGIBLE. The type is not the listed A2AInterface type, so the interface is not eligible.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
       "id": "EXEC-01-P",
       "rule_id": "EXEC-01",
       "mode": "deployment_or_document_review",
@@ -6990,6 +7339,258 @@
       "evidence_status": "planned_not_executed"
     },
     {
+      "id": "didp-01-core-1-0-unchanged",
+      "rule_id": "DIDP-01",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve with accept application/did+json",
+      "preconditions": "Active record with one ed25519 key, one x25519 key and one service",
+      "expected": "PROJECT. Bytes equal the chapter 10 RESOLVE-01 document: no @context, JsonWebKey2020, contentType application/did+json.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-01-did-1-1-shape",
+      "rule_id": "DIDP-01",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve with accept application/did",
+      "preconditions": "Same active record",
+      "expected": "PROJECT. @context is exactly the string https://www.w3.org/ns/did/v1.1, contentType is application/did, every verification method type is JsonWebKey.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-01-no-multikey",
+      "rule_id": "DIDP-01",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve with accept application/did and search for Multikey or publicKeyMultibase",
+      "preconditions": "Same active record",
+      "expected": "PROJECT. No Multikey type and no publicKeyMultibase member anywhere in the document.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-01-jwk-members",
+      "rule_id": "DIDP-01",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve both projections and compare JWK member sets",
+      "preconditions": "Active record with a P-256 signing key",
+      "expected": "PROJECT. Both projections carry exactly kty, crv, x, y with identical values; no alg or kid member.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-01-no-empty-relationship",
+      "rule_id": "DIDP-01",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve both projections",
+      "preconditions": "Active record with one ed25519 signing key, no x25519 key and one service",
+      "expected": "PROJECT. authentication and assertionMethod list the signing key; keyAgreement is absent, never an empty array.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-01-context-offline",
+      "rule_id": "DIDP-01",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve with accept application/did",
+      "preconditions": "Resolver has no network access to w3.org",
+      "expected": "PROJECT. The DID 1.1 projection is produced from the local context constant; no context fetch is attempted.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-01-invalid-record",
+      "rule_id": "DIDP-01",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve with accept application/did",
+      "preconditions": "Authoritative record carries a key whose encoding fails chapter 11 checks",
+      "expected": "ERROR. record.invalid and no document in either projection.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-02-select-1-1",
+      "rule_id": "DIDP-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve with accept application/did",
+      "preconditions": "Active record with one ed25519 signing key and one service",
+      "expected": "PROJECT. DID 1.1 projection with contentType application/did.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-02-default-1-0",
+      "rule_id": "DIDP-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve with no accept option",
+      "preconditions": "Active record with one ed25519 signing key and one service",
+      "expected": "PROJECT. DID Core 1.0 projection with contentType application/did+json.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-02-wildcard",
+      "rule_id": "DIDP-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "HTTP GET with Accept: */*",
+      "preconditions": "Active record with one ed25519 signing key and one service",
+      "expected": "PROJECT. DID Core 1.0 projection with contentType application/did+json.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-02-json-envelope",
+      "rule_id": "DIDP-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "HTTP GET with Accept: application/json",
+      "preconditions": "Active record with one ed25519 signing key and one service",
+      "expected": "PROJECT. Chapter 10 three-member envelope with the DID Core 1.0 projection, unchanged from today.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-02-json-ld-rejected",
+      "rule_id": "DIDP-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve with accept application/did+ld+json",
+      "preconditions": "SAGE interface; active record with one ed25519 signing key and one service",
+      "expected": "ERROR. representation.unsupported, HTTP 406, no document.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-02-did-resolution-rejected",
+      "rule_id": "DIDP-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "HTTP GET with Accept: application/did-resolution",
+      "preconditions": "SAGE interface; active record with one ed25519 signing key and one service",
+      "expected": "ERROR. representation.unsupported, HTTP 406, no document.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-02-q-list-rejected",
+      "rule_id": "DIDP-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "HTTP GET with Accept: application/did;q=0.9, application/did+json",
+      "preconditions": "SAGE interface; active record with one ed25519 signing key and one service",
+      "expected": "ERROR. representation.unsupported, HTTP 406, no document.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-02-no-fallback",
+      "rule_id": "DIDP-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve with accept application/did",
+      "preconditions": "Resolver cannot produce the DID 1.1 projection for this record",
+      "expected": "ERROR. Request fails with no document; the DID Core 1.0 projection is not returned instead.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-02-did-resolution-interface",
+      "rule_id": "DIDP-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve with accept application/did;q=0.9, application/did+json",
+      "preconditions": "DID Resolution interface over a SAGE core; active record with one ed25519 signing key and one service",
+      "expected": "PROJECT. The DIDP-02 table does not apply: the q-value list is matched under DID Resolution and the returned document is the DIDP-01 projection for its contentType (DID Core 1.0 for application/did+json).",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-03-equivalent-members",
+      "rule_id": "DIDP-03",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve both projections from one observation and compare all members except @context and type",
+      "preconditions": "Active record with three keys including one revoked",
+      "expected": "PROJECT. id, verification method ids, controllers, JWKs, relationships, services and versionId are identical; the revoked key is absent from both.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-03-two-observations",
+      "rule_id": "DIDP-03",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Request both projections in one operation",
+      "preconditions": "Record version changes between the two halves of one dual-projection request",
+      "expected": "ERROR. The resolver fails or retries from one observation; it never returns two projections with different versionId.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-03-deactivated",
+      "rule_id": "DIDP-03",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve both projections through the SAGE interface",
+      "preconditions": "Deactivated record",
+      "expected": "PROJECT. Both projections have an empty verificationMethod array, no authentication, assertionMethod or keyAgreement member, and deactivated true in metadata.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-04-peer-document-ignored",
+      "rule_id": "DIDP-04",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Verifier checks a message signed with that extra key",
+      "preconditions": "Peer supplies a DID 1.1 document listing an extra signing key",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-04-no-alias-members",
+      "rule_id": "DIDP-04",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve both projections and search for alsoKnownAs, equivalentId and canonicalId",
+      "preconditions": "Active record with one ed25519 signing key and one service",
+      "expected": "PROJECT. None of alsoKnownAs, equivalentId or canonicalId appears in either projection.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-04-received-alias",
+      "rule_id": "DIDP-04",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Verifier decides whether the other DID's key may sign for this agent",
+      "preconditions": "Received document lists alsoKnownAs naming another DID",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-05-malformed",
+      "rule_id": "DIDP-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve an identifier with a mixed-case method prefix",
+      "preconditions": "DID Resolution interface over a SAGE core",
+      "expected": "ERROR. Problem type https://www.w3.org/ns/did#INVALID_DID, sageCode id.malformed, HTTP 400, no document.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-05-not-found",
+      "rule_id": "DIDP-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve an unregistered identifier",
+      "preconditions": "DID Resolution interface over a SAGE core",
+      "expected": "ERROR. Problem type https://www.w3.org/ns/did#NOT_FOUND, sageCode record.not-found, HTTP 404, no document.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-05-stale-not-absent",
+      "rule_id": "DIDP-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve a registered identifier",
+      "preconditions": "DID Resolution interface over a SAGE core whose observation is stale",
+      "expected": "ERROR. Problem type https://www.w3.org/ns/did#INTERNAL_ERROR, sageCode record.stale, HTTP 500; never NOT_FOUND.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-05-unknown-kind",
+      "rule_id": "DIDP-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve did:sage with an unimplemented registry kind",
+      "preconditions": "DID Resolution interface over a SAGE core",
+      "expected": "ERROR. Problem type https://www.w3.org/ns/did#METHOD_NOT_SUPPORTED, sageCode id.unknown-kind, HTTP 501, no document.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-05-unsupported-accept",
+      "rule_id": "DIDP-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve with accept text/html, a type no DID representation has",
+      "preconditions": "DID Resolution interface over a SAGE core",
+      "expected": "ERROR. Problem type https://www.w3.org/ns/did#FEATURE_NOT_SUPPORTED, sageCode representation.unsupported, HTTP 501.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "didp-05-deactivated",
+      "rule_id": "DIDP-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Resolve a deactivated record",
+      "preconditions": "DID Resolution interface over a SAGE core",
+      "expected": "PROJECT. didDocument is null, didDocumentMetadata.deactivated is true, HTTP 410.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
       "id": "msca-http-ed25519",
       "rule_id": "MSG-01",
       "mode": "unit_and_bounded_local_runtime",
@@ -7059,6 +7660,582 @@
       "input": "A transport-independent signed envelope declares a permitted secp256k1/Keccak key without an HTTP alg parameter",
       "preconditions": "Use an isolated synthetic record and the exact non-HTTP envelope domain; no HTTP carriage or live effects",
       "expected": "Evaluate only under the explicit non-HTTP suite and full registry/profile checks; the HTTP restriction alone does not reject this suite.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-01-jsonrpc-in-payload",
+      "rule_id": "A2AB-01",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "POST whose envelope payload is one A2A JSON-RPC SendMessage request",
+      "preconditions": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "expected": "ACCEPT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-01-bare-jsonrpc-body",
+      "rule_id": "A2AB-01",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "POST whose HTTP body is a bare A2A JSON-RPC request with no SAGE envelope",
+      "preconditions": "Interface uses the SAGE binding",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-01-batch-payload",
+      "rule_id": "A2AB-01",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Envelope payload is a JSON-RPC batch array of two requests",
+      "preconditions": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-01-streaming-method",
+      "rule_id": "A2AB-01",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Envelope payload calls SendStreamingMessage",
+      "preconditions": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-01-header-parameters-ignored",
+      "rule_id": "A2AB-01",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "HTTP header A2A-Version: 0.3 added beside metadata a2a_version 1.0",
+      "preconditions": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "expected": "ACCEPT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-01-a2a-error-in-data",
+      "rule_id": "A2AB-01",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Request for an unknown task id",
+      "preconditions": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "expected": "ACCEPT. Response envelope has success true and data holds a JSON-RPC error object with the A2A TaskNotFoundError code.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-02-version-1-0",
+      "rule_id": "A2AB-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "metadata a2a_version is 1.0",
+      "preconditions": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "expected": "ACCEPT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-02-version-absent",
+      "rule_id": "A2AB-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "metadata has no a2a_version member",
+      "preconditions": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-02-version-0-3",
+      "rule_id": "A2AB-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "metadata a2a_version is 0.3",
+      "preconditions": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-02-version-patch",
+      "rule_id": "A2AB-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "metadata a2a_version is 1.0.1",
+      "preconditions": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-02-version-empty",
+      "rule_id": "A2AB-02",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "metadata a2a_version is the empty string",
+      "preconditions": "Eligible signed card, activated extension and a valid SAGE request envelope",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-03-declared",
+      "rule_id": "A2AB-03",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card and activates the extension",
+      "preconditions": "Card declares one SAGE extension with required true and exact typed params",
+      "expected": "ACCEPT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-03-required-false",
+      "rule_id": "A2AB-03",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client evaluates the card for a protected operation",
+      "preconditions": "Card declares the SAGE extension with required false",
+      "expected": "NOT_ELIGIBLE.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-03-two-entries",
+      "rule_id": "A2AB-03",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client evaluates the card for a protected operation",
+      "preconditions": "Card declares the SAGE extension URI twice with different did values",
+      "expected": "NOT_ELIGIBLE.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-03-numeric-record-version",
+      "rule_id": "A2AB-03",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client evaluates the card for a protected operation",
+      "preconditions": "Card params.recordVersion is the JSON number 7 instead of the string",
+      "expected": "NOT_ELIGIBLE.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-03-wrong-sage-version",
+      "rule_id": "A2AB-03",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client evaluates the card for a protected operation",
+      "preconditions": "Card params.sageVersion is 0.11.0",
+      "expected": "NOT_ELIGIBLE.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-03-lifetime-too-long",
+      "rule_id": "A2AB-03",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client evaluates the card for a protected operation",
+      "preconditions": "Card params expires minus issued is 86401 seconds",
+      "expected": "NOT_ELIGIBLE.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-03-not-activated",
+      "rule_id": "A2AB-03",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Server receives the request",
+      "preconditions": "Eligible card; metadata a2a_extensions omits the SAGE extension URI",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-03-activated-twice",
+      "rule_id": "A2AB-03",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Server receives the request",
+      "preconditions": "Eligible card; metadata a2a_extensions lists the SAGE extension URI twice",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-04-only-sage-interfaces",
+      "rule_id": "A2AB-04",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client evaluates the card",
+      "preconditions": "Card lists two SAGE-binding interfaces with protocolVersion 1.0 and no streaming, push or extended card",
+      "expected": "ACCEPT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-04-grpc-listed",
+      "rule_id": "A2AB-04",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client evaluates the card",
+      "preconditions": "Card declares the SAGE extension and also lists a GRPC 1.0 interface",
+      "expected": "NOT_ELIGIBLE.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-04-server-grpc-downgrade",
+      "rule_id": "A2AB-04",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Attacker calls SendMessage for the same agent over gRPC without SAGE",
+      "preconditions": "Server card declares the SAGE extension; server also runs a gRPC endpoint",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-04-server-0-3-downgrade",
+      "rule_id": "A2AB-04",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Attacker sends a plain JSON-RPC request with no A2A-Version and no envelope",
+      "preconditions": "Server card declares the SAGE extension",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-04-streaming-capability",
+      "rule_id": "A2AB-04",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client evaluates the card",
+      "preconditions": "Card declares the SAGE extension and capabilities.streaming true",
+      "expected": "NOT_ELIGIBLE.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-04-extended-card",
+      "rule_id": "A2AB-04",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client evaluates the card",
+      "preconditions": "Card declares the SAGE extension and capabilities.extendedAgentCard true",
+      "expected": "NOT_ELIGIBLE.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-04-duplicate-member",
+      "rule_id": "A2AB-04",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client parses the card",
+      "preconditions": "Signed card whose JSON repeats the params did member with two values",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-04-unknown-member",
+      "rule_id": "A2AB-04",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client parses and verifies the card",
+      "preconditions": "Valid signed card with an extra top-level member injected after signing",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-04-oversized",
+      "rule_id": "A2AB-04",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client parses the card",
+      "preconditions": "Card JSON is 262145 bytes",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-ed25519-valid",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies with JOSE alg Ed25519 and typ sage-a2a-card+jws",
+      "preconditions": "Card signed with an accepted ed25519 key named by a did:sage kid; record version and lifetime valid",
+      "expected": "ACCEPT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-p256-low-s",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies with JOSE alg ES256",
+      "preconditions": "Card signed with an accepted ecdsa-p256-sha256 key, low-S signature",
+      "expected": "ACCEPT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-p256-high-s",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "Same card with the P-256 signature rewritten to high S",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-eddsa-polymorphic",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "Card signed with an accepted ed25519 key but alg EdDSA",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-unprotected-header",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "SAGE signature whose unprotected header carries kid of another key",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-jku-present",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card without fetching any URL",
+      "preconditions": "SAGE signature whose protected header also carries jku",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-crit-present",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "SAGE signature whose protected header carries crit and b64 false",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-duplicate-header-member",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "Protected header JSON repeats kid with two values",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-two-sage-signatures",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "Card carries two signatures of the SAGE shape, both valid",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-foreign-plus-bad-sage",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "Card carries a valid ES256 signature with an HTTPS kid and an invalid SAGE signature",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-relative-kid",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "kid is key-1 without a DID",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-kid-no-fragment",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "kid is the canonical DID without a fragment",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-kid-x25519",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "kid names the record's x25519 key-agreement key",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-kid-other-did",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "kid names a key of a different did:sage record than params.did",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-expected-peer-mismatch",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "Valid card for agent M; client configured to expect agent A",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-revoked-key",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "kid names a key that the current record marks revoked",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-deactivated-record",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "params.did names a deactivated record",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-record-version-old",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "Signature verifies; params.recordVersion is older than the current record version",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-record-version-ahead",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "Signature verifies; params.recordVersion is newer than the resolver's fresh view",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-expired-card",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "Signature verifies; now is equal to params.expires",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-secp256k1-key",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client verifies the card",
+      "preconditions": "kid names an accepted sage-secp256k1-keccak256 key",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-default-field-added",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client canonicalizes per A2A section 8.4.1 and verifies",
+      "preconditions": "Valid card; an empty repeated field such as extensions on a skill is added after signing",
+      "expected": "ACCEPT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-05-presence-field-changed",
+      "rule_id": "A2AB-05",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client canonicalizes per A2A section 8.4.1 and verifies",
+      "preconditions": "Valid card; an explicitly set optional field is changed after signing",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-06-matching-service",
+      "rule_id": "A2AB-06",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client selects the interface",
+      "preconditions": "Interface url equals a record service uri of type A2AInterface byte for byte",
+      "expected": "ACCEPT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-06-no-service",
+      "rule_id": "A2AB-06",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client selects the interface",
+      "preconditions": "Interface url has no matching A2AInterface service in the record",
+      "expected": "NOT_ELIGIBLE.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-06-trailing-slash",
+      "rule_id": "A2AB-06",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client selects the interface",
+      "preconditions": "Record service uri has a trailing slash that the interface url lacks",
+      "expected": "NOT_ELIGIBLE.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-06-host-case",
+      "rule_id": "A2AB-06",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client selects the interface",
+      "preconditions": "Interface url host differs from the service uri only in letter case",
+      "expected": "NOT_ELIGIBLE.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-06-default-port",
+      "rule_id": "A2AB-06",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client selects the interface",
+      "preconditions": "Interface url adds an explicit :443 that the service uri lacks",
+      "expected": "NOT_ELIGIBLE.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-06-recipient-mismatch",
+      "rule_id": "A2AB-06",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Request envelope recipient names agent B",
+      "preconditions": "Eligible card for agent A",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-06-tenant-elsewhere",
+      "rule_id": "A2AB-06",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "JSON-RPC request tenant routes to agent B",
+      "preconditions": "Shared endpoint serves agents A and B by tenant; envelope recipient is A",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-06-response-wrong-signer",
+      "rule_id": "A2AB-06",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Response envelope signed by agent B's key",
+      "preconditions": "Valid request to agent A",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-07-abort-no-retry",
+      "rule_id": "A2AB-07",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client attempts the operation",
+      "preconditions": "Trusted configuration requires SAGE for the peer; card verification fails",
+      "expected": "ABORT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-07-no-standard-binding-retry",
+      "rule_id": "A2AB-07",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client considers retrying over the standard JSONRPC binding",
+      "preconditions": "SAGE request rejected by the server",
+      "expected": "ABORT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-07-no-version-retry",
+      "rule_id": "A2AB-07",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client considers retrying with 0.3",
+      "preconditions": "Server rejects metadata a2a_version 1.0",
+      "expected": "ABORT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-07-uniform-error",
+      "rule_id": "A2AB-07",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Compare the public errors the server returns",
+      "preconditions": "Two requests fail different checks",
+      "expected": "REJECT.",
+      "evidence_status": "planned_not_executed"
+    },
+    {
+      "id": "a2ab-07-success-no-fallback",
+      "rule_id": "A2AB-07",
+      "mode": "independent_fixture_and_live_adapter",
+      "input": "Client performs the operation over the SAGE binding",
+      "preconditions": "Trusted configuration requires SAGE for the peer; every check passes",
+      "expected": "ACCEPT.",
       "evidence_status": "planned_not_executed"
     }
   ],

@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+from check_a2a_did_adoption import prior_path as at_a2a_did_base
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -50,11 +51,14 @@ def verify_current_sources(root=ROOT, record=None):
         # The old overlay stays pinned to this revision after chapter 09 changes.
         path = (root / 'verification/history/web-registry-media-base-2026-09-30' / name
                 if correction and name == 'analysis/current-design-overlay.json'
-                else root / name)
+                else at_a2a_did_base(root, name))
         require(sha(path) == digest, 'current source bytes: ' + name)
     if correction:
         from check_web_registry_media_contract import verify as verify_media
         verify_media(root)
+    if (root / 'verification/a2a-did-adoption.json').is_file():
+        from check_a2a_did_adoption import verify as verify_a2a_did
+        verify_a2a_did(root)
     return record
 
 
@@ -68,10 +72,10 @@ def verify(root=ROOT):
             and record['historical_snapshot_root'] == SNAPSHOT,
             'revision identity')
     require(record['prior_audit'] == 'verification/standards-clause-audit.md'
-            and sha(root / record['prior_audit']) == record['prior_audit_sha256']
+            and sha(at_a2a_did_base(root, record['prior_audit'])) == record['prior_audit_sha256']
             and record['prior_standards_scope_record'] ==
             'verification/standards-scope-revision.json'
-            and sha(root / record['prior_standards_scope_record']) ==
+            and sha(at_a2a_did_base(root, record['prior_standards_scope_record'])) ==
             record['prior_standards_scope_record_sha256'],
             'prior review provenance')
     require(record['counts'] == {'requirements': 45, 'rule_groups': 91,
@@ -89,7 +93,7 @@ def verify(root=ROOT):
             'unsupported evidence promotion')
 
     from check_mcp_independent_llm_rereview import SOURCE_PATHS
-    old_scope = json.loads((root / record['prior_standards_scope_record']).read_text())
+    old_scope = json.loads(at_a2a_did_base(root, record['prior_standards_scope_record']).read_text())
     llm = json.loads((root / 'verification/mcp-independent-llm-rereview.json').read_text())
     historical = record['historical_sha256']
     require(set(historical) == set(old_scope['current_sha256']) | SOURCE_PATHS,
@@ -103,7 +107,7 @@ def verify(root=ROOT):
         require(historical[name] == digest, 'prior LLM review source: ' + name)
 
     previous = json.loads((root / SNAPSHOT / 'verification/traceability.json').read_text())
-    current = json.loads((root / 'verification/traceability.json').read_text())
+    current = json.loads(at_a2a_did_base(root, 'verification/traceability.json').read_text())
     require(previous['protocol_version'] == current['protocol_version'] == '0.10.0'
             and previous['status'] == current['status'] == 'verification_plan_not_executed'
             and previous['requirements'] == current['requirements']
@@ -131,7 +135,7 @@ def verify(root=ROOT):
         added = [case_id for case_id, owner in NEW_OWNERS.items() if owner == name]
         require(rule['case_ids'] == old['case_ids'] + added,
                 'rule case mapping: ' + name)
-        source = (root / rule['source']).read_text().splitlines()
+        source = at_a2a_did_base(root, rule['source']).read_text().splitlines()
         require(1 <= rule['line'] <= len(source)
                 and name in source[rule['line'] - 1],
                 'current rule anchor: ' + name)
@@ -144,10 +148,10 @@ def verify(root=ROOT):
                 'new case plan: ' + name)
 
     http = (root / 'spec/03-rfc9421.md').read_text()
-    did = (root / 'spec/06-did-sage.md').read_text()
-    jwk = (root / 'spec/10-resolution.md').read_text()
+    did = at_a2a_did_base(root, 'spec/06-did-sage.md').read_text()
+    jwk = at_a2a_did_base(root, 'spec/10-resolution.md').read_text()
     transport = (root / 'spec/08-transport.md').read_text()
-    registry = (root / 'spec/11-registries.md').read_text()
+    registry = at_a2a_did_base(root, 'spec/11-registries.md').read_text()
     report = (root / 'verification/standards-clause-revision.md').read_text()
     require('`alg` MUST be exactly `ed25519` or' in http
             and '`ecdsa-p256-sha256`' in http
@@ -160,7 +164,7 @@ def verify(root=ROOT):
                     ('SCA-01', 'SCA-02', 'SCA-03', 'NOT_ESTABLISHED',
                      'NOT_PERFORMED', '489')),
             'normative decision or evidence limits')
-    graph = json.loads((root / 'analysis/current-design-overlay.json').read_text())
+    graph = json.loads(at_a2a_did_base(root, 'analysis/current-design-overlay.json').read_text())
     require(graph['traceability']['planned_cases'] == 489
             and graph['traceability']['sha256'] ==
             record['current_sha256']['verification/traceability.json'],

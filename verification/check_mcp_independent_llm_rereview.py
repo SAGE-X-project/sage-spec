@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from check_standards_clause_revision import verify_current_sources
+from check_a2a_did_adoption import prior_path as at_a2a_did_base
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -85,7 +86,7 @@ def verify_record(root, record):
             descriptor_sha.hex() ==
             '7f8d2790a0d3de142cf69a1ac59c66f01830e21515d5fd37e9f18c98868a3ed4',
             'fixed descriptor bytes and digest')
-    require(digest((root / record['previous_review']).read_bytes()) ==
+    require(digest(at_a2a_did_base(root, record['previous_review']).read_bytes()) ==
             PREVIOUS_SHA256, 'historical review bytes')
     findings = record['previous_finding_dispositions']
     require([row['id'] for row in findings] == ['LLM-01', 'LLM-02'] and

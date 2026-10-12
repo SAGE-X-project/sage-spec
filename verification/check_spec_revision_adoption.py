@@ -8,6 +8,7 @@ from pathlib import Path
 
 from check_mcp_errata_adoption import ROOT, pinned_path, verify as verify_prior
 from review_target import pinned_path as reviewed_path
+from check_a2a_did_adoption import prior_path as at_a2a_did_base
 
 
 OWNERS = {
@@ -110,7 +111,7 @@ def verify(root=ROOT):
         historical = root / "verification/history/llm-review-target-2026-09-25" / source
         revised = root / 'verification/history/standards-clauses-base-2026-09-29' / source
         lines = (historical if historical.is_file() else
-                 revised if revised.is_file() else root / source).read_text().splitlines()
+                 revised if revised.is_file() else at_a2a_did_base(root, source)).read_text().splitlines()
         found = [number for number, line in enumerate(lines, 1)
                  if (line.startswith("#") and re.search(r"\b" + re.escape(ident) + r"\b", line))
                  or re.match(r"^\*\*" + re.escape(ident) + r"\b", line)]
