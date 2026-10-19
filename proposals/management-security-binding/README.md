@@ -1,6 +1,6 @@
 # Candidate management authentication and fork bindings
 
-Status: **UNADOPTED future-version candidate**, draft revision 2.
+Status: **UNADOPTED future-version candidate**, draft revision 3.
 Baseline sage-spec main `6d611b19764cfae50936ab4c63dbe4e1f9f78487`,
 SAGE 0.10.0. On 2026-10-19 the project direction was selected: preserve
 0.10.0, design new security rules as a separate version candidate, preserve
@@ -171,12 +171,13 @@ merely because the channel is fresh.
 
 ## 3. Proposed chain binding scope and exact remaining ABI dependency
 
-Select direct externally owned account transactions on the configured chain
-as the initial candidate; no meta-transactions, trusted forwarders, proxy
-upgrades, account abstraction, multisig-contract caller or relayer substitution
-is silently supported. Those alternatives need their own complete binding.
-This restriction changes which deployments/actors can claim the new binding;
-it cannot be retroactively inferred from REG-06's current account-address rule.
+The selected account policy permits both externally owned accounts and
+contract wallets. The Registry's exact `msg.sender` in the executed call is
+the actor. This replaces draft revision 2's EOA-only restriction, exclusively
+within this unadopted candidate. The [caller binding](account-binding.md)
+defines controller equality, contract-wallet limits, scoped operators and the
+required normal/runtime evidence. The Registry itself remains non-proxy.
+There is no forwarded or recovered replacement for the current caller.
 
 A selected transaction format must authenticate chain domain, nonce,
 destination, value and complete calldata. For example, EIP-1559 type2
@@ -186,14 +187,19 @@ One does not reinterpret the chain transaction signature as a SAGE
 RFC9421 signature, PoP, EIP-191 message or a trial of multiple algorithms.
 Exact legacy/type acceptance must be stated in the adopted binding, not guessed.
 
-The trusted node validates the transaction and chain; the contract authenticates
-the actual transaction sender, its own configured registry/chain and executed
-code. Client expected registry destination/code/chain/finality must all agree.
-The public controller is that exact sender for create; every subsequent actor
-is the actual authenticated sender, checked against current controller/grants.
-Body controller fields and recovered PoPs never replace it. A proof does not
-authorize arbitrary creation. Nonzero-value calls, unsupported selectors and
-ambiguous decoding need explicit binding rules rather than implied support.
+The selected validation source must establish accepted chain execution and
+Registry identity/code. A direct EOA call and a wallet call may have different
+outer transaction senders but are authorized by the same Registry rule: the
+current call's actual `msg.sender`, checked against controller/current grants.
+Create's proposed controller equals that caller. A wallet's owner, signer,
+transaction sponsor or `tx.origin` does not replace the wallet address. Client
+expected registry destination/code/chain/finality must all agree; an outer
+transaction addressed to a wallet is not evidence that the Registry executed
+the intended calldata. The executed Registry command and resulting state/history
+must be established as described in [account-binding.md](account-binding.md).
+Body controller fields and recovered PoPs never grant caller authority.
+Nonzero-value calls, unsupported selectors and ambiguous decoding require
+explicit refusal rules under the candidate ABI.
 
 The [typed ABI candidate](contract-abi.json) and [mapping](contract-design.md)
 start the required pinned artifact and per-selector mapping of
@@ -210,8 +216,8 @@ The ABI acceptance checklist in [verification-plan.md](verification-plan.md)
 precedes implementation and deployment; existing code is not certified.
 
 The existing claim commitment remains SHA-256/JCS over its exact REG-06 fields
-including secret random salt. Associate the commitment with authenticated sender
-and registry. Reveal by that sender occurs after commit block and within256
+including secret random salt. Associate the commitment with the actual Registry
+caller and registry. Reveal by that same caller occurs after commit block and within256
 blocks, consumes the matching commitment and creates the record atomically.
 Activation remains separate. Transaction nonce and expected record version have
 different replay roles; both are required by their own layer. Chain-ID replay
@@ -269,7 +275,7 @@ is a candidate means and remaining evidence contract, not a completed fork test.
 | Command framing/principal | Exact immutable payload from owned mutually authenticated channel reaches one atomic admission; all operations with controller and permitted operators | Duplicate/unknown/malformed/truncated/second frame, wrong context/version/body actor, different stream, stale credential configuration or expired leaf: no unauthorized dispatch |
 | Atomic grants/replay | Current permitted scope succeeds; one version/complete durable history change; separate read-only inspection | Concurrent same version, revoke-before-write, operator creating/delegating, stale grant, capacity/uncertain/restart state; no partial success |
 | Authentication | Correct root/name/leaf and protected-current generation; explicit new binding revision | Unknown certificate, retired pin, invalid clock, forwarder identity substitution, closed session; existing controller-only code is not all-operation evidence |
-| Chain | Published ABI artifact and exact selectors/argument round trip; trusted sender, chain and code; correct finalized inclusion | Calldata/context/nonce/version substitution, wrong sender, unbound relayer/proxy, wrong code/branch, uncertain receipt. Fixed simulator/unit only for attack-capable cases |
+| Chain | Published ABI artifact and exact selectors/argument round trip; exact Registry caller (EOA or wallet), chain and code; correct finalized execution | Calldata/context/nonce/version substitution, wrong caller, forwarded identity substitution, wrong Registry code/branch, uncertain receipt. Fixed simulator/unit only for attack-capable cases |
 | Fork | Authenticated configured anchor/source, validated descent/finality, restart persistence and explicit trusted reconfiguration | Same-genesis post-anchor divergence, conflict/rollback, unavailable ancestry, stale source generation: fail closed, no automatic selection |
 
 Before adoption: independently review the read-only history candidate and finish the ABI semantics and implementation gates;
