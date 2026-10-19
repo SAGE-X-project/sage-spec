@@ -192,3 +192,11 @@ artifact, compatibility and explicit versioned adoption before matching contract
 Go/Rust/ADK and Inspector implementation. Actual account-policy execution,
 operating source/custody, deployment and migration remain separate gates.
 All old FAIL/PARTIAL/NOT_RUN findings and deferred W3C registration remain intact.
+
+The [state and chain-history refinement](contract-state-and-history.md) is
+an unadopted revision-5 candidate. It distinguishes derived chain commands
+from the unchanged six-member web input, retains revealed salt, proposes
+caller-scoped multi-claims with ClaimMismatch reserved, and describes typed
+storage and reached-body guard ordering. Its mapping gate checks artifact
+consistency only. Full decoder/guard/serializer/cost/Source/version adoption
+and matching Registry execution remain unfinished; no old finding is closed.

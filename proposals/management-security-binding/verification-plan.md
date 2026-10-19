@@ -144,3 +144,20 @@ The [candidate command, state and outcome model](contract-execution-model.md)
 adds a separate 22-error/2-event artifact with normal data-codec checks.
 It does not change the thirteen-function ABI or complete storage slots, guard
 precedence, contract execution, costs, finality or version adoption.
+
+## Candidate chain-command and storage refinement
+
+Check all 13 ABI method classifications and 51 ordered input paths (including
+structural tuple/array nodes) against chain-command-map.json and the existing
+signature manifest. Preserve the six-member web input/no actor, the separately
+derived chain actor, complete reveal salt and reserved ClaimMismatch. Unit-only
+metadata cases cover omitted/duplicate paths, redirected actor/salt/proof/expiry
+fields, changed scalar types and limits; these are not live protocol requests.
+
+The checker emits no protocol PASS and runs no contract. Require fresh source
+hashes, eight unit results, at least90% checker statement coverage and actual
+artifact evidence before accepting this design-tool change. Subsequently close
+per-operation guard priorities, serializer byte equality and actual slot/type
+layout, then full maximum-valid workload/account/finality/compatibility and
+explicit adoption. No design-tool success closes the old four documentary
+FAILs, operating/issuer holds or actual Registry/Go/Rust/ADK inspection gates.

@@ -28,6 +28,10 @@ jobs:
         with:
           go-version-file: sage/go.mod
           cache-dependency-path: sage/go.sum
+      - name: Set up Python for candidate metadata checks
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
       - name: Inspect candidate Registry ABI without contract execution
         working-directory: sage
         env:
@@ -60,13 +64,38 @@ jobs:
               raise SystemExit("candidate outcome checker coverage is below 90%")
           PYCODE
           go run "$outcome/check.go" -abi "$outcome/abi.json" -schemas "$outcome/schemas.json" > "$target/candidate-outcomes-result.json"
+          python3 - > "$target/chain-map-unit.log" 2>&1 <<'PYCODE'
+          import hashlib, json, os, pathlib, sys, trace, unittest
+          root = pathlib.Path(os.environ["SAGE_CANDIDATE_ROOT"]).resolve()
+          target = pathlib.Path(os.environ["GITHUB_WORKSPACE"]) / "spec"
+          sys.path.insert(0, str(root))
+          suite = unittest.defaultTestLoader.discover(str(root), "test_chain_map.py")
+          tracer = trace.Trace(count=True, trace=False)
+          result = tracer.runfunc(unittest.TextTestRunner(verbosity=2).run, suite)
+          source = root / "check_chain_map.py"
+          executable = set(trace._find_executable_linenos(str(source)))
+          observed = {line for (name, line), count in tracer.results().counts.items() if pathlib.Path(name).resolve() == source and count > 0}
+          covered = executable & observed
+          percent = 100 * len(covered) / len(executable) if executable else 0
+          coverage = {"scope": "candidate metadata checker only; no Registry execution", "python": sys.version,
+                      "source_sha256": hashlib.sha256(source.read_bytes()).hexdigest(),
+                      "executable_lines": sorted(executable), "covered_lines": sorted(covered),
+                      "statements": len(executable), "covered": len(covered), "percent": percent,
+                      "tests_run": result.testsRun, "unit_success": result.wasSuccessful()}
+          (target / "chain-map-coverage.json").write_text(json.dumps(coverage, indent=2) + "\n")
+          print(json.dumps(coverage))
+          if not result.wasSuccessful() or result.testsRun != 8 or percent < 90:
+              raise SystemExit("candidate command map unit or coverage gate failed")
+          PYCODE
+          cat "$target/chain-map-unit.log"
+          python3 "$SAGE_CANDIDATE_ROOT/check_chain_map.py" > "$target/chain-map-result.json"
           go list -m -json github.com/ethereum/go-ethereum > "$target/candidate-abi-module.json"
           python3 - <<'PYCODE'
           import hashlib, json, os, pathlib, subprocess
           root = pathlib.Path(os.environ["GITHUB_WORKSPACE"]) / "spec"
           proposal = "proposals/management-security-binding/"
-          inputs = [proposal + name for name in ["README.md", "web-history.md", "verification-plan.md", "lifecycle-and-schemas.md", "contract-design.md", "account-binding.md", "contract-execution-model.md", "outcomes/abi.json", "outcomes/schemas.json", "outcomes/check.go", "outcomes/check_test.go", "contract-abi.json", "contract-signatures.json", "abi_check.go", "abi_check_test.go"]] + [".github/workflows/candidate-registry-abi.yml"]
-          outputs = ["candidate-abi-unit.log", "candidate-abi.cover", "candidate-abi-coverage.txt", "candidate-abi-result.json", "candidate-abi-module.json", "candidate-outcomes-unit.log", "candidate-outcomes.cover", "candidate-outcomes-coverage.txt", "candidate-outcomes-result.json"]
+          inputs = [proposal + name for name in ["README.md", "web-history.md", "verification-plan.md", "lifecycle-and-schemas.md", "contract-design.md", "account-binding.md", "contract-execution-model.md", "outcomes/abi.json", "outcomes/schemas.json", "outcomes/check.go", "outcomes/check_test.go", "contract-state-and-history.md", "chain-command-map.json", "check_chain_map.py", "test_chain_map.py", "contract-abi.json", "contract-signatures.json", "abi_check.go", "abi_check_test.go"]] + [".github/workflows/candidate-registry-abi.yml"]
+          outputs = ["candidate-abi-unit.log", "candidate-abi.cover", "candidate-abi-coverage.txt", "candidate-abi-result.json", "candidate-abi-module.json", "candidate-outcomes-unit.log", "candidate-outcomes.cover", "candidate-outcomes-coverage.txt", "candidate-outcomes-result.json", "chain-map-unit.log", "chain-map-coverage.json", "chain-map-result.json"]
           module = json.loads((root / "candidate-abi-module.json").read_text())
           if "Replace" in module or module.get("Path") != "github.com/ethereum/go-ethereum" or not module.get("Sum") or not module.get("Version"):
               raise SystemExit("unbound candidate ABI library identity")
@@ -99,3 +128,6 @@ jobs:
             spec/candidate-outcomes.cover
             spec/candidate-outcomes-coverage.txt
             spec/candidate-outcomes-result.json
+            spec/chain-map-unit.log
+            spec/chain-map-coverage.json
+            spec/chain-map-result.json

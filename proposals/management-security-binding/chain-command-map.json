@@ -1,0 +1,413 @@
+{
+  "status": "UNADOPTED",
+  "scope": "candidate argument mapping only; Registry execution NOT_RUN",
+  "webInputFields": [
+    "binding",
+    "registry",
+    "did",
+    "operation",
+    "expectedVersion",
+    "arguments"
+  ],
+  "chainCommandFields": [
+    "binding",
+    "registry",
+    "did",
+    "operation",
+    "expectedVersion",
+    "arguments",
+    "actor"
+  ],
+  "historyFields": [
+    "version",
+    "previousVersion",
+    "actor",
+    "operation",
+    "commandDigest",
+    "target",
+    "automaticRemovals",
+    "admitted",
+    "recordDigest",
+    "grantsDigest"
+  ],
+  "derived": {
+    "binding": "configured binding",
+    "registry": "configured registry",
+    "did": "configured registry and exact agentId",
+    "actor": "actual Registry msg.sender",
+    "initialKeyState": "accepted",
+    "createExpectedVersion": "",
+    "createSalt": "revealed ABI bytes32; canonical base64url"
+  },
+  "limits": {
+    "recordBytes": 65536,
+    "historyItemBytes": 262144,
+    "commandItemBytes": 262144,
+    "lifetimeKeys": 128,
+    "services": 16,
+    "activeGrants": 128
+  },
+  "reservedErrors": [
+    "ClaimMismatch"
+  ],
+  "methods": {
+    "commitClaim": {
+      "kind": "claim",
+      "operation": null,
+      "inputs": [
+        {
+          "path": "commitment",
+          "abiType": "bytes32",
+          "target": "claim.commitment"
+        }
+      ],
+      "minimumHeadBytes": 36,
+      "maximumCalldataBytes": 36
+    },
+    "revealClaim": {
+      "kind": "mutation",
+      "operation": "create",
+      "inputs": [
+        {
+          "path": "agentId",
+          "abiType": "string",
+          "target": "did.agentId"
+        },
+        {
+          "path": "controller",
+          "abiType": "address",
+          "target": "arguments.controller/address"
+        },
+        {
+          "path": "keys",
+          "abiType": "tuple[]",
+          "target": "arguments.keys"
+        },
+        {
+          "path": "keys[].name",
+          "abiType": "string",
+          "target": "arguments.keys[].name"
+        },
+        {
+          "path": "keys[].alg",
+          "abiType": "string",
+          "target": "arguments.keys[].alg"
+        },
+        {
+          "path": "keys[].key",
+          "abiType": "bytes",
+          "target": "arguments.keys[].key/base64url"
+        },
+        {
+          "path": "keys[].signer",
+          "abiType": "string",
+          "target": "arguments.keys[].proof.signer"
+        },
+        {
+          "path": "keys[].proof",
+          "abiType": "bytes",
+          "target": "arguments.keys[].proof.value/base64url"
+        },
+        {
+          "path": "keys[].hasExpiry",
+          "abiType": "bool",
+          "target": "arguments.keys[].expires/presence"
+        },
+        {
+          "path": "keys[].expires",
+          "abiType": "uint64",
+          "target": "arguments.keys[].expires/value"
+        },
+        {
+          "path": "services",
+          "abiType": "tuple[]",
+          "target": "arguments.services"
+        },
+        {
+          "path": "services[].name",
+          "abiType": "string",
+          "target": "arguments.services[].name"
+        },
+        {
+          "path": "services[].serviceType",
+          "abiType": "string",
+          "target": "arguments.services[].type"
+        },
+        {
+          "path": "services[].uri",
+          "abiType": "string",
+          "target": "arguments.services[].uri"
+        },
+        {
+          "path": "salt",
+          "abiType": "bytes32",
+          "target": "arguments.salt/base64url"
+        }
+      ],
+      "minimumHeadBytes": 164,
+      "maximumCalldataBytes": 148804
+    },
+    "activate": {
+      "kind": "mutation",
+      "operation": "activate",
+      "inputs": [
+        {
+          "path": "agentId",
+          "abiType": "string",
+          "target": "did.agentId"
+        },
+        {
+          "path": "expectedVersion",
+          "abiType": "uint64",
+          "target": "expectedVersion/decimal"
+        }
+      ],
+      "minimumHeadBytes": 68,
+      "maximumCalldataBytes": 164
+    },
+    "addKey": {
+      "kind": "mutation",
+      "operation": "add-key",
+      "inputs": [
+        {
+          "path": "agentId",
+          "abiType": "string",
+          "target": "did.agentId"
+        },
+        {
+          "path": "expectedVersion",
+          "abiType": "uint64",
+          "target": "expectedVersion/decimal"
+        },
+        {
+          "path": "entry",
+          "abiType": "tuple",
+          "target": "arguments.key"
+        },
+        {
+          "path": "entry.name",
+          "abiType": "string",
+          "target": "arguments.key.name"
+        },
+        {
+          "path": "entry.alg",
+          "abiType": "string",
+          "target": "arguments.key.alg"
+        },
+        {
+          "path": "entry.key",
+          "abiType": "bytes",
+          "target": "arguments.key.key/base64url"
+        },
+        {
+          "path": "entry.signer",
+          "abiType": "string",
+          "target": "arguments.key.proof.signer"
+        },
+        {
+          "path": "entry.proof",
+          "abiType": "bytes",
+          "target": "arguments.key.proof.value/base64url"
+        },
+        {
+          "path": "entry.hasExpiry",
+          "abiType": "bool",
+          "target": "arguments.key.expires/presence"
+        },
+        {
+          "path": "entry.expires",
+          "abiType": "uint64",
+          "target": "arguments.key.expires/value"
+        }
+      ],
+      "minimumHeadBytes": 100,
+      "maximumCalldataBytes": 1028
+    },
+    "revokeKey": {
+      "kind": "mutation",
+      "operation": "revoke-key",
+      "inputs": [
+        {
+          "path": "agentId",
+          "abiType": "string",
+          "target": "did.agentId"
+        },
+        {
+          "path": "expectedVersion",
+          "abiType": "uint64",
+          "target": "expectedVersion/decimal"
+        },
+        {
+          "path": "name",
+          "abiType": "string",
+          "target": "arguments.name"
+        }
+      ],
+      "minimumHeadBytes": 100,
+      "maximumCalldataBytes": 260
+    },
+    "updateServices": {
+      "kind": "mutation",
+      "operation": "update-services",
+      "inputs": [
+        {
+          "path": "agentId",
+          "abiType": "string",
+          "target": "did.agentId"
+        },
+        {
+          "path": "expectedVersion",
+          "abiType": "uint64",
+          "target": "expectedVersion/decimal"
+        },
+        {
+          "path": "services",
+          "abiType": "tuple[]",
+          "target": "arguments.services"
+        },
+        {
+          "path": "services[].name",
+          "abiType": "string",
+          "target": "arguments.services[].name"
+        },
+        {
+          "path": "services[].serviceType",
+          "abiType": "string",
+          "target": "arguments.services[].type"
+        },
+        {
+          "path": "services[].uri",
+          "abiType": "string",
+          "target": "arguments.services[].uri"
+        }
+      ],
+      "minimumHeadBytes": 100,
+      "maximumCalldataBytes": 38116
+    },
+    "authorizeOperator": {
+      "kind": "mutation",
+      "operation": "authorize-operator",
+      "inputs": [
+        {
+          "path": "agentId",
+          "abiType": "string",
+          "target": "did.agentId"
+        },
+        {
+          "path": "expectedVersion",
+          "abiType": "uint64",
+          "target": "expectedVersion/decimal"
+        },
+        {
+          "path": "operator",
+          "abiType": "address",
+          "target": "arguments.operator/address"
+        },
+        {
+          "path": "scope",
+          "abiType": "string",
+          "target": "arguments.scope"
+        }
+      ],
+      "minimumHeadBytes": 132,
+      "maximumCalldataBytes": 292
+    },
+    "revokeOperator": {
+      "kind": "mutation",
+      "operation": "revoke-operator",
+      "inputs": [
+        {
+          "path": "agentId",
+          "abiType": "string",
+          "target": "did.agentId"
+        },
+        {
+          "path": "expectedVersion",
+          "abiType": "uint64",
+          "target": "expectedVersion/decimal"
+        },
+        {
+          "path": "operator",
+          "abiType": "address",
+          "target": "arguments.operator/address"
+        },
+        {
+          "path": "scope",
+          "abiType": "string",
+          "target": "arguments.scope"
+        }
+      ],
+      "minimumHeadBytes": 132,
+      "maximumCalldataBytes": 292
+    },
+    "deactivate": {
+      "kind": "mutation",
+      "operation": "deactivate",
+      "inputs": [
+        {
+          "path": "agentId",
+          "abiType": "string",
+          "target": "did.agentId"
+        },
+        {
+          "path": "expectedVersion",
+          "abiType": "uint64",
+          "target": "expectedVersion/decimal"
+        }
+      ],
+      "minimumHeadBytes": 68,
+      "maximumCalldataBytes": 164
+    },
+    "registryId": {
+      "kind": "read",
+      "operation": null,
+      "inputs": [],
+      "minimumHeadBytes": 4,
+      "maximumCalldataBytes": 4
+    },
+    "record": {
+      "kind": "read",
+      "operation": null,
+      "inputs": [
+        {
+          "path": "agentId",
+          "abiType": "string",
+          "target": "read.agentId"
+        }
+      ],
+      "minimumHeadBytes": 36,
+      "maximumCalldataBytes": 132
+    },
+    "activeGrants": {
+      "kind": "read",
+      "operation": null,
+      "inputs": [
+        {
+          "path": "agentId",
+          "abiType": "string",
+          "target": "read.agentId"
+        }
+      ],
+      "minimumHeadBytes": 36,
+      "maximumCalldataBytes": 132
+    },
+    "historyItem": {
+      "kind": "read",
+      "operation": null,
+      "inputs": [
+        {
+          "path": "agentId",
+          "abiType": "string",
+          "target": "read.agentId"
+        },
+        {
+          "path": "version",
+          "abiType": "uint64",
+          "target": "read.version/decimal"
+        }
+      ],
+      "minimumHeadBytes": 68,
+      "maximumCalldataBytes": 164
+    }
+  }
+}
