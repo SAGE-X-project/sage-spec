@@ -1,0 +1,169 @@
+{
+  "activate": {
+    "inputLayout": [
+      "agentId:string",
+      "expectedVersion:uint64"
+    ],
+    "mutability": "nonpayable",
+    "outputLayout": [
+      "version:uint64"
+    ],
+    "signature": "activate(string,uint64)"
+  },
+  "activeGrants": {
+    "inputLayout": [
+      "agentId:string"
+    ],
+    "mutability": "view",
+    "outputLayout": [
+      "canonicalGrants:bytes"
+    ],
+    "signature": "activeGrants(string)"
+  },
+  "addKey": {
+    "inputLayout": [
+      "agentId:string",
+      "expectedVersion:uint64",
+      "entry:tuple",
+      "entry.name:string",
+      "entry.alg:string",
+      "entry.key:bytes",
+      "entry.signer:string",
+      "entry.proof:bytes",
+      "entry.hasExpiry:bool",
+      "entry.expires:uint64"
+    ],
+    "mutability": "nonpayable",
+    "outputLayout": [
+      "version:uint64"
+    ],
+    "signature": "addKey(string,uint64,(string,string,bytes,string,bytes,bool,uint64))"
+  },
+  "authorizeOperator": {
+    "inputLayout": [
+      "agentId:string",
+      "expectedVersion:uint64",
+      "operator:address",
+      "scope:string"
+    ],
+    "mutability": "nonpayable",
+    "outputLayout": [
+      "version:uint64"
+    ],
+    "signature": "authorizeOperator(string,uint64,address,string)"
+  },
+  "commitClaim": {
+    "inputLayout": [
+      "commitment:bytes32"
+    ],
+    "mutability": "nonpayable",
+    "outputLayout": [],
+    "signature": "commitClaim(bytes32)"
+  },
+  "deactivate": {
+    "inputLayout": [
+      "agentId:string",
+      "expectedVersion:uint64"
+    ],
+    "mutability": "nonpayable",
+    "outputLayout": [
+      "version:uint64"
+    ],
+    "signature": "deactivate(string,uint64)"
+  },
+  "historyItem": {
+    "inputLayout": [
+      "agentId:string",
+      "version:uint64"
+    ],
+    "mutability": "view",
+    "outputLayout": [
+      "canonicalHistory:bytes",
+      "canonicalCommand:bytes"
+    ],
+    "signature": "historyItem(string,uint64)"
+  },
+  "record": {
+    "inputLayout": [
+      "agentId:string"
+    ],
+    "mutability": "view",
+    "outputLayout": [
+      "present:bool",
+      "canonicalRecord:bytes"
+    ],
+    "signature": "record(string)"
+  },
+  "registryId": {
+    "inputLayout": [],
+    "mutability": "view",
+    "outputLayout": [
+      "registry:string"
+    ],
+    "signature": "registryId()"
+  },
+  "revealClaim": {
+    "inputLayout": [
+      "agentId:string",
+      "controller:address",
+      "keys:tuple[]",
+      "keys[].name:string",
+      "keys[].alg:string",
+      "keys[].key:bytes",
+      "keys[].signer:string",
+      "keys[].proof:bytes",
+      "keys[].hasExpiry:bool",
+      "keys[].expires:uint64",
+      "services:tuple[]",
+      "services[].name:string",
+      "services[].serviceType:string",
+      "services[].uri:string",
+      "salt:bytes32"
+    ],
+    "mutability": "nonpayable",
+    "outputLayout": [
+      "version:uint64"
+    ],
+    "signature": "revealClaim(string,address,(string,string,bytes,string,bytes,bool,uint64)[],(string,string,string)[],bytes32)"
+  },
+  "revokeKey": {
+    "inputLayout": [
+      "agentId:string",
+      "expectedVersion:uint64",
+      "name:string"
+    ],
+    "mutability": "nonpayable",
+    "outputLayout": [
+      "version:uint64"
+    ],
+    "signature": "revokeKey(string,uint64,string)"
+  },
+  "revokeOperator": {
+    "inputLayout": [
+      "agentId:string",
+      "expectedVersion:uint64",
+      "operator:address",
+      "scope:string"
+    ],
+    "mutability": "nonpayable",
+    "outputLayout": [
+      "version:uint64"
+    ],
+    "signature": "revokeOperator(string,uint64,address,string)"
+  },
+  "updateServices": {
+    "inputLayout": [
+      "agentId:string",
+      "expectedVersion:uint64",
+      "services:tuple[]",
+      "services[].name:string",
+      "services[].serviceType:string",
+      "services[].uri:string"
+    ],
+    "mutability": "nonpayable",
+    "outputLayout": [
+      "version:uint64"
+    ],
+    "signature": "updateServices(string,uint64,(string,string,string)[])"
+  }
+}

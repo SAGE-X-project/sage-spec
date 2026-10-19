@@ -1,6 +1,6 @@
 # Authenticated read-only management inspection candidate
 
-Status: **UNADOPTED future-version candidate**, draft revision 1. This extends
+Status: **UNADOPTED future-version candidate**, draft revision 2. This extends
 only the proposed web management binding in [README.md](README.md). It does
 not add an endpoint to REG-08 public record retrieval, implement a protocol,
 prove durability or change the 0.10.0 inspection contract. The chain binding
@@ -120,7 +120,10 @@ the complete active grant array sorted by ASCII operator then scope, with
 at most 128 exact `{operator,scope}` objects. `tombstone` is exactly
 `{deactivated:boolean}`; false does not omit the member. Each history item
 has exactly `version`, `previousVersion`, `actor`, `operation`,
-`commandDigest`, `target`, `automaticRemovals`. `previousVersion` is empty
+`commandDigest`, `target`, `automaticRemovals`, `admitted`, `recordDigest`,
+`grantsDigest`. The last three fields bind the trusted admission time and
+complete resulting record/grants as specified in
+[lifecycle-and-schemas.md](lifecycle-and-schemas.md). `previousVersion` is empty
 only for creation. `target` is null except authorize/revoke-operator, where
 it is exactly `{operator,scope}`. `automaticRemovals` is a sorted complete
 array of removed `{operator,scope}` pairs, never a second mutation/version.
@@ -178,3 +181,8 @@ operating/implementation choices still unselected. This proposal specifies
 observable refusal and inspection, not an implemented recovery backend.
 Full integration/Inspector acceptance needs evidence of that backend under
 normal, safe restart and unit-only fault scenarios.
+
+Revision 2 applies the closed schema, current-authority, trusted-clock and
+complete-history invariants in [lifecycle-and-schemas.md](lifecycle-and-schemas.md).
+Draft revision 1 is available at Git revision
+`b63b08f81f566ab00d27c89e0cd4c40a4b6f383d`; it is not a deployed wire format.

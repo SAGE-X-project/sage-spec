@@ -1,6 +1,6 @@
 # Candidate management authentication and fork bindings
 
-Status: **UNADOPTED future-version candidate**, draft revision 1.
+Status: **UNADOPTED future-version candidate**, draft revision 2.
 Baseline sage-spec main `6d611b19764cfae50936ab4c63dbe4e1f9f78487`,
 SAGE 0.10.0. On 2026-10-19 the project direction was selected: preserve
 0.10.0, design new security rules as a separate version candidate, preserve
@@ -39,8 +39,8 @@ new fork acceptance conditions create new acceptance/rejection rules. They
 must not be merged into 0.10.0 as PATCH clarifications under OVERVIEW-03.
 No release number is selected here. The selected direction permits a separately versioned design; adoption still
 needs a concrete release/profile identifier, compatibility inventory and review
-before implementation. The old profile and old evidence remain identifiable. The chain ABI
-is still a design dependency below, not a fabricated finished binding.
+before implementation. The old profile and old evidence remain identifiable. The typed ABI candidate and its remaining semantic/implementation gates are
+listed in [contract-design.md](contract-design.md); it is not a finished binding.
 
 ## 2. Proposed web management binding: exact command on its authenticated channel
 
@@ -94,8 +94,9 @@ before allocation/JSON parsing. The payload is one strict UTF-8 JSON object
 under chapter 02, serialized as JCS; received bytes must equal that object's
 JCS bytes. Invalid UTF-8, duplicate/unknown/missing fields, noncanonical bytes,
 extra bytes inside the declared payload and unknown operations are refused
-before authorization. The session dispatches at most its first valid frame;
-trailing frames can never dispatch a second operation. EOF before the complete
+before authorization. Only the first declared frame is evaluated. An invalid, oversized or
+truncated first frame closes the session without dispatch; the server never
+scans for a later valid frame. Trailing frames cannot dispatch another operation. EOF before the complete
 first frame refuses without mutation. Frame length is not an HTTP content
 length and cannot be silently accepted on the public read endpoint.
 
@@ -113,7 +114,7 @@ exactly the empty string. It is checked at the atomic admission point.
 | create | `controller`, `keys`, `services`; REG-01 encodings/bounds, proposed DID and all proofs; candidate starts at version1/state created | Actor equals proposed controller; DID/tombstone absent; no operator creation |
 | activate | Empty object | Controller or current `activate` grant; created |
 | add-key | `key` containing exactly one REG-01 key | Controller or current `add-key` grant; active |
-| revoke-key | `name` using key-id grammar | Controller or current `revoke-key` grant in active state; controller-only revocation in created state remains an explicit unresolved lifecycle interpretation of REG-03. Retain the immutable entry; atomically deactivate if no usable signing key remains. Adoption is blocked until that interpretation is resolved without silently changing 0.10.0. |
+| revoke-key | `name` using key-id grammar | Controller in created/active, or current `revoke-key` grant in active. Retain the immutable entry; atomically deactivate if no usable signing key remains. This explicit future-candidate choice and all state transitions are defined in [lifecycle-and-schemas.md](lifecycle-and-schemas.md); no 0.10.0 interpretation is retroactively changed. |
 | update-services | `services`, the complete REG-01 array | Controller or current `update-services` grant; active |
 | authorize-operator | `operator`, `scope` as chapter 09 section 9 | Controller only; created/active, exact state-eligible scope |
 | revoke-operator | `operator`, `scope` as chapter 09 section 9 | Controller only; created/active, exact active pair |
@@ -194,13 +195,16 @@ Body controller fields and recovered PoPs never replace it. A proof does not
 authorize arbitrary creation. Nonzero-value calls, unsupported selectors and
 ambiguous decoding need explicit binding rules rather than implied support.
 
-The ABI must be published as a pinned artifact with a per-selector mapping of
+The [typed ABI candidate](contract-abi.json) and [mapping](contract-design.md)
+start the required pinned artifact and per-selector mapping of
 all eight operations above plus commit/reveal. Each entry needs canonical
 argument types, dynamic offsets/lengths/trailing bytes, DID/registry mapping,
 expected empty/create versus exact previous version, all key/proof/expiry and
 service fields, output/revert semantics, events and atomic state/history/grant
-storage rules. Its actual selectors, byte encoding and code hash are NOT defined
-by this proposal and therefore the chain binding is NOT complete. Merely writing
+storage rules. The ABI checker derives selectors and checks normal canonical call bytes,
+but actual contract code, storage enforcement, proof verification, transaction
+acceptance, history/revert/event encoding and costs remain incomplete.
+Therefore the chain binding is NOT complete. Merely writing
 that mapping must exist does not close security.5/.6 for eip155. The selected new-contract design direction keeps the legacy deployment intact.
 The ABI acceptance checklist in [verification-plan.md](verification-plan.md)
 precedes implementation and deployment; existing code is not certified.
@@ -268,7 +272,7 @@ is a candidate means and remaining evidence contract, not a completed fork test.
 | Chain | Published ABI artifact and exact selectors/argument round trip; trusted sender, chain and code; correct finalized inclusion | Calldata/context/nonce/version substitution, wrong sender, unbound relayer/proxy, wrong code/branch, uncertain receipt. Fixed simulator/unit only for attack-capable cases |
 | Fork | Authenticated configured anchor/source, validated descent/finality, restart persistence and explicit trusted reconfiguration | Same-genesis post-anchor divergence, conflict/rollback, unavailable ancestry, stale source generation: fail closed, no automatic selection |
 
-Before adoption: independently review the read-only history candidate and finish the exact chain ABI;
+Before adoption: independently review the read-only history candidate and finish the ABI semantics and implementation gates;
 review all operations and binding schemas; finish profile/version compatibility under OVERVIEW-03 and review the selected
 new-contract migration direction without deploying it. Afterwards: version-matched independent documentary review,
 implementation, unit and safe owned-runtime tests, Inspector subject/evidence,
@@ -306,3 +310,9 @@ The remaining four documentary findings stay open until a versioned subject,
 complete web/chain/fork contracts and independent evidence support a new
 finding. The two actual issuer obligations and all existing runtime gaps
 remain separate.
+
+The [lifecycle and schema refinement](lifecycle-and-schemas.md) resolves the
+created-state revoke choice and tightens future draft-only schemas. Its new
+history fields are incompatible with draft revision 1; no deployed reader or
+0.10.0 subject is silently upgraded. [contract-design.md](contract-design.md)
+separates the typed ABI/normal codec checks from actual contract execution.
