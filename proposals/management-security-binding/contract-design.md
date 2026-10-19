@@ -1,6 +1,6 @@
 # Typed Registry ABI and storage design candidate
 
-Status: **UNADOPTED future-version candidate**, draft revision 2. The
+Status: **UNADOPTED future-version candidate**, draft revision 3. The
 [ABI JSON](contract-abi.json) and separately authored
 [complete method schemas](contract-signatures.json) specify thirteen typed
 function candidates: nine write surfaces and four reads. They are not deployed
@@ -61,16 +61,24 @@ lengths, padding and dynamic tails before admission. Solidity's ordinary
 decoder alone is not a promise of strict canonical decoding or trailing-byte
 rejection. Input allocation/work is bounded before expensive proof work.
 
-The contract's exact msg.sender is the actor; no body, PoP, callback, log or
-claimed recovered key replaces it. Current controller/grants and predecessor
-are checked at the mutation's serialization point. The initial draft's direct
-EOA account/transaction restriction remains a separate unfinished gate: the
-contract cannot infer every original transaction-envelope property from a
-function selector/msg.sender. The accepted transaction types, account/delegation
-model and validation-source evidence must be defined before adopting this
-binding. This ABI does not silently support forwarders or claim to prove EOA
-provenance. Transaction nonce, record predecessor and claim commitment retain
-their distinct replay roles.
+The contract's exact `msg.sender` is the actor for both EOA and contract-wallet
+calls, as selected in [account-binding.md](account-binding.md). No body, PoP,
+callback, log, claimed recovered key or `tx.origin` replaces it. Reveal's
+controller equals that caller; current controller/grants and predecessor are
+checked at the mutation's serialization point. Commit and reveal are bound to
+the same caller even when different outer transactions execute the wallet.
+No code-size or transaction-origin EOA restriction is introduced. A wallet's
+own upgrade/signature/owner policy is outside Registry authentication; the
+address does not attest those properties.
+
+The earlier EOA-only gate is superseded in this future candidate. Accepted
+transaction types and the validation source's exact executed-call/state/history
+evidence remain unfinished gates: a selector, RPC `from`, outer transaction
+signer or receipt alone does not prove the Registry caller or command. Forwarded
+identity substitution and wallet-signature callbacks are not added to this ABI.
+Transaction nonce, record predecessor and caller-bound claim commitment retain
+their distinct replay roles. No ABI selector/tuple changes follow from selecting
+this address-based account policy.
 
 ## 3. Record, grants and complete history storage
 

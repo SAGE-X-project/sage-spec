@@ -1,6 +1,6 @@
 # Future binding verification and contract design plan
 
-Status: **UNADOPTED design and evidence plan**, draft revision 2. This plan
+Status: **UNADOPTED design and evidence plan**, draft revision 3. This plan
 implements the selected design direction, not an adopted wire standard,
 finished ABI, release, contract implementation or deployment approval.
 
@@ -45,7 +45,7 @@ not a selected operating network. The contract artifact must settle:
 | Commit/reveal and create | Canonical selector/type definitions; sender-scoped claim; exact commitment fields/domain; reveal strictly after commit block and within 256 blocks; atomic one-time consume/create; minimum proven signing key and separate activation |
 | Lifecycle operations | Selectors and argument maps for activate, add-key, revoke-key, update-services, authorize-operator, revoke-operator and deactivate; apply the explicit candidate created-state controller revoke-key rule; overflow/expiry/terminal-state rules |
 | Canonical decoding | Exact selector, argument types and order, dynamic offsets/lengths, text encoding, duplicates/sorting, lengths before work, trailing bytes and value rules. Prove encode/decode round trips; reject ambiguous alternate encodings without executing adversarial payloads |
-| Actor and grants | Exact authenticated sender-to-controller/operator mapping, registry/chain binding, eligible states/scopes, current grant at serialization and atomic revoke-before-write. No body principal, PoP authorization, implicit forwarder or operator delegation |
+| Actor and grants | Exact Registry msg.sender-to-controller/operator mapping for both EOA and contract-wallet callers under [account-binding.md](account-binding.md); caller-bound commit/reveal, registry/chain binding, eligible states/scopes, current grant at serialization and atomic revoke-before-write. No tx.origin/body/recovered signer replacement, PoP authorization, implicit forwarder or operator delegation |
 | Records and proofs | Exact record-to-storage mapping and independent re-encoding, lifetime key count/name/material uniqueness, algorithm/role separation, Ed25519 support and all accepted algorithm verification; KEM endorsement distinguished from possession |
 | Version/history | One uint64-range record increment, exact predecessor, history entries for all successful mutations/grant changes/automatic removals, retained tombstones, atomic public reads, restart/reorg treatment and complete authenticated inspection mapping |
 | Returns/errors/events | Exact outputs and revert/error semantics with no state/event success on failure; typed events distinguish management operations; logs alone are not authoritative full storage/history or finalized execution |
@@ -56,8 +56,11 @@ A plain ABI JSON file is insufficient without this semantics map. Conversely,
 a table of required selectors is not the ABI. The typed ABI and normal codec artifact now begin that work, as explained in
 [contract-design.md](contract-design.md). Remaining semantics, contract code,
 proof verification, costs and deployment data are not supplied by ABI checks.
-If feasibility/cost requires a different account or upgrade model, publish a
-separate reviewed candidate rather than silently widening direct-sender scope.
+The account policy is selected: both EOA and contract-wallet addresses may be
+actual callers. Its unit/normal-runtime evidence remains NOT_RUN. No library
+qualification or ABI codec check substitutes for that evidence. Any future
+change to caller interpretation or Registry upgrade model needs a separately
+reviewed candidate rather than silently widening identity substitution.
 
 Migration preparation includes deterministic export/import comparison of
 public records, historical key tombstones, grants, history and authority;
@@ -100,7 +103,7 @@ paid execution require separate authorization.
 | Auth/command | Closed schemas, canonical bytes, actor-context matching, all operations/states, malformed/duplicate/truncated/extra-frame refusal and stale credentials as data | Trusted local Client/server handshake, normal reads/writes, exact command delivered once to owned atomic admission; no external target |
 | Atomic storage | Same predecessor, concurrent revoke/write order, exhausted capacity, uncertain commit and rollback as modeled outcomes | Owned store normal persistence and safe restart, complete old/new snapshots; no claim from a mock alone |
 | Read/history | Every response schema, chunks/length/digest/context, ACL/current generation, expiry, denied/unknown/pruned view, lost response with in-flight commit | Owned history traversal with normal multi-chunk records/commands, read-only permission and new authenticated sessions; observed view identity and source receipts |
-| Contract | Independent ABI expected bytes, every operation/key role/state/proof/version and negative modeled cases | Local normal deployment/registration/read/grant lifecycle after implementation and authorization; compiler/artifact/runtime code/gas evidence; no public-chain transaction implied |
+| Contract | Independent ABI expected bytes, every operation/key role/state/proof/version and negative modeled cases | Local normal deployment/registration/read/grant lifecycle with an owned EOA and wallet after implementation and authorization; exact inner caller/command/state/history observations, compiler/artifact/runtime code/gas evidence; no public-chain transaction implied |
 | Finality/fork | Pre/post-anchor conflicts, stale sources, missing ancestry, restart high-water marks as fixed data and unit scenarios | Normal owned node/source observation only where safe and available; otherwise explicit NOT_RUN |
 | Integration/Inspector | Independent catalogs/oracles, old subjects unchanged, bad/missing evidence yields ERROR/NOT_RUN rather than fabricated PASS | Go/Rust/ADK selected consumers and Inspector capture the same pinned source/ABI/observer and real evidence; full PR/main CI and artifact review |
 
