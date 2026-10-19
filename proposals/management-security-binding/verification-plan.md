@@ -1,6 +1,6 @@
 # Future binding verification and contract design plan
 
-Status: **UNADOPTED design and evidence plan**, draft revision 1. This plan
+Status: **UNADOPTED design and evidence plan**, draft revision 2. This plan
 implements the selected design direction, not an adopted wire standard,
 finished ABI, release, contract implementation or deployment approval.
 
@@ -43,7 +43,7 @@ not a selected operating network. The contract artifact must settle:
 | Surface | Required exact design/evidence before implementation |
 |---|---|
 | Commit/reveal and create | Canonical selector/type definitions; sender-scoped claim; exact commitment fields/domain; reveal strictly after commit block and within 256 blocks; atomic one-time consume/create; minimum proven signing key and separate activation |
-| Lifecycle operations | Selectors and argument maps for activate, add-key, revoke-key, update-services, authorize-operator, revoke-operator and deactivate; resolve created-state controller revoke-key interpretation explicitly; overflow/expiry/terminal-state rules |
+| Lifecycle operations | Selectors and argument maps for activate, add-key, revoke-key, update-services, authorize-operator, revoke-operator and deactivate; apply the explicit candidate created-state controller revoke-key rule; overflow/expiry/terminal-state rules |
 | Canonical decoding | Exact selector, argument types and order, dynamic offsets/lengths, text encoding, duplicates/sorting, lengths before work, trailing bytes and value rules. Prove encode/decode round trips; reject ambiguous alternate encodings without executing adversarial payloads |
 | Actor and grants | Exact authenticated sender-to-controller/operator mapping, registry/chain binding, eligible states/scopes, current grant at serialization and atomic revoke-before-write. No body principal, PoP authorization, implicit forwarder or operator delegation |
 | Records and proofs | Exact record-to-storage mapping and independent re-encoding, lifetime key count/name/material uniqueness, algorithm/role separation, Ed25519 support and all accepted algorithm verification; KEM endorsement distinguished from possession |
@@ -53,8 +53,9 @@ not a selected operating network. The contract artifact must settle:
 | Read/finality mapping | Record, grants and history at one finalized block; exact storage/proof or trusted-node observation mapping; chain/address/code/ABI identity and readiness. Arbitrary RPC data is not proof |
 
 A plain ABI JSON file is insufficient without this semantics map. Conversely,
-a table of required selectors is not the ABI. These artifacts remain a next
-work item; this document contains no generated selectors or deployment data.
+a table of required selectors is not the ABI. The typed ABI and normal codec artifact now begin that work, as explained in
+[contract-design.md](contract-design.md). Remaining semantics, contract code,
+proof verification, costs and deployment data are not supplied by ABI checks.
 If feasibility/cost requires a different account or upgrade model, publish a
 separate reviewed candidate rather than silently widening direct-sender scope.
 
@@ -118,8 +119,7 @@ coverage or an additional conformance verdict.
 
 ## 5. Work order and preserved work
 
-1. Review this web management/history candidate and resolve its explicit
-   lifecycle/schema issues; keep current normative files unchanged.
+1. Review the refined web management/history lifecycle and closed schemas; keep current normative files unchanged.
 2. Finish the new-contract ABI/storage/algorithm-cost design against pinned
    current SAGE/A2A/DID and an explicitly frozen ERC-8004 revision; record gaps
    and the KYA boundary. ERC-8004 remains changeable, not an unpinned latest input.
