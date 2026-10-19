@@ -84,7 +84,7 @@ jobs:
                       "tests_run": result.testsRun, "unit_success": result.wasSuccessful()}
           (target / "chain-map-coverage.json").write_text(json.dumps(coverage, indent=2) + "\n")
           print(json.dumps(coverage))
-          if not result.wasSuccessful() or result.testsRun != 7 or percent < 90:
+          if not result.wasSuccessful() or result.testsRun != 8 or percent < 90:
               raise SystemExit("candidate command map unit or coverage gate failed")
           PYCODE
           cat "$target/chain-map-unit.log"

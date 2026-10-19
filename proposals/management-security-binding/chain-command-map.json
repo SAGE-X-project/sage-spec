@@ -60,7 +60,9 @@
           "abiType": "bytes32",
           "target": "claim.commitment"
         }
-      ]
+      ],
+      "minimumHeadBytes": 36,
+      "maximumCalldataBytes": 36
     },
     "revealClaim": {
       "kind": "mutation",
@@ -141,7 +143,9 @@
           "abiType": "bytes32",
           "target": "arguments.salt/base64url"
         }
-      ]
+      ],
+      "minimumHeadBytes": 164,
+      "maximumCalldataBytes": 148804
     },
     "activate": {
       "kind": "mutation",
@@ -157,7 +161,9 @@
           "abiType": "uint64",
           "target": "expectedVersion/decimal"
         }
-      ]
+      ],
+      "minimumHeadBytes": 68,
+      "maximumCalldataBytes": 164
     },
     "addKey": {
       "kind": "mutation",
@@ -213,7 +219,9 @@
           "abiType": "uint64",
           "target": "arguments.key.expires/value"
         }
-      ]
+      ],
+      "minimumHeadBytes": 100,
+      "maximumCalldataBytes": 1028
     },
     "revokeKey": {
       "kind": "mutation",
@@ -234,7 +242,9 @@
           "abiType": "string",
           "target": "arguments.name"
         }
-      ]
+      ],
+      "minimumHeadBytes": 100,
+      "maximumCalldataBytes": 260
     },
     "updateServices": {
       "kind": "mutation",
@@ -270,7 +280,9 @@
           "abiType": "string",
           "target": "arguments.services[].uri"
         }
-      ]
+      ],
+      "minimumHeadBytes": 100,
+      "maximumCalldataBytes": 38116
     },
     "authorizeOperator": {
       "kind": "mutation",
@@ -296,7 +308,9 @@
           "abiType": "string",
           "target": "arguments.scope"
         }
-      ]
+      ],
+      "minimumHeadBytes": 132,
+      "maximumCalldataBytes": 292
     },
     "revokeOperator": {
       "kind": "mutation",
@@ -322,7 +336,9 @@
           "abiType": "string",
           "target": "arguments.scope"
         }
-      ]
+      ],
+      "minimumHeadBytes": 132,
+      "maximumCalldataBytes": 292
     },
     "deactivate": {
       "kind": "mutation",
@@ -338,12 +354,16 @@
           "abiType": "uint64",
           "target": "expectedVersion/decimal"
         }
-      ]
+      ],
+      "minimumHeadBytes": 68,
+      "maximumCalldataBytes": 164
     },
     "registryId": {
       "kind": "read",
       "operation": null,
-      "inputs": []
+      "inputs": [],
+      "minimumHeadBytes": 4,
+      "maximumCalldataBytes": 4
     },
     "record": {
       "kind": "read",
@@ -354,7 +374,9 @@
           "abiType": "string",
           "target": "read.agentId"
         }
-      ]
+      ],
+      "minimumHeadBytes": 36,
+      "maximumCalldataBytes": 132
     },
     "activeGrants": {
       "kind": "read",
@@ -365,7 +387,9 @@
           "abiType": "string",
           "target": "read.agentId"
         }
-      ]
+      ],
+      "minimumHeadBytes": 36,
+      "maximumCalldataBytes": 132
     },
     "historyItem": {
       "kind": "read",
@@ -381,7 +405,9 @@
           "abiType": "uint64",
           "target": "read.version/decimal"
         }
-      ]
+      ],
+      "minimumHeadBytes": 68,
+      "maximumCalldataBytes": 164
     }
   }
 }

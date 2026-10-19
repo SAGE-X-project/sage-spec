@@ -8,7 +8,7 @@ import runpy
 import tempfile
 import unittest
 
-from check_chain_map import load, verify
+from check_chain_map import calldata_bounds, load, verify
 
 ROOT = Path(__file__).parent
 MAPPING = load(ROOT / 'chain-command-map.json')
@@ -79,6 +79,28 @@ class ChainMapTests(unittest.TestCase):
         sig['record']['inputLayout'] *= 2
         with self.assertRaisesRegex(ValueError, 'unique inputs'):
             verify(changed, sig)
+
+    def test_independently_authored_caps_and_future_bound_refusal(self):
+        expected = {'commitClaim': (36, 36), 'revealClaim': (164, 148804),
+                    'activate': (68, 164), 'addKey': (100, 1028), 'revokeKey': (100, 260),
+                    'updateServices': (100, 38116), 'authorizeOperator': (132, 292),
+                    'revokeOperator': (132, 292), 'deactivate': (68, 164),
+                    'registryId': (4, 4), 'record': (36, 132),
+                    'activeGrants': (36, 132), 'historyItem': (68, 164)}
+        for name, cap in expected.items():
+            self.assertEqual(calldata_bounds(SIGNATURES[name]['inputLayout']), cap)
+        for field, value in [('minimumHeadBytes', True), ('maximumCalldataBytes', 148803)]:
+            self.reject(lambda x: x['methods']['revealClaim'].update({field: value}), 'calldata bounds')
+        for rows, message in [(['entry:tuple'], 'tuple paths'),
+                              (['entry:tuple', 'entry.inner.name:string'], 'tuple paths'),
+                              (['entry:tuple', 'entry.hasExpiry:bool'], 'dynamic tuple shape'),
+                              (['extra:tuple[]', 'extra[].name:string'], 'array role'),
+                              (['unknown:string'], 'field or type'),
+                              (['number:uint256'], 'field or type'),
+                              (['agentId:string', 'agentId.orphan:string'], 'layout coverage'),
+                              (['agentId:string', 'agentId:string'], 'layout coverage')]:
+            with self.assertRaisesRegex(ValueError, message):
+                calldata_bounds(rows)
 
     def test_load_rejects_duplicates_non_json_text_and_size(self):
         with tempfile.TemporaryDirectory() as directory:

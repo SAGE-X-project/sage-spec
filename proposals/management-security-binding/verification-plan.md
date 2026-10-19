@@ -155,7 +155,7 @@ metadata cases cover omitted/duplicate paths, redirected actor/salt/proof/expiry
 fields, changed scalar types and limits; these are not live protocol requests.
 
 The checker emits no protocol PASS and runs no contract. Require fresh source
-hashes, seven unit results, at least90% checker statement coverage and actual
+hashes, eight unit results, at least90% checker statement coverage and actual
 artifact evidence before accepting this design-tool change. Subsequently close
 per-operation guard priorities, serializer byte equality and actual slot/type
 layout, then full maximum-valid workload/account/finality/compatibility and

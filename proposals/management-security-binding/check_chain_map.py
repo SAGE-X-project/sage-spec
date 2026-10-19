@@ -59,6 +59,47 @@ def load(path):
     return value
 
 
+
+def calldata_bounds(layouts):
+    """Conservative current-table encoding bound, not an admissible-workload claim."""
+    text_limits = {'agentId': 64, 'name': 32, 'scope': 15, 'alg': 23,
+                   'signer': 189, 'serviceType': 64, 'uri': 2048}
+    byte_limits = {'key': 65, 'proof': 65}
+    arrays = {'keys': 128, 'services': 16}
+    rows = [row.rsplit(':', 1) for row in layouts]
+
+    def value_size(name, kind):
+        if kind in {'uint64', 'bool', 'address', 'bytes32'}:
+            return False, 32
+        limits = text_limits if kind == 'string' else byte_limits if kind == 'bytes' else {}
+        require(name in limits, 'unsupported bound field or type')
+        return True, 32 + 32 * ((limits[name] + 31) // 32)
+
+    roots = [(name, kind) for name, kind in rows if '.' not in name]
+    tails, used = 0, []
+    for name, kind in roots:
+        used.append(name)
+        if kind in {'tuple', 'tuple[]'}:
+            prefix = name + ('[].' if kind == 'tuple[]' else '.')
+            children = [(path[len(prefix):], typ) for path, typ in rows if path.startswith(prefix)]
+            require(bool(children) and all('.' not in path for path, typ in children), 'bounded tuple paths')
+            used.extend(prefix + path for path, typ in children)
+            parts = [value_size(path, typ) for path, typ in children]
+            require(any(dynamic for dynamic, size in parts), 'supported dynamic tuple shape')
+            encoded = 32 * len(parts) + sum(size for dynamic, size in parts if dynamic)
+            if kind == 'tuple[]':
+                require(name in arrays, 'bounded array role')
+                encoded = 32 + arrays[name] * (32 + encoded)
+            tails += encoded
+        else:
+            dynamic, size = value_size(name, kind)
+            if dynamic:
+                tails += size
+    require(len(used) == len(rows) == len(set(used))
+            and set(used) == {path for path, kind in rows}, 'complete bounded layout coverage')
+    return 4 + 32 * len(roots), 4 + 32 * len(roots) + tails
+
+
 def verify(mapping, signatures):
     require(type(mapping) is dict and set(mapping) == set(FIELDS) |
             {'status', 'scope', 'derived', 'limits', 'reservedErrors', 'methods'}, 'closed map')
@@ -75,7 +116,7 @@ def verify(mapping, signatures):
     require(type(methods) is dict and set(methods) == expected_methods == set(signatures), 'method inventory')
     input_count = 0
     for name, method in methods.items():
-        require(type(method) is dict and set(method) == {'kind', 'operation', 'inputs'}, 'closed method')
+        require(type(method) is dict and set(method) == {'kind', 'operation', 'inputs', 'minimumHeadBytes', 'maximumCalldataBytes'}, 'closed method')
         kind = 'mutation' if name in OPERATIONS else 'read' if name in READS else 'claim'
         require(method['kind'] == kind and method['operation'] == OPERATIONS.get(name), 'method semantics')
         rows = method['inputs']
@@ -110,6 +151,10 @@ def verify(mapping, signatures):
         require(layouts == signatures[name]['inputLayout'], 'complete ordered ABI input coverage')
         require(len(layouts) == len(set(layouts)) and len(targets) == len(set(targets)), 'unique inputs and destinations')
         require(signatures[name]['mutability'] == ('view' if kind == 'read' else 'nonpayable'), 'ABI mutability')
+        minimum, maximum = calldata_bounds(layouts)
+        require(type(method['minimumHeadBytes']) is int and type(method['maximumCalldataBytes']) is int
+                and method['minimumHeadBytes'] == minimum and method['maximumCalldataBytes'] == maximum,
+                'exact calldata bounds')
         input_count += len(rows)
     return {'scope': SCOPE, 'status': 'UNADOPTED', 'methods': len(methods),
             'record_mutations': len(OPERATIONS), 'reads': len(READS), 'claim_methods': 1,

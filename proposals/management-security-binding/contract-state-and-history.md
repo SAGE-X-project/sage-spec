@@ -66,7 +66,7 @@ Neither command digest, calldata hash, transaction hash nor event topic0
 substitutes for another or for an authorization/consensus proof.
 
 Complete command and history each have 1..262144 canonical JSON bytes. The
-complete REG-01 record remains at most65536, grants at most128 pairs. These
+complete REG-01 record remains at most 65536, grants at most128 pairs. These
 chain history item bounds do not expand the web69632-byte input frame. A read
 returns one exact version item; it never replays unbounded history or returns
 all versions at once. Four reads and commitClaim create no command/version.
@@ -182,18 +182,18 @@ No allocation by an unchecked ABI length and no URL fetch/callback is allowed.
 | 5 | Actual caller/controller or exact current grant; reveal controller must equal caller; grant changes controller-only | UnauthorizedCaller |
 | 6 | Allowed lifecycle, then exact predecessor, then successor capacity | WrongRecordState; PreviousVersionMismatch; VersionExhausted |
 | 7 | Reveal block comparison/window, then safe admission time, then nondecreasing time against predecessor | ClaimWindowInvalid; TimeInvalid |
-| 8 | Operation targets/duplicate grants/eligible scopes; then ordered key/service name and raw material uniqueness and role/algorithm/signer/expiry syntax | KeyUnavailable; GrantUnavailable; GrantAlreadyPresent; InvalidEntry; KeyNameReused; KeyMaterialReused; UnsupportedKeyAlgorithm |
+| 8 | Operation targets/duplicate grants/eligible scopes; then ordered key/service name and raw material uniqueness and role/algorithm/signer/expiry syntax, then exact provisional record byte bound | KeyUnavailable; GrantUnavailable; GrantAlreadyPresent; InvalidEntry; KeyNameReused; KeyMaterialReused; UnsupportedKeyAlgorithm; BoundsExceeded |
 | 9 | All signing proofs in ASCII key order, then all KEM endorsements in ASCII key order; exact eligible signer only | InvalidKeyProof |
 | 10 | Complete successor, operation-specific usable-signer rule below, automatic removals, canonical command/record/grants/history construction and byte bounds | InvalidEntry; BoundsExceeded; HistoryUnavailable |
 | 11 | Atomically store complete state/indexes/history/claim consumption, emit successful event, return exact successor | No partial-success category |
 
 This fixes the global-cap/selector order without requiring an unknown
 selector to supply a per-method cap. A future wider algorithm table requires
-a newly reviewed cap, not an alias. Per-method exact caps and the complete
-within-row priority map remain a pre-implementation gate.
+a newly reviewed cap, not an alias. Section7 specifies per-method caps and the within-row priority candidate.
+Actual decoder and guard execution remain a pre-implementation evidence gate.
 
-Before code, each row's category association must be spelled out by the
-operation table and diagnostic rules, not just inferred from this summary.
+The operation-specific table and diagnostic rules in section7 refine this
+summary; only their checked categories are mapped to a named custom error.
 At rank8, a duplicate name is checked before duplicate material; duplicate
 name with both current-service collision and prior-key reuse chooses
 KeyNameReused first. Unsupported algorithm is checked before decoding its
@@ -255,6 +255,24 @@ command and entry only after their digests and resulting bytes are ready.
 Read and write use the same explicitly reviewed serialization contract; an
 independent normal oracle must check byte equality (not just hash equality).
 
+The chain command bound covers the otherwise admissible record data without
+truncation: create's keys/services/controller occur unchanged in the resulting
+record; add-key's new entry and update-services' full replacement also occur
+unchanged there. All other argument sets are bounded small scalar objects.
+Beyond these common components, binding contributes at most256 escaped content
+bytes (128 visible ASCII bytes), Registry 82, DID 156, actor 42, predecessor 20,
+operation 18 and reveal salt 43, plus fixed member names/punctuation. A
+conservative 2048 bytes covers all wrapper/scalar overhead; thus command size
+is at most 65536+2048=67584, below262144. This is not permission to use the
+chain shape as the web input. Actual serializer byte equality remains NOT_RUN.
+
+One canonical address/scope grant pair is at most83 bytes;128 distinct sorted
+pairs require at most2+128*83+127=10753 bytes. A history entry adds only bounded
+scalars, three 43-byte digests, optional target and fixed member names; even a
+conservative 2048-byte allowance beyond automaticRemovals keeps it at most 12801
+bytes and therefore below262144. This is a byte-capacity argument, not gas,
+actual storage execution or source evidence.
+
 Full workload cost remains NOT_RUN. Published isolated strict Ed25519 and
 conditional storage calculations are not a complete Registry cost, max-valid
 record proof or permitted budget. Preserve required128 lifetime keys,16services,
@@ -263,8 +281,9 @@ execution environment cannot admit a required valid case, report that
 feasibility gap and obtain an explicit profile/design decision. Do not lower
 limits, erase retained evidence or silently call a partial profile conforming.
 
-Next: finish a machine-readable operation/guard mapping and typed layout
-qualification, serializer byte examples and full valid workload design/cost;
+Next: implement and verify the actual bounded decoder/guard behavior after
+adoption; before that, finish typed layout qualification, serializer byte
+examples and full valid workload design/cost;
 then fixed standards/Source/version/compatibility and explicit adoption before
 matching actual Registry/Go/Rust/ADK/Inspector implementation. Existing reports,
 Core1.0 observations, issuer/operating/registration holds and stages9..14 remain.
@@ -274,7 +293,7 @@ Core1.0 observations, issuer/operating/registration holds and stages9..14 remain
 `check_chain_map.py` checks the closed metadata format, exact 13 methods,
 8 record-mutation/4 read/1 claim classification, complete ordered ABI input
 paths/types, field destinations, explicit web/chain actor distinction, salt,
-reserved diagnostic and integer bounds. Seven finite artifact-mutation units
+reserved diagnostic and integer bounds. Eight finite artifact-mutation units
 cover omission, destination/type/actor substitution, duplicates, bool-vs-int
 limits and non-JSON/non-ASCII metadata. They do not submit these as protocol
 requests, generate signatures or execute a Registry.
@@ -284,5 +303,220 @@ candidate ABI artifact, bound to exact source hashes and Python identity.
 A successful checker result means only this fixed design metadata agrees with
 its stated cross-file relationships. It cannot establish serializer output,
 guard runtime precedence, authority truth, source finality, full costs or any
-new conformance verdict. Per-operation guard closure, full type/layout
-qualification and actual code remain distinct gates.
+new conformance verdict. The section7 guard design, full type/layout qualification and actual
+code remain distinct from this metadata gate. The gate recomputes all13
+method head/cap pairs but does not execute those decoding/guard paths.
+
+## 7. Per-operation framing and reached-body priorities
+
+The metadata gate also recomputes minimum static-head and conservative maximum
+calldata bytes from the ordered input layouts and current bounded tuple fields.
+These are byte-size bounds, not the minimum complete canonical encoding or a
+promise that simultaneous maxima form an admissible REG-01 record.
+
+| Method | Selector plus static head | Maximum complete calldata |
+|---|---:|---:|
+| commitClaim | 36 | 36 |
+| revealClaim | 164 | 148804 |
+| activate | 68 | 164 |
+| addKey | 100 | 1028 |
+| revokeKey | 100 | 260 |
+| updateServices | 100 | 38116 |
+| authorizeOperator | 132 | 292 |
+| revokeOperator | 132 | 292 |
+| deactivate | 68 | 164 |
+| registryId | 4 | 4 |
+| record | 36 | 132 |
+| activeGrants | 36 | 132 |
+| historyItem | 68 | 164 |
+
+For dynamic bytes of maximum n, length plus padded content is
+32+32*ceil(n/32). The current raw TABLE union uses key<=65, proof<=65, alg<=23,
+name<=32, signer<=189, serviceType<=64 and uri<=2048. Key tuple maximum is
+7*32+64+64+128+224+128=832. Service maximum is3*32+64+96+2080=2336.
+A dynamic tuple array has a32-byte length, one32-byte offset per element and
+the bounded tuple payloads; keys have at most128 entries, services at most16.
+A root agentId is at most64, name32, scope15. ABI integers, addresses, bools
+and bytes32 occupy32-byte words. Every table value includes the4-byte selector.
+No minimum-head number authorizes padding/trailing bytes, missing dynamic
+length words or any noncanonical complete input. Optional/future algorithms
+cannot enlarge these bounds without a newly reviewed mapping and profile.
+
+### 7.1 Deterministic raw preflight
+
+After any compiler/backend preemption described above, reached-body order is:
+
+1. Refuse actual length>148804 (BoundsExceeded), then length<4 (MalformedCall).
+2. Read only the available4-byte selector. Unknown selector is MalformedCall.
+3. Apply the known method's maximum cap (BoundsExceeded), then its static-head
+   minimum (MalformedCall). This does not allocate by a supplied length.
+4. Walk dynamic fields in ABI declaration order, arrays in index order and
+   tuple members in declaration order. At each node, a missing offset/length
+   word is MalformedCall. A declared count/field length above its reviewed cap
+   is BoundsExceeded. Unsafe offset/length arithmetic, an out-of-input slice,
+   overlap/alias/gap, noncanonical offset/padding or trailing bytes is
+   MalformedCall. Check each condition in that written order. Before copying
+   or decoding content, prove that node's complete range and all nested bounds.
+   Finish exact canonical ABI equality after those bounded checks. No unchecked
+   allocation, external URI fetch or fallback-selector scan occurs.
+
+This is a deterministic decoder design contract; its actual code and unit-only
+malformed-input scenarios remain NOT_RUN. Native nonpayable or ABI compiler
+refusal may precede it and need not emit these names. Out-of-gas/empty/panic/
+unknown revert is never normalized into success or a fabricated new version.
+
+### 7.2 Shared semantic suborder and diagnostics
+
+After framing, rank2 checks value then configured context. Rank3 walks admitted
+fields in ABI order: exact ASCII/identifier/address/service-URI/scalar grammar,
+then their semantic ranges (including safe seconds and positive predecessors).
+Raw length/count caps have already been checked before any content parse.
+Known-algorithm/role/same-record signer eligibility is rank8 rather than an
+alternate parser that chooses an algorithm from raw key bytes.
+
+Rank4 selects the authoritative current identity. For reveal, identifier absent
+(including no terminal tombstone) precedes matching caller/hash presence and
+unconsumed state. For other record mutations it requires a present record;
+absence is WrongRecordState. A present record's missing/incoherent current
+history needed for the operation is HistoryUnavailable. This does not require
+unbounded replay of all old versions inside a mutation: complete retained
+history is an invariant preserved by atomic code and later checked by complete
+inspection. A claim commit only checks caller/hash duplication.
+
+Rank5 checks exact principal. Grant mutations require the controller. For
+other eligible mutations an exact existing operation grant can authorize the
+actual caller; a PoP or wallet owner cannot. Reveal separately requires its
+controller to equal caller. Failure is UnauthorizedCaller. Rank6 checks the
+operation/state table, then predecessor equality, then uint64 successor
+capacity. Their errors are respectively WrongRecordState,
+PreviousVersionMismatch and VersionExhausted. The counter never wraps, including
+for deactivate. Rank7 checks reveal's strict-later/window rule first, then safe
+block.timestamp and nondecreasing admitted time. commit/read do not add a
+record time or mutation-version check.
+
+Rank8 performs the following operation-specific rules in the written order;
+a rule that does not apply to that operation is skipped, never replaced by a
+default permission:
+
+| Operation | Target and entry checks after ranks1..7 |
+|---|---|
+| create | New key names ASCII sorted: equality gives KeyNameReused, a distinct inversion InvalidEntry. New raw-material duplicate gives KeyMaterialReused. Service names sorted/unique, collision with any retained/proposed key name gives InvalidEntry. Validate new key entries in their supplied order as below. |
+| activate | No supplied key/proof or target; usable-signing rule is rank10. |
+| add-key | Lifetime count at capacity gives BoundsExceeded. Prior key-name reuse gives KeyNameReused; raw-material reuse across any role/algorithm gives KeyMaterialReused; collision with a current service name gives InvalidEntry. Then validate the one new key entry. |
+| revoke-key | Missing or already-revoked target gives KeyUnavailable. No newly supplied proof; the final usable-signer/terminal decision is rechecked at rank10. |
+| update-services | Sorted/unique service names and retained-key-name noncollision, otherwise InvalidEntry. No grant or proof inferred from metadata. |
+| authorize-operator | Target equals controller or scope ineligible for current state gives InvalidEntry; already active exact pair gives GrantAlreadyPresent; active grant count at128 gives BoundsExceeded. |
+| revoke-operator | Target equals controller gives InvalidEntry; absent exact active pair gives GrantUnavailable. |
+| deactivate | No new target/proof. |
+
+The exact permitted scope strings are checked as field grammar at rank3; their
+current-state eligibility is checked at rank8 for grant insertion. Created
+allows only activate/deactivate grants; active allows add-key/revoke-key/
+update-services/deactivate. No other target address is implicitly an authority.
+There is no new zero-address principal reservation introduced by this table;
+actual msg.sender and existing exact principal policy continue to apply.
+
+For each new key, unknown or configured-unsupported algorithm gives
+UnsupportedKeyAlgorithm before algorithm-specific representation decoding.
+Wrong raw/proof length, role, signer reference, expiry-presence/value or other
+structural entry condition gives InvalidEntry. A signing entry names its own
+canonical key URL. A KEM entry names a distinct same-record eligible accepted
+unexpired signing entry, with no alternate-key trial. A mathematical verification
+failure under the selected strict verifier at rank9 is InvalidKeyProof. Verify
+only the newly supplied proofs (all creation entries or the single add-key
+entry); unchanged previously admitted entries do not create a new general
+proof loop for grant/service/deactivate operations. At creation verify all new
+signing proofs before any new KEM endorsement even if its name sorts earlier.
+
+After every applicable rank8 entry/target check, construct a bounded,
+noncommitting prospective record and count its exact chapter02 JCS bytes.
+Reject size>65536 as BoundsExceeded before rank9 proof work. For a nonterminal
+prospective successor, also apply the explicitly future-profile headroom check
+in section8, after its actual-byte check and before any proof. This is a new
+admission narrowing proposed here, not an added0.10.0 consumer rule. The global raw
+ABI cap alone does not imply the record bound. New keys are only provisionally
+represented as accepted for byte counting; this is not proof validity, signer
+admission, durable state, a digest authority or a success event. For byte counting, a revoke-key/deactivate prospective record may project the
+exact terminal state from its already admitted retained keys and the same
+admission time; this is not an early committed lifecycle decision. Rank10
+rechecks the final operation-specific state and grant cleanup after all proofs.
+Do not publish or store it before all remaining guards succeed. The exact serializer remains
+an implementation/test gate; an estimate must not silently reject an otherwise
+valid record. Retain rank10's complete final-state/digest/byte-bound recheck.
+
+Rank10 constructs the full successor and applies the explicitly operation-specific
+usable-signing rules: create/activate require one; revoke-key with none remaining
+commits terminal state and all grant removals; other permitted management is not
+refused merely because keys expired. Apply activation cleanup of activate grants,
+deactivation cleanup of all grants, then encode the complete record, grants,
+command and history in that order. Encoded bound failure is BoundsExceeded;
+a violated successor invariant is InvalidEntry; missing required retained data
+is HistoryUnavailable. No arbitrary local exception is relabeled as one of these
+without its checked cause. At rank11 commit all effects and one event atomically.
+Explicit revoke-operator target is not duplicated in automaticRemovals.
+
+### 7.3 Operation applicability, reads and reserved diagnostic
+
+| Surface | Applicable reached-body ranks |
+|---|---|
+| commitClaim |1..3; rank4 duplicate caller/hash, then atomic claim insert/event. No record/version/time/key proof/history command |
+| revealClaim |1..11; rank6 create-absence semantics only, not a supplied predecessor |
+| other seven record mutators |1..11 with only their operation-specific targets/proofs/successor rules |
+| registryId |1..3/context, then exact configured ID; no record lookup or event |
+| record |1..4/context; proved absence returns false/empty; otherwise complete terminal/current record |
+| activeGrants |1..4/context; absent identity is WrongRecordState; missing complete grants is HistoryUnavailable |
+| historyItem |1..4/context; absent identity is WrongRecordState; requested version>current or missing retained positive item is HistoryUnavailable |
+
+Reads impose no controller/web read ACL, mutation predecessor/time/key proof or
+claim consumption. A syntactically invalid requested version fails at rank3
+before lookup; positive but unavailable version fails at the history step.
+Source/finality/readiness is an external authenticated evidence requirement,
+not established by these Solidity return bytes or a custom error selector.
+ClaimMismatch remains reserved/not emitted in this multi-claim candidate.
+
+This is a candidate diagnostic priority definition, not observed runtime
+coverage or a guarantee that a later compiler body is reached. New implementation
+must apply fixed unit scenarios for simultaneous failures and safe owned normal
+EOA/wallet lifecycle/history runs before it can claim this behavior.
+
+## 8. Proposed terminal/version byte headroom — explicit future narrowing
+
+The existing record ceiling alone does not reserve bytes for a later root
+state/version change. For unchanged content, active→deactivated adds5 JSON
+content bytes; a version digit boundary can also add bytes. A record at the
+ceiling could therefore prevent a required terminal successor even without
+adding a key/service. No packet, signing or runtime reproduction is needed to
+state this byte-capacity issue.
+
+This **unadopted future-profile proposal adds an admission restriction**. For
+every nonterminal prospective successor, after checking its actual complete
+JCS length<=65536, make a temporary size-counting copy with only root version
+replaced by the string "18446744073709551615" and root state by "deactivated".
+Require this copy's exact JCS length<=65536, otherwise BoundsExceeded before
+proof work. Apply this at create and every later nonterminal successor,
+including add-key and update-services; no alternate enrollment/update path
+skips it. Never revive a revoked key to count space or drop retained fields.
+
+This is at most24 additional bytes for an active record with a one-digit
+version (5 for state and19 for version). Created needs at most23 (4+19).
+The exact temporary encoding decides the check; an unconditional24-byte
+subtraction is not an equivalent implementation. Terminal successors require
+the actual record bound but no future headroom, since they cannot mutate.
+
+The temporary object is never an admitted record, accepted command, stored
+history entry, event, PoP/claim input, signature or recordDigest. Only the
+actual successor is stored and hashed. This invariant prevents size growth
+from these two metadata fields alone when key/service/controller/id values
+are retained. It does not guarantee future arbitrary additions, gas funds,
+clock/source/authority readiness or counter availability. In particular the
+maximum uint64 version still refuses every mutation, including deactivate;
+this reservation introduces no version-exhaustion bypass or liveness claim.
+
+This restriction excludes some boundary records that the0.10.0 byte ceiling
+alone would admit. Do not silently call the admission sets identical, apply
+the new check when reading old0.10.0 records, reclassify existing frozen results
+or change an existing deployment. Explicit future profile/version/domain and
+new Registry/identity, compatibility/migration policy and adoption must account
+for it. Existing retained records must not be truncated or rewritten as a
+migration shortcut. Actual reservation serializer/transition tests and matching
+Registry/Go/Rust/ADK/Inspector support remain NOT_RUN until implementation.
