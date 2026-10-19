@@ -4,8 +4,6 @@ import hashlib
 import json
 from pathlib import Path
 
-from check_method_security_clarification import at_previous_adoption
-
 
 ROOT = Path(__file__).resolve().parents[1]
 RECORD = 'verification/a2a-did-adoption.json'
@@ -128,6 +126,8 @@ def check_text(root):
 
 
 def verify(root=ROOT):
+    from check_method_security_clarification import at_previous_adoption
+
     record = json.loads((root / RECORD).read_text())
     require(set(record) == {
         'schema_version', 'kind', 'protocol_version', 'base_revision', 'status',
