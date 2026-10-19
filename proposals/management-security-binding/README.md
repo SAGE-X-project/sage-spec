@@ -327,3 +327,11 @@ The [candidate command, state and outcome model](contract-execution-model.md)
 adds a separate 22-error/2-event artifact with normal data-codec checks.
 It does not change the thirteen-function ABI or complete storage slots, guard
 precedence, contract execution, costs, finality or version adoption.
+
+The [state and chain-history refinement](contract-state-and-history.md) is
+an unadopted revision-5 candidate. It distinguishes derived chain commands
+from the unchanged six-member web input, retains revealed salt, proposes
+caller-scoped multi-claims with ClaimMismatch reserved, and describes typed
+storage and reached-body guard ordering. Its mapping gate checks artifact
+consistency only. Full decoder/guard/serializer/cost/Source/version adoption
+and matching Registry execution remain unfinished; no old finding is closed.
