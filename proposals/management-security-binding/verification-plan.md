@@ -1,6 +1,6 @@
 # Future binding verification and contract design plan
 
-Status: **UNADOPTED design and evidence plan**, draft revision 3. This plan
+Status: **UNADOPTED design and evidence plan**, draft revision 4. This plan
 implements the selected design direction, not an adopted wire standard,
 finished ABI, release, contract implementation or deployment approval.
 
@@ -139,3 +139,8 @@ work or dependencies. Existing implementation gaps and deferred W3C registration
 remain in the project handoff. Later demo, facilitator, discovery, settlement,
 governance and testnet work retain their original order; no operational network
 or future stage is started by publishing this candidate.
+
+The [candidate command, state and outcome model](contract-execution-model.md)
+adds a separate 22-error/2-event artifact with normal data-codec checks.
+It does not change the thirteen-function ABI or complete storage slots, guard
+precedence, contract execution, costs, finality or version adoption.

@@ -1,6 +1,6 @@
 # Typed Registry ABI and storage design candidate
 
-Status: **UNADOPTED future-version candidate**, draft revision 3. The
+Status: **UNADOPTED future-version candidate**, draft revision 4. The
 [ABI JSON](contract-abi.json) and separately authored
 [complete method schemas](contract-signatures.json) specify thirteen typed
 function candidates: nine write surfaces and four reads. They are not deployed
@@ -113,8 +113,7 @@ code/ABI and Registry policy; unproved or conflicting observations fail closed.
 On-chain history cannot enforce the private web read ACL and is publicly
 observable. History contains no private credentials/session secrets. Mapping
 accepted ABI arguments into the complete semantic command, future binding and
-PoP/claim domains, exact storage slots/proofs, bounded history reads, event and
-revert/error schemas remain design gates. The ABI read return shapes do not
+PoP/claim domains, exact storage slots/proofs, bounded history reads, enforcement of the separate event/error schemas remain design gates. The ABI read return shapes do not
 pretend those backend details or privacy costs are solved.
 
 ## 4. Crypto and cost gates
@@ -161,7 +160,12 @@ strict hostile-input decoding, storage correctness or gas measurements.
 No exploit client/service or chain transaction is executed by this checker.
 
 Complete transaction/account binding, per-operation semantic command mapping,
-exact storage/events/errors, actual algorithm verification and costs, selected
+exact storage and executable events/errors, actual algorithm verification and costs, selected
 finality source, concrete version/domain/compatibility/adoption and independent
 Inspector integration remain. The current four documentary failures and all
 old implementation findings stay associated with their existing subjects.
+
+The [candidate command, state and outcome model](contract-execution-model.md)
+adds a separate 22-error/2-event artifact with normal data-codec checks.
+It does not change the thirteen-function ABI or complete storage slots, guard
+precedence, contract execution, costs, finality or version adoption.
