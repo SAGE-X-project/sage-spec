@@ -1,6 +1,6 @@
 # Candidate management authentication and fork bindings
 
-Status: **UNADOPTED future-version candidate**, draft revision 3.
+Status: **UNADOPTED future-version candidate**, draft revision 4.
 Baseline sage-spec main `6d611b19764cfae50936ab4c63dbe4e1f9f78487`,
 SAGE 0.10.0. On 2026-10-19 the project direction was selected: preserve
 0.10.0, design new security rules as a separate version candidate, preserve
@@ -209,7 +209,7 @@ expected empty/create versus exact previous version, all key/proof/expiry and
 service fields, output/revert semantics, events and atomic state/history/grant
 storage rules. The ABI checker derives selectors and checks normal canonical call bytes,
 but actual contract code, storage enforcement, proof verification, transaction
-acceptance, history/revert/event encoding and costs remain incomplete.
+acceptance, complete history and actual revert/event behavior and costs remain incomplete.
 Therefore the chain binding is NOT complete. Merely writing
 that mapping must exist does not close security.5/.6 for eip155. The selected new-contract design direction keeps the legacy deployment intact.
 The ABI acceptance checklist in [verification-plan.md](verification-plan.md)
@@ -322,3 +322,8 @@ created-state revoke choice and tightens future draft-only schemas. Its new
 history fields are incompatible with draft revision 1; no deployed reader or
 0.10.0 subject is silently upgraded. [contract-design.md](contract-design.md)
 separates the typed ABI/normal codec checks from actual contract execution.
+
+The [candidate command, state and outcome model](contract-execution-model.md)
+adds a separate 22-error/2-event artifact with normal data-codec checks.
+It does not change the thirteen-function ABI or complete storage slots, guard
+precedence, contract execution, costs, finality or version adoption.

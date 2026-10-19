@@ -48,13 +48,25 @@ jobs:
               raise SystemExit("candidate ABI checker coverage is below 90%")
           PYCODE
           go run "$SAGE_CANDIDATE_ROOT/abi_check.go" -abi "$SAGE_CANDIDATE_ROOT/contract-abi.json" -signatures "$SAGE_CANDIDATE_ROOT/contract-signatures.json" > "$target/candidate-abi-result.json"
+          outcome="$SAGE_CANDIDATE_ROOT/outcomes"
+          SAGE_OUTCOMES_ROOT="$outcome" go test -v -count=1 -covermode=atomic -coverprofile="$target/candidate-outcomes.cover" "$outcome/check.go" "$outcome/check_test.go" > "$target/candidate-outcomes-unit.log" 2>&1
+          cat "$target/candidate-outcomes-unit.log"
+          go tool cover -func="$target/candidate-outcomes.cover" > "$target/candidate-outcomes-coverage.txt"
+          cat "$target/candidate-outcomes-coverage.txt"
+          python3 - "$target/candidate-outcomes-coverage.txt" <<'PYCODE'
+          import pathlib, sys
+          rows = [line for line in pathlib.Path(sys.argv[1]).read_text().splitlines() if line.startswith("total:")]
+          if len(rows) != 1 or float(rows[0].split()[-1].removesuffix("%")) < 90:
+              raise SystemExit("candidate outcome checker coverage is below 90%")
+          PYCODE
+          go run "$outcome/check.go" -abi "$outcome/abi.json" -schemas "$outcome/schemas.json" > "$target/candidate-outcomes-result.json"
           go list -m -json github.com/ethereum/go-ethereum > "$target/candidate-abi-module.json"
           python3 - <<'PYCODE'
           import hashlib, json, os, pathlib, subprocess
           root = pathlib.Path(os.environ["GITHUB_WORKSPACE"]) / "spec"
           proposal = "proposals/management-security-binding/"
-          inputs = [proposal + name for name in ["README.md", "web-history.md", "verification-plan.md", "lifecycle-and-schemas.md", "contract-design.md", "account-binding.md", "contract-abi.json", "contract-signatures.json", "abi_check.go", "abi_check_test.go"]] + [".github/workflows/candidate-registry-abi.yml"]
-          outputs = ["candidate-abi-unit.log", "candidate-abi.cover", "candidate-abi-coverage.txt", "candidate-abi-result.json", "candidate-abi-module.json"]
+          inputs = [proposal + name for name in ["README.md", "web-history.md", "verification-plan.md", "lifecycle-and-schemas.md", "contract-design.md", "account-binding.md", "contract-execution-model.md", "outcomes/abi.json", "outcomes/schemas.json", "outcomes/check.go", "outcomes/check_test.go", "contract-abi.json", "contract-signatures.json", "abi_check.go", "abi_check_test.go"]] + [".github/workflows/candidate-registry-abi.yml"]
+          outputs = ["candidate-abi-unit.log", "candidate-abi.cover", "candidate-abi-coverage.txt", "candidate-abi-result.json", "candidate-abi-module.json", "candidate-outcomes-unit.log", "candidate-outcomes.cover", "candidate-outcomes-coverage.txt", "candidate-outcomes-result.json"]
           module = json.loads((root / "candidate-abi-module.json").read_text())
           if "Replace" in module or module.get("Path") != "github.com/ethereum/go-ethereum" or not module.get("Sum") or not module.get("Version"):
               raise SystemExit("unbound candidate ABI library identity")
@@ -83,3 +95,7 @@ jobs:
             spec/candidate-abi-result.json
             spec/candidate-abi-module.json
             spec/candidate-abi-receipt.json
+            spec/candidate-outcomes-unit.log
+            spec/candidate-outcomes.cover
+            spec/candidate-outcomes-coverage.txt
+            spec/candidate-outcomes-result.json

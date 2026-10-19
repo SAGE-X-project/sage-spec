@@ -1,0 +1,137 @@
+{
+  "MalformedCall": {
+    "kind": "error",
+    "signature": "MalformedCall()",
+    "layout": []
+  },
+  "ValueNotAllowed": {
+    "kind": "error",
+    "signature": "ValueNotAllowed()",
+    "layout": []
+  },
+  "WrongRegistryContext": {
+    "kind": "error",
+    "signature": "WrongRegistryContext()",
+    "layout": []
+  },
+  "UnauthorizedCaller": {
+    "kind": "error",
+    "signature": "UnauthorizedCaller()",
+    "layout": []
+  },
+  "WrongRecordState": {
+    "kind": "error",
+    "signature": "WrongRecordState()",
+    "layout": []
+  },
+  "PreviousVersionMismatch": {
+    "kind": "error",
+    "signature": "PreviousVersionMismatch()",
+    "layout": []
+  },
+  "VersionExhausted": {
+    "kind": "error",
+    "signature": "VersionExhausted()",
+    "layout": []
+  },
+  "ClaimUnavailable": {
+    "kind": "error",
+    "signature": "ClaimUnavailable()",
+    "layout": []
+  },
+  "ClaimWindowInvalid": {
+    "kind": "error",
+    "signature": "ClaimWindowInvalid()",
+    "layout": []
+  },
+  "ClaimMismatch": {
+    "kind": "error",
+    "signature": "ClaimMismatch()",
+    "layout": []
+  },
+  "IdentifierUnavailable": {
+    "kind": "error",
+    "signature": "IdentifierUnavailable()",
+    "layout": []
+  },
+  "KeyUnavailable": {
+    "kind": "error",
+    "signature": "KeyUnavailable()",
+    "layout": []
+  },
+  "KeyNameReused": {
+    "kind": "error",
+    "signature": "KeyNameReused()",
+    "layout": []
+  },
+  "KeyMaterialReused": {
+    "kind": "error",
+    "signature": "KeyMaterialReused()",
+    "layout": []
+  },
+  "InvalidKeyProof": {
+    "kind": "error",
+    "signature": "InvalidKeyProof()",
+    "layout": []
+  },
+  "UnsupportedKeyAlgorithm": {
+    "kind": "error",
+    "signature": "UnsupportedKeyAlgorithm()",
+    "layout": []
+  },
+  "InvalidEntry": {
+    "kind": "error",
+    "signature": "InvalidEntry()",
+    "layout": []
+  },
+  "BoundsExceeded": {
+    "kind": "error",
+    "signature": "BoundsExceeded()",
+    "layout": []
+  },
+  "GrantUnavailable": {
+    "kind": "error",
+    "signature": "GrantUnavailable()",
+    "layout": []
+  },
+  "GrantAlreadyPresent": {
+    "kind": "error",
+    "signature": "GrantAlreadyPresent()",
+    "layout": []
+  },
+  "HistoryUnavailable": {
+    "kind": "error",
+    "signature": "HistoryUnavailable()",
+    "layout": []
+  },
+  "TimeInvalid": {
+    "kind": "error",
+    "signature": "TimeInvalid()",
+    "layout": []
+  },
+  "ClaimCommitted": {
+    "kind": "event",
+    "signature": "ClaimCommitted(address,bytes32,uint256)",
+    "layout": [
+      "caller:address:topic",
+      "commitment:bytes32:topic",
+      "blockNumber:uint256:data"
+    ]
+  },
+  "RecordChanged": {
+    "kind": "event",
+    "signature": "RecordChanged(bytes32,address,string,uint64,uint64,string,bytes32,bytes32,bytes32,uint64)",
+    "layout": [
+      "didHash:bytes32:topic",
+      "actor:address:topic",
+      "did:string:data",
+      "previousVersion:uint64:data",
+      "version:uint64:data",
+      "operation:string:data",
+      "commandDigest:bytes32:data",
+      "recordDigest:bytes32:data",
+      "grantsDigest:bytes32:data",
+      "admitted:uint64:data"
+    ]
+  }
+}
