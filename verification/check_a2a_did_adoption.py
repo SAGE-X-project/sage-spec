@@ -126,6 +126,8 @@ def check_text(root):
 
 
 def verify(root=ROOT):
+    from check_method_security_clarification import at_previous_adoption
+
     record = json.loads((root / RECORD).read_text())
     require(set(record) == {
         'schema_version', 'kind', 'protocol_version', 'base_revision', 'status',
@@ -158,7 +160,7 @@ def verify(root=ROOT):
         require(sha(root / HISTORY / name) == digest, 'historical bytes: ' + name)
     require(set(record['current_sha256']) == CHANGED | {PROFILE}, 'current inventory')
     for name, digest in record['current_sha256'].items():
-        require(sha(root / name) == digest, 'current bytes: ' + name)
+        require(sha(at_previous_adoption(root, name)) == digest, 'current bytes: ' + name)
     for name, digest in record['proposal_sha256'].items():
         require(name.startswith(PROPOSAL + '/') and sha(root / name) == digest,
                 'proposal bytes: ' + name)

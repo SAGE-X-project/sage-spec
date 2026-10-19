@@ -33,3 +33,59 @@ jobs:
               if old != open(f"{record['historical_root']}/{name}", 'rb').read():
                   raise SystemExit('preserved file differs from the base revision: ' + name)
           PY
+      - name: Check documentary security clarification and preserved evidence
+        run: |
+          python3 -B verification/test_method_security_clarification.py -v > method-security-unit.log 2>&1
+          cat method-security-unit.log
+          python3 -B verification/check_method_security_clarification.py > method-security-check.json
+          cat method-security-check.json
+          python3 - <<'PY'
+          import json, pathlib, subprocess
+          record = json.load(open('verification/method-security-clarification.json'))
+          for name in record['baseline_sha256']:
+              original = subprocess.check_output(['git', 'show', record['base_revision'] + ':' + name])
+              saved = pathlib.Path(record['historical_root'], name).read_bytes()
+              if saved != original:
+                  raise SystemExit('security clarification history differs from its Git base: ' + name)
+          name = 'verification/a2a-did-adoption.json'
+          if pathlib.Path(name).read_bytes() != subprocess.check_output(['git', 'show', record['base_revision'] + ':' + name]):
+              raise SystemExit('earlier adoption record changed')
+          PY
+      - name: Record documentary verification provenance
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, subprocess, sys
+          names = [
+              '.github/workflows/a2a-did-proposal.yml',
+              'spec/06-did-sage.md', 'analysis/current-design-overlay.json',
+              'verification/check_a2a_did_adoption.py',
+              'verification/check_method_security_clarification.py',
+              'verification/test_method_security_clarification.py',
+              'verification/method-security-clarification.json',
+              'verification/method-security-clarification-review.md',
+              'verification/history/method-security-base-2026-10-19/spec/06-did-sage.md',
+              'verification/history/method-security-base-2026-10-19/analysis/current-design-overlay.json',
+              'method-security-unit.log', 'method-security-check.json',
+          ]
+          receipt = {
+              'scope': 'documentary provenance and guard tests; not protocol conformance',
+              'checkout': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+              'tree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
+              'run_id': os.environ['GITHUB_RUN_ID'],
+              'run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'python': sys.version,
+              'sha256': {n: hashlib.sha256(pathlib.Path(n).read_bytes()).hexdigest() for n in names},
+              'guard_result': json.load(open('method-security-check.json')),
+          }
+          pathlib.Path('method-security-receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
+          PY
+      - name: Upload documentary verification evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: method-security-verification
+          if-no-files-found: error
+          path: |
+            method-security-unit.log
+            method-security-check.json
+            method-security-receipt.json

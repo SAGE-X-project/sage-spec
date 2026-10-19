@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "kind": "sage-method-security-clarification",
+  "protocol_version": "0.10.0",
+  "status": "ADOPTED_DOCUMENTARY_ANALYSIS",
+  "base_revision": "06b50e177ccd22bce7d70fd80c2d7f822ae3fd3b",
+  "historical_root": "verification/history/method-security-base-2026-10-19",
+  "baseline_sha256": {
+    "spec/06-did-sage.md": "fa7e180a37971ec382968d826857a3c4735f2a5f476c939d7aaf48349cea5691",
+    "analysis/current-design-overlay.json": "8173f44baeab7db57fd29e0992d4273409e1d52eb15b35f1ffe329ec584ba432"
+  },
+  "current_sha256": {
+    "spec/06-did-sage.md": "995f99299abc0ebd02651bfda75a5d30145968add464e1f93b2e9d656ea8184b",
+    "analysis/current-design-overlay.json": "7a580fd3c335a4376af5da35bbca757d3926ae3153e2b062c60200451e09c0d2"
+  },
+  "analysis_statement_ids": [
+    "did11-cr20260305#privacy-requirements.1",
+    "did11-cr20260305#security-requirements.13",
+    "did11-cr20260305#security-requirements.2"
+  ],
+  "incomplete_statement_ids": [
+    "did11-cr20260305#security-requirements.1",
+    "did11-cr20260305#security-requirements.5",
+    "did11-cr20260305#security-requirements.6",
+    "res10-crd20261001#vdr-forks.1"
+  ],
+  "historical_verdicts": {
+    "did11-cr20260305#privacy-requirements.1": "FAIL",
+    "did11-cr20260305#security-requirements.1": "FAIL",
+    "did11-cr20260305#security-requirements.13": "FAIL",
+    "did11-cr20260305#security-requirements.2": "FAIL",
+    "did11-cr20260305#security-requirements.5": "FAIL",
+    "did11-cr20260305#security-requirements.6": "FAIL",
+    "res10-crd20261001#vdr-forks.1": "FAIL"
+  },
+  "new_conformance_verdicts": {},
+  "independent_review": {
+    "path": "verification/method-security-clarification-review.md",
+    "sha256": "454124f62028d4e69d89d687f15a21e838d6db8502fa59270041f20c332a781a",
+    "scope": "documentary analysis only; no conformance verdict"
+  },
+  "wire_acceptance_changed": false,
+  "authentication_rule_adopted": false,
+  "fork_policy_adopted": false,
+  "runtime_execution": "NOT_RUN",
+  "operating_roots_selected": false
+}
