@@ -1,0 +1,75 @@
+name: Registry management binding
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    name: Adopted management binding and finite metadata units
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
+      - name: Check documentary units and exact coverage
+        run: |
+          python3 -B - > registry-management-unit.log 2>&1 <<'PY'
+          import hashlib, json, pathlib, sys, trace, unittest
+          root = pathlib.Path('verification').resolve()
+          sys.path.insert(0, str(root))
+          suite = unittest.defaultTestLoader.discover(str(root), 'test_registry_management.py')
+          tracker = trace.Trace(count=True, trace=False)
+          result = tracker.runfunc(unittest.TextTestRunner(verbosity=2).run, suite)
+          source = root / 'check_registry_management.py'
+          executable = set(trace._find_executable_linenos(str(source)))
+          observed = {line for (name, line), count in tracker.results().counts.items()
+                      if pathlib.Path(name).resolve() == source and count > 0}
+          covered = executable & observed
+          percent = 100 * len(covered) / len(executable) if executable else 0
+          coverage = {'scope': 'adopted documentary checker only; no contract execution',
+                      'python': sys.version, 'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
+                      'executable_lines': sorted(executable), 'covered_lines': sorted(covered),
+                      'statements': len(executable), 'covered': len(covered), 'percent': percent,
+                      'tests_run': result.testsRun, 'unit_success': result.wasSuccessful()}
+          pathlib.Path('registry-management-coverage.json').write_text(json.dumps(coverage, indent=2) + '\n')
+          print(json.dumps(coverage))
+          if not result.wasSuccessful() or result.testsRun != 10 or percent < 90:
+              raise SystemExit('adopted management binding unit or coverage gate failed')
+          PY
+          cat registry-management-unit.log
+          python3 -B verification/check_registry_management.py > registry-management-result.json
+      - name: Seal exact adopted document and original inputs
+        run: |
+          python3 -B - <<'PY'
+          import hashlib, json, os, pathlib, subprocess, sys
+          root = pathlib.Path('.')
+          proposed = json.loads(pathlib.Path('profiles/sage-0.11.0/registry-management.json').read_text())
+          new = ['profiles/sage-0.11.0/registry-management.md', 'profiles/sage-0.11.0/registry-management.json',
+                 'verification/check_registry_management.py', 'verification/test_registry_management.py',
+                 '.github/workflows/registry-management.yml']
+          outputs = ['registry-management-unit.log', 'registry-management-coverage.json', 'registry-management-result.json']
+          receipt = {'scope': 'adopted documentary contract, finite units and source identity only; no Registry runtime or conformance',
+                     'checkout': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+                     'tree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
+                     'run_id': os.environ['GITHUB_RUN_ID'], 'run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+                     'python': sys.version, 'status': proposed['status'], 'new_runtime_conformance_verdicts': 0,
+                     'sha256': {name: hashlib.sha256((root / name).read_bytes()).hexdigest()
+                                for name in list(proposed['source_sha256']) + new + outputs}}
+          pathlib.Path('registry-management-receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
+          print(json.dumps(receipt, indent=2))
+          PY
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: registry-management
+          if-no-files-found: error
+          path: |
+            registry-management-unit.log
+            registry-management-coverage.json
+            registry-management-result.json
+            registry-management-receipt.json
