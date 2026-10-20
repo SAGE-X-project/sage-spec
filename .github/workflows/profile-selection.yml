@@ -1,0 +1,58 @@
+name: Protected profile selection
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  selection:
+    name: Check selected profile and frozen source identities
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
+      - name: Check documentary selection without protocol execution
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, subprocess, sys
+          root = pathlib.Path('profiles/sage-0.11.0')
+          p = json.loads((root / 'selection.json').read_text())
+          assert p['status'] == 'ADOPTED_DESIGN_SELECTION'
+          assert p['protocol_version'] == '0.11.0'
+          assert p['exchange_choice'] == 'V1' and p['registration_reader_choice'] == 'R1'
+          assert p['release_readiness'] is False and p['new_runtime_conformance_verdicts'] == 0
+          assert p['registry_instance']['state'] == 'UNBOUND' and p['registry_instance']['operating_readiness'] is False
+          assert p['registry_instance']['address'] is None and p['registry_instance']['code_hash'] is None
+          assert len(p['baseline_sha256']) == 29
+          for name, expected in p['baseline_sha256'].items():
+              assert hashlib.sha256(pathlib.Path(name).read_bytes()).hexdigest() == expected, name
+          assert len(p['domain_entries']) == 21 and len({x['name'] for x in p['domain_entries']}) == 21
+          assert all(x['value'].encode().hex() == x['utf8_hex'] for x in p['domain_entries'])
+          assert len(p['field_values']) == 19
+          assert p['retained_namespaces']['http_algorithm_names'] == ['ed25519', 'ecdsa-p256-sha256']
+          assert p['registration_reader']['string_agentId']['max'] == str(2**256 - 1)
+          names = ['.github/workflows/profile-selection.yml', str(root / 'selection.json'), str(root / 'README.md')]
+          receipt = {
+              'scope': 'documentary profile selection and source identity only; no protocol runtime or conformance',
+              'checkout': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+              'tree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
+              'run_id': os.environ['GITHUB_RUN_ID'], 'run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],
+              'python': sys.version, 'selection': {'exchange': 'V1', 'reader': 'R1'},
+              'baseline_files': len(p['baseline_sha256']), 'domains': len(p['domain_entries']),
+              'discriminators': len(p['field_values']), 'new_conformance_verdicts': 0,
+              'sha256': {n: hashlib.sha256(pathlib.Path(n).read_bytes()).hexdigest() for n in names},
+          }
+          pathlib.Path('profile-selection-receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
+          print(json.dumps(receipt, indent=2))
+          PY
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: profile-selection
+          if-no-files-found: error
+          path: profile-selection-receipt.json
