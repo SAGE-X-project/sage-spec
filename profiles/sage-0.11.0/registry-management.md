@@ -1,20 +1,22 @@
 # SAGE 0.11.0 chain Registry management binding
 
-Status: **PROPOSED CHAIN BINDING**, revision 1, for explicit adoption before
-matching implementation acceptance. This document completes the chain-side
-management rules for the selected V1 exchange. It does not make the existing
-management proposals normative, amend SAGE 0.10.0, certify an implementation,
-select a live instance or authorize deployment. The companion, payment-wallet,
+Status: **ADOPTED CHAIN MANAGEMENT BINDING**, revision 2. This document defines
+the normative chain-side management rules for the selected SAGE 0.11.0 V1
+exchange, following explicit adoption of this binding and its additional
+admission restriction. It does not adopt other management proposal sections,
+amend SAGE 0.10.0, certify an implementation, select a live instance or
+authorize deployment. The companion, payment-wallet,
 reputation, validation and optional web-management proposals are excluded.
 
 The [machine-readable contract](registry-management.json) identifies the exact
 public inputs, schemas, function mapping and limits. The words MUST, MUST NOT,
 SHOULD and MAY have the BCP 14 meaning used by chapter 00. The selection in
 [selection.json](selection.json) already fixes the version and domain bytes;
-this proposal adds the following explicit chain admission and evidence rules.
-If adopted, a matching implementation MUST satisfy this document in full and
+this binding adds the following explicit chain admission and evidence rules.
+A matching implementation MUST satisfy this document in full and
 qualify its exact compiler, dependencies, runtime code, ABI and operating
-manifest. Publication or passing the documentary checker alone is not adoption.
+manifest. Passing the documentary checker alone is not implementation
+qualification, runtime conformance or operating approval.
 
 ## 1. Source precedence and instance identity — CM-01
 
@@ -23,7 +25,7 @@ fixed `040436d0239330e3f5fc760489cf2a63729fa4a4` revision. Moving branches,
 later ERC drafts and private design notes cannot change this binding.
 The selected V1 values plus this document govern new chain management. The
 explicitly restated rules below replace the candidate status only for this
-binding after adoption; other proposal sections remain proposals. General
+binding; other proposal sections remain proposals. General
 cryptographic/JCS/identifier rules come from the pinned chapters 01, 02, 06,
 09 and 11 with only the selected 0.11.0 domain/version substitutions.
 Implementation details not prescribed here require their own qualified source
@@ -239,8 +241,8 @@ quotes/backslashes, key/service name punctuation differences, absent versus
 zero expiry, decimal boundaries, empty services/grants and all transition
 types. Counts or approximate byte estimates cannot replace actual serialization.
 
-This proposal explicitly adopts the future headroom restriction from the
-pinned revision5 candidate. For every nonterminal prospective successor,
+This binding explicitly adopts the additional terminal/version headroom
+restriction. For every nonterminal prospective successor,
 check its actual complete record length first, then re-encode a temporary
 size-only copy with state=deactivated and version="18446744073709551615" and
 require it to fit65536. This applies to creation and every nonterminal mutation
@@ -388,7 +390,7 @@ required valid case, record the feasibility gap and obtain an explicit design
 decision; do not lower limits or promote an incomplete experiment to conformance.
 No license/source, runtime verifier, operating chain/fork/transaction format,
 gas budget, RPC, deployed address/code or custody/host configuration is selected
-by this normative proposal. No actual transaction is authorized.
+by this normative binding. No actual transaction is authorized.
 
 Old0.10.0 subjects and all FAIL/PARTIAL/UNSUPPORTED/NOT_RUN findings remain
 identifiable. Use separate new enrollment/proofs/API entry points and new

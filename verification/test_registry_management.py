@@ -33,8 +33,8 @@ class RegistryManagementTests(unittest.TestCase):
             with self.subTest(field=field), self.assertRaises(ValueError):
                 guard.validate(value, ROOT)
 
-    def test_metadata_cannot_authorize_adoption_or_operations(self):
-        for field, replacement in [('status', 'ADOPTED'), ('adoption', 'IMPLICIT'),
+    def test_metadata_cannot_change_adoption_or_authorize_operations(self):
+        for field, replacement in [('status', 'PROPOSED_CHAIN_BINDING'), ('adoption', 'IMPLICIT'),
                                    ('revision', True), ('protocol_version', '0.10.0'),
                                    ('source_revision', 'main')]:
             value = deepcopy(self.value)
@@ -166,7 +166,7 @@ class RegistryManagementTests(unittest.TestCase):
         with redirect_stdout(stream):
             runpy.run_path(str(ROOT / 'verification/check_registry_management.py'), run_name='__main__')
         result = json.loads(stream.getvalue())
-        self.assertEqual(result['status'], 'PROPOSED_CHAIN_BINDING')
+        self.assertEqual(result['status'], 'ADOPTED_CHAIN_MANAGEMENT_BINDING')
         self.assertIs(result['operating_readiness'], False)
         self.assertEqual(result['new_runtime_conformance_verdicts'], 0)
 

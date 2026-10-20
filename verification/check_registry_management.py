@@ -1,4 +1,4 @@
-"""Check a proposed documentary contract; never execute or authorize a Registry."""
+"""Check the adopted documentary contract; never execute or authorize a Registry."""
 from pathlib import Path
 import hashlib
 import json
@@ -60,15 +60,15 @@ def exact(actual, expected, reason):
 def validate(value, root):
     require(type(value) is dict and set(value) == KEYS, 'manifest root')
     exact({k: value[k] for k in ['kind', 'status', 'adoption', 'revision', 'protocol_version', 'source_revision']},
-          {'kind': 'sage-chain-management-binding', 'status': 'PROPOSED_CHAIN_BINDING',
-           'adoption': 'EXPLICIT_DECISION_REQUIRED', 'revision': 1, 'protocol_version': '0.11.0',
-           'source_revision': '040436d0239330e3f5fc760489cf2a63729fa4a4'}, 'proposal identity')
+          {'kind': 'sage-chain-management-binding', 'status': 'ADOPTED_CHAIN_MANAGEMENT_BINDING',
+           'adoption': 'EXPLICITLY_ADOPTED', 'revision': 2, 'protocol_version': '0.11.0',
+           'source_revision': '040436d0239330e3f5fc760489cf2a63729fa4a4'}, 'adopted binding identity')
     require(value['document'] == DOCUMENT, 'fixed documentary path')
     doc = (root / DOCUMENT).read_bytes()
     require(hashlib.sha256(doc).hexdigest() == value['document_sha256'], 'document identity')
     text = doc.decode('utf-8')
     exact(value['requirements'], ['CM-%02d' % n for n in range(1, 10)], 'requirement inventory')
-    require('PROPOSED CHAIN BINDING' in text, 'document status')
+    require('ADOPTED CHAIN MANAGEMENT BINDING' in text, 'document status')
     require(all(text.count('— ' + n + '\n') == 1 for n in value['requirements']), 'document anchors')
     for name, digest in SELECTED.items():
         require(hashlib.sha256((root / name).read_bytes()).hexdigest() == digest, 'frozen selection source')
@@ -116,7 +116,7 @@ def validate(value, root):
     exact(value['errors'], sorted(k for k, v in outcome.items() if v['kind'] == 'error'), 'diagnostics')
     exact(value['events'], {k: v for k, v in outcome.items() if v['kind'] == 'event'}, 'event schemas')
     exact(value['reserved_errors'], ['ClaimMismatch'], 'reserved not emitted')
-    exact(value['headroom'], {'status': 'PROPOSED_EXPLICIT_NEW_ADMISSION_RESTRICTION',
+    exact(value['headroom'], {'status': 'ADOPTED_EXPLICIT_NEW_ADMISSION_RESTRICTION',
           'applies': 'EVERY_NONTERMINAL_PROSPECTIVE_SUCCESSOR_BEFORE_PROOFS', 'size_only_state': 'deactivated',
           'size_only_version': '18446744073709551615', 'actual_record_bound_first': True,
           'fixed_subtraction_equivalent': False, 'old_profile_reads_affected': False,
@@ -131,8 +131,8 @@ def validate(value, root):
           'deployment_authorized': False, 'readiness': False, 'new_runtime_conformance_verdicts': 0}, 'no invented operating approval')
     for name, expected in REVIEWED_POLICY.items():
         exact(value[name], expected, 'reviewed policy.' + name)
-    return {'scope': 'proposed documentary source/schema consistency only; no contract execution',
-            'status': 'PROPOSED_CHAIN_BINDING', 'sources': 32, 'requirements': 9,
+    return {'scope': 'adopted documentary source/schema consistency only; no contract execution',
+            'status': 'ADOPTED_CHAIN_MANAGEMENT_BINDING', 'sources': 32, 'requirements': 9,
             'methods': 13, 'mutations': 8, 'errors': 22, 'events': 2,
             'new_runtime_conformance_verdicts': 0, 'operating_readiness': False}
 

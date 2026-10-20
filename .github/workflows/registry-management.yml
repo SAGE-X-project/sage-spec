@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   contract:
-    name: Proposed management contract and finite metadata units
+    name: Adopted management binding and finite metadata units
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
@@ -32,7 +32,7 @@ jobs:
                       if pathlib.Path(name).resolve() == source and count > 0}
           covered = executable & observed
           percent = 100 * len(covered) / len(executable) if executable else 0
-          coverage = {'scope': 'proposed documentary checker only; no contract execution',
+          coverage = {'scope': 'adopted documentary checker only; no contract execution',
                       'python': sys.version, 'source_sha256': hashlib.sha256(source.read_bytes()).hexdigest(),
                       'executable_lines': sorted(executable), 'covered_lines': sorted(covered),
                       'statements': len(executable), 'covered': len(covered), 'percent': percent,
@@ -40,11 +40,11 @@ jobs:
           pathlib.Path('registry-management-coverage.json').write_text(json.dumps(coverage, indent=2) + '\n')
           print(json.dumps(coverage))
           if not result.wasSuccessful() or result.testsRun != 10 or percent < 90:
-              raise SystemExit('proposed management contract unit or coverage gate failed')
+              raise SystemExit('adopted management binding unit or coverage gate failed')
           PY
           cat registry-management-unit.log
           python3 -B verification/check_registry_management.py > registry-management-result.json
-      - name: Seal exact proposed document and original inputs
+      - name: Seal exact adopted document and original inputs
         run: |
           python3 -B - <<'PY'
           import hashlib, json, os, pathlib, subprocess, sys
@@ -54,7 +54,7 @@ jobs:
                  'verification/check_registry_management.py', 'verification/test_registry_management.py',
                  '.github/workflows/registry-management.yml']
           outputs = ['registry-management-unit.log', 'registry-management-coverage.json', 'registry-management-result.json']
-          receipt = {'scope': 'proposed documentary contract, finite units and source identity only; no Registry runtime or conformance',
+          receipt = {'scope': 'adopted documentary contract, finite units and source identity only; no Registry runtime or conformance',
                      'checkout': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
                      'tree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
                      'run_id': os.environ['GITHUB_RUN_ID'], 'run_attempt': os.environ['GITHUB_RUN_ATTEMPT'],

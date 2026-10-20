@@ -1,8 +1,8 @@
 {
   "kind": "sage-chain-management-binding",
-  "status": "PROPOSED_CHAIN_BINDING",
-  "adoption": "EXPLICIT_DECISION_REQUIRED",
-  "revision": 1,
+  "status": "ADOPTED_CHAIN_MANAGEMENT_BINDING",
+  "adoption": "EXPLICITLY_ADOPTED",
+  "revision": 2,
   "protocol_version": "0.11.0",
   "source_revision": "040436d0239330e3f5fc760489cf2a63729fa4a4",
   "source_sha256": {
@@ -40,7 +40,7 @@
     ".github/workflows/profile-selection.yml": "ed1a39173edcf2d35b4937ba5ef7f259e663a0f26b42e35d515032bfa3a32a3b"
   },
   "document": "profiles/sage-0.11.0/registry-management.md",
-  "document_sha256": "e314e747be8647572b1a497e038d7529b9575766e27fe1c94c83380337dfa9ca",
+  "document_sha256": "e2cfa057f7bf6ea883f85688d55895b69391d76b07f4ae90912ec5e937089185",
   "requirements": [
     "CM-01",
     "CM-02",
@@ -458,7 +458,7 @@
     }
   },
   "headroom": {
-    "status": "PROPOSED_EXPLICIT_NEW_ADMISSION_RESTRICTION",
+    "status": "ADOPTED_EXPLICIT_NEW_ADMISSION_RESTRICTION",
     "applies": "EVERY_NONTERMINAL_PROSPECTIVE_SUCCESSOR_BEFORE_PROOFS",
     "size_only_state": "deactivated",
     "size_only_version": "18446744073709551615",
